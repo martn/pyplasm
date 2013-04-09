@@ -5,33 +5,22 @@ def out():
     edge=CUBOID([1])
     face=CUBOID([1,1])
     cell=CUBOID([1,1,1])
-    sep=T([1,2,3])([1,0,0])
 
-    return STRUCT([
+    a = STRUCT(
             COLOR(RED)(point)
-            ,sep
-            ,COLOR(GREEN)(point)
-            ,sep
-            ,COLOR(BLUE)(point)
-            ,sep
-            ,COLOR(RED)(edge)
-            ,sep
-            ,COLOR(GREEN)(edge)
-            ,sep
-            ,COLOR(BLUE)(edge)
-            ,sep
-            ,COLOR(RED)(face)
-            ,sep
-            ,COLOR(GREEN)(face)
-            ,sep
-            ,COLOR(BLUE)(face)
-            ,sep
-            ,COLOR(RED)(cell)
-            ,sep
-            ,COLOR(GREEN)(cell)
-            ,sep
-            ,COLOR(BLUE)(cell)
-            ])
+            ,COLOR(GREEN)(T(point, 1, 0, 0))
+            ,COLOR(BLUE)(T(point, 2, 0, 0))
+            ,COLOR(RED)(T(edge, 3, 0, 0))
+            ,COLOR(GREEN)(T(edge, 4, 0, 0))
+            ,COLOR(BLUE)(T(edge, 5, 0, 0))
+            ,COLOR(RED)(T(face, 6, 0, 0))
+            ,COLOR(GREEN)(T(face, 7, 0, 0))
+            ,COLOR(BLUE)(T(face, 8, 0, 0))
+            ,COLOR(RED)(T(cell, 9, 0, 0))
+            ,COLOR(GREEN)(T(cell, 10, 0, 0))
+            ,COLOR(BLUE)(T(cell, 11, 0, 0)))
+
+    return a
 
 VIEW(out())
 

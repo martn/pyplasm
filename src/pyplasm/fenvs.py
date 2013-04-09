@@ -2924,9 +2924,9 @@ RXMY = COMP([PLASM_STRUCT, CONS([COMP([COMP([PLASM_T([1, 2]), AA(RAISE( PLASM_DI
 
 def RIF (size):
 	thin = 0.01*size
-	x=COLOR(RED)(CUBOID([size, thin, thin]))
-	y=COLOR(GREEN)(CUBOID([thin, size, thin]))
-	z=COLOR(BLUE)(CUBOID([thin, thin, size]))
+	x=PLASM_COLOR(RED)(CUBOID([size, thin, thin]))
+	y=PLASM_COLOR(GREEN)(CUBOID([thin, size, thin]))
+	z=PLASM_COLOR(BLUE)(CUBOID([thin, thin, size]))
 	return Plasm.Struct([x,y,z])
 
 
@@ -3638,10 +3638,33 @@ if self_test:
 
 #===================================================================================
 # Colors (wants a list [R,G,B] or [R,G,B,A]
-# Example COLOR([1,0,0])(pol)
+# Example PLASM_COLOR([1,0,0])(pol)
 #===================================================================================
 
-def COLOR(C):
+# Change it to procedural style:
+def COLOR(o, col):
+  # Check if it is a list:
+  if type(col) is list:
+    # Sanity checks:
+    if len(col) <> 3 and len(col) <> 4:
+      raise Exception("Color needs to be a list of length 3 (R, G, B) or 4 (R, G, B, opacity).")
+    if col[0] < 0 or col[0] > 255 or col[1] < 0 or col[1] > 255 or col[2] < 0 or col[2] > 255:
+       raise Exception("RGB values in color definition must lie between 0 and 255.")
+    if len(col) == 4:
+      if col[3] < 0 or col[3] > 1:
+        raise Exception("Opacity value in color definition must be between 0 and 1.")
+    # Normalizing RGB between 0 and 1 if necessary:
+    if col[0] > 1 or col[1] > 1 or col[2] > 1:
+      col[0] = col[0] / 255
+      col[1] = col[1] / 255
+      col[2] = col[2] / 255
+  else:
+    raise Exception("Color needs to be a list.")
+
+  return COLOR(col)(o)
+
+# Original PLaSM color command:
+def PLASM_COLOR(C):
 
 	def formatColor(C):
 		assert isinstance(C,Color4f) 
@@ -3652,12 +3675,12 @@ def COLOR(C):
 		C=Color4f(C[0],C[1],C[2],C[3] if len(C)>=4 else 1.0)
 
 	if not isinstance(C,Color4f):
-		raise Exception("cannot transform " + repr(C) + " to Color4f")
+		raise Exception("Cannot transform " + repr(C) + " to Color4f")
 
-	def COLOR0(pol):
+	def PLASM_COLOR0(pol):
 		return Plasm.addProperty(pol, "RGBcolor", formatColor(C))
 
-	return COLOR0
+	return PLASM_COLOR0
 
 GRAY    = Color4f([0.5, 0.5, 0.5, 1.0])
 GREEN   = Color4f([0.0, 1.0, 0.0, 1.0])
@@ -3675,7 +3698,7 @@ YELLOW  = Color4f([1.0, 1.0, 0.0, 1.0])
 
 
 if self_test: 
-   (Plasm.getProperty(COLOR(RED)(Plasm.cube(3)),"RGBcolor")==("%s %s %s %s" % (1.0,0.0,0.0,1.0)))
+   (Plasm.getProperty(PLASM_COLOR(RED)(Plasm.cube(3)),"RGBcolor")==("%s %s %s %s" % (1.0,0.0,0.0,1.0)))
 
 
 #===================================================================================

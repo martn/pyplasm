@@ -8,21 +8,22 @@ cyl = CYLINDER(0.75, 4)
 c = T(c, -1, -1, -1)
 # Translate the cylinder by -2 in the z-direction:
 cyl = T(cyl, 0, 0, -2)
-# Subtract cylinder from the cube:
-c = DIFF(c, cyl)
 # Rotate the cylinder by 90 degrees about the x-axis:
-cyl = R(cyl, 1, PI/2)
-# Subtract the cylinder from the cube:
-c = DIFF(c, cyl)
+cyl2 = RDEG(cyl, 1, 90)
 # Rotate the cylinder by 90 degrees about the z-axis:
-cyl = R(cyl, 3, PI/2)
+cyl3 = RDEG(cyl2, 3, 90)
 # Subtract the cylinder from the cube:
-c = DIFF(c, cyl)
+c = DIFF(c, cyl, cyl2, cyl3)
+
+col = Color4f([0.0, 0.0, 1.0, 0.0])
+
+c = COLOR(col)(c)
+
 # View the result. 
 VIEW(c)
 
 # STL output:
-import plasm_stl
-filename = "drilled-cube.stl"
-plasm_stl.toSTL(c, filename)
-print "STL file written to", filename
+#import plasm_stl
+#filename = "drilled-cube.stl"
+#plasm_stl.toSTL(c, filename)
+#print "STL file written to", filename
