@@ -3655,13 +3655,13 @@ def COLOR(o, col):
         raise Exception("Opacity value in color definition must be between 0 and 1.")
     # Normalizing RGB between 0 and 1 if necessary:
     if col[0] > 1 or col[1] > 1 or col[2] > 1:
-      col[0] = col[0] / 255
-      col[1] = col[1] / 255
-      col[2] = col[2] / 255
+      col[0] = col[0] / 255.
+      col[1] = col[1] / 255.
+      col[2] = col[2] / 255.
   else:
     raise Exception("Color needs to be a list.")
 
-  return COLOR(col)(o)
+  return PLASM_COLOR(col)(o)
 
 # Original PLaSM color command:
 def PLASM_COLOR(C):
