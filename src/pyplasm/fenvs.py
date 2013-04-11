@@ -3647,7 +3647,7 @@ def COLOR(o, col):
   if type(col) is list:
     # Sanity checks:
     if len(col) <> 3 and len(col) <> 4:
-      raise Exception("Color needs to be a list of length 3 (R, G, B) or 4 (R, G, B, opacity).")
+      raise Exception("Color must be a list of length 3 (R, G, B) or 4 (R, G, B, A).")
     if col[0] < 0 or col[0] > 255 or col[1] < 0 or col[1] > 255 or col[2] < 0 or col[2] > 255:
        raise Exception("RGB values in color definition must lie between 0 and 255.")
     if len(col) == 4:
@@ -3659,7 +3659,7 @@ def COLOR(o, col):
       col[1] = col[1] / 255.
       col[2] = col[2] / 255.
   else:
-    raise Exception("Color needs to be a list.")
+    raise Exception("Color must be a list: either [R, G, B] or [R, G, B, A].")
 
   return PLASM_COLOR(col)(o)
 
@@ -3672,6 +3672,11 @@ def PLASM_COLOR(C):
 
 	# convert list to Color
 	if isinstance(C,list) and len(C) in (3,4):
+                # Normalizing RGB between 0 and 1 if necessary:
+                if C[0] > 1 or C[1] > 1 or C[2] > 1:
+                C[0] = C[0] / 255.
+                C[1] = C[1] / 255.
+                C[2] = C[2] / 255.
 		C=Color4f(C[0],C[1],C[2],C[3] if len(C)>=4 else 1.0)
 
 	if not isinstance(C,Color4f):
@@ -3682,18 +3687,18 @@ def PLASM_COLOR(C):
 
 	return PLASM_COLOR0
 
-GRAY    = Color4f([0.5, 0.5, 0.5, 1.0])
-GREEN   = Color4f([0.0, 1.0, 0.0, 1.0])
-BLACK   = Color4f([0.0, 0.0, 0.0, 1.0])
-BLUE    = Color4f([0.0, 0.0, 1.0, 1.0])
-BROWN   = Color4f([0.5, 0.5, 0.5, 1.0])
-CYAN    = Color4f([0.0, 1.0, 1.0, 1.0])
-MAGENTA = Color4f([1.0, 0.0, 1.0, 1.0])
-ORANGE  = Color4f([1.0, 0.5, 1.0, 1.0])
-PURPLE  = Color4f([0.5, 0.0, 0.5, 1.0])
-WHITE   = Color4f([1.0, 1.0, 1.0, 1.0])
-RED     = Color4f([1.0, 0.0, 0.0, 1.0])
-YELLOW  = Color4f([1.0, 1.0, 0.0, 1.0])
+GRAY    = [128, 128, 128, 1.0]
+GREEN   = [0, 255, 0, 1.0]
+BLACK   = [0, 0, 0, 1.0]
+BLUE    = [0, 0, 255, 1.0]
+BROWN   = [139, 69, 19, 1.0]
+CYAN    = [0, 255, 255, 1.0]
+MAGENTA = [255, 0, 255, 1.0]
+ORANGE  = [255, 128, 255, 1.0]
+PURPLE  = [128, 0, 128, 1.0]
+WHITE   = [255, 255, 255, 1.0]
+RED     = [255, 0, 0, 1.0]
+YELLOW  = [255, 255, 0, 1.0]
 
 
 
