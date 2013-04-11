@@ -29,14 +29,14 @@ cyl2 = R(cyl1, 3, PI/2)
 
 # Cutting off the radiuses at once
 out = DIFF(out, cyl1, cyl2)
- 
+
 # Display the result:
 VIEW(out)
 
 # STL output:
-import plasm_stl
-filename = "ashtray.stl"
-plasm_stl.toSTL(out, filename)
-print "STL file written to", filename
+#import plasm_stl
+#filename = "ashtray.stl"
+#plasm_stl.toSTL(out, filename)
+#print "STL file written to", filename
 
 
