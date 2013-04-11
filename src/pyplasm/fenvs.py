@@ -3716,12 +3716,12 @@ def MATERIAL(M):
 	# convert list to Material
 	if isinstance(M,list) and (len(M)==3 or len(M)==4):
 		r,g,b=M[0:3]
-		a=M[3] if len(M)==4 else 1.0
+		alpha=M[3] if len(M)==4 else 1.0
 		ambient =[r*0.4,g*0.4,b*0.4,alpha]
 		diffuse =[r*0.6,g*0.6,b*0.6,alpha]
 		specular=[0    ,0    ,0    ,alpha]
 		emission=[0    ,0    ,0    ,alpha]
-		shininess
+		shininess = 1.0
 		M=ambient + diffuse + specular + emission + [shininess]
 
 	#convert the list to a XGE material

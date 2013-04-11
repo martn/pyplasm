@@ -2,7 +2,7 @@ from pyplasm import *
 
 # Outer cylinder:
 Rout = 0.10
-Hout = 0.10
+Hout = 0.30
 cyl_outer = CYLINDER(Rout, Hout)
 
 # Inner cylinder
@@ -14,30 +14,17 @@ cyl_inner = T(cyl_inner, 0, 0, bt)
 # Subtract inner cylinder from outer:
 out = DIFF(cyl_outer, cyl_inner)
 
+# Testing material properties:
+alpha = 1
+r = 1
+g = 0
+b = 0
+ambient = [r*0.4,g*0.4,b*0.4,alpha]
+diffuse = [r*0.6,g*0.6,b*0.6,alpha]
+specular = [0,0,0,alpha]
+emission = [0,0,0,alpha]
+shine = 100
+out = MATERIAL(ambient + diffuse + specular + emission + [shine])(out)
 
-
- 
-ambient = [1,0,0,1]
-diffuse = [0,1,0,1]
-specular = [0,0,1,0]
-emission = [0,0,0,1]
-shine = 100 
-
-#out = MATERIAL([1,0,0,1,   0,1,0,1,   0,0,1,1,    0,0,0,1,    100])(out)
-out = MATERIAL([0.1, 0.1, 0.1, 1.0,   0.1, 0.1, 0.8, 0.5,  0, 0, 0, 1.0,   0.0, 0.0, 0.0, 1.0,   10.0])(out)
-
-
-
-# Display the result:
-
-out = COLOR(out, [0, 255, 0, 0.0])
-
+# Show the result:
 VIEW(out)
-
-# STL output:
-#import plasm_stl
-#filename = "ashtray.stl"
-#plasm_stl.toSTL(out, filename)
-#print "STL file written to", filename
-
-
