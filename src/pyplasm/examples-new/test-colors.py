@@ -8,9 +8,9 @@ c = T(c, -1, -1, -1)
 cyl = CYLINDER(0.75, 4)
 # Translate the cylinder by -2 in the z-direction:
 cyl = T(cyl, 0, 0, -2)
-cyl = COLOR(cyl, [255, 0, 0])
+cyl = COLOR(cyl, BROWN)
 cyl2 = RDEG(cyl, 2, 90)
-cyl2 = COLOR(cyl2, [0, 255, 0])
+cyl2 = COLOR(cyl2, GREEN)
 # Rotate the cylinder by 90 degrees about the x-axis:
 #cyl2 = RDEG(cyl, 1, 90)
 #cyl2 = COLOR(cyl2, [0, 255, 0])

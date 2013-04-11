@@ -3674,9 +3674,9 @@ def PLASM_COLOR(C):
 	if isinstance(C,list) and len(C) in (3,4):
                 # Normalizing RGB between 0 and 1 if necessary:
                 if C[0] > 1 or C[1] > 1 or C[2] > 1:
-                C[0] = C[0] / 255.
-                C[1] = C[1] / 255.
-                C[2] = C[2] / 255.
+                        C[0] = C[0] / 255.
+                        C[1] = C[1] / 255.
+                        C[2] = C[2] / 255.
 		C=Color4f(C[0],C[1],C[2],C[3] if len(C)>=4 else 1.0)
 
 	if not isinstance(C,Color4f):
