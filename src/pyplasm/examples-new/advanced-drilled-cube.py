@@ -15,9 +15,9 @@ cyl3 = RDEG(cyl2, 3, 90)
 # Subtract the cylinder from the cube:
 c = DIFF(c, cyl, cyl2, cyl3)
 
-col = Color4f([0.0, 0.0, 1.0, 0.0])
+col = [0, 0, 255, 0]
 
-c = COLOR(col)(c)
+c = COLOR(c, col)
 
 # View the result. 
 VIEW(c)

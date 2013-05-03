@@ -1,7 +1,7 @@
 # Import libraries.
 from pyplasm import *
 from numpy import *
-color = [0.9, 0.9, 0.9]
+color = [220, 220, 220]
 
 # Define 'n' random rotations.
 def randRots(n):
@@ -12,11 +12,11 @@ def randRots(n):
 N = 100
   
 # Intersect N randomly rotated cubes.
-Cube = T([1, 2, 3])([-1, -1, -1])(CUBOID([2, 2, 2]))
+Cube = T(CUBE(2), -1, -1, -1)
 rotations = AA(ROTN)(randRots(N))
 out = TREE(COMP([JOIN, INTERSECTION]))(CONS(rotations)(Cube))
 
 # View the result. The numbers between 0 and 1 
 # are RGB components.
-VIEW(COLOR(color)(out))
+VIEW(COLOR(out, color))
 

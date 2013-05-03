@@ -1,7 +1,7 @@
 from pyplasm import *
 
 # Brass color:
-color = [222/255., 218/255., 72/255.]
+color = [222, 218, 72]
 
 # Number of teeth:
 N = 18
@@ -37,7 +37,7 @@ pts = pts_base + pts_mid + pts_top
 # Toothe is a convexhull of the points:
 t = CONVEXHULL(*pts)
 
-VIEW(COLOR(color)(t))
+VIEW(COLOR(t, color))
 
 ###############
 
@@ -54,7 +54,7 @@ gear = []
 for i in range(N):
     gear.append(R(t, 3, i * angle))
 
-VIEW(COLOR(color)(STRUCT(*gear)))
+VIEW(COLOR(STRUCT(*gear), color))
 
 ###############
 
@@ -63,7 +63,7 @@ base = TUBE(base_rin, base_rout, base_h, 128)
 dz = (base_h - y0)/2.
 base = T(base, 0, 0, -dz)
 
-VIEW(COLOR(color)(base))
+VIEW(COLOR(base, color))
 
 ###############
 
@@ -76,14 +76,14 @@ cone = CONE(base_rout, base_rout)
 cone = R(cone, 2, PI)
 cone = T(cone, 0, 0, 40)
 
-VIEW(COLOR(color)(STRUCT(tc1, cone)))
+VIEW(COLOR(STRUCT(tc1, cone), color))
 
 ###############
 
 # Difference of the cones:
 tc = DIFF(tc1, cone)
 
-VIEW(COLOR(color)(tc))
+VIEW(COLOR(tc, color))
 
 ###############
 
@@ -93,7 +93,7 @@ base = TOP(base, tc)
 # Attach teeth:
 gear.append(base) 
 
-VIEW(COLOR(color)(STRUCT(*gear)))
+VIEW(COLOR(STRUCT(*gear), color))
 
 ###############
 
@@ -110,7 +110,7 @@ b1 = T(b1, -25, -5, 0)
 b2 = R(b1, 3, PI/3)
 b3 = R(b2, 3, PI/3)
 
-VIEW(COLOR(color)(STRUCT(inner, b1, b2, b3)))
+VIEW(COLOR(STRUCT(inner, b1, b2, b3), color))
 
 ###############
 
@@ -119,7 +119,7 @@ inner = DIFF(inner, b1)
 inner = DIFF(inner, b2)
 inner = DIFF(inner, b3)
 
-VIEW(COLOR(color)(inner))
+VIEW(COLOR(inner, color))
 
 ###############
 
@@ -129,7 +129,7 @@ inner = DIFF(inner, cone)
 # Translate the inner part:
 inner = T(inner, 0, 0, -dz)
 
-VIEW(COLOR(color)(inner))
+VIEW(COLOR(inner, color))
 
 ###############
 
@@ -139,7 +139,7 @@ gear.append(inner)
 # Display the gear:
 out = STRUCT(*gear)
 
-VIEW(COLOR(color)(out))
+VIEW(COLOR(out, color))
 
 # STL output:
 import plasm_stl

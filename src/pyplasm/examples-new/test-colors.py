@@ -11,14 +11,5 @@ cyl = T(cyl, 0, 0, -2)
 cyl = COLOR(cyl, BROWN)
 cyl2 = RDEG(cyl, 2, 90)
 cyl2 = COLOR(cyl2, GREEN)
-# Rotate the cylinder by 90 degrees about the x-axis:
-#cyl2 = RDEG(cyl, 1, 90)
-#cyl2 = COLOR(cyl2, [0, 255, 0])
-# Rotate the cylinder by 90 degrees about the z-axis:
-#cyl3 = RDEG(cyl2, 3, 90)
-#cyl3 = COLOR(cyl3, [0, 0, 255])
-# View the result. 
-#VIEW(STRUCT(c, cyl, cyl2, cyl3))
-VIEW(STRUCT(cyl, cyl2))
 
-print RED
+VIEW(STRUCT(cyl, cyl2))
