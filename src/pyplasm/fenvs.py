@@ -3700,7 +3700,24 @@ WHITE   = [255, 255, 255, 1.0]
 RED     = [255, 0, 0, 1.0]
 YELLOW  = [255, 255, 0, 1.0]
 
-
+# Returns a list of three numbers between 0 and 255: [R, G, B]
+# A and other properties not taken into account yet.
+def GETCOLOR(obj):
+   string = Plasm.getProperty(obj, "RGBcolor")
+   col = [float(s) for s in string.split()] 
+   if col == []:
+      print "Warning: There is no color associated with object."
+      return
+   else:
+      if len(col) < 3:
+          print "Warning: There is some problem with the color of an object."
+          print "Expected [R, G, B] but list length is", len(col0)
+          return
+   col[0] = int(255*float(col[0]) + 0.5)
+   col[1] = int(255*float(col[1]) + 0.5)
+   col[2] = int(255*float(col[2]) + 0.5)
+   return col[0:3]
+ 
 
 if self_test: 
    (Plasm.getProperty(PLASM_COLOR(RED)(Plasm.cube(3)),"RGBcolor")==("%s %s %s %s" % (1.0,0.0,0.0,1.0)))

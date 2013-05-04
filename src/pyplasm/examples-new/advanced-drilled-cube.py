@@ -19,6 +19,8 @@ col = [0, 0, 255, 0]
 
 c = COLOR(c, col)
 
+print "Color of object is", GETCOLOR(c)
+
 # View the result. 
 VIEW(c)
 
