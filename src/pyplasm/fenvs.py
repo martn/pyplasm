@@ -916,29 +916,60 @@ def CUBOID (sizes_list):
 if self_test: 
 	assert(Plasm.limits(CUBOID([1,2,3]))==Boxf(Vecf(1,0,0,0),Vecf(1,1,2,3)))
 
+# English:
 def CUBE (side):
     return CUBOID([side, side, side])
+# Czech:
+KRYCHLE = CUBE
+KOSTKA  = CUBE
+# Polish:
+SZESCIAN = CUBE
 
+# English:
 def SQUARE (side):
     return CUBOID([side, side])
+# Czech::
+CTVEREC = SQUARE
+# Polish:
+KWADRAT = SQUARE
 
+# English:
 def SQUARE3D (a):
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
     return CUBOID([a, a, h])
+# Czech::
+CTVEREC3D = SQUARE3D
+# Polish:
+KWADRAT3D = SQUARE3D
 
+# English:
 def BRICK (a, b, c):
     return CUBOID([a, b, c])
+# Czech::
+KVADR = BRICK
+CIHLA = BRICK
+# Polish:
+CEGLA = BRICK
 
+# English:
 def RECTANGLE (a, b):
     return CUBOID([a, b])
+# Czech::
+OBDELNIK = RECTANGLE
+# Polish:
+PROSTOKAT = RECTANGLE
 
 def RECTANGLE3D (a, b):
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
     return CUBOID([a, b, 0.001])
+# Czech::
+OBDELNIK3D = RECTANGLE3D
+# Polish:
+PROSTOKAT3D = RECTANGLE3D
 
 HEXAHEDRON=Plasm.cube(3,-1.0/math.sqrt(3.0),+1.0/math.sqrt(3.0))
 
@@ -1005,8 +1036,15 @@ def PLASM_CONVEXHULL (points):
     return MKPOL([points, [range(1,len(points)+1)], [[1]]])
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+# English:
 def CONVEXHULL(*args):
     return PLASM_CONVEXHULL(list(args))
+# Czech:
+KONVEXNIOBAL = CONVEXHULL
+OBAL = CONVEXHULL
+# Polish:
+OTOCZKAWYPUKLA = CONVEXHULL
+OTOCZKA = CONVEXHULL
 
 CHULL = CONVEXHULL
 CH = CONVEXHULL
@@ -1082,9 +1120,18 @@ if self_test:
 	assert(Plasm.limits(PLASM_TRANSLATE([1, 2, 3])([1, 0, 2])(Plasm.cube(2)))==Boxf(Vecf(1,1,0,2),Vecf(1,2,1,2)))
 
 # NEW DEFINITION:
+# English:
 def TRANSLATE(obj, t1, t2, t3):
     return PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj)
+# Czech:
+POSUN = TRANSLATE
+POSUNUTI = TRANSLATE
+# Polish:
+PRZENIES = TRANSLATE
+
 T = TRANSLATE
+MOVE = TRANSLATE
+
 
 # ===================================================
 # SCALE
@@ -1108,9 +1155,17 @@ if self_test:
 	assert(Plasm.limits(PLASM_S([3,1])([4,2])(Plasm.cube(3)))==Boxf(Vecf(1,0,0,0),Vecf(1,2,1,4)))
 
 # NEW DEFINITION:
+# English:
 def SCALE(obj, a, b, c):
     return PLASM_SCALE([1, 2, 3])([a, b, c])(obj)
+# Czech:
+SKALUJ = SCALE
+SKALOVANI = SCALE
+# Polish:
+PRZESKALUJ = SCALE
+
 S = SCALE
+
 
 # ===================================================
 # ROTATE
@@ -1129,21 +1184,40 @@ if self_test:
 	assert(Plasm.limits(PLASM_ROTATE([1,2])(PI/2)(Plasm.cube(2))).fuzzyEqual(Boxf(Vecf(1,-1,0),Vecf(1,0,+1))))
 
 # NEW DEFINITION
-def ROTATE(obj, axis, angle):
+# English:
+def ROTATERAD(obj, axis, angle_rad):
     if axis == 1: plane_indexes = [2, 3]
     elif axis == 2: plane_indexes = [1, 3]
     else: plane_indexes = [1, 2]
     def PLASM_ROTATE2 (pol):
         dim = max(plane_indexes)
-	return Plasm.rotate(pol, dim, plane_indexes[0] , plane_indexes[1], angle)
+	return Plasm.rotate(pol, dim, plane_indexes[0] , plane_indexes[1], angle_rad)
     return PLASM_ROTATE2(obj)    
+# Czech:
+OTOCRAD = ROTATERAD
+OTOCENIRAD = ROTATERAD
+ROTACERAD = ROTATERAD
+ROTUJRAD = ROTATERAD
+# Polish:
+OBROCRAD = ROTATERAD
 
-R = ROTATE
-RRAD = ROTATE
+RRAD = ROTATERAD
 
-def RDEG(obj, axis, angle_deg):
+# English:
+def ROTATEDEG(obj, axis, angle_deg):
     angle_rad = angle_deg * PI / 180.0
-    return ROTATE(obj, axis, angle_rad)
+    return ROTATERAD(obj, axis, angle_rad)
+# Czech:
+OTOC = ROTATEDEG
+OTOCENI = ROTATEDEG
+ROTACE = ROTATEDEG
+ROTUJ = ROTATEDEG
+# Polish:
+OBROC = ROTATEDEG
+
+ROTATE = ROTATEDEG
+RDEG = ROTATEDEG
+R = ROTATEDEG
 
 # ===================================================
 #; Applica uno shearing con vettore shearing-vector-list sulla variabile
@@ -1230,8 +1304,15 @@ if self_test:
 	assert(Plasm.limits(PLASM_STRUCT([ PLASM_TRANSLATE([1, 2, 3])([1, 1, 0]), PLASM_TRANSLATE([1, 2, 3])([1, 1, 0]), Plasm.cube(2)  ,  PLASM_TRANSLATE([1, 2, 3])([1, 1, 0])  ,PLASM_TRANSLATE([1, 2, 3])([1, 1, 0]),  Plasm.cube(2),Plasm.cube(2,1,2)  ])).fuzzyEqual(Boxf(Vecf(1,2,2),Vecf(1,6,6))))
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+# English:
 def STRUCT(*args):
     return PLASM_STRUCT(list(args))
+# Czech:
+SPOJ = STRUCT
+SPOJIT = STRUCT
+STRUKTURA = STRUCT
+# Polish:
+# It is also "STRUKTURA"
 
 # ===================================================
 # BOOLEAN OP
@@ -1242,11 +1323,17 @@ def PLASM_UNION(objs_list):
         return Plasm.boolop(BOOL_CODE_OR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+# English:
 def UNION(*args):
     return PLASM_UNION(list(args))
-
 U = UNION
-
+# Czech:
+SJEDNOCENI = UNION
+SOUCET = UNION
+SECTI = UNION
+SECIST = UNION
+# Polish:
+UNIA = UNION
 
 #also ^ can be used to indicates INTERSECTION
 def PLASM_INTERSECTION (objs_list):
@@ -1254,27 +1341,38 @@ def PLASM_INTERSECTION (objs_list):
 PLASM_I = PLASM_INTERSECTION
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+# English:
 def INTERSECTION(*args):
     return PLASM_INTERSECTION(list(args))
 I = INTERSECTION
-
+# Czech:
+PRUNIK = INTERSECTION
+# Polish:
+PRZECIECIE = INTERSECTION
 
 #also -, or DIFF, can be used to indicates DIFFERENCE
 def PLASM_DIFFERENCE (objs_list):
         return Plasm.boolop(BOOL_CODE_DIFF, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
 PLASM_DIFF = PLASM_DIFFERENCE        
 
-
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+# English:
 def DIFFERENCE(*args):
     return PLASM_DIFFERENCE(list(args))
 DIFF = DIFFERENCE
+# Czech:
+ROZDIL = DIFF
+ODECTI = DIFF
+ODECIST = DIFF
+# Polish:
+ROZNICA = DIFF
 
 # xor
 def PLASM_XOR(objs_list):
         return Plasm.boolop(BOOL_CODE_XOR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+# English:
 def XOR(*args):
     return PLASM_XOR(list(args))
 
@@ -1321,9 +1419,13 @@ if self_test:
 	assert(Plasm.limits(PLASM_POWER([Plasm.cube(2),Plasm.cube(1)])).fuzzyEqual(Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1))))
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+# English:
 def POWER(*args):
     return PLASM_POWER(list(args))
-
+# Czech:
+MOCNINA = POWER
+# Polish:
+MOC = POWER
 
 
 # ===================================================
@@ -1353,6 +1455,7 @@ if self_test:
 # GRID
 # ===================================================
 
+# English:
 def GRID (sequence):
     cursor,points,hulls= (0,[[0]],[])
     for value in sequence:
@@ -1360,6 +1463,10 @@ def GRID (sequence):
         if value>=0: hulls += [[len(points)-2,len(points)-1]]
         cursor = cursor + abs(value)
     return  Plasm.mkpol(1, CAT(points), hulls,plasm_config.tolerance())   
+# Czech:
+SIT = GRID
+# Polish:
+SIATKA = GRID
 
 QUOTE = GRID
 
@@ -1729,9 +1836,16 @@ def PLASM_TUBE (args):
     return PLASM_TUBE0
 
 # NEW DEFINITION
+# English:
 def TUBE(r1, r2, h, division = 64):
     return PLASM_TUBE([r1, r2, h])(division)
-
+# Czech:
+TRUBICE = TUBE
+TRUBKA = TUBE
+TUBA = TUBE
+ROURA = TUBE
+# Polish:
+RURA = TUBE
 
 
 # =============================================
@@ -1750,11 +1864,17 @@ if self_test:
     assert Plasm.limits(PLASM_CIRCLE(1.0)([8,8]))==Boxf(Vecf(1,-1,-1),Vecf(1,+1,+1))
 
 # NEW DEFINITION
+# English:
 def CIRCLE(r, division = [64, 32]):
     if type(division) == list: 
         return PLASM_CIRCLE(r)(division)
     else:
         return PLASM_CIRCLE(r)([division, 32])
+# Czech:
+KRUH = CIRCLE
+# Polish:
+KOLO = CIRCLE
+
 def CIRCLE3D(r, division = [64, 32]):
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
@@ -1763,7 +1883,10 @@ def CIRCLE3D(r, division = [64, 32]):
         return PRISM(PLASM_CIRCLE(r)(division), h)
     else:
         return PRISM(PLASM_CIRCLE(r)([division, 32]), h)
-
+# Czech:
+KRUH3D = CIRCLE3D
+# Polish:
+KOLO3D = CIRCLE3D
 
 
 # =============================================
@@ -1780,20 +1903,21 @@ def PLASM_MY_CYLINDER (args):
 
 PLASM_CYLINDER = PLASM_MY_CYLINDER 
 
-
 if self_test: 
    assert(Plasm.limits(PLASM_CYLINDER([1.0,2.0])(8)).fuzzyEqual(Boxf(Vecf(1,-1,-1,0),Vecf(1,+1,+1,2))))
 
 # NEW DEFINITION
+# English:
 def CYLINDER(r, h, division = 64):
     return PLASM_CYLINDER([r, h])(division)
-
-
+#Czech:
+VALEC = CYLINDER
+# Polish:
+# It is also "CYLINDER"
 
 # =============================================
 # SPHERE
 # =============================================
-
 
 def PLASM_SPHERE (radius):
     def PLASM_SPHERE0 (subds):
@@ -1817,9 +1941,14 @@ def SPHERE_SURFACE(radius, divisions = [24, 48]):
     # This is a surface:
     return PLASM_SPHERE(radius)(divisions)
 
+# English:
 def SPHERE(radius, divisions = [24, 48]):
     # Making it s solid:
     return PLASM_JOIN(PLASM_SPHERE(radius)(divisions))
+# Czech:
+KOULE = SPHERE
+# Polish:
+KULA = SPHERE
 
 
 # =============================================
@@ -1871,9 +2000,14 @@ if self_test:
 	VIEW(SKELETON(1)(PLASM_SOLIDTORUS([1.5,2])([18,24,1])))
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+# English:
 def TORUS(r1, r2, divisions = [64, 32]):
     return PLASM_SOLIDTORUS([r1, r2])([divisions[0], divisions[1], 1])
-
+DONUT = TORUS
+# Czech:
+# It is also "TORUS"
+# Polish:
+# It is also "TORUS"
 
 # =============================================
 # CONE
@@ -1891,8 +2025,13 @@ if self_test:
    assert Plasm.limits(PLASM_CONE([1.0,3.0])(16)).fuzzyEqual(Boxf(Vecf(1,-1,-1,0),Vecf(1,+1,+1,3)))
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+# English:
 def CONE(r, h, division = 64):
     return PLASM_CONE([r, h])(division)
+# Czech:
+KUZEL = CONE
+# Polish:
+STOZEK = CONE
 
 
 # =============================================
@@ -1913,9 +2052,14 @@ def PLASM_TRUNCONE (args):
 	return PLASM_TRUNCONE0
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+# English:
 def TRUNCONE(r1, r2, h, divisions = 64):
     # Changing to a solid:
     return PLASM_JOIN(PLASM_TRUNCONE([r1, r2, h])(divisions))
+# Czech:
+KOMOLYKUZEL = TRUNCONE
+# Polish:
+SCIETYSTOZEK = TRUNCONE
 
 
 # =============================================
@@ -1937,8 +2081,13 @@ def build_DODECAHEDRON ():
 		PLASM_R([1, 2])(PI/2), PLASM_R([2, 3])(PI/2), 
 		roofpair]))
 
+# English:
 DODECAHEDRON = build_DODECAHEDRON()
-
+# Czech:
+DODEKAEDR = DODECAHEDRON
+DVANACTISTEN = DODECAHEDRON
+# Polish:
+DWUNASTOSCIAN = DODECAHEDRON
 
 # =============================================
 # ICOSAHEDRON
@@ -1952,8 +2101,13 @@ def build_ICOSAHEDRON():
     rectz = PLASM_R([2, 3])(PI/2)(PLASM_R([1, 2])(PI/2)(rectx))
     return PLASM_S([1, 2, 3])([b, b, b])(PLASM_JOIN([rectx, recty, rectz]))
 
+# English:
 ICOSAHEDRON = build_ICOSAHEDRON()
-
+# Czech:
+IKOSAEDR = ICOSAHEDRON
+DVACETISTEN = ICOSAHEDRON
+# Polish:
+DWUDZIESTOSCIAN = DODECAHEDRON
 
 # =============================================
 # TETRAHEDRON
@@ -1964,17 +2118,27 @@ def build_TETRAHEDRON():
 
 PLASM_TETRAHEDRON = build_TETRAHEDRON()
 
-# NEW DEFINITION:
+# English:
 def TETRAHEDRON(a, b, c, d):
     return PLASM_CONVEXHULL([a, b, c, d])
+# Czech:
+TETRAEDR = TETRAHEDRON
+CTYRSTEN = TETRAHEDRON
+# Polish:
+CZWOROBOK = TETRAHEDRON
 
 # =============================================
 # TRIANGLE
 # =============================================
 
-# NEW DEFINITION:
+# English:
 def TRIANGLE(a, b, c):
     return PLASM_CONVEXHULL([a, b, c])
+# Czech:
+TROJUHELNIK = TRIANGLE
+# Polish:
+TROJKAT = TRIANGLE
+
 def TRIANGLE3D(a, b, c):
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
@@ -1995,6 +2159,10 @@ def TRIANGLE3D(a, b, c):
     c_high = [c[0], c[1], h]
     # Get the convex hull:
     return PLASM_CONVEXHULL([a_low, a_high, b_low, b_high, c_low, c_high])
+# Czech:
+TROJUHELNIK3D = TRIANGLE3D
+# Polish:
+TROJKAT3D = TRIANGLE3D
 
 
 # ===================================================
@@ -2002,16 +2170,14 @@ def TRIANGLE3D(a, b, c):
 # ===================================================
 
 def POLYPOINT (points):
-	return Plasm.mkpol( len(points[0]),CAT(points),[ [i] for i in range(len(points))] )
+    return Plasm.mkpol( len(points[0]),CAT(points),[ [i] for i in range(len(points))] )
 
 # ===================================================
 # POLYLINE 
 # ===================================================
 
 def POLYLINE (points):
-	return Plasm.mkpol( len(points[0]),CAT(points),[[i,i+1] for i in range(len(points)-1)])
-
-
+    return Plasm.mkpol( len(points[0]),CAT(points),[[i,i+1] for i in range(len(points)-1)])
 
 
 # ===================================================
@@ -2525,8 +2691,14 @@ def PLASM_PRISM (HEIGHT):
     return PLASM_PRISM0
 
 # NEW DEFINITION
+# English:
 def PRISM(basis, h):
     return PLASM_PRISM(h)(basis)
+# Czech:
+HRANOL = PRISM
+# Polish:
+PRYZMA = PRISM
+
 
 # ===================================================
 # CROSSPOLYTOPE
@@ -2544,7 +2716,6 @@ def CROSSPOLYTOPE (D):
 	return MKPOL([points,cells,pols])
 
 OCTAHEDRON = CROSSPOLYTOPE(2)
-
 
 
 # ===================================================
@@ -3029,7 +3200,6 @@ def MESH (seq):
 # ===================================================
 # NU_GRID
 # ===================================================
-
 
 def NU_GRID (data):
 	polylines=[POLYLINE(i) for i in data]
@@ -3642,6 +3812,7 @@ if self_test:
 #===================================================================================
 
 # Change it to procedural style:
+# English:
 def COLOR(o, col):
   # Check if it is a list:
   if type(col) is list:
@@ -3660,8 +3831,13 @@ def COLOR(o, col):
       col[2] = col[2] / 255.
   else:
     raise Exception("Color must be a list: either [R, G, B] or [R, G, B, A].")
-
   return PLASM_COLOR(col)(o)
+# Czech:
+BARVA = COLOR
+OBARVI = COLOR
+OBARVIT = COLOR
+# Polish:
+KOLOR = COLOR
 
 # Original PLaSM color command:
 def PLASM_COLOR(C):
