@@ -3863,7 +3863,9 @@ def PLASM_COLOR(C):
 
 	return PLASM_COLOR0
 
+# English:
 GRAY    = [128, 128, 128, 1.0]
+GREY    = [128, 128, 128, 1.0]
 GREEN   = [0, 255, 0, 1.0]
 BLACK   = [0, 0, 0, 1.0]
 BLUE    = [0, 0, 255, 1.0]
@@ -3875,6 +3877,31 @@ PURPLE  = [128, 0, 128, 1.0]
 WHITE   = [255, 255, 255, 1.0]
 RED     = [255, 0, 0, 1.0]
 YELLOW  = [255, 255, 0, 1.0]
+# Czech:
+SEDA = GRAY
+SEDIVA = GRAY
+ZELENA = GREEN
+CERNA = BLACK
+MODRA = BLUE
+HNEDA = BROWN
+ORANZOVA = ORANGE
+FIALOVA = PURPLE
+BILA = WHITE
+CERVENA = RED
+RUDA = RED
+ZLUTA = YELLOW
+# Polish:
+SZARY = GRAY
+SIWY = GRAY
+ZIELONY = GREEN
+CZARNY = BLACK
+NIEBIESKI = BLUE
+BRAZOWY = BROWN
+POMARANCZOVY = ORANGE
+PURPUROWY = PURPLE
+BIALY = WHITE
+CZERWONY = RED
+ZOLTY = YELLOW
 
 # Returns a list of three numbers between 0 and 255: [R, G, B]
 # A and other properties not taken into account yet.
