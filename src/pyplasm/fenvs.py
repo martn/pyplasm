@@ -898,7 +898,7 @@ if self_test:
 # GEOMETRIC FUNCTION 
 # ===================================================
 
-def VIEW (obj,Background=True):
+def PLASM_VIEW (obj,Background=True):
 	if self_test: Background=False
 	Plasm.View(obj,Background) 
 	return obj
@@ -1933,7 +1933,7 @@ def PLASM_SPHERE (radius):
 if self_test:
 	assert Plasm.limits(PLASM_SPHERE(1)([8,8])).fuzzyEqual(Boxf(Vecf(1,-1,-1,-1),Vecf(1,+1,+1,+1)))
 	plasm_config.push(1e-4)
-	VIEW(PLASM_SPHERE(1)([16,16]))
+	PLASM_VIEW(PLASM_SPHERE(1)([16,16]))
 	plasm_config.pop()
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
@@ -1972,7 +1972,7 @@ def PLASM_TORUS (radius):
 if self_test:
    assert Plasm.limits(PLASM_TORUS([1,2])([8,8])).fuzzyEqual(Boxf(Vecf(1,-2,-2,-0.5),Vecf(1,+2,+2,+0.5)))
    plasm_config.push(1e-4)
-   VIEW(PLASM_TORUS([1,2])([20,20]))
+   PLASM_VIEW(PLASM_TORUS([1,2])([20,20]))
    plasm_config.pop()
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
@@ -1997,7 +1997,7 @@ def PLASM_SOLIDTORUS (radius):
     return PLASM_TORUS0
 
 if self_test:
-	VIEW(SKELETON(1)(PLASM_SOLIDTORUS([1.5,2])([18,24,1])))
+	PLASM_VIEW(SKELETON(1)(PLASM_SOLIDTORUS([1.5,2])([18,24,1])))
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
 # English:
@@ -2286,7 +2286,7 @@ def PLASM_BEZIER(U):
 	return PLASM_BEZIER0
 
 if self_test:
-	VIEW(PLASM_MAP(PLASM_BEZIER(S1)([[-0,0],[1,0],[1,1],[2,1],[3,1]]))(PLASM_INTERVALS(1)(32)))
+	PLASM_VIEW(PLASM_MAP(PLASM_BEZIER(S1)([[-0,0],[1,0],[1,1],[2,1],[3,1]]))(PLASM_INTERVALS(1)(32)))
 	C0 = PLASM_BEZIER(S1)([[0,0,0],[10,0,0]])
 	C1 = PLASM_BEZIER(S1)([[0,2,0],[8,3,0],[9,2,0]])
 	C2 = PLASM_BEZIER(S1)([[0,4,1],[7,5,-1],[8,5,1],[12,4,0]])
@@ -2295,7 +2295,7 @@ if self_test:
 	plasm_config.push(1e-4)
 	out = PLASM_MAP(PLASM_BEZIER(S2)([C0,C1,C2,C3]))(  Plasm.power(PLASM_INTERVALS(1)(10),PLASM_INTERVALS(1)(10))  )
 	plasm_config.pop()
-	VIEW(out)
+	PLASM_VIEW(out)
 
 
 def PLASM_BEZIERCURVE (controlpoints):
@@ -2348,7 +2348,7 @@ if self_test:
 	plasm_config.push(1e-4)
 	out=PLASM_MAP(PLASM_COONSPATCH([Su0,Su1,Sv0,Sv1]))(Plasm.power(PLASM_INTERVALS(1)(10),PLASM_INTERVALS(1)(10)))
 	plasm_config.pop()
-	VIEW(out)
+	PLASM_VIEW(out)
 
 # NEW DEFINITION:
 def COONSPATCH(a, b, c, d):
@@ -2375,7 +2375,7 @@ if self_test:
 	beta = lambda point: [      -1,      +1,point[0] ]
 	domain= PLASM_TRANSLATE([1, 2, 3])([-1, -1, 0])(Plasm.power(PLASM_INTERVALS(2)(10),PLASM_INTERVALS(2)(10)))
 	plasm_config.push(1e-4)
-	VIEW(PLASM_MAP(PLASM_RULEDSURFACE([alpha,beta]))(domain))
+	PLASM_VIEW(PLASM_MAP(PLASM_RULEDSURFACE([alpha,beta]))(domain))
 	plasm_config.pop()
 
 # NEW DEFINITION
@@ -2404,7 +2404,7 @@ if self_test:
 	domain=Plasm.power(PLASM_INTERVALS(1)(20),PLASM_INTERVALS(1)(20))
 	out=Plasm.Struct([PLASM_MAP(alpha)(domain),PLASM_MAP(beta )(domain),PLASM_MAP(PROFILEPRODSURFACE([alpha,beta]))(domain)])
 	plasm_config.pop()
-	VIEW(out)
+	PLASM_VIEW(out)
 
 # NEW DEFINITION
 def PROFILE_PROD_SURFACE(a, b):
@@ -2432,7 +2432,7 @@ if self_test:
 	domain=Plasm.power(PLASM_INTERVALS(1)(10),PLASM_INTERVALS(2*PI)(30)) # the first interval should be in 0,1 for bezier
 	out=PLASM_MAP(ROTATIONALSURFACE(profile))(domain)
 	plasm_config.pop()
-	VIEW(out)
+	PLASM_VIEW(out)
 
 # NEW COMMAND:
 def ROTATIONAL_SURFACE(args):
@@ -2456,7 +2456,7 @@ if self_test:
 	Vdomain=PLASM_INTERVALS(1)(6)
 	domain=Plasm.power(Udomain,Vdomain)
 	fn=CYLINDRICALSURFACE([alpha,[0,0,1]])
-	VIEW(PLASM_MAP(fn)(domain))
+	PLASM_VIEW(PLASM_MAP(fn)(domain))
 
 # NEW COMMAND:
 def CYLINDRICAL_SURFACE(a, b):
@@ -2480,7 +2480,7 @@ if self_test:
 	domain=Plasm.power(PLASM_INTERVALS(1)(20),PLASM_INTERVALS(1)(6))
 	beta=PLASM_BEZIER(S1)([ [1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0] ])
 	out=PLASM_MAP(CONICALSURFACE([[0,0,1],beta]))(domain)
-	VIEW(out)
+	PLASM_VIEW(out)
 
 # NEW COMMAND:
 def CONICAL_SURFACE(a, b):
@@ -2514,7 +2514,7 @@ if self_test:
 		PLASM_MAP(PLASM_CUBICHERMITE(S1)([[1,0],[1,1],[ -4, 4],[ 4,0]]))(domain),
 		PLASM_MAP(PLASM_CUBICHERMITE(S1)([[1,0],[1,1],[-10,10],[10,0]]))(domain)
 	])
-	VIEW(out)
+	PLASM_VIEW(out)
 
 	c1=PLASM_CUBICHERMITE(S1)([[1  ,0,0],[0  ,1,0],[0,3,0],[-3,0,0]])
 	c2=PLASM_CUBICHERMITE(S1)([[0.5,0,0],[0,0.5,0],[0,1,0],[-1,0,0]])
@@ -2523,7 +2523,7 @@ if self_test:
 	domain=Plasm.power(PLASM_INTERVALS(1)(14),PLASM_INTERVALS(1)(14))
 	out=PLASM_MAP(sur3)(domain)
 	plasm_config.pop()
-	VIEW(out)
+	PLASM_VIEW(out)
 
 # NEW DEFINITION
 def CUBIC_HERMITE_1(*args):
@@ -2632,8 +2632,8 @@ def PERMUTAHEDRON (d):
 
 
 if self_test:
-	VIEW(Plasm.Struct([PERMUTAHEDRON(2),SKEL_1(PERMUTAHEDRON(2))]))
-	VIEW(Plasm.Struct([PERMUTAHEDRON(3),SKEL_1(PERMUTAHEDRON(3))]))
+	PLASM_VIEW(Plasm.Struct([PERMUTAHEDRON(2),SKEL_1(PERMUTAHEDRON(2))]))
+	PLASM_VIEW(Plasm.Struct([PERMUTAHEDRON(3),SKEL_1(PERMUTAHEDRON(3))]))
 
 
 
@@ -2668,9 +2668,9 @@ def SCHLEGEL3D (D):
 
 
 if self_test:
-	VIEW(SCHLEGEL3D(0.2)(SKEL_1(PLASM_T([1,2,3,4])([-1.0/3.0,-1.0/3.0,-1,+1])(SIMPLEX(4)))))
-	VIEW(SCHLEGEL3D(0.2)(SKEL_1(PLASM_T([1,2,3,4])([-1,-1,-1,1])(CUBOID([2,2,2,2])))))
-	VIEW(SCHLEGEL3D(0.2)(SKEL_1(PLASM_T([1,2,3,4])([-1.0/3.0,-1.0/3.0,-1,+1])(Plasm.power(SIMPLEX(2),SIMPLEX(2))))))
+	PLASM_VIEW(SCHLEGEL3D(0.2)(SKEL_1(PLASM_T([1,2,3,4])([-1.0/3.0,-1.0/3.0,-1,+1])(SIMPLEX(4)))))
+	PLASM_VIEW(SCHLEGEL3D(0.2)(SKEL_1(PLASM_T([1,2,3,4])([-1,-1,-1,1])(CUBOID([2,2,2,2])))))
+	PLASM_VIEW(SCHLEGEL3D(0.2)(SKEL_1(PLASM_T([1,2,3,4])([-1.0/3.0,-1.0/3.0,-1,+1])(Plasm.power(SIMPLEX(2),SIMPLEX(2))))))
 
 # ===================================================
 # FINITECONE
@@ -2858,8 +2858,8 @@ def SPLINE (curve):
 if self_test:
 	domain=PLASM_INTERVALS(1)(20)
 	points = [[-3,6],[-4,2],[-3,-1],[-1,1],[1.5,1.5],[3,4],[5,5],[7,2],[6,-2],[2,-3]]
-	VIEW(SPLINE(CUBICCARDINAL(domain))(points))
-	VIEW(SPLINE(CUBICUBSPLINE(domain))(points))
+	PLASM_VIEW(SPLINE(CUBICCARDINAL(domain))(points))
+	PLASM_VIEW(SPLINE(CUBICUBSPLINE(domain))(points))
 
 # ======================================================
 # CUBICUBSPLINE
@@ -2933,7 +2933,7 @@ if self_test:
 	controlpoints=[[[0,0,0],[2,-4,2]],[[0,3,1],[4,0,0]]]
 	domain=Plasm.power(PLASM_INTERVALS(1)(10),PLASM_INTERVALS(1)(10))
 	mapping=BILINEARSURFACE(controlpoints)
-	VIEW(PLASM_MAP(mapping)(domain))
+	PLASM_VIEW(PLASM_MAP(mapping)(domain))
 
 # ======================================================
 # BIQUADRATICSURFACE
@@ -2951,7 +2951,7 @@ if self_test:
 	domain=Plasm.power(PLASM_INTERVALS(1)(10),PLASM_INTERVALS(1)(10))
 	mapping=BIQUADRATICSURFACE(controlpoints)
 	plasm_config.push(1e-4)
-	VIEW(PLASM_MAP(mapping)(domain))
+	PLASM_VIEW(PLASM_MAP(mapping)(domain))
 	plasm_config.pop()
 
 
@@ -2972,7 +2972,7 @@ if self_test:
 	domain=Plasm.power(PLASM_INTERVALS(1)(10),PLASM_INTERVALS(1)(10))
 	mapping=PLASM_HERMITESURFACE(controlpoints)
 	plasm_config.push(1e-4)
-	VIEW(PLASM_MAP(mapping)(domain))
+	PLASM_VIEW(PLASM_MAP(mapping)(domain))
 	plasm_config.pop()
 
 # ======================================================
@@ -2993,7 +2993,7 @@ if self_test:
 	domain=Plasm.power(PLASM_INTERVALS(1)(10),PLASM_INTERVALS(1)(10))
 	mapping=PLASM_BEZIERSURFACE(controlpoints)
 	plasm_config.push(1e-4)
-	VIEW(PLASM_MAP(mapping)(domain))
+	PLASM_VIEW(PLASM_MAP(mapping)(domain))
 	plasm_config.pop()
 
 # ======================================================
@@ -3048,7 +3048,7 @@ if self_test:
 	Ztensor =  [[[0,0,0],[0,0,0],[0,0,0]],[[1,1,1],[1,1,1],[1,1,1]],[[2,2,1],[2,2,1],[2,2,1]]] 
 	mapping = PLASM_BEZIERMANIFOLD(degrees)([Xtensor,Ytensor,Ztensor])
 	out=PLASM_MAP(mapping)(domain3D)
-	VIEW(out)
+	PLASM_VIEW(out)
 
 # ===================================================
 # LOCATE
@@ -3262,7 +3262,7 @@ def SOLIDIFY(pol):
 
 if self_test:
 
-	VIEW(SOLIDIFY(PLASM_STRUCT(AA(POLYLINE)([
+	PLASM_VIEW(SOLIDIFY(PLASM_STRUCT(AA(POLYLINE)([
 		[[0,0],[4,2],[2.5,3],[4,5],[2,5],[0,3],[-3,3],[0,0]],
 		[[0,3],[0,1],[2,2],[2,4],[0,3]],
 		[[2,2],[1,3],[1,2],[2,2]]]))))
@@ -3339,7 +3339,7 @@ if self_test:
 	mypol2 = PLASM_S(0.9,0.9,0)(mypol1)
 	mypol3 =  PLASM_DIFF([mypol1,mypol2]);
 
-	VIEW(PLASM_STRUCT([
+	PLASM_VIEW(PLASM_STRUCT([
 		  EX([0,10])(mypol3), PLASM_T(1)(12) ,
 		  LEX([0,10])(mypol3), PLASM_T(1)(25) ,
 		   PLASM_S(3)(3)(SEX([0,PI])(16)(mypol3))
@@ -3358,7 +3358,7 @@ def POLAR(pol,precision=1e-6):
 	return MKPOL([faces,cells,pols]) 
 	
 if self_test:
-	VIEW(POLAR(CUBOID([1,1,1])))
+	PLASM_VIEW(POLAR(CUBOID([1,1,1])))
 
 # ===================================================
 # SWEEP 
@@ -3403,7 +3403,7 @@ if self_test:
 	A=Plasm.power(Min2,Q(0.05))
 	B=Plasm.power(Min0,Q(0.70))
 	C=Plasm.power(Min1,Q(0.05))
-	VIEW(PLASM_TOP([PLASM_TOP([A,B]),C]) )
+	PLASM_VIEW(PLASM_TOP([PLASM_TOP([A,B]),C]) )
 
 # ===================================================
 # OFFSET 
@@ -3435,7 +3435,7 @@ if self_test:
 	pols = [[1]]
 	House = MKPOL([verts,cells,pols])
 	out=Plasm.Struct([ OFFSET([0.1,0.2,0.1])(House), PLASM_T(1)(1.2*SIZE(1)(House))(House)])
-	VIEW(out)
+	PLASM_VIEW(out)
 
 
 # //////////////////////////////////////////////////////////////////
@@ -3465,10 +3465,10 @@ if self_test:
 	S0v = COMP([PLASM_BEZIERCURVE([[0,0,0],[0,0,3],[0,10,3],[0,10,0]]) , CONS([S2]) ]) 
 	S1v = COMP([PLASM_BEZIERCURVE([[10,0,0],[10,5,3],[10,10,0]]) ,CONS([S2])   ])
 	surface=PLASM_COONSPATCH([Su0,Su1,S0v,S1v])
-	VIEW(PLASM_MAP(  surface ) (Plasm.power(PLASM_INTERVALS(1)(10),PLASM_INTERVALS(1)(10))))
+	PLASM_VIEW(PLASM_MAP(  surface ) (Plasm.power(PLASM_INTERVALS(1)(10),PLASM_INTERVALS(1)(10))))
 	solidMapping = THINSOLID(surface)
 	Domain3D = Plasm.power(Plasm.power(PLASM_INTERVALS(1)(5),PLASM_INTERVALS(1)(5)),PLASM_INTERVALS(0.5)(5))
-	VIEW(PLASM_MAP(solidMapping)(Domain3D))
+	PLASM_VIEW(PLASM_MAP(solidMapping)(Domain3D))
 
 	
 # //////////////////////////////////////////////////////////////////
@@ -3541,7 +3541,7 @@ def ELLIPSE (args):
 
 
 if self_test:
-	VIEW(ELLIPSE([1,2])(8))
+	PLASM_VIEW(ELLIPSE([1,2])(8))
 
 
 
@@ -3624,7 +3624,7 @@ def PLASM_BEZIERSTRIPE (args):
 
 if self_test:
 	vertices=[[0,0],[1.5,0],[-1,2],[2,2],[2,0]]
-	VIEW(Plasm.Struct([ POLYLINE(vertices) , Plasm.power(PLASM_BEZIERSTRIPE([vertices,0.25,22]),QUOTE([0.9]))  ]))
+	PLASM_VIEW(Plasm.Struct([ POLYLINE(vertices) , Plasm.power(PLASM_BEZIERSTRIPE([vertices,0.25,22]),QUOTE([0.9]))  ]))
 
 
 
@@ -3730,7 +3730,7 @@ def DISPLAYNUBSPLINE (args,marker_size=0.1):
 
 if self_test:
 	ControlPoints=[[0,0],[-1,2],[1,4],[2,3],[1,1],[1,2],[2.5,1], [2.5,3], [4,4],[5,0]]
-	VIEW(DISPLAYNUBSPLINE([3,[0,0,0,0, 1,2,3,4,5, 6    ,7,7,7,7], ControlPoints]))
+	PLASM_VIEW(DISPLAYNUBSPLINE([3,[0,0,0,0, 1,2,3,4,5, 6    ,7,7,7,7], ControlPoints]))
 
 
 # =================================================
@@ -3802,7 +3802,7 @@ if self_test:
 	knots = [0,0,0,1,1,2,2,3,3,4,4,4]
 	_p=math.sqrt(2)/2.0
 	controlpoints = [[-1,0,1], [-_p,_p,_p], [0,1,1], [_p,_p,_p],[1,0,1], [_p,-_p,_p], [0,-1,1], [-_p,-_p,_p], [-1,0,1]]
-	VIEW(DISPLAYNURBSPLINE([2, knots, controlpoints]))
+	PLASM_VIEW(DISPLAYNURBSPLINE([2, knots, controlpoints]))
 
 
 
@@ -4041,7 +4041,7 @@ def TEXTURE(params):
 	return lambda pol: TEXTURE0(params,pol)
 
 if self_test:
-	VIEW(TEXTURE(":images/gioconda.png")(CUBOID([1,1])))
+	PLASM_VIEW(TEXTURE(":images/gioconda.png")(CUBOID([1,1])))
 
 
 
