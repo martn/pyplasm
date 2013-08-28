@@ -1,6 +1,10 @@
+# This is needed to access NCLab's object "lab":
+from nclab.engines.python import NCLab
+lab = NCLab.instance()
 
+# This is needed to measure time:
 import time
-start=time.clock()
+start = time.clock()
 print "Evaluating fenvs.py.."
 
 #default values (see PlasmConfig)
@@ -898,10 +902,26 @@ if self_test:
 # GEOMETRIC FUNCTION 
 # ===================================================
 
+# THIS was originally VIEW() but we need to 
+# redefine it below.
 def PLASM_VIEW (obj,Background=True):
 	if self_test: Background=False
 	Plasm.View(obj,Background) 
 	return obj
+
+# Redefined function VIEW():
+def VIEW(*args):
+        NCKab.visualize(NCLab.converter(args))
+# Czech:
+def UKAZ(*args):
+        NCKab.visualize(NCLab.converter(args))
+def ZOBRAZ(*args):
+        NCKab.visualize(NCLab.converter(args))
+# Polish:
+def ZOBACZ(*args):
+        NCKab.visualize(NCLab.converter(args))
+def POKAZ(*args):
+        NCKab.visualize(NCLab.converter(args))
 
 
 # ===================================================
