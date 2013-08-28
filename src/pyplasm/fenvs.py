@@ -911,17 +911,17 @@ def PLASM_VIEW (obj,Background=True):
 
 # Redefined function VIEW():
 def VIEW(*args):
-        NCKab.visualize(NCLab.converter(args))
+        NCLab.visualize(NCLab.converter(args))
 # Czech:
 def UKAZ(*args):
-        NCKab.visualize(NCLab.converter(args))
+        NCLab.visualize(NCLab.converter(args))
 def ZOBRAZ(*args):
-        NCKab.visualize(NCLab.converter(args))
+        NCLab.visualize(NCLab.converter(args))
 # Polish:
 def ZOBACZ(*args):
-        NCKab.visualize(NCLab.converter(args))
+        NCLab.visualize(NCLab.converter(args))
 def POKAZ(*args):
-        NCKab.visualize(NCLab.converter(args))
+        NCLab.visualize(NCLab.converter(args))
 
 
 # ===================================================
