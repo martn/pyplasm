@@ -1,6 +1,6 @@
 # This is needed to access NCLab's object "nclabinst":
-#from nclab.engines.python import NCLab
-#nclabinst = NCLab.instance()
+from nclab.engines.python import NCLab
+nclabinst = NCLab.instance()
 
 # This is needed to measure time:
 import time
