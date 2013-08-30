@@ -1931,6 +1931,7 @@ if self_test:
 # English:
 def CYLINDER(r, h, division = 64):
     return PLASM_CYLINDER([r, h])(division)
+CYL = CYLINDER
 #Czech:
 VALEC = CYLINDER
 # Polish:
