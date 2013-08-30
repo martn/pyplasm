@@ -1,6 +1,6 @@
 # This is needed to access NCLab's object "nclabinst":
-#from nclab.engines.python import NCLab
-#nclabinst = NCLab.instance()
+from nclab.engines.python import NCLab
+nclabinst = NCLab.instance()
 
 # This is needed to measure time:
 import time
@@ -910,18 +910,19 @@ def PLASM_VIEW (obj,Background=True):
 	return obj
 
 # Redefined function VIEW():
-#def VIEW(*args):
-#        nclabinst.visualize(nclabinst.converter(args))
+def VIEW(*args):
+        nclabinst.visualize(nclabinst.converter(args))
+V = VIEW
 # Czech:
-#def UKAZ(*args):
-#        nclabinst.visualize(nclabinst.converter(args))
-#def ZOBRAZ(*args):
-#        nclabinst.visualize(nclabinst.converter(args))
+def UKAZ(*args):
+        nclabinst.visualize(nclabinst.converter(args))
+def ZOBRAZ(*args):
+        nclabinst.visualize(nclabinst.converter(args))
 # Polish:
-#def ZOBACZ(*args):
-#        nclabinst.visualize(nclabinst.converter(args))
-#def POKAZ(*args):
-#        nclabinst.visualize(nclabinst.converter(args))
+def ZOBACZ(*args):
+        nclabinst.visualize(nclabinst.converter(args))
+def POKAZ(*args):
+        nclabinst.visualize(nclabinst.converter(args))
 
 
 # ===================================================
