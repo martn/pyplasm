@@ -1,4 +1,4 @@
-# This is needed to access NCLab's object "lab":
+# This is needed to access NCLab's object "nclabinst":
 from nclab.engines.python import NCLab
 nclabinst = NCLab.instance()
 
@@ -1380,6 +1380,7 @@ PLASM_DIFF = PLASM_DIFFERENCE
 def DIFFERENCE(*args):
     return PLASM_DIFFERENCE(list(args))
 DIFF = DIFFERENCE
+D = DIFF
 # Czech:
 ROZDIL = DIFF
 ODECTI = DIFF
@@ -3420,10 +3421,10 @@ if self_test:
 	Min0 = PLASM_STRUCT([PLASM_T([1,2])(v)(PLASM_S([1,2])([0.1,0.1])(B)) for v in vertices ])
 	Min1 = MINKOWSKI ([[0.1*-1.0/2.0,0.1*-1*math.sqrt(3.0/2.0)],[0.1*-1.0/2.0,0.1*math.sqrt(3.0/2.0)],[0.1*1,0.1*0]])(pol1D)
 	Min2 = MINKOWSKI ([[0.1*-1.0/2.0,0.1*-1*math.sqrt(3.0/2.0)],[0.1*-1.0/2.0,0.1*math.sqrt(3.0/2.0)],[0.1*1,0.1*0]])(pol2D)
-	A=Plasm.power(Min2,Q(0.05))
-	B=Plasm.power(Min0,Q(0.70))
-	C=Plasm.power(Min1,Q(0.05))
-	PLASM_VIEW(PLASM_TOP([PLASM_TOP([A,B]),C]) )
+	Atest=Plasm.power(Min2,Q(0.05))
+	Btest=Plasm.power(Min0,Q(0.70))
+	Ctest=Plasm.power(Min1,Q(0.05))
+	PLASM_VIEW(PLASM_TOP([PLASM_TOP([Atest,Btest]),Ctest]) )
 
 # ===================================================
 # OFFSET 
@@ -3550,21 +3551,17 @@ def RATIONALPLASM_BEZIER (controlpoints_fn):
 
 
 def ELLIPSE (args):
-    A , B = args
+    Ael, Bel = args
     def ELLIPSE0 (N):
-        C = 0.5*math.sqrt(2)
-        mapping = RATIONALPLASM_BEZIER([[A, 0, 1], [A*C, B*C, C], [0, B, 1]])
+        Cel = 0.5*math.sqrt(2)
+        mapping = RATIONALPLASM_BEZIER([[Ael, 0, 1], [Ael*Cel, Bel*Cel, Cel], [0, Bel, 1]])
         quarter = PLASM_MAP(mapping)((PLASM_INTERVALS(1.0)(N)))
         half = PLASM_STRUCT([quarter, PLASM_S(2)(-1)(quarter)])
         return PLASM_STRUCT([half, PLASM_S(1)(-1)(half)])
     return ELLIPSE0
 
-
 if self_test:
 	PLASM_VIEW(ELLIPSE([1,2])(8))
-
-
-
 
 # //////////////////////////////////////////////////////////////////
 # NORM2 (==normal of a curve)
@@ -3852,6 +3849,7 @@ def COLOR(o, col):
   else:
     raise Exception("Color must be a list: either [R, G, B] or [R, G, B, A].")
   return PLASM_COLOR(col)(o)
+C = COLOR
 # Czech:
 BARVA = COLOR
 OBARVI = COLOR
@@ -3860,26 +3858,26 @@ OBARVIT = COLOR
 KOLOR = COLOR
 
 # Original PLaSM color command:
-def PLASM_COLOR(C):
+def PLASM_COLOR(Cpl):
 
-	def formatColor(C):
-		assert isinstance(C,Color4f) 
-		return "%s %s %s %s" % (C.r,C.g,C.b,C.a)
+	def formatColor(Cpl):
+		assert isinstance(Cpl,Color4f) 
+		return "%s %s %s %s" % (Cpl.r,Cpl.g,Cpl.b,Cpl.a)
 
 	# convert list to Color
-	if isinstance(C,list) and len(C) in (3,4):
+	if isinstance(Cpl,list) and len(Cpl) in (3,4):
                 # Normalizing RGB between 0 and 1 if necessary:
-                if C[0] > 1 or C[1] > 1 or C[2] > 1:
-                        C[0] = C[0] / 255.
-                        C[1] = C[1] / 255.
-                        C[2] = C[2] / 255.
-		C=Color4f(C[0],C[1],C[2],C[3] if len(C)>=4 else 1.0)
+                if Cpl[0] > 1 or Cpl[1] > 1 or Cpl[2] > 1:
+                        Cpl[0] = Cpl[0] / 255.
+                        Cpl[1] = Cpl[1] / 255.
+                        Cpl[2] = Cpl[2] / 255.
+		Cpl=Color4f(Cpl[0],Cpl[1],Cpl[2],Cpl[3] if len(Cpl)>=4 else 1.0)
 
-	if not isinstance(C,Color4f):
-		raise Exception("Cannot transform " + repr(C) + " to Color4f")
+	if not isinstance(Cpl,Color4f):
+		raise Exception("Cannot transform " + repr(Cpl) + " to Color4f")
 
 	def PLASM_COLOR0(pol):
-		return Plasm.addProperty(pol, "RGBcolor", formatColor(C))
+		return Plasm.addProperty(pol, "RGBcolor", formatColor(Cpl))
 
 	return PLASM_COLOR0
 
