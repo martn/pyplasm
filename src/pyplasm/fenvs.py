@@ -2078,6 +2078,7 @@ def PLASM_TRUNCONE (args):
 def TRUNCONE(r1, r2, h, divisions = 64):
     # Changing to a solid:
     return PLASM_JOIN(PLASM_TRUNCONE([r1, r2, h])(divisions))
+TCONE = TRUNCONE
 # Czech:
 KOMOLYKUZEL = TRUNCONE
 # Polish:
