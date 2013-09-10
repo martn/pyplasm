@@ -1,6 +1,6 @@
 # This is needed to access NCLab's object "nclabinst":
 #from nclab.engines.python import NCLab
-#nclabinst = NCLab.instance()
+nclabinst = NCLab.instance()
 
 # This is needed to measure time:
 import time
@@ -3891,6 +3891,7 @@ BLACK   = [0, 0, 0, 1.0]
 BLUE    = [0, 0, 255, 1.0]
 BROWN   = [139, 69, 19, 1.0]
 CYAN    = [0, 255, 255, 1.0]
+PINK = [255, 0, 255, 1.0]
 MAGENTA = [255, 0, 255, 1.0]
 ORANGE  = [255, 153, 0, 1.0]
 PURPLE  = [128, 0, 128, 1.0]
@@ -3911,6 +3912,7 @@ CERNA = BLACK
 MODRA = BLUE
 HNEDA = BROWN
 ORANZOVA = ORANGE
+RUZOVA = PINK
 FIALOVA = PURPLE
 BILA = WHITE
 CERVENA = RED
