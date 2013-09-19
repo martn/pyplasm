@@ -1143,15 +1143,14 @@ if self_test:
 # English:
 def TRANSLATE(obj, t1, t2, t3):
     return PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj)
+T = TRANSLATE
+MOVE = TRANSLATE
 # Czech:
 POSUN = TRANSLATE
 POSUNUTI = TRANSLATE
 # Polish:
 PRZENIES = TRANSLATE
-
-T = TRANSLATE
-MOVE = TRANSLATE
-
+PRZESUN = TRANSLATE
 
 # ===================================================
 # SCALE
@@ -1178,14 +1177,13 @@ if self_test:
 # English:
 def SCALE(obj, a, b, c):
     return PLASM_SCALE([1, 2, 3])([a, b, c])(obj)
+S = SCALE
 # Czech:
 SKALUJ = SCALE
 SKALOVANI = SCALE
 # Polish:
+SKALUJ = SCALE
 PRZESKALUJ = SCALE
-
-S = SCALE
-
 
 # ===================================================
 # ROTATE
@@ -1369,6 +1367,7 @@ I = INTERSECTION
 PRUNIK = INTERSECTION
 # Polish:
 PRZECIECIE = INTERSECTION
+PRZETNIJ = INTERSECTION
 
 #also -, or DIFF, can be used to indicates DIFFERENCE
 def PLASM_DIFFERENCE (objs_list):
@@ -1387,6 +1386,7 @@ ODECTI = DIFF
 ODECIST = DIFF
 # Polish:
 ROZNICA = DIFF
+ODEJMIJ = DIFF
 
 # xor
 def PLASM_XOR(objs_list):
