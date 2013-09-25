@@ -2040,6 +2040,7 @@ VALEC = CYLINDER
 # It is also "CYLINDER"
 # German:
 ZYLINDER = CYLINDER
+ZYL = CYLINDER
 
 # =============================================
 # SPHERE
