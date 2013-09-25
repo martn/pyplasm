@@ -501,7 +501,7 @@ if self_test:
 # n-ary addition
 # ===================================================
 
-def SUM(args):
+def PLASM_SUM(args):
 
 
 	if isinstance(args,list) and ISPOL(args[0]): 
@@ -523,11 +523,11 @@ def SUM(args):
 	raise Exception("\'+\' function has been applied to %s!" % repr(args))        
 
 
-ADD = SUM
+PLASM_ADD = PLASM_SUM
 
 if self_test: 
 	assert(ADD([1,2,3])==6 and ADD([[1,2,3],[4,5,6]])==[5,7,9])
-	assert SUM([ [[1,2],[3,4]],  [[10,20],[30,40]],  [[100,200],[300,400]] ])==[[111,222],[333,444]]
+	assert PLASM_SUM([ [[1,2],[3,4]],  [[10,20],[30,40]],  [[100,200],[300,400]] ])==[[111,222],[333,444]]
 	assert(LIFT(ADD)([math.cos,math.sin])(PI/2)==1.0)
 	assert(RAISE(ADD)([1,2])==3)
 	assert(RAISE(ADD)([math.cos,math.sin])(PI/2)==1.0)
@@ -913,16 +913,16 @@ def PLASM_VIEW (obj,Background=True):
 def VIEW(*args):
         nclabinst.visualize(nclabinst.converter(args))
 V = VIEW
+SHOW = VIEW
 # Czech:
-def UKAZ(*args):
-        nclabinst.visualize(nclabinst.converter(args))
-def ZOBRAZ(*args):
-        nclabinst.visualize(nclabinst.converter(args))
+UKAZ = SHOW
+ZOBRAZ = SHOW
 # Polish:
-def ZOBACZ(*args):
-        nclabinst.visualize(nclabinst.converter(args))
-def POKAZ(*args):
-        nclabinst.visualize(nclabinst.converter(args))
+ZOBACZ = SHOW
+POKAZ = SHOW
+# German:
+ZEIGE = SHOW
+ANSICHT = SHOW
 
 # ===================================================
 # CUBOID
@@ -944,6 +944,9 @@ KRYCHLE = CUBE
 KOSTKA  = CUBE
 # Polish:
 SZESCIAN = CUBE
+# German:
+WUERFEL = CUBE
+WURFEL = CUBE
 
 # English:
 def SQUARE (side):
@@ -952,6 +955,8 @@ def SQUARE (side):
 CTVEREC = SQUARE
 # Polish:
 KWADRAT = SQUARE
+# German:
+QUADRAT = SQUARE
 
 # English:
 def SQUARE3D (a):
@@ -963,15 +968,20 @@ def SQUARE3D (a):
 CTVEREC3D = SQUARE3D
 # Polish:
 KWADRAT3D = SQUARE3D
+# German:
+QUADRAT3D = SQUARE3D
 
 # English:
 def BRICK (a, b, c):
     return CUBOID([a, b, c])
+BOX = BRICK
 # Czech::
 KVADR = BRICK
 CIHLA = BRICK
 # Polish:
 CEGLA = BRICK
+# German:
+# also BOX
 
 # English:
 def RECTANGLE (a, b):
@@ -980,6 +990,8 @@ def RECTANGLE (a, b):
 OBDELNIK = RECTANGLE
 # Polish:
 PROSTOKAT = RECTANGLE
+# German:
+RECHTECK = RECTANGLE
 
 def RECTANGLE3D (a, b):
     # height is kept the same for add these thin objects,
@@ -990,8 +1002,17 @@ def RECTANGLE3D (a, b):
 OBDELNIK3D = RECTANGLE3D
 # Polish:
 PROSTOKAT3D = RECTANGLE3D
+# German:
+RECHTECK3D = RECTANGLE3D
 
-HEXAHEDRON=Plasm.cube(3,-1.0/math.sqrt(3.0),+1.0/math.sqrt(3.0))
+# English:
+HEXAHEDRON = Plasm.cube(3,-1.0/math.sqrt(3.0),+1.0/math.sqrt(3.0))
+# Czech:
+HEXAEDR = HEXAHEDRON
+# Polish:
+# SZESCIAN already defined
+# German:
+HEXAEDER = HEXAHEDRON
 
 
 # ===================================================
@@ -1059,15 +1080,18 @@ def PLASM_CONVEXHULL (points):
 # English:
 def CONVEXHULL(*args):
     return PLASM_CONVEXHULL(list(args))
-# Czech:
-KONVEXNIOBAL = CONVEXHULL
-OBAL = CONVEXHULL
-# Polish:
-OTOCZKAWYPUKLA = CONVEXHULL
-OTOCZKA = CONVEXHULL
-
 CHULL = CONVEXHULL
-CH = CONVEXHULL
+CH = CHULL
+# Czech:
+KONVEXNIOBAL = CHULL
+OBAL = CHULL
+# Polish:
+OTOCZKAWYPUKLA = CHULL
+OTOCZKA = CHULL
+# German:
+HUELLE = CHULL
+HULLE = CHULL
+
 
 # ===================================================
 # UKPOL
@@ -1145,12 +1169,20 @@ def TRANSLATE(obj, t1, t2, t3):
     return PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj)
 T = TRANSLATE
 MOVE = TRANSLATE
+SHIFT = TRANSLATE
 # Czech:
 POSUN = TRANSLATE
 POSUNUTI = TRANSLATE
 # Polish:
 PRZENIES = TRANSLATE
 PRZESUN = TRANSLATE
+# German:
+BEWEGE = TRANSLATE
+BEWEGEN = TRANSLATE
+BEWEGUNG = TRANSLATE
+VERSCHIEBUNG = TRANSLATE
+VERSCHIEBEN = TRANSLATE
+VERSCHIEBE = TRANSLATE
 
 # ===================================================
 # SCALE
@@ -1184,6 +1216,9 @@ SKALOVANI = SCALE
 # Polish:
 SKALUJ = SCALE
 PRZESKALUJ = SCALE
+# German:
+SKALIERE = SCALE
+SKALIEREN = SCALE
 
 # ===================================================
 # ROTATE
@@ -1211,6 +1246,7 @@ def ROTATERAD(obj, axis, angle_rad):
         dim = max(plane_indexes)
 	return Plasm.rotate(pol, dim, plane_indexes[0] , plane_indexes[1], angle_rad)
     return PLASM_ROTATE2(obj)    
+RRAD = ROTATERAD
 # Czech:
 OTOCRAD = ROTATERAD
 OTOCENIRAD = ROTATERAD
@@ -1218,13 +1254,21 @@ ROTACERAD = ROTATERAD
 ROTUJRAD = ROTATERAD
 # Polish:
 OBROCRAD = ROTATERAD
-
-RRAD = ROTATERAD
+# German:
+DREHERAD = ROTATERAD
+DREHENRAD = ROTATERAD
+DREHUNGRAD = ROTATERAD
+ROTIERERAD = ROTATERAD
+ROTIRENRAD = ROTATERAD
+ROTIRUNGRAD = ROTATERAD
 
 # English:
 def ROTATEDEG(obj, axis, angle_deg):
     angle_rad = angle_deg * PI / 180.0
     return ROTATERAD(obj, axis, angle_rad)
+ROTATE = ROTATEDEG
+RDEG = ROTATEDEG
+R = ROTATEDEG
 # Czech:
 OTOC = ROTATEDEG
 OTOCENI = ROTATEDEG
@@ -1232,10 +1276,14 @@ ROTACE = ROTATEDEG
 ROTUJ = ROTATEDEG
 # Polish:
 OBROC = ROTATEDEG
+# German:
+DREHE = ROTATEDEG
+DREHEN = ROTATEDEG
+DREHUNG = ROTATEDEG
+ROTIERE = ROTATEDEG
+ROTIREN = ROTATEDEG
+ROTIERUNG = ROTATEDEG
 
-ROTATE = ROTATEDEG
-RDEG = ROTATEDEG
-R = ROTATEDEG
 
 # ===================================================
 #; Applica uno shearing con vettore shearing-vector-list sulla variabile
@@ -1274,7 +1322,7 @@ def EMBED (up_dim):
 
 # NEW DEFINITION:
 def FOOTPRINT(obj):
-    return EMBED(1)(BOX([1,2])(obj))
+    return EMBED(1)(PLASM_BOX([1,2])(obj))
 
 # ===================================================
 # STRUCT
@@ -1331,12 +1379,16 @@ SPOJIT = STRUCT
 STRUKTURA = STRUCT
 # Polish:
 # It is also "STRUKTURA"
+# German:
+STRUKTUR = STRUCT
+VERBINDE = STRUCT
+
 
 # ===================================================
 # BOOLEAN OP
 # ===================================================
 
-#also +, or SUM, can be used to indicates UNION
+#also +, or SUM, can be used to indicate UNION
 def PLASM_UNION(objs_list):
         return Plasm.boolop(BOOL_CODE_OR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
 
@@ -1345,13 +1397,20 @@ def PLASM_UNION(objs_list):
 def UNION(*args):
     return PLASM_UNION(list(args))
 U = UNION
+SUM = UNION
 # Czech:
 SJEDNOCENI = UNION
 SOUCET = UNION
 SECTI = UNION
 SECIST = UNION
+SUMA = UNION
 # Polish:
 UNIA = UNION
+SUMA = UNION
+# German:
+VEREINIGE = UNION
+VEREINIGUNG = UNION
+SUMME = UNION
 
 #also ^ can be used to indicates INTERSECTION
 def PLASM_INTERSECTION (objs_list):
@@ -1368,6 +1427,9 @@ PRUNIK = INTERSECTION
 # Polish:
 PRZECIECIE = INTERSECTION
 PRZETNIJ = INTERSECTION
+# German:
+DURCHSCHNITT = INTERSECTION
+SCHNITT = INTERSECTION
 
 #also -, or DIFF, can be used to indicates DIFFERENCE
 def PLASM_DIFFERENCE (objs_list):
@@ -1384,9 +1446,14 @@ D = DIFF
 ROZDIL = DIFF
 ODECTI = DIFF
 ODECIST = DIFF
+MINUS = DIFF
 # Polish:
 ROZNICA = DIFF
 ODEJMIJ = DIFF
+# German:
+DIFFERENZ = DIFF
+ABZIEHE = DIFF
+SUBTRAHIERE = DIFF
 
 # xor
 def PLASM_XOR(objs_list):
@@ -1445,8 +1512,12 @@ def POWER(*args):
     return PLASM_POWER(list(args))
 # Czech:
 MOCNINA = POWER
+UMOCNIT = POWER
+UMOCNI = POWER
 # Polish:
 MOC = POWER
+# German:
+LEISTUNG = POWER
 
 
 # ===================================================
@@ -1484,12 +1555,14 @@ def GRID (sequence):
         if value>=0: hulls += [[len(points)-2,len(points)-1]]
         cursor = cursor + abs(value)
     return  Plasm.mkpol(1, CAT(points), hulls,plasm_config.tolerance())   
+QUOTE = GRID
 # Czech:
 SIT = GRID
 # Polish:
 SIATKA = GRID
+# German:
+GITTER = GRID
 
-QUOTE = GRID
 
 if self_test: 
 	assert(Plasm.limits(QUOTE([1,-1,1]))==Boxf(Vecf([1,0]),Vecf([1,3])))
@@ -1513,6 +1586,17 @@ if self_test:
 # NEW DEFINITION:
 def INTERVALS(a, n):
     return PLASM_INTERVALS(a)(n)
+# Czech:
+DELENI = INTERVALS
+INTERVALY = INTERVALS
+# Polish:
+DZIELENIE = INTERVALS
+INTERWALY = INTERVALS
+# German:
+INTERVALLE = INTERVALS
+AUFTEILEN = INTERVALS
+AUFSPALTEN = INTERVALS
+
 
 # NEW COMMAND FOR REFERENCE DOMAIN:
 def REF_DOMAIN(a, b, n, m):
@@ -1538,6 +1622,18 @@ if self_test:
 # NEW_DEFINITION:
 def SIZE(pol, List):
     return PLASM_SIZE(List)(pol)
+# Czech:
+VELIKOST = SIZE
+ROZMER = SIZE
+DELKA = SIZE
+# Polish:
+ROZMIAR = SIZE
+# German:
+GROESSE = SIZE
+GROSSE = SIZE
+LAENGE = SIZE
+LANGE = SIZE
+
 
 # ===================================================
 # MIN/MAX/MID
@@ -1648,22 +1744,22 @@ def ALIGN(obj1, obj2, align1 = None, align2 = None, align3 = None):
     return PLASM_ALIGN(L)([obj1, obj2])
 
 # ===================================================
-# BOX of a pol complex
+# PLASM_BOX of a pol complex
 # ===================================================
 
-def BOX (List):
-    def BOX0 (List,pol):
+def PLASM_BOX (List):
+    def PLASM_BOX0 (List,pol):
         if not isinstance(List,list): List=[List]
         dim = len(List) 
         box=Plasm.limits(pol)
         vt =Vecf([0] + [box.p1     [i] for i in List])
         vs=Vecf([0] + [box.size()[i] for i in List]) 
         return Plasm.translate(Plasm.scale(Plasm.cube(dim),vs),vt)
-    return lambda pol: BOX0(List,pol)
+    return lambda pol: PLASM_BOX0(List,pol)
 
 if self_test: 
-   assert(Plasm.limits(BOX([1,3])(Plasm.translate(Plasm.cube(3),Vecf(0,1,2,3))))==Boxf(Vecf(1,1,3),Vecf(1,2,4))) 
-   assert(Plasm.limits(BOX(3)(Plasm.translate(Plasm.cube(3),Vecf(0,1,2,3))))==Boxf(Vecf([1,3]),Vecf([1,4])))
+   assert(Plasm.limits(PLASM_BOX([1,3])(Plasm.translate(Plasm.cube(3),Vecf(0,1,2,3))))==Boxf(Vecf(1,1,3),Vecf(1,2,4))) 
+   assert(Plasm.limits(PLASM_BOX(3)(Plasm.translate(Plasm.cube(3),Vecf(0,1,2,3))))==Boxf(Vecf([1,3]),Vecf([1,4])))
 
 # ===================================================
 # VECTORS 
@@ -1686,7 +1782,7 @@ if self_test:
 	assert VECTNORM([1,0,0])==1 
 
 
-INNERPROD = COMP([COMP([RAISE(SUM), AA(RAISE(PROD))]), TRANS])
+INNERPROD = COMP([COMP([RAISE(PLASM_SUM), AA(RAISE(PROD))]), TRANS])
 
 if self_test:
   assert INNERPROD ([[1,2,3],[4,5,6]])==32
@@ -1867,6 +1963,8 @@ TUBA = TUBE
 ROURA = TUBE
 # Polish:
 RURA = TUBE
+# German:
+ROHR = TUBE
 
 
 # =============================================
@@ -1895,6 +1993,8 @@ def CIRCLE(r, division = [64, 32]):
 KRUH = CIRCLE
 # Polish:
 KOLO = CIRCLE
+# German:
+KREIS = CIRCLE
 
 def CIRCLE3D(r, division = [64, 32]):
     # height is kept the same for add these thin objects,
@@ -1908,6 +2008,8 @@ def CIRCLE3D(r, division = [64, 32]):
 KRUH3D = CIRCLE3D
 # Polish:
 KOLO3D = CIRCLE3D
+# German:
+KREIS3D = CIRCLE3D
 
 
 # =============================================
@@ -1932,10 +2034,12 @@ if self_test:
 def CYLINDER(r, h, division = 64):
     return PLASM_CYLINDER([r, h])(division)
 CYL = CYLINDER
-#Czech:
+# Czech:
 VALEC = CYLINDER
 # Polish:
 # It is also "CYLINDER"
+# German:
+ZYLINDER = CYLINDER
 
 # =============================================
 # SPHERE
@@ -1971,6 +2075,8 @@ def SPHERE(radius, divisions = [24, 48]):
 KOULE = SPHERE
 # Polish:
 KULA = SPHERE
+# German:
+KUGEL = SPHERE
 
 
 # =============================================
@@ -2030,6 +2136,8 @@ DONUT = TORUS
 # It is also "TORUS"
 # Polish:
 # It is also "TORUS"
+# German:
+# It is also "TORUS"
 
 # =============================================
 # CONE
@@ -2054,6 +2162,8 @@ def CONE(r, h, division = 64):
 KUZEL = CONE
 # Polish:
 STOZEK = CONE
+# German:
+KEGEL = CONE
 
 
 # =============================================
@@ -2083,6 +2193,8 @@ TCONE = TRUNCONE
 KOMOLYKUZEL = TRUNCONE
 # Polish:
 SCIETYSTOZEK = TRUNCONE
+# German:
+KEGELSTUMPF = TRUNCONE
 
 
 # =============================================
@@ -2111,6 +2223,8 @@ DODEKAEDR = DODECAHEDRON
 DVANACTISTEN = DODECAHEDRON
 # Polish:
 DWUNASTOSCIAN = DODECAHEDRON
+# German:
+DODEKAEDER = DODECAHEDRON
 
 # =============================================
 # ICOSAHEDRON
@@ -2130,7 +2244,9 @@ ICOSAHEDRON = build_ICOSAHEDRON()
 IKOSAEDR = ICOSAHEDRON
 DVACETISTEN = ICOSAHEDRON
 # Polish:
-DWUDZIESTOSCIAN = DODECAHEDRON
+DWUDZIESTOSCIAN = ICOSAHEDRON
+# German:
+IKOSAEDER = ICOSAHEDRON
 
 # =============================================
 # TETRAHEDRON
@@ -2149,6 +2265,8 @@ TETRAEDR = TETRAHEDRON
 CTYRSTEN = TETRAHEDRON
 # Polish:
 CZWOROBOK = TETRAHEDRON
+# German:
+TETRAEDER = TETRAHEDRON
 
 # =============================================
 # TRIANGLE
@@ -2161,6 +2279,8 @@ def TRIANGLE(a, b, c):
 TROJUHELNIK = TRIANGLE
 # Polish:
 TROJKAT = TRIANGLE
+# German:
+DREIECK = TRIANGLE
 
 def TRIANGLE3D(a, b, c):
     # height is kept the same for add these thin objects,
@@ -2186,6 +2306,8 @@ def TRIANGLE3D(a, b, c):
 TROJUHELNIK3D = TRIANGLE3D
 # Polish:
 TROJKAT3D = TRIANGLE3D
+# German:
+DREIECK3D = TRIANGLE3D
 
 
 # ===================================================
@@ -2668,7 +2790,7 @@ def STAR (N):
     def CIRCLEPOINTS (STARTANGLE):
         def CIRCLEPOINTS1 (R):
             def CIRCLEPOINTS0 (N):
-                return AA((COMP([CONS([RAISE(PROD)([K(R),COS]), RAISE(PROD)([K(R),SIN])]), (RAISE(SUM)([ID,K(STARTANGLE)]))])))(((COMP([COMP([AA(RAISE(PROD)), TRANS]), CONS([K((FROMTO([1,N]))), DIESIS(N)])]))((2*PI/N))))
+                return AA((COMP([CONS([RAISE(PROD)([K(R),COS]), RAISE(PROD)([K(R),SIN])]), (RAISE(PLASM_SUM)([ID,K(STARTANGLE)]))])))(((COMP([COMP([AA(RAISE(PROD)), TRANS]), CONS([K((FROMTO([1,N]))), DIESIS(N)])]))((2*PI/N))))
             return CIRCLEPOINTS0
         return CIRCLEPOINTS1
     return  (COMP([COMP([TRIANGLEFAN, CAT]), TRANS]))([CIRCLEPOINTS(0)(1)(N), CIRCLEPOINTS((PI/N))(2.5)(N)])
@@ -2721,6 +2843,8 @@ def PRISM(basis, h):
 HRANOL = PRISM
 # Polish:
 PRYZMA = PRISM
+# German:
+PRISMA = PRISM
 
 
 # ===================================================
@@ -2802,7 +2926,7 @@ SCALARMATPROD = COMP([COMP([(COMP([AA, AA]))(RAISE(PROD)), AA(DISTL)]), DISTL])
 MATDOTPROD = COMP([INNERPROD, AA(CAT)])
 
 def ORTHO (matrix):
-	return SCALARMATPROD([0.5,SUM([matrix,TRANS(matrix)])])
+	return SCALARMATPROD([0.5,PLASM_SUM([matrix,TRANS(matrix)])])
 
 def SKEW (matrix):
     return SCALARMATPROD([0.5, PLASM_DIFF([matrix,TRANS(matrix)])])
@@ -3858,6 +3982,8 @@ OBARVI = COLOR
 OBARVIT = COLOR
 # Polish:
 KOLOR = COLOR
+# German:
+FARBE = COLOR
 
 # Original PLaSM color command:
 def PLASM_COLOR(Cpl):
@@ -3938,6 +4064,7 @@ CZARNY = BLACK
 NIEBIESKI = BLUE
 BRAZOWY = BROWN
 POMARANCZOVY = ORANGE
+ROZOWY = PINK
 PURPUROWY = PURPLE
 BIALY = WHITE
 CZERWONY = RED
@@ -3952,6 +4079,25 @@ SREBRO = SILVER
 SREBRNY = SILVER
 ZLOTO = GOLD
 ZLOTY = GOLD
+# German:
+GRAU = GREY
+GRUEN = GREEN
+GRUN = GREEN
+SCHWARZ = BLACK
+BLAU = BLUE
+BRAUN = BROWN
+    # ORANGE is the same
+ROSA = PINK
+LILA = PURPLE
+WEISS = WHITE
+ROT = RED
+GELB = YELLOW
+STAHL = STEEL
+MESSING = BRASS
+KUPFER = COPPER
+    # BRONZE is the same
+SILBER = SILVER
+    # GOLD is the same
 
 
 # Returns a list of three numbers between 0 and 255: [R, G, B]
@@ -4182,6 +4328,6 @@ def BOUNDARY(hpc,dim):
 	
 
 
-print "...fenvs.py imported in",(time.clock() - start),"seconds"
+#print "...fenvs.py imported in",(time.clock() - start),"seconds"
 
 
