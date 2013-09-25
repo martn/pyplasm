@@ -923,6 +923,8 @@ POKAZ = SHOW
 # German:
 ZEIGE = SHOW
 ANSICHT = SHOW
+# Spanish:
+MOSTRAR = SHOW
 
 # ===================================================
 # CUBOID
@@ -947,6 +949,8 @@ SZESCIAN = CUBE
 # German:
 WUERFEL = CUBE
 WURFEL = CUBE
+# Spanish:
+CUBO = CUBE
 
 # English:
 def SQUARE (side):
@@ -957,6 +961,8 @@ CTVEREC = SQUARE
 KWADRAT = SQUARE
 # German:
 QUADRAT = SQUARE
+# Spanish:
+CUADRADO = SQUARE
 
 # English:
 def SQUARE3D (a):
@@ -970,6 +976,8 @@ CTVEREC3D = SQUARE3D
 KWADRAT3D = SQUARE3D
 # German:
 QUADRAT3D = SQUARE3D
+# Spanish:
+CUADRADO3D = SQUARE3D
 
 # English:
 def BRICK (a, b, c):
@@ -982,6 +990,8 @@ CIHLA = BRICK
 CEGLA = BRICK
 # German:
 # also BOX
+# Spanish:
+LADRILLO = BRICK
 
 # English:
 def RECTANGLE (a, b):
@@ -992,6 +1002,8 @@ OBDELNIK = RECTANGLE
 PROSTOKAT = RECTANGLE
 # German:
 RECHTECK = RECTANGLE
+# Spanish:
+RECTANGULO = RECTANGLE
 
 def RECTANGLE3D (a, b):
     # height is kept the same for add these thin objects,
@@ -1004,6 +1016,8 @@ OBDELNIK3D = RECTANGLE3D
 PROSTOKAT3D = RECTANGLE3D
 # German:
 RECHTECK3D = RECTANGLE3D
+# Spanish:
+RECTANGULO3D = RECTANGLE3D
 
 # English:
 HEXAHEDRON = Plasm.cube(3,-1.0/math.sqrt(3.0),+1.0/math.sqrt(3.0))
@@ -1013,7 +1027,8 @@ HEXAEDR = HEXAHEDRON
 # SZESCIAN already defined
 # German:
 HEXAEDER = HEXAHEDRON
-
+# Spanish:
+HEXAEDRO = HEXAHEDRON
 
 # ===================================================
 # SIMPLEX
@@ -1091,7 +1106,8 @@ OTOCZKA = CHULL
 # German:
 HUELLE = CHULL
 HULLE = CHULL
-
+# Spanish:
+CASCO = CHULL
 
 # ===================================================
 # UKPOL
@@ -1183,6 +1199,8 @@ BEWEGUNG = TRANSLATE
 VERSCHIEBUNG = TRANSLATE
 VERSCHIEBEN = TRANSLATE
 VERSCHIEBE = TRANSLATE
+# Spanish:
+MOVER = TRANSLATE
 
 # ===================================================
 # SCALE
@@ -1219,6 +1237,8 @@ PRZESKALUJ = SCALE
 # German:
 SKALIERE = SCALE
 SKALIEREN = SCALE
+# Spanish:
+ESCALA = SCALE
 
 # ===================================================
 # ROTATE
@@ -1261,6 +1281,9 @@ DREHUNGRAD = ROTATERAD
 ROTIERERAD = ROTATERAD
 ROTIRENRAD = ROTATERAD
 ROTIRUNGRAD = ROTATERAD
+# Spanish:
+GIRARRAD = ROTATERAD
+ROTARRAD = ROTATERAD
 
 # English:
 def ROTATEDEG(obj, axis, angle_deg):
@@ -1283,7 +1306,9 @@ DREHUNG = ROTATEDEG
 ROTIERE = ROTATEDEG
 ROTIREN = ROTATEDEG
 ROTIERUNG = ROTATEDEG
-
+# Spanish:
+GIRAR = ROTATE
+ROTAR = ROTATE
 
 # ===================================================
 #; Applica uno shearing con vettore shearing-vector-list sulla variabile
@@ -1382,7 +1407,8 @@ STRUKTURA = STRUCT
 # German:
 STRUKTUR = STRUCT
 VERBINDE = STRUCT
-
+# Spanish:
+ESTRUCTURA = STRUCT
 
 # ===================================================
 # BOOLEAN OP
@@ -1411,6 +1437,8 @@ SUMA = UNION
 VEREINIGE = UNION
 VEREINIGUNG = UNION
 SUMME = UNION
+# Spanish:
+SUMA = UNION
 
 #also ^ can be used to indicates INTERSECTION
 def PLASM_INTERSECTION (objs_list):
@@ -1430,6 +1458,8 @@ PRZETNIJ = INTERSECTION
 # German:
 DURCHSCHNITT = INTERSECTION
 SCHNITT = INTERSECTION
+# Spanish:
+INTERSECCION = INTERSECTION
 
 #also -, or DIFF, can be used to indicates DIFFERENCE
 def PLASM_DIFFERENCE (objs_list):
@@ -1442,6 +1472,7 @@ def DIFFERENCE(*args):
     return PLASM_DIFFERENCE(list(args))
 DIFF = DIFFERENCE
 D = DIFF
+SUBTRACT = DIFF
 # Czech:
 ROZDIL = DIFF
 ODECTI = DIFF
@@ -1454,6 +1485,9 @@ ODEJMIJ = DIFF
 DIFFERENZ = DIFF
 ABZIEHE = DIFF
 SUBTRAHIERE = DIFF
+# Spanish:
+DIFERENCIA = DIFF
+SUSTRAER = DIFF
 
 # xor
 def PLASM_XOR(objs_list):
@@ -1518,7 +1552,8 @@ UMOCNI = POWER
 MOC = POWER
 # German:
 LEISTUNG = POWER
-
+# Spanish:
+POTENCIA = POWER
 
 # ===================================================
 # Skeleton
@@ -1562,7 +1597,9 @@ SIT = GRID
 SIATKA = GRID
 # German:
 GITTER = GRID
-
+# Spanish:
+REJILLA = GRID
+CUADRICULA = GRID
 
 if self_test: 
 	assert(Plasm.limits(QUOTE([1,-1,1]))==Boxf(Vecf([1,0]),Vecf([1,3])))
@@ -1586,6 +1623,7 @@ if self_test:
 # NEW DEFINITION:
 def INTERVALS(a, n):
     return PLASM_INTERVALS(a)(n)
+DIVISION = INTERVALS
 # Czech:
 DELENI = INTERVALS
 INTERVALY = INTERVALS
@@ -1596,7 +1634,8 @@ INTERWALY = INTERVALS
 INTERVALLE = INTERVALS
 AUFTEILEN = INTERVALS
 AUFSPALTEN = INTERVALS
-
+# Spanish:
+# DIVISION same as in English
 
 # NEW COMMAND FOR REFERENCE DOMAIN:
 def REF_DOMAIN(a, b, n, m):
@@ -1633,7 +1672,9 @@ GROESSE = SIZE
 GROSSE = SIZE
 LAENGE = SIZE
 LANGE = SIZE
-
+# Spanish:
+TAMANO = SIZE
+LONGITUD = SIZE
 
 # ===================================================
 # MIN/MAX/MID
@@ -1965,7 +2006,8 @@ ROURA = TUBE
 RURA = TUBE
 # German:
 ROHR = TUBE
-
+# Spanish:
+TUBO = TUBE
 
 # =============================================
 # CIRCLE 
@@ -1995,6 +2037,8 @@ KRUH = CIRCLE
 KOLO = CIRCLE
 # German:
 KREIS = CIRCLE
+# Spanish:
+CIRCULO = CIRCLE
 
 def CIRCLE3D(r, division = [64, 32]):
     # height is kept the same for add these thin objects,
@@ -2010,7 +2054,8 @@ KRUH3D = CIRCLE3D
 KOLO3D = CIRCLE3D
 # German:
 KREIS3D = CIRCLE3D
-
+# Spanish:
+CIRCULO3D = CIRCLE3D
 
 # =============================================
 # MY_CYLINDER 
@@ -2041,6 +2086,9 @@ VALEC = CYLINDER
 # German:
 ZYLINDER = CYLINDER
 ZYL = CYLINDER
+# Spanish:
+CILINDRO = CYLINDER
+CIL = CYLINDER
 
 # =============================================
 # SPHERE
@@ -2078,7 +2126,8 @@ KOULE = SPHERE
 KULA = SPHERE
 # German:
 KUGEL = SPHERE
-
+# Spanish:
+ESFERA = SPHERE
 
 # =============================================
 # TORUS - SURFACE
@@ -2139,6 +2188,8 @@ DONUT = TORUS
 # It is also "TORUS"
 # German:
 # It is also "TORUS"
+# Spanish:
+TORO = TORUS
 
 # =============================================
 # CONE
@@ -2165,7 +2216,8 @@ KUZEL = CONE
 STOZEK = CONE
 # German:
 KEGEL = CONE
-
+# Spanish:
+CONO = CONE
 
 # =============================================
 # TRUNCONE
@@ -2196,7 +2248,8 @@ KOMOLYKUZEL = TRUNCONE
 SCIETYSTOZEK = TRUNCONE
 # German:
 KEGELSTUMPF = TRUNCONE
-
+# Spanish:
+CONOTRUNCADO = TRUNCONE
 
 # =============================================
 # DODECAHEDRON
@@ -2226,6 +2279,8 @@ DVANACTISTEN = DODECAHEDRON
 DWUNASTOSCIAN = DODECAHEDRON
 # German:
 DODEKAEDER = DODECAHEDRON
+# Spanish:
+DODECAEDRO = DODECAHEDRON
 
 # =============================================
 # ICOSAHEDRON
@@ -2248,6 +2303,8 @@ DVACETISTEN = ICOSAHEDRON
 DWUDZIESTOSCIAN = ICOSAHEDRON
 # German:
 IKOSAEDER = ICOSAHEDRON
+# Spanish:
+ICOSAEDRO = ICOSAHEDRON
 
 # =============================================
 # TETRAHEDRON
@@ -2268,6 +2325,8 @@ CTYRSTEN = TETRAHEDRON
 CZWOROBOK = TETRAHEDRON
 # German:
 TETRAEDER = TETRAHEDRON
+# Spanish:
+TETRAEDRO = TETRAHEDRON
 
 # =============================================
 # TRIANGLE
@@ -2282,6 +2341,8 @@ TROJUHELNIK = TRIANGLE
 TROJKAT = TRIANGLE
 # German:
 DREIECK = TRIANGLE
+# Spanish:
+TRIANGULO = TRIANGLE
 
 def TRIANGLE3D(a, b, c):
     # height is kept the same for add these thin objects,
@@ -2309,6 +2370,8 @@ TROJUHELNIK3D = TRIANGLE3D
 TROJKAT3D = TRIANGLE3D
 # German:
 DREIECK3D = TRIANGLE3D
+# Spanish:
+TRIANGULO3D = TRIANGLE3D
 
 
 # ===================================================
@@ -2846,7 +2909,8 @@ HRANOL = PRISM
 PRYZMA = PRISM
 # German:
 PRISMA = PRISM
-
+# Spanish:
+# Same as in German
 
 # ===================================================
 # CROSSPOLYTOPE
@@ -3985,6 +4049,8 @@ OBARVIT = COLOR
 KOLOR = COLOR
 # German:
 FARBE = COLOR
+# Spanish:
+# Same as in English
 
 # Original PLaSM color command:
 def PLASM_COLOR(Cpl):
@@ -4099,7 +4165,32 @@ KUPFER = COPPER
     # BRONZE is the same
 SILBER = SILVER
     # GOLD is the same
-
+# Spanish:
+GRIS = GREY
+VERDE = GREEN
+NEGRO = BLACK
+NEGRA = BLACK
+AZUL = BLUE
+MARRON = BROWN
+CIAN = CYAN
+ROSO = PINK
+ROSA = PINK
+MAGENTA = MAGENTA
+NARANJA = ORANGE
+PURPURO = PURPLE
+PURPURA = PURPLE
+BLANCO = WHITE
+BLANCA = WHITE
+ROJO = RED
+ROJA = RED
+AMARILLO = YELLOW
+AMARILLA = YELLOW
+ACERO = STEEL
+LATON = BRASS
+COBRE = COPPER
+BRONCE = BRONZE
+PLATA = SILVER
+ORO = GOLD
 
 # Returns a list of three numbers between 0 and 255: [R, G, B]
 # A and other properties not taken into account yet.
