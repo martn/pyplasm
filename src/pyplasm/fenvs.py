@@ -925,6 +925,11 @@ ZEIGE = SHOW
 ANSICHT = SHOW
 # Spanish:
 MOSTRAR = SHOW
+MUESTRA = SHOW
+# Italian:
+MOSTRARE = SHOW
+MOSTRA = SHOW
+
 
 # ===================================================
 # CUBOID
@@ -951,6 +956,9 @@ WUERFEL = CUBE
 WURFEL = CUBE
 # Spanish:
 CUBO = CUBE
+# Italian:
+# Same as Spanish
+
 
 # English:
 def SQUARE (side):
@@ -963,6 +971,9 @@ KWADRAT = SQUARE
 QUADRAT = SQUARE
 # Spanish:
 CUADRADO = SQUARE
+# Italian:
+QUADRATO = SQUARE
+
 
 # English:
 def SQUARE3D (a):
@@ -978,6 +989,9 @@ KWADRAT3D = SQUARE3D
 QUADRAT3D = SQUARE3D
 # Spanish:
 CUADRADO3D = SQUARE3D
+# Italian:
+QUADRATO3D = SQUARE3D
+
 
 # English:
 def BRICK (a, b, c):
@@ -992,6 +1006,11 @@ CEGLA = BRICK
 # also BOX
 # Spanish:
 LADRILLO = BRICK
+# Italian:
+COTTO = BRICK
+MATTONE = BRICK
+LATERIZIO = BRICK
+
 
 # English:
 def RECTANGLE (a, b):
@@ -1004,6 +1023,9 @@ PROSTOKAT = RECTANGLE
 RECHTECK = RECTANGLE
 # Spanish:
 RECTANGULO = RECTANGLE
+# Italian:
+RETTANGOLO = RECTANGLE
+
 
 def RECTANGLE3D (a, b):
     # height is kept the same for add these thin objects,
@@ -1018,9 +1040,16 @@ PROSTOKAT3D = RECTANGLE3D
 RECHTECK3D = RECTANGLE3D
 # Spanish:
 RECTANGULO3D = RECTANGLE3D
+# Italian:
+RETTANGOLO3D = RECTANGLE3D
+
 
 # English:
-HEXAHEDRON = Plasm.cube(3,-1.0/math.sqrt(3.0),+1.0/math.sqrt(3.0))
+# Original version: HEXAHEDRON = Plasm.cube(3,-1.0/math.sqrt(3.0),+1.0/math.sqrt(3.0))
+def HEXAHEDRON(size):
+    c = CUBE(size)
+    return T(c, -0.5 * size, -0.5 * size, -0.5 * size)
+HEX = HEXAHEDRON
 # Czech:
 HEXAEDR = HEXAHEDRON
 # Polish:
@@ -1029,6 +1058,9 @@ HEXAEDR = HEXAHEDRON
 HEXAEDER = HEXAHEDRON
 # Spanish:
 HEXAEDRO = HEXAHEDRON
+# Italian:
+ESAEDRO = HEXAHEDRON
+
 
 # ===================================================
 # SIMPLEX
@@ -1108,6 +1140,9 @@ HUELLE = CHULL
 HULLE = CHULL
 # Spanish:
 CASCO = CHULL
+# Italian:
+CONVESSO = CHULL
+
 
 # ===================================================
 # UKPOL
@@ -1201,6 +1236,13 @@ VERSCHIEBEN = TRANSLATE
 VERSCHIEBE = TRANSLATE
 # Spanish:
 MOVER = TRANSLATE
+MUEVA = TRANSLATE
+# Italian:
+MUOVERE = TRANSLATE
+MUOVI = TRANSLATE
+SPOSTARE = TRANSLATE
+SPOSTA = TRANSLATE
+
 
 # ===================================================
 # SCALE
@@ -1239,6 +1281,11 @@ SKALIERE = SCALE
 SKALIEREN = SCALE
 # Spanish:
 ESCALA = SCALE
+ESCALAR = SCALE
+# Italian:
+SCALA = SCALE
+SCALARE = SCALE
+
 
 # ===================================================
 # ROTATE
@@ -1284,6 +1331,10 @@ ROTIRUNGRAD = ROTATERAD
 # Spanish:
 GIRARRAD = ROTATERAD
 ROTARRAD = ROTATERAD
+# Italian:
+RUOTARERAD = ROTATERAD
+RUOTARAD = ROTATERAD
+
 
 # English:
 def ROTATEDEG(obj, axis, angle_deg):
@@ -1309,6 +1360,10 @@ ROTIERUNG = ROTATEDEG
 # Spanish:
 GIRAR = ROTATE
 ROTAR = ROTATE
+# Italian:
+RUOTARE = ROTATE
+RUOTA = ROTATE
+
 
 # ===================================================
 #; Applica uno shearing con vettore shearing-vector-list sulla variabile
@@ -1409,6 +1464,9 @@ STRUKTUR = STRUCT
 VERBINDE = STRUCT
 # Spanish:
 ESTRUCTURA = STRUCT
+# Italian:
+STRUTTURA = STRUCT
+
 
 # ===================================================
 # BOOLEAN OP
@@ -1439,6 +1497,9 @@ VEREINIGUNG = UNION
 SUMME = UNION
 # Spanish:
 SUMA = UNION
+# Italian:
+SOMMA = UNION
+
 
 #also ^ can be used to indicates INTERSECTION
 def PLASM_INTERSECTION (objs_list):
@@ -1460,6 +1521,9 @@ DURCHSCHNITT = INTERSECTION
 SCHNITT = INTERSECTION
 # Spanish:
 INTERSECCION = INTERSECTION
+# Italian:
+INTERSEZIONE = INTERSECTION
+INTERSECA = INTERSECTION
 
 #also -, or DIFF, can be used to indicates DIFFERENCE
 def PLASM_DIFFERENCE (objs_list):
@@ -1488,6 +1552,11 @@ SUBTRAHIERE = DIFF
 # Spanish:
 DIFERENCIA = DIFF
 SUSTRAER = DIFF
+# Italian:
+DIFERENCIA = DIFF
+SOTTRARRE = DIFF
+SOTTRAI = DIFF
+
 
 # xor
 def PLASM_XOR(objs_list):
@@ -1554,6 +1623,9 @@ MOC = POWER
 LEISTUNG = POWER
 # Spanish:
 POTENCIA = POWER
+# Italian:
+POTENZA = POWER
+
 
 # ===================================================
 # Skeleton
@@ -1600,6 +1672,9 @@ GITTER = GRID
 # Spanish:
 REJILLA = GRID
 CUADRICULA = GRID
+# Italian:
+GRIGLIA = GRID
+
 
 if self_test: 
 	assert(Plasm.limits(QUOTE([1,-1,1]))==Boxf(Vecf([1,0]),Vecf([1,3])))
@@ -1636,6 +1711,10 @@ AUFTEILEN = INTERVALS
 AUFSPALTEN = INTERVALS
 # Spanish:
 # DIVISION same as in English
+# Italian:
+# DIVISION same as in English
+DIVISIONE = INTERVALS
+
 
 # NEW COMMAND FOR REFERENCE DOMAIN:
 def REF_DOMAIN(a, b, n, m):
@@ -1675,6 +1754,10 @@ LANGE = SIZE
 # Spanish:
 TAMANO = SIZE
 LONGITUD = SIZE
+# Italian:
+TAGLIA = SIZE
+LUNGHEZZA = SIZE
+
 
 # ===================================================
 # MIN/MAX/MID
@@ -2008,6 +2091,9 @@ RURA = TUBE
 ROHR = TUBE
 # Spanish:
 TUBO = TUBE
+# Italian:
+# Same as in Spanish
+
 
 # =============================================
 # CIRCLE 
@@ -2039,6 +2125,9 @@ KOLO = CIRCLE
 KREIS = CIRCLE
 # Spanish:
 CIRCULO = CIRCLE
+# Italian:
+CERCHIO = CIRCLE
+
 
 def CIRCLE3D(r, division = [64, 32]):
     # height is kept the same for add these thin objects,
@@ -2056,6 +2145,9 @@ KOLO3D = CIRCLE3D
 KREIS3D = CIRCLE3D
 # Spanish:
 CIRCULO3D = CIRCLE3D
+# Italian:
+CERCHIO3D = CIRCLE3D
+
 
 # =============================================
 # MY_CYLINDER 
@@ -2089,6 +2181,10 @@ ZYL = CYLINDER
 # Spanish:
 CILINDRO = CYLINDER
 CIL = CYLINDER
+# Italian:
+CILINDRO = CYLINDER
+CIL = CYLINDER
+
 
 # =============================================
 # SPHERE
@@ -2128,6 +2224,9 @@ KULA = SPHERE
 KUGEL = SPHERE
 # Spanish:
 ESFERA = SPHERE
+# Italian:
+SFERA = SPHERE
+
 
 # =============================================
 # TORUS - SURFACE
@@ -2190,6 +2289,9 @@ DONUT = TORUS
 # It is also "TORUS"
 # Spanish:
 TORO = TORUS
+# Italian:
+# Same as in Spanish
+
 
 # =============================================
 # CONE
@@ -2218,6 +2320,9 @@ STOZEK = CONE
 KEGEL = CONE
 # Spanish:
 CONO = CONE
+# Italian:
+# Same as in Spanish
+
 
 # =============================================
 # TRUNCONE
@@ -2250,6 +2355,9 @@ SCIETYSTOZEK = TRUNCONE
 KEGELSTUMPF = TRUNCONE
 # Spanish:
 CONOTRUNCADO = TRUNCONE
+# Italian:
+TRONCOCONICA = TRUNCONE
+
 
 # =============================================
 # DODECAHEDRON
@@ -2281,6 +2389,9 @@ DWUNASTOSCIAN = DODECAHEDRON
 DODEKAEDER = DODECAHEDRON
 # Spanish:
 DODECAEDRO = DODECAHEDRON
+# Italian:
+# Same as in Spanish
+
 
 # =============================================
 # ICOSAHEDRON
@@ -2305,6 +2416,9 @@ DWUDZIESTOSCIAN = ICOSAHEDRON
 IKOSAEDER = ICOSAHEDRON
 # Spanish:
 ICOSAEDRO = ICOSAHEDRON
+# Italian:
+# Same as in Spanish
+
 
 # =============================================
 # TETRAHEDRON
@@ -2327,6 +2441,9 @@ CZWOROBOK = TETRAHEDRON
 TETRAEDER = TETRAHEDRON
 # Spanish:
 TETRAEDRO = TETRAHEDRON
+# Italian:
+# Same as in Spanish
+
 
 # =============================================
 # TRIANGLE
@@ -2343,6 +2460,9 @@ TROJKAT = TRIANGLE
 DREIECK = TRIANGLE
 # Spanish:
 TRIANGULO = TRIANGLE
+# Italian:
+TRIANGOLO = TRIANGLE
+
 
 def TRIANGLE3D(a, b, c):
     # height is kept the same for add these thin objects,
@@ -2372,6 +2492,9 @@ TROJKAT3D = TRIANGLE3D
 DREIECK3D = TRIANGLE3D
 # Spanish:
 TRIANGULO3D = TRIANGLE3D
+# Italian:
+TRIANGOLO3D = TRIANGLE3D
+
 
 
 # ===================================================
@@ -2911,6 +3034,9 @@ PRYZMA = PRISM
 PRISMA = PRISM
 # Spanish:
 # Same as in German
+# Italian:
+# Same as in German
+
 
 # ===================================================
 # CROSSPOLYTOPE
@@ -2928,7 +3054,9 @@ def CROSSPOLYTOPE (D):
 	return MKPOL([points,cells,pols])
 
 OCTAHEDRON = CROSSPOLYTOPE(2)
-
+OKTAEDR = OCTAHEDRON
+OCTAEDER = OCTAHEDRON
+OCTAEDRO = OCTAHEDRON
 
 # ===================================================
 # MATHOM
@@ -4051,6 +4179,8 @@ KOLOR = COLOR
 FARBE = COLOR
 # Spanish:
 # Same as in English
+# Italian:
+COLORE = COLOR
 
 # Original PLaSM color command:
 def PLASM_COLOR(Cpl):
@@ -4191,6 +4321,38 @@ COBRE = COPPER
 BRONCE = BRONZE
 PLATA = SILVER
 ORO = GOLD
+# Italian:
+GRIGIO = GREY
+VERDE = GREEN
+NERO = BLACK
+NERA = BLACK
+AZZURRO = BLUE
+AZZURRA = BLUE
+MARRONE = BROWN
+ROSOLARE = BROWN
+CIANO = CYAN
+DENTELLARE = PINK
+ROSA = PINK
+MAGENTA = MAGENTA
+ARANCIONE = ORANGE
+ARANCIO = ORANGE
+ARANCIA = ORANGE
+VIOLA = PURPLE
+VIOLA = PURPLE
+PORPORA = PURPLE
+BIANCO = WHITE
+BIANCA = WHITE
+ROSSO = RED
+ROSSA = RED
+GIALLO = YELLOW
+GIALLA = YELLOW
+ACCIAIO = STEEL
+OTTONE = BRASS
+RAME = COPPER
+BRONZO = BRONZE
+ARGENTO = SILVER
+# ORO is same as in Spanish
+
 
 # Returns a list of three numbers between 0 and 255: [R, G, B]
 # A and other properties not taken into account yet.
