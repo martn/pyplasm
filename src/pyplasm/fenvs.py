@@ -929,7 +929,8 @@ MUESTRA = SHOW
 # Italian:
 MOSTRARE = SHOW
 MOSTRA = SHOW
-
+# French:
+MONTRER = SHOW
 
 # ===================================================
 # CUBOID
@@ -958,7 +959,8 @@ WURFEL = CUBE
 CUBO = CUBE
 # Italian:
 # Same as Spanish
-
+# French:
+# CUBE same as English
 
 # English:
 def SQUARE (side):
@@ -973,7 +975,8 @@ QUADRAT = SQUARE
 CUADRADO = SQUARE
 # Italian:
 QUADRATO = SQUARE
-
+# French:
+CARRE = SQUARE
 
 # English:
 def SQUARE3D (a):
@@ -991,6 +994,8 @@ QUADRAT3D = SQUARE3D
 CUADRADO3D = SQUARE3D
 # Italian:
 QUADRATO3D = SQUARE3D
+# French:
+CARRE3D = SQUARE3D
 
 
 # English:
@@ -1010,7 +1015,9 @@ LADRILLO = BRICK
 COTTO = BRICK
 MATTONE = BRICK
 LATERIZIO = BRICK
-
+PARALELLEPIPEDO = BRICK
+# French:
+BRIQUE = BRICK
 
 # English:
 def RECTANGLE (a, b):
@@ -1025,7 +1032,8 @@ RECHTECK = RECTANGLE
 RECTANGULO = RECTANGLE
 # Italian:
 RETTANGOLO = RECTANGLE
-
+# French:
+# Same as in English
 
 def RECTANGLE3D (a, b):
     # height is kept the same for add these thin objects,
@@ -1042,6 +1050,8 @@ RECHTECK3D = RECTANGLE3D
 RECTANGULO3D = RECTANGLE3D
 # Italian:
 RETTANGOLO3D = RECTANGLE3D
+# French:
+# Same as in English
 
 
 # English:
@@ -1060,7 +1070,8 @@ HEXAEDER = HEXAHEDRON
 HEXAEDRO = HEXAHEDRON
 # Italian:
 ESAEDRO = HEXAHEDRON
-
+# French:
+HEXAEDRE = HEXAHEDRON
 
 # ===================================================
 # SIMPLEX
@@ -1128,9 +1139,11 @@ def PLASM_CONVEXHULL (points):
 def CONVEXHULL(*args):
     return PLASM_CONVEXHULL(list(args))
 CHULL = CONVEXHULL
+CONVEX = CHULL
 CH = CHULL
 # Czech:
 KONVEXNIOBAL = CHULL
+KONVEX = CHULL
 OBAL = CHULL
 # Polish:
 OTOCZKAWYPUKLA = CHULL
@@ -1142,7 +1155,8 @@ HULLE = CHULL
 CASCO = CHULL
 # Italian:
 CONVESSO = CHULL
-
+# French:
+CONVEXE = CHULL
 
 # ===================================================
 # UKPOL
@@ -1242,7 +1256,8 @@ MUOVERE = TRANSLATE
 MUOVI = TRANSLATE
 SPOSTARE = TRANSLATE
 SPOSTA = TRANSLATE
-
+# French:
+DEPLACER = TRANSLATE
 
 # ===================================================
 # SCALE
@@ -1285,7 +1300,9 @@ ESCALAR = SCALE
 # Italian:
 SCALA = SCALE
 SCALARE = SCALE
-
+# French:
+ECHELLE = SCALE
+REDIMENSIONNER = SCALE
 
 # ===================================================
 # ROTATE
@@ -1334,7 +1351,8 @@ ROTARRAD = ROTATERAD
 # Italian:
 RUOTARERAD = ROTATERAD
 RUOTARAD = ROTATERAD
-
+# French:
+TOURNERRAD = ROTATERAD
 
 # English:
 def ROTATEDEG(obj, axis, angle_deg):
@@ -1363,6 +1381,8 @@ ROTAR = ROTATE
 # Italian:
 RUOTARE = ROTATE
 RUOTA = ROTATE
+# French:
+TOURNER = ROTATE
 
 
 # ===================================================
@@ -1466,7 +1486,8 @@ VERBINDE = STRUCT
 ESTRUCTURA = STRUCT
 # Italian:
 STRUTTURA = STRUCT
-
+# French:
+# Same as English
 
 # ===================================================
 # BOOLEAN OP
@@ -1499,7 +1520,9 @@ SUMME = UNION
 SUMA = UNION
 # Italian:
 SOMMA = UNION
-
+# French:
+# UNION same as English
+SOMME = UNION
 
 #also ^ can be used to indicates INTERSECTION
 def PLASM_INTERSECTION (objs_list):
@@ -1524,6 +1547,8 @@ INTERSECCION = INTERSECTION
 # Italian:
 INTERSEZIONE = INTERSECTION
 INTERSECA = INTERSECTION
+# French:
+# Same as English
 
 #also -, or DIFF, can be used to indicates DIFFERENCE
 def PLASM_DIFFERENCE (objs_list):
@@ -1556,6 +1581,9 @@ SUSTRAER = DIFF
 DIFERENCIA = DIFF
 SOTTRARRE = DIFF
 SOTTRAI = DIFF
+# French:
+SOUSTRAIRE = DIFF
+# DIFF same as in English
 
 
 # xor
@@ -1625,6 +1653,8 @@ LEISTUNG = POWER
 POTENCIA = POWER
 # Italian:
 POTENZA = POWER
+# French:
+PUISSANCE = POWER
 
 
 # ===================================================
@@ -1674,7 +1704,8 @@ REJILLA = GRID
 CUADRICULA = GRID
 # Italian:
 GRIGLIA = GRID
-
+# French:
+GRILLE = GRID
 
 if self_test: 
 	assert(Plasm.limits(QUOTE([1,-1,1]))==Boxf(Vecf([1,0]),Vecf([1,3])))
@@ -1714,7 +1745,8 @@ AUFSPALTEN = INTERVALS
 # Italian:
 # DIVISION same as in English
 DIVISIONE = INTERVALS
-
+# French:
+# DIVISION same as in English
 
 # NEW COMMAND FOR REFERENCE DOMAIN:
 def REF_DOMAIN(a, b, n, m):
@@ -1757,7 +1789,9 @@ LONGITUD = SIZE
 # Italian:
 TAGLIA = SIZE
 LUNGHEZZA = SIZE
-
+# French:
+TAILLE = SIZE
+LONGUEUR = SIZE
 
 # ===================================================
 # MIN/MAX/MID
@@ -2093,7 +2127,8 @@ ROHR = TUBE
 TUBO = TUBE
 # Italian:
 # Same as in Spanish
-
+# French:
+# Same as in English
 
 # =============================================
 # CIRCLE 
@@ -2127,7 +2162,9 @@ KREIS = CIRCLE
 CIRCULO = CIRCLE
 # Italian:
 CERCHIO = CIRCLE
-
+# French:
+CERCLE = CIRCLE
+ROND = CIRCLE
 
 def CIRCLE3D(r, division = [64, 32]):
     # height is kept the same for add these thin objects,
@@ -2147,6 +2184,9 @@ KREIS3D = CIRCLE3D
 CIRCULO3D = CIRCLE3D
 # Italian:
 CERCHIO3D = CIRCLE3D
+# French:
+CERCLE3D = CIRCLE3D
+ROND3D = CIRCLE3D
 
 
 # =============================================
@@ -2184,7 +2224,8 @@ CIL = CYLINDER
 # Italian:
 CILINDRO = CYLINDER
 CIL = CYLINDER
-
+# French:
+CYLINDRE = CYL
 
 # =============================================
 # SPHERE
@@ -2226,7 +2267,8 @@ KUGEL = SPHERE
 ESFERA = SPHERE
 # Italian:
 SFERA = SPHERE
-
+# French:
+# Same as English
 
 # =============================================
 # TORUS - SURFACE
@@ -2291,7 +2333,8 @@ DONUT = TORUS
 TORO = TORUS
 # Italian:
 # Same as in Spanish
-
+# French:
+TORE = TORUS
 
 # =============================================
 # CONE
@@ -2322,7 +2365,8 @@ KEGEL = CONE
 CONO = CONE
 # Italian:
 # Same as in Spanish
-
+# French:
+# Same in English
 
 # =============================================
 # TRUNCONE
@@ -2357,7 +2401,9 @@ KEGELSTUMPF = TRUNCONE
 CONOTRUNCADO = TRUNCONE
 # Italian:
 TRONCOCONICA = TRUNCONE
-
+# French:
+TRONCONE = TCONE
+TRONCCONE = TCONE
 
 # =============================================
 # DODECAHEDRON
@@ -2391,7 +2437,8 @@ DODEKAEDER = DODECAHEDRON
 DODECAEDRO = DODECAHEDRON
 # Italian:
 # Same as in Spanish
-
+# French:
+DODECAEDRE = DODECAHEDRON
 
 # =============================================
 # ICOSAHEDRON
@@ -2418,6 +2465,8 @@ IKOSAEDER = ICOSAHEDRON
 ICOSAEDRO = ICOSAHEDRON
 # Italian:
 # Same as in Spanish
+# French:
+ICOSAEDRE = ICOSAHEDRON
 
 
 # =============================================
@@ -2443,7 +2492,8 @@ TETRAEDER = TETRAHEDRON
 TETRAEDRO = TETRAHEDRON
 # Italian:
 # Same as in Spanish
-
+# French:
+TETRAEDRE = TETRAHEDRON
 
 # =============================================
 # TRIANGLE
@@ -2462,7 +2512,8 @@ DREIECK = TRIANGLE
 TRIANGULO = TRIANGLE
 # Italian:
 TRIANGOLO = TRIANGLE
-
+# French:
+# Same as in English
 
 def TRIANGLE3D(a, b, c):
     # height is kept the same for add these thin objects,
@@ -2494,7 +2545,8 @@ DREIECK3D = TRIANGLE3D
 TRIANGULO3D = TRIANGLE3D
 # Italian:
 TRIANGOLO3D = TRIANGLE3D
-
+# French:
+# Same as in English
 
 
 # ===================================================
@@ -3036,7 +3088,8 @@ PRISMA = PRISM
 # Same as in German
 # Italian:
 # Same as in German
-
+# French:
+PRISME = PRISM
 
 # ===================================================
 # CROSSPOLYTOPE
@@ -4181,6 +4234,8 @@ FARBE = COLOR
 # Same as in English
 # Italian:
 COLORE = COLOR
+# French:
+COULEUR = COLOR
 
 # Original PLaSM color command:
 def PLASM_COLOR(Cpl):
@@ -4352,6 +4407,26 @@ RAME = COPPER
 BRONZO = BRONZE
 ARGENTO = SILVER
 # ORO is same as in Spanish
+# French:
+GRIS = GREY
+VERT = GREEN
+NOIR = BLACK
+BLEU = BLUE
+BRUN = BROWN
+# CYAN is same as in English
+ROSE = PINK
+# MAGENTA same as in English
+# ORANGE same as in English
+POURPRE = PURPLE
+BLANC = WHITE
+ROUGE = RED
+JAUNE = YELLOW
+ACIER = STEEL
+LAITON = BRASS
+CUIVRE = COPPER
+# BRONZE same as in English
+ARGENT = SILVER
+OR = GOLD
 
 
 # Returns a list of three numbers between 0 and 255: [R, G, B]
