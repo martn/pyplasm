@@ -4675,7 +4675,7 @@ def HASOBJECT(out, obj):
 
 # Base function. Returns True if object "out" contains 
 # no part of object "obj":
-def HASOBJECT(out, obj):
+def HASNTOBJECT(out, obj):
     test = INTERSECTION(out, obj)
     s1 = SIZE(test, 1)
     s2 = SIZE(test, 2)
