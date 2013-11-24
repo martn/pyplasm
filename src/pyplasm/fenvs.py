@@ -4661,56 +4661,51 @@ def BOUNDARY(hpc,dim):
 # AUTOGRADING FUNCTIONALITY
 #===================================================================================
 
+# Base function. Returns True if object "out" contains 
+# the entire object "obj":
+def HASOBJECT(out, obj):
+    test = DIFF(obj, INTERSECTION(out, obj))
+    s1 = SIZE(test, 1)
+    s2 = SIZE(test, 2)
+    s3 = SIZE(test, 3)
+    if s1 < 1e-8 and s2 < 1e-8 and s3 < 1e-8:
+      return True
+    else:
+      return False
+
+# Base function. Returns True if object "out" contains 
+# no part of object "obj":
+def HASOBJECT(out, obj):
+    test = INTERSECTION(out, obj)
+    s1 = SIZE(test, 1)
+    s2 = SIZE(test, 2)
+    s3 = SIZE(test, 3)
+    if s1 < 1e-8 and s2 < 1e-8 and s3 < 1e-8:
+      return True
+    else:
+      return False
+
+# Returns True if the entire cube "cube" lies in object "out":
 def HASCUBE(out, centerx, centery, centerz, size):
     cube = CUBE(size)
     cube = TRANSLATE(cube, centerx - 0.5*size, centery - 0.5*size, centerz - 0.5*size)
-    # This makes sure that the *entire* cube "cube" lies in object "out":
-    test = DIFF(cube, INTERSECTION(out, cube))
-    s1 = SIZE(test, 1)
-    s2 = SIZE(test, 2)
-    s3 = SIZE(test, 3)
-    if s1 < 1e-10 and s2 < 1e-10 and s3 < 1e-10:
-      return True
-    else:
-      return False
+    return HASOBJECT(out, cube)
 
+# Returns True if no part of cube "cube" lies in object "out":
 def HASNTCUBE(out, centerx, centery, centerz, size):
     cube = CUBE(size)
     cube = TRANSLATE(cube, centerx - 0.5*size, centery - 0.5*size, centerz - 0.5*size)
-    # This makes sure that no part of cube "cube" lies in object "out":
-    test = INTERSECTION(out, cube)
-    s1 = SIZE(test, 1)
-    s2 = SIZE(test, 2)
-    s3 = SIZE(test, 3)
-    if s1 < 1e-10 and s2 < 1e-10 and s3 < 1e-10:
-      return True
-    else:
-      return False
+    return HASNTOBJECT(out, cube)
 
-
+# Returns True if entire brick "brick" lies in object "out":
 def HASBRICK(out, centerx, centery, centerz, sizex, sizey, sizez):
     brick = BRICK(sizex, sizey, sizez)
     brick = TRANSLATE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
-    # This makes sure that the *entire* brick "brick" lies in object "out":
-    test = DIFF(brick, INTERSECTION(out, brick))
-    s1 = SIZE(test, 1)
-    s2 = SIZE(test, 2)
-    s3 = SIZE(test, 3)
-    if s1 < 1e-10 and s2 < 1e-10 and s3 < 1e-10:
-      return True
-    else:
-      return False
+    return HASOBJECT(out, brick)
 
+# Returns True if no part of brick "brick" lies in object "out":
 def HASNTBRICK(out, centerx, centery, centerz, sizex, sizey, sizez):
     brick = BRICK(sizex, sizey, sizez)
     brick = TRANSLATE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
-    # This makes sure that no part of brick "brick" lies in object "out":
-    test = INTERSECTION(out, brick)
-    s1 = SIZE(test, 1)
-    s2 = SIZE(test, 2)
-    s3 = SIZE(test, 3)
-    if s1 < 1e-10 and s2 < 1e-10 and s3 < 1e-10:
-      return True
-    else:
-      return False
+    return HASNTOBJECT(out, brick)
 
