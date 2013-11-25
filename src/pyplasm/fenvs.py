@@ -4722,3 +4722,13 @@ def HASNTBRICK(out, centerx, centery, centerz, sizex, sizey, sizez):
     brick = TRANSLATE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
     return HASNTOBJECT(out, brick)
 
+# Returns True if object "out" is in bounding box (xmin, xmax) x (ymin, ymax) x (zmin, zmax)
+# with tolerance eps:
+def INBOX(out, xmin, xmax, ymin, ymax, zmin, zmax, eps):
+    a1 = (abs(MINX(out) - xmin) <= eps)
+    a2 = (abs(MINY(out) - ymin) <= eps)
+    a3 = (abs(MINZ(out) - zmin) <= eps)
+    a4 = (abs(MAXX(out) - xmax) <= eps)
+    a5 = (abs(MAXY(out) - ymax) <= eps)
+    a6 = (abs(MAXZ(out) - zmax) <= eps)
+    return (a1 and a2 and a3 and a4 and a5 and a6)
