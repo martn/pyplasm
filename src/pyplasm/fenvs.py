@@ -1815,6 +1815,19 @@ def MID  (List):
         return [center [i] for i in List] if isinstance(List,list) else center[List]
     return MID1
 
+def MINX(obj):
+    return MIN(1)(obj) 
+def MINY(obj):
+    return MIN(2)(obj) 
+def MINZ(obj):
+    return MIN(3)(obj) 
+def MAXX(obj):
+    return MAX(1)(obj) 
+def MAXY(obj):
+    return MAX(2)(obj) 
+def MAXZ(obj):
+    return MAX(3)(obj) 
+
 if self_test: 
 	assert(MIN(1)(Plasm.cube(2))==0)
 	assert(MIN([1,3])(PLASM_TRANSLATE([1, 2, 3])([10, 20, 30])(Plasm.cube(3)))==[10,30])
