@@ -4732,7 +4732,7 @@ def SIZETEST(tested, sizex, sizey, sizez, eps = 0.0):
 
 # Checks if objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
-def SIZETEST2(tested, ref, eps = 0.0):
+def SIZEMATCH(tested, ref, eps = 0.0):
     a1 = (SIZE(tested, 1) - SIZE(ref, 1) <= eps)
     a2 = (SIZE(tested, 2) - SIZE(ref, 2) <= eps)
     a3 = (SIZE(tested, 3) - SIZE(ref, 3) <= eps)
@@ -4749,7 +4749,7 @@ def POSITIONTEST(tested, minx, miny, minz, eps = 0.0):
 # Checks if objects "tested" and "ref" have the same 
 # minimum coordinates in the x, y, z directions, 
 # with a given tolerance:
-def POSITIONTEST2(tested, ref, eps = 0.0):
+def POSITIONMATCH(tested, ref, eps = 0.0):
     b1 = (abs(MINX(tested) - MINX(ref)) <= eps)
     b2 = (abs(MINY(tested) - MINY(ref)) <= eps)
     b3 = (abs(MINZ(tested) - MINZ(ref)) <= eps)
@@ -4765,7 +4765,7 @@ def ADJUSTPOSITION(tested, minx, miny, minz):
 # Move object "tested" so that its minx coincides with minx of object ref,
 # its miny coincides with miny of object ref. and its minz coincides 
 # with minz of object ref:
-def ADJUSTPOSITION2(tested, ref):
+def ALIGNOBJECTS(tested, ref):
     xmintested = MINX(tested)
     ymintested = MINY(tested)
     zmintested = MINZ(tested)
