@@ -4722,14 +4722,6 @@ def HASNTBRICK(tested, centerx, centery, centerz, sizex, sizey, sizez):
     brick = TRANSLATE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
     return HASNTOBJECT(tested, brick)
 
-# Checks if objects "tested" and "ref" have the same dimensions, 
-# with a given tolerance:
-def SIZETEST(tested, ref, eps = 0.0):
-    a1 = (SIZE(tested, 1) - SIZE(ref, 1) <= eps)
-    a2 = (SIZE(tested, 2) - SIZE(ref, 2) <= eps)
-    a3 = (SIZE(tested, 3) - SIZE(ref, 3) <= eps)
-    return (a1 and a2 and a3)
-
 # Checks if object "tested" has dimensions sizex, sizey, sizez
 # with a given tolerance:
 def SIZETEST(tested, sizex, sizey, sizez, eps = 0.0):
@@ -4738,14 +4730,13 @@ def SIZETEST(tested, sizex, sizey, sizez, eps = 0.0):
     a3 = (SIZE(tested, 3) - sizez <= eps)
     return (a1 and a2 and a3)
 
-# Checks if objects "tested" and "ref" have the same 
-# minimum coordinates in the x, y, z directions, 
+# Checks if objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
-def POSITIONTEST(tested, ref, eps = 0.0):
-    b1 = (abs(MINX(tested) - MINX(ref)) <= eps)
-    b2 = (abs(MINY(tested) - MINY(ref)) <= eps)
-    b3 = (abs(MINZ(tested) - MINZ(ref)) <= eps)
-    return (b1 and b2 and b3)
+def SIZETEST2(tested, ref, eps = 0.0):
+    a1 = (SIZE(tested, 1) - SIZE(ref, 1) <= eps)
+    a2 = (SIZE(tested, 2) - SIZE(ref, 2) <= eps)
+    a3 = (SIZE(tested, 3) - SIZE(ref, 3) <= eps)
+    return (a1 and a2 and a3)
 
 # Checks if object "tested" has given minx, miny, minz 
 # coordinates in the x, y, z directions, with a given tolerance:
@@ -4755,17 +4746,14 @@ def POSITIONTEST(tested, minx, miny, minz, eps = 0.0):
     b3 = (abs(MINZ(tested) - minz) <= eps)
     return (b1 and b2 and b3)
 
-# Move object "tested" so that its minx coincides with minx of object ref,
-# its miny coincides with miny of object ref. and its minz coincides 
-# with minz of object ref:
-def ADJUSTPOSITION(tested, ref):
-    xmintested = MINX(tested)
-    ymintested = MINY(tested)
-    zmintested = MINZ(tested)
-    xminref = MINX(ref)
-    yminref = MINY(ref)
-    zminref = MINZ(ref)
-    return T(tested, xminref - xmintested, yminref - ymintested, zminref - zmintested)
+# Checks if objects "tested" and "ref" have the same 
+# minimum coordinates in the x, y, z directions, 
+# with a given tolerance:
+def POSITIONTEST2(tested, ref, eps = 0.0):
+    b1 = (abs(MINX(tested) - MINX(ref)) <= eps)
+    b2 = (abs(MINY(tested) - MINY(ref)) <= eps)
+    b3 = (abs(MINZ(tested) - MINZ(ref)) <= eps)
+    return (b1 and b2 and b3)
 
 # Move object "tested" so that it has given minx, miny, minz:
 def ADJUSTPOSITION(tested, minx, miny, minz):
@@ -4773,6 +4761,18 @@ def ADJUSTPOSITION(tested, minx, miny, minz):
     ymintested = MINY(tested)
     zmintested = MINZ(tested)
     return T(tested, minx - xmintested, miny - ymintested, minz - zmintested)
+
+# Move object "tested" so that its minx coincides with minx of object ref,
+# its miny coincides with miny of object ref. and its minz coincides 
+# with minz of object ref:
+def ADJUSTPOSITION2(tested, ref):
+    xmintested = MINX(tested)
+    ymintested = MINY(tested)
+    zmintested = MINZ(tested)
+    xminref = MINX(ref)
+    yminref = MINY(ref)
+    zminref = MINZ(ref)
+    return T(tested, xminref - xmintested, yminref - ymintested, zminref - zmintested)
 
 # Returns a brick which is the bounding box of an object "tested":
 def BBOX(tested):
