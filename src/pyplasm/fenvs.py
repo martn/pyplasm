@@ -4722,27 +4722,44 @@ def HASNTBRICK(out, centerx, centery, centerz, sizex, sizey, sizez):
     brick = TRANSLATE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
     return HASNTOBJECT(out, brick)
 
+# Checks if objects "out" and "ref" have the same dimensions, 
+# with a given tolerance:
+def SIZETEST(out, ref):
+    a1 = (SIZE(out, 1) - SIZE(ref, 1) <= eps)
+    a2 = (SIZE(out, 2) - SIZE(ref, 2) <= eps)
+    a3 = (SIZE(out, 3) - SIZE(ref, 3) <= eps)
+    return (a1 and a2 and a3)
+
+# Checks if objects "out" and "ref" have the same 
+# minimum coordinates in the x, y, z directions, 
+# with a given tolerance:
+def POSITIONTEST(out, ref):
+    b1 = (abs(MINX(out) - MINX(ref)) <= eps)
+    b2 = (abs(MINY(out) - MINY(ref)) <= eps)
+    b3 = (abs(MINZ(out) - MINZ(ref)) <= eps)
+    return (b1 and b2 and b3)
+
+# Move object "out" so that its minx coincides with minx of object ref,
+# its miny coincides with miny of object ref. and its minz coincides 
+# with minz of object ref:
+def ADJUSTPOSITION(out, ref):
+    xminout = MINX(out)
+    yminout = MINY(out)
+    zminout = MINZ(out)
+    xminref = MINX(ref)
+    yminref = MINY(ref)
+    zminref = MINZ(ref)
+    return T(out, xminref - xminout, yminref - yminout, zminref - zminout)
+
 # Returns a brick which is the bounding box of an object "out":
-def BOUNDINGBOX(out):
+def BBOX(out):
     brick = BRICK(MAXX(out) - MINX(out), MAXY(out) - MINY(out), MAXZ(out) - MINZ(out))
     brick = T(brick, MINX(out), MINY(out), MINZ(out))
     return brick
 
-# Quick check based on min and max coordinates that 
-# returns True if object "out" is in bounding box "bbox"
-# and False otherwise:
-def INBOUNDINGBOX(out, bbox, eps = 0.0):
-    a1 = (MINX(out) >= MINX(bbox) - eps)
-    a2 = (MINY(out) >= MINY(bbox) - eps)
-    a3 = (MINZ(out) >= MINZ(bbox) - eps)
-    a4 = (MAXX(out) <= MAXX(bbox) + eps)
-    a5 = (MAXY(out) <= MAXY(bbox) + eps)
-    a6 = (MAXZ(out) <= MAXZ(bbox) + eps)
-    return (a1 and a2 and a3 and a4 and a5 and a6)
-
 # Returns the frame of a bounding box "bbox". Bars of 
 # the frame will have thickness "eps"
-def BOUNDINGBOXFRAME(bbox, eps):
+def BBOXFRAME(bbox, eps):
     x = SIZE(bbox, 1)
     y = SIZE(bbox, 2)
     z = SIZE(bbox, 3)
