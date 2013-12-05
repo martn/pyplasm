@@ -4722,13 +4722,35 @@ def HASNTBRICK(out, centerx, centery, centerz, sizex, sizey, sizez):
     brick = TRANSLATE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
     return HASNTOBJECT(out, brick)
 
-# Returns True if object "out" is in bounding box (xmin, xmax) x (ymin, ymax) x (zmin, zmax)
-# with tolerance eps:
-def INBOX(out, xmin, xmax, ymin, ymax, zmin, zmax, eps):
-    a1 = (abs(MINX(out) - xmin) <= eps)
-    a2 = (abs(MINY(out) - ymin) <= eps)
-    a3 = (abs(MINZ(out) - zmin) <= eps)
-    a4 = (abs(MAXX(out) - xmax) <= eps)
-    a5 = (abs(MAXY(out) - ymax) <= eps)
-    a6 = (abs(MAXZ(out) - zmax) <= eps)
+# Returns a brick which is the bounding box of an object "out":
+def BOUNDINGBOX(out):
+    brick = BRICK(MAXX(out) - MINX(out), MAXY(out) - MINY(out), MAXZ(out) - MINZ(out))
+    brick = T(brick, MINX(out), MINY(out), MINZ(out))
+    return brick
+
+# Quick check based on min and max coordinates that 
+# returns True if object "out" is in bounding box "bbox"
+# and False otherwise:
+def INBOUNDINGBOX(out, bbox, eps = 0.0):
+    a1 = (MINX(out) >= MINX(bbox) - eps)
+    a2 = (MINY(out) >= MINY(bbox) - eps)
+    a3 = (MINZ(out) >= MINZ(bbox) - eps)
+    a4 = (MAXX(out) <= MAXX(bbox) + eps)
+    a5 = (MAXY(out) <= MAXY(bbox) + eps)
+    a6 = (MAXZ(out) <= MAXZ(bbox) + eps)
     return (a1 and a2 and a3 and a4 and a5 and a6)
+
+# Returns the frame of a bounding box "bbox". Bars of 
+# the frame will have thickness "eps"
+def BOUNDINGBOXFRAME(bbox, eps):
+    x = SIZE(bbox, 1)
+    y = SIZE(bbox, 2)
+    z = SIZE(bbox, 3)
+    brickx = BRICK(x, y - 2*eps, z - 2*eps)
+    brickx = T(brickx, 0, eps, eps)
+    bricky = BRICK(x - 2*eps, y, z - 2*eps)
+    bricky = T(bricky, eps, 0, eps)
+    brickz = BRICK(x - 2*eps, y - 2*eps, z)
+    brickz = T(brickz, eps, eps, 0)
+    return DIFF(bbox, brickx, bricky, brickz)
+
