@@ -15,9 +15,9 @@ if __name__ == "__main__":
 
     # Choose font:
     #font = PARSESVGFONT("acaslonprobolditalic.svg")
-    font = PARSESVGFONT("blackoakstd.svg")
+    #font = PARSESVGFONT("blackoakstd.svg")
     #font = PARSESVGFONT("frscript.svg")
-    #font = PARSESVGFONT("jokerman.svg")
+    font = PARSESVGFONT("jokerman.svg")
     #font = PARSESVGFONT("stencilstd.svg")
     #font = PARSESVGFONT("acaslonprobold.svg")
     #font = PARSESVGFONT("cooperblackstd.svg")

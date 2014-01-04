@@ -215,7 +215,7 @@ class Fonts:
     def _mkPol_(self,character,fontsize,dom):
         curves = []
         if len(character.controlpoints)==0:
-            return T(1)(FONTWIDTH)
+            return PLASM_T(1)(FONTWIDTH)
         else:
             curves.append(PLASM_S([1,2])([FONTWIDTH/fontsize, FONTHEIGHT/fontsize]))
         for l in character.controlpoints:
