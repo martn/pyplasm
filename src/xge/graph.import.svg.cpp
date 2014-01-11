@@ -542,7 +542,7 @@ public:
 				parse((TiXmlElement*)xchild);
 		}
 
-		Log::printf("...done in %d msec\n",(int)(Clock()-t1));
+		//Log::printf("...done in %d msec\n",(int)(Clock()-t1));
 
 		//Box3f box=this->getBBox();
 		//guessBestPosition(box,Vec3f(0,0,1),DEFAULT_FOV,1.0f);

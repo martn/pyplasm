@@ -1573,7 +1573,7 @@ std::vector<SmartPointer<Batch> > Plasm::getBatches(SmartPointer<Hpc> src,bool b
 			continue;
 		}
 	}
-	Log::printf("...done in %d msec\n",(int)t1.msec());
+	//Log::printf("...done in %d msec\n",(int)t1.msec());
 
 	if (bOptimize)
 		batches=Batch::Optimize(batches);

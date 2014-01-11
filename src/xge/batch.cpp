@@ -226,7 +226,7 @@ std::vector<SmartPointer<Batch> > Batch::Optimize(std::vector<SmartPointer<Batch
 	Log::printf("   total number vertices    %d\n",(int)tot_number_of_vertices);
 	Log::printf("   Number of output batches %d\n",(int)ret.size());
 	Log::printf("   Batch vertex media       %d\n",(int)(tot_number_of_vertices/(float)ret.size()));
-	Log::printf("...done in %d msec\n",(int)t1.msec());
+	//Log::printf("...done in %d msec\n",(int)t1.msec());
 	return ret;
 }
 
@@ -711,7 +711,7 @@ void Batch::Save(std::string filename,std::vector< SmartPointer<Batch> > batches
 	}
 	ar.Pop("batches");
 	ar.Close();
-	printf("done in %d msec\n",t1.msec());
+	//printf("done in %d msec\n",t1.msec());
 }
 
 
@@ -733,7 +733,7 @@ std::vector< SmartPointer<Batch> > Batch::Open(std::string filename)
 	}
 	ar.Pop("batches");
 	ar.Close();
-	printf("done in %d msec\n",t1.msec());
+	//printf("done in %d msec\n",t1.msec());
 	return batches;
 }
 

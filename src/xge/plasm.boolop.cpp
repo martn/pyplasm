@@ -502,7 +502,7 @@ void PlasmBoolOperation::run()
 	//is it right this order of hmat, vmat since I need the inversion here!
 	gout->transform(hmat,vmat); 
 
-	Log::printf("...done in %d msec\n",(int)(Clock()-t1));
+	//Log::printf("...done in %d msec\n",(int)(Clock()-t1));
 }
 
 

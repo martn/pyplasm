@@ -53,7 +53,7 @@ Octree::Octree(const std::vector<SmartPointer<Batch> >& batches,int max_depth,fl
 		} 
 	}
 	this->printStatistics();
-	Log::printf("...done in %d msec\n",(int)t1.msec());
+	//Log::printf("...done in %d msec\n",(int)t1.msec());
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
