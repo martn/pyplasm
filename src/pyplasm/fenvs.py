@@ -1496,7 +1496,9 @@ STRUTTURA = STRUCT
 
 #also +, or SUM, can be used to indicate UNION
 def PLASM_UNION(objs_list):
-        return Plasm.boolop(BOOL_CODE_OR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
+        color = GETCOLOR(objs_list[0])
+        result = Plasm.boolop(BOOL_CODE_OR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
+        return COLOR(result, color)
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
 # English:
@@ -1527,7 +1529,9 @@ SOMME = UNION
 
 #also ^ can be used to indicates INTERSECTION
 def PLASM_INTERSECTION (objs_list):
-        return Plasm.boolop(BOOL_CODE_AND, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
+        color = GETCOLOR(objs_list[0])
+        result = Plasm.boolop(BOOL_CODE_AND, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
+        return COLOR(result, color)
 PLASM_I = PLASM_INTERSECTION
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
@@ -1555,7 +1559,7 @@ INTERSECA = INTERSECTION
 def PLASM_DIFFERENCE (objs_list):
         color = GETCOLOR(objs_list[0])
         result = Plasm.boolop(BOOL_CODE_DIFF, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        return C(result, color)
+        return COLOR(result, color)
 
 PLASM_DIFF = PLASM_DIFFERENCE        
 
@@ -1592,7 +1596,9 @@ SOUSTRAIRE = DIFF
 
 # xor
 def PLASM_XOR(objs_list):
-        return Plasm.boolop(BOOL_CODE_XOR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
+        color = GETCOLOR(objs_list[0])
+        result = Plasm.boolop(BOOL_CODE_XOR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
+        return COLOR(result, color)
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
 # English:
