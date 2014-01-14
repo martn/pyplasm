@@ -1498,7 +1498,8 @@ STRUTTURA = STRUCT
 def PLASM_UNION(objs_list):
         color = GETCOLOR(objs_list[0])
         result = Plasm.boolop(BOOL_CODE_OR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        return COLOR(result, color)
+        if col != []: return COLOR(result, color)
+	else: return result
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
 # English:
@@ -1531,7 +1532,9 @@ SOMME = UNION
 def PLASM_INTERSECTION (objs_list):
         color = GETCOLOR(objs_list[0])
         result = Plasm.boolop(BOOL_CODE_AND, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        return COLOR(result, color)
+        if col != []: return COLOR(result, color)
+	else: return result
+
 PLASM_I = PLASM_INTERSECTION
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
@@ -1559,7 +1562,8 @@ INTERSECA = INTERSECTION
 def PLASM_DIFFERENCE (objs_list):
         color = GETCOLOR(objs_list[0])
         result = Plasm.boolop(BOOL_CODE_DIFF, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        return COLOR(result, color)
+        if col != []: return COLOR(result, color)
+	else: return result
 
 PLASM_DIFF = PLASM_DIFFERENCE        
 
@@ -1598,7 +1602,8 @@ SOUSTRAIRE = DIFF
 def PLASM_XOR(objs_list):
         color = GETCOLOR(objs_list[0])
         result = Plasm.boolop(BOOL_CODE_XOR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        return COLOR(result, color)
+        if col != []: return COLOR(result, color)
+	else: return result
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
 # English:
@@ -4228,6 +4233,7 @@ if self_test:
 def COLOR(o, col):
   # Check if it is a list:
   if type(col) is list:
+    if col == []: return o
     # Sanity checks:
     if len(col) <> 3 and len(col) <> 4:
       raise Exception("Color must be a list of length 3 (R, G, B) or 4 (R, G, B, A).")
@@ -4461,7 +4467,7 @@ def GETCOLOR(obj):
    col = [float(s) for s in string.split()] 
    if col == []:
       print "Warning: There is no color associated with object."
-      return
+      return col
    else:
       if len(col) < 3:
           print "Warning: There is some problem with the color of an object."
