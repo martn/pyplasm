@@ -1498,7 +1498,7 @@ STRUTTURA = STRUCT
 def PLASM_UNION(objs_list):
         color = GETCOLOR(objs_list[0])
         result = Plasm.boolop(BOOL_CODE_OR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        if col != []: return COLOR(result, color)
+        if color != []: return COLOR(result, color)
 	else: return result
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
@@ -1532,7 +1532,7 @@ SOMME = UNION
 def PLASM_INTERSECTION (objs_list):
         color = GETCOLOR(objs_list[0])
         result = Plasm.boolop(BOOL_CODE_AND, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        if col != []: return COLOR(result, color)
+        if color != []: return COLOR(result, color)
 	else: return result
 
 PLASM_I = PLASM_INTERSECTION
@@ -1562,7 +1562,7 @@ INTERSECA = INTERSECTION
 def PLASM_DIFFERENCE (objs_list):
         color = GETCOLOR(objs_list[0])
         result = Plasm.boolop(BOOL_CODE_DIFF, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        if col != []: return COLOR(result, color)
+        if color != []: return COLOR(result, color)
 	else: return result
 
 PLASM_DIFF = PLASM_DIFFERENCE        
@@ -1602,7 +1602,7 @@ SOUSTRAIRE = DIFF
 def PLASM_XOR(objs_list):
         color = GETCOLOR(objs_list[0])
         result = Plasm.boolop(BOOL_CODE_XOR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        if col != []: return COLOR(result, color)
+        if color != []: return COLOR(result, color)
 	else: return result
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
