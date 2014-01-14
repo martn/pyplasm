@@ -1553,7 +1553,10 @@ INTERSECA = INTERSECTION
 
 #also -, or DIFF, can be used to indicates DIFFERENCE
 def PLASM_DIFFERENCE (objs_list):
-        return Plasm.boolop(BOOL_CODE_DIFF, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
+        color = GETCOLOR(objs_list[0])
+        result = Plasm.boolop(BOOL_CODE_DIFF, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
+        return C(result, color)
+
 PLASM_DIFF = PLASM_DIFFERENCE        
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
