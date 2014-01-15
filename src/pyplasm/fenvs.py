@@ -1230,7 +1230,11 @@ if self_test:
 # NEW DEFINITION:
 # English:
 def TRANSLATE(obj, t1, t2, t3):
-    return PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj)
+    col = GETCOLOR(obj)
+    obj = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj)
+    if col != []: obj = COLOR(obj, col)
+    return obj
+
 T = TRANSLATE
 MOVE = TRANSLATE
 SHIFT = TRANSLATE
@@ -1283,7 +1287,11 @@ if self_test:
 # NEW DEFINITION:
 # English:
 def SCALE(obj, a, b, c):
-    return PLASM_SCALE([1, 2, 3])([a, b, c])(obj)
+    col = GETCOLOR(obj)
+    obj = PLASM_SCALE([1, 2, 3])([a, b, c])(obj)
+    if col != []: obj = COLOR(obj, col)
+    return obj
+
 S = SCALE
 # Czech:
 SKALUJ = SCALE
@@ -1326,10 +1334,14 @@ def ROTATERAD(obj, axis, angle_rad):
     if axis == 1: plane_indexes = [2, 3]
     elif axis == 2: plane_indexes = [1, 3]
     else: plane_indexes = [1, 2]
+    col = GETCOLOR(obj)
     def PLASM_ROTATE2 (pol):
         dim = max(plane_indexes)
 	return Plasm.rotate(pol, dim, plane_indexes[0] , plane_indexes[1], angle_rad)
-    return PLASM_ROTATE2(obj)    
+    obj = PLASM_ROTATE2(obj)
+    if col != []: obj = COLOR(obj, col)
+    return obj
+    
 RRAD = ROTATERAD
 # Czech:
 OTOCRAD = ROTATERAD
@@ -4465,7 +4477,7 @@ def GETCOLOR(obj):
    string = Plasm.getProperty(obj, "RGBcolor")
    col = [float(s) for s in string.split()] 
    if col == []:
-      return [255, 255, 255]
+      return col
    else:
       if len(col) < 3:
           print "Warning: There is some problem with the color of an object."
