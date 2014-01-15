@@ -879,7 +879,6 @@ def MERGE (f):
             return [list_b[0]] + MERGE_NO_CURRIED(f,[list_a, list_b[1:]])
     return lambda x: MERGE_NO_CURRIED(f,x)
 
-
 if self_test: 
 	assert(MERGE(lambda x,y:x>y)([[1,3,4,5],[2,4,8]])==[1,2,3,4,4,5,8])
 
@@ -4466,8 +4465,7 @@ def GETCOLOR(obj):
    string = Plasm.getProperty(obj, "RGBcolor")
    col = [float(s) for s in string.split()] 
    if col == []:
-      print "Warning: There is no color associated with object."
-      return col
+      return [255, 255, 255]
    else:
       if len(col) < 3:
           print "Warning: There is some problem with the color of an object."
