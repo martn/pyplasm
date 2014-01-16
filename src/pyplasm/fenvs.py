@@ -2805,6 +2805,7 @@ if self_test:
 def RULED_SURFACE(a, b):
     return PLASM_RULEDSURFACE([a, b])
 RUSURFACE = RULED_SURFACE
+RUS = RULED_SURFACE
     
 # ======================================================
 # PROFILE SURFACE
