@@ -1776,15 +1776,6 @@ DIVISIONE = INTERVALS
 # French:
 # DIVISION same as in English
 
-# NEW COMMAND FOR REFERENCE DOMAIN:
-def REF_DOMAIN(a, b, m, n):
-    #return POWER(INTERVALS(a, m), INTERVALS(b, n))
-    return SIMPLEXGRID([a, b])([m, n])
-
-def UNIT_SQUARE(n, m):
-    #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
-    return SIMPLEXGRID([1.0, 1.0])([m, n])
-
 # ===================================================
 # SIZE
 # ===================================================
@@ -4827,6 +4818,7 @@ def BBOXFRAME(bbox, eps):
     brickz = T(brickz, eps, eps, 0)
     return DIFF(bbox, brickx, bricky, brickz)
 
+# Alberto's changes to make Cartesian products simplicial:
 def cumsum(iterable):
     """ Cumulative addition: list(cumsum(range(4))) => [0, 1, 3, 6] 
         
@@ -4871,7 +4863,6 @@ def larSimplexGrid(shape):
         model = larExtrude(model,item * [1])
     return model
 
-
 def SIMPLEXGRID(size):
     """ User interface in Pyplasm.
         size = list of grid sizes in each coordinate direction;
@@ -4888,3 +4879,13 @@ def SIMPLEXGRID(size):
         coords = range(1,len(size)+1)
         return PLASM_S(coords)(scaleCoeffs)(MKPOL([verts,cells,None]))
     return model2hpc0
+
+# NEW COMMAND FOR REFERENCE DOMAIN:
+
+def REF_DOMAIN(a, b, m, n):
+    #return POWER(INTERVALS(a, m), INTERVALS(b, n))
+    return SIMPLEXGRID([a, b])([m, n])
+
+def UNIT_SQUARE(n, m):
+    #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
+    return SIMPLEXGRID([1.0, 1.0])([m, n])
