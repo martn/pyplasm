@@ -1,3 +1,7 @@
+# Alberto's change to make Cartesian products 
+# be simplexes:
+from simplexn import *
+
 # This is needed to access NCLab's object "nclabinst":
 from nclab.engines.python import NCLab
 nclabinst = NCLab.instance()
@@ -1775,11 +1779,13 @@ DIVISIONE = INTERVALS
 # DIVISION same as in English
 
 # NEW COMMAND FOR REFERENCE DOMAIN:
-def REF_DOMAIN(a, b, n, m):
-    return POWER(INTERVALS(a, n), INTERVALS(b, m))
+def REF_DOMAIN(a, b, m, n):
+    #return POWER(INTERVALS(a, m), INTERVALS(b, n))
+    return SIMPLEXGRID([a, b])([m, n])
 
 def UNIT_SQUARE(n, m):
-    return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
+    #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
+    return SIMPLEXGRID([1.0, 1.0])([m, n])
 
 # ===================================================
 # SIZE
