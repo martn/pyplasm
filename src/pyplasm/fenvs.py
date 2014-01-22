@@ -4470,6 +4470,8 @@ OR = GOLD
 # Returns a list of three numbers between 0 and 255: [R, G, B]
 # A and other properties not taken into account yet.
 def GETCOLOR(obj):
+   if not ISPOL(obj):
+      raise Exception(repr(obj) + " is not a Plasm object")
    string = Plasm.getProperty(obj, "RGBcolor")
    col = [float(s) for s in string.split()] 
    if col == []:
