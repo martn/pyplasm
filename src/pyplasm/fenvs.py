@@ -1715,9 +1715,18 @@ if self_test:
 # GRID
 # ===================================================
 
+def flatten(*args):
+    output = []
+    for arg in args:
+        if hasattr(arg, '__iter__'):
+            output.extend(flatten(*arg))
+        else:
+            output.append(arg)
+    return output
+
 # English:
 def GRID (*args):
-    sequence = list(args)
+    sequence = flatten(*args)
     cursor,points,hulls= (0,[[0]],[])
     for value in sequence:
         points = points + [[cursor + abs(value)]] 
