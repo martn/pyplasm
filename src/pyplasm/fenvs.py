@@ -1012,6 +1012,8 @@ CEGLA = BRICK
 # also BOX
 # Spanish:
 LADRILLO = BRICK
+CAJA = BRICK
+CUADRO = BRICK
 # Italian:
 COTTO = BRICK
 MATTONE = BRICK
@@ -1154,6 +1156,7 @@ HUELLE = CHULL
 HULLE = CHULL
 # Spanish:
 CASCO = CHULL
+CONVEXA = CHULL
 # Italian:
 CONVESSO = CHULL
 # French:
@@ -1713,7 +1716,8 @@ if self_test:
 # ===================================================
 
 # English:
-def GRID (sequence):
+def GRID (*args):
+    sequence = list(args)
     cursor,points,hulls= (0,[[0]],[])
     for value in sequence:
         points = points + [[cursor + abs(value)]] 
@@ -2433,6 +2437,8 @@ SCIETYSTOZEK = TRUNCONE
 KEGELSTUMPF = TRUNCONE
 # Spanish:
 CONOTRUNCADO = TRUNCONE
+TRUNCONO = TRUNCONE
+TCONO = TRUNCONE
 # Italian:
 TRONCOCONICA = TRUNCONE
 # French:
