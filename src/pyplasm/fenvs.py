@@ -1149,6 +1149,7 @@ CH = CHULL
 KONVEXNIOBAL = CHULL
 KONVEX = CHULL
 OBAL = CHULL
+KOBAL = CHULL
 # Polish:
 OTOCZKAWYPUKLA = CHULL
 OTOCZKA = CHULL
@@ -1498,6 +1499,7 @@ def STRUCT(*args):
 # Czech:
 SPOJ = STRUCT
 SPOJIT = STRUCT
+SPOJENI = STRUCT
 STRUKTURA = STRUCT
 # Polish:
 # It is also "STRUKTURA"
@@ -1682,6 +1684,7 @@ def POWER(*args):
     return PLASM_POWER(list(args))
 # Czech:
 MOCNINA = POWER
+PRODUKT = POWER
 UMOCNIT = POWER
 UMOCNI = POWER
 # Polish:
@@ -1744,6 +1747,7 @@ def GRID (*args):
 QUOTE = GRID
 # Czech:
 SIT = GRID
+MRIZ = GRID
 # Polish:
 SIATKA = GRID
 # German:
@@ -2209,6 +2213,7 @@ def CIRCLE(r, division = [64, 32]):
         return PLASM_CIRCLE(r)([division, 32])
 # Czech:
 KRUH = CIRCLE
+KRUZNICE = CIRCLE
 # Polish:
 KOLO = CIRCLE
 # German:
@@ -2448,6 +2453,7 @@ def TRUNCONE(r1, r2, h, divisions = 64):
 TCONE = TRUNCONE
 # Czech:
 KOMOLYKUZEL = TRUNCONE
+KKUZEL = TRUNCONE
 # Polish:
 SCIETYSTOZEK = TRUNCONE
 # German:
