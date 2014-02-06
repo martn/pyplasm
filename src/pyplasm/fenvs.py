@@ -912,7 +912,8 @@ def PLASM_VIEW (obj,Background=True):
 
 # Redefined function VIEW():
 def VIEW(*args):
-        nclabinst.visualize(nclabinst.converter(args))
+        sequence = flatten(*args)
+        nclabinst.visualize(nclabinst.converter(*sequence))
 V = VIEW
 SHOW = VIEW
 # Czech:
