@@ -933,6 +933,7 @@ MOSTRARE = SHOW
 MOSTRA = SHOW
 # French:
 MONTRER = SHOW
+MONTRE = SHOW
 
 # ===================================================
 # CUBOID
@@ -1026,6 +1027,7 @@ LATERIZIO = BRICK
 PARALELLEPIPEDO = BRICK
 # French:
 BRIQUE = BRICK
+BOITE = BRICK
 
 # English:
 def RECTANGLE (a, b):
@@ -1170,6 +1172,8 @@ CONVESSO = CHULL
 SPANNA = CHULL
 # French:
 CONVEXE = CHULL
+ENVELOPPE = CHULL
+DUREE = CHULL
 
 # ===================================================
 # UKPOL
@@ -1276,6 +1280,7 @@ SPOSTARE = TRANSLATE
 SPOSTA = TRANSLATE
 # French:
 DEPLACER = TRANSLATE
+DEPLACE = TRANSLATE
 
 # ===================================================
 # SCALE
@@ -1381,6 +1386,7 @@ RUOTARERAD = ROTATERAD
 RUOTARAD = ROTATERAD
 # French:
 TOURNERRAD = ROTATERAD
+TOURNERAD = ROTATERAD
 
 # English:
 def ROTATEDEG(obj, axis, angle_deg):
@@ -1413,6 +1419,7 @@ RUOTARE = ROTATE
 RUOTA = ROTATE
 # French:
 TOURNER = ROTATE
+TOURNE = ROTATE
 
 
 # ===================================================
@@ -1510,7 +1517,7 @@ SPOJENI = STRUCT
 STRUKTURA = STRUCT
 # Polish:
 # It is also "STRUKTURA"
-# German:
+#German:
 STRUKTUR = STRUCT
 VERBINDE = STRUCT
 # Spanish:
@@ -2490,7 +2497,6 @@ TRONCONO = TRUNCONE
 TCONO = TRUNCONE
 # French:
 TRONCONE = TCONE
-TRONCCONE = TCONE
 
 # =============================================
 # DODECAHEDRON
