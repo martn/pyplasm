@@ -949,6 +949,7 @@ if self_test:
 
 # English:
 def CUBE (side):
+    if side <= 0: raise Exception("CUBE(x) requires a positive value of x")
     return CUBOID([side, side, side])
 # Czech:
 KRYCHLE = CUBE
