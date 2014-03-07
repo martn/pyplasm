@@ -1,8 +1,13 @@
+# coding=UTF-8
+
 from scipy import reshape
 
 # This is needed to access NCLab's object "nclabinst":
 from nclab.engines.python import NCLab
 nclabinst = NCLab.instance()
+
+# Import exceptions without traceback:
+from nclab.tools import ExceptionWT
 
 # This is needed to measure time:
 import time
@@ -905,36 +910,78 @@ if self_test:
 
 # THIS was originally VIEW() but we need to 
 # redefine it below.
-def PLASM_VIEW (obj,Background=True):
-	if self_test: Background=False
-	Plasm.View(obj,Background) 
-	return obj
+def PLASM_VIEW (obj, Background = True):
+    if self_test: Background = False
+    Plasm.View(obj, Background) 
+    return obj
 
-# Redefined function VIEW():
+# English:
 def VIEW(*args):
-        sequence = flatten(*args)
-        if len(sequence == 0): raise Exception("The SHOW(...) command must contain at least one object!")
-        nclabinst.visualize(nclabinst.converter(sequence))
-V = VIEW
-SHOW = VIEW
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("The VIEW(...) command must contain at least one object!")
+    nclabinst.visualize(nclabinst.converter(sequence))
+def V(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("The V(...) command must contain at least one object!")
+    nclabinst.visualize(nclabinst.converter(sequence))
+def SHOW(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("The SHOW(...) command must contain at least one object!")
+    nclabinst.visualize(nclabinst.converter(sequence))
 # Czech:
-UKAZ = SHOW
-ZOBRAZ = SHOW
+def UKAZ(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("Příkaz UKAZ(...) musí obsahovat alespoň jeden objekt!")
+    nclabinst.visualize(nclabinst.converter(sequence))
+def ZOBRAZ(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("Příkaz ZOBRAZ(...) musí obsahovat alespoň jeden objekt!")
+    nclabinst.visualize(nclabinst.converter(sequence))
 # Polish:
-ZOBACZ = SHOW
-POKAZ = SHOW
+def ZOBACZ(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("Poleceń ZOBACZ(...) musi zawierać co najmniej jeden obiekt!")
+    nclabinst.visualize(nclabinst.converter(sequence))
+def POKAZ(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("Poleceń POKAZ(...) musi zawierać co najmniej jeden obiekt!")
+    nclabinst.visualize(nclabinst.converter(sequence))
 # German:
-ZEIGE = SHOW
-ANSICHT = SHOW
+def ZEIGE(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("Der Befehl ZEIGE(...) muss mindestens ein Objekt enthalten!")
+    nclabinst.visualize(nclabinst.converter(sequence))
+def ANSICHT(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("Der Befehl ANSICHT(...) muss mindestens ein Objekt enthalten!")
+    nclabinst.visualize(nclabinst.converter(sequence))
 # Spanish:
-MOSTRAR = SHOW
-MUESTRA = SHOW
+def MOSTRAR(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("El comando MOSTRAR(...) debe contener al menos un objeto!")
+    nclabinst.visualize(nclabinst.converter(sequence))
+def MUESTRA(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("El comando MUESTRA(...) debe contener al menos un objeto!")
+    nclabinst.visualize(nclabinst.converter(sequence))
 # Italian:
-MOSTRARE = SHOW
-MOSTRA = SHOW
+def MOSTRARE(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("Il comando MOSTRARE(...) deve contenere almeno un oggetto!")
+    nclabinst.visualize(nclabinst.converter(sequence))
+def MOSTRA(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("Il comando MOSTRA(...) deve contenere almeno un oggetto!")
+    nclabinst.visualize(nclabinst.converter(sequence))
 # French:
-MONTRER = SHOW
-MONTRE = SHOW
+def MONTRER(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("La commande MONTRER(...) doit contenir au moins un objet!")
+    nclabinst.visualize(nclabinst.converter(sequence))
+def MONTRE(*args):
+    sequence = flatten(*args)
+    if len(sequence == 0): raise ExceptionWT("La commande MONTRE(...) doit contenir au moins un objet!")
+    nclabinst.visualize(nclabinst.converter(sequence))
 
 # ===================================================
 # CUBOID
@@ -950,7 +997,7 @@ if self_test:
 
 # English:
 def CUBE (side):
-    if side <= 0: raise Exception("CUBE(x) requires a positive value of x!")
+    if side <= 0: raise ExceptionWT("CUBE(x) requires a positive value of x!")
     return CUBOID([side, side, side])
 # Czech:
 KRYCHLE = CUBE
@@ -969,7 +1016,7 @@ CUBO = CUBE
 
 # English:
 def SQUARE (side):
-    if side <= 0: raise Exception("SQUARE(x) requires a positive value of x!")
+    if side <= 0: raise ExceptionWT("SQUARE(x) requires a positive value of x!")
     return CUBOID([side, side])
 # Czech::
 CTVEREC = SQUARE
@@ -986,7 +1033,7 @@ CARRE = SQUARE
 
 # English:
 def SQUARE3D (a):
-    if a <= 0: raise Exception("SQUARE3D(x) requires a positive value of x!")
+    if a <= 0: raise ExceptionWT("SQUARE3D(x) requires a positive value of x!")
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
@@ -1007,7 +1054,7 @@ CARRE3D = SQUARE3D
 
 # English:
 def BRICK (a, b, c):
-    if a <= 0 or b <= 0 or c <= 0: raise Exception("BOX(x, y, z) requires positive dimensions x, y, z!")
+    if a <= 0 or b <= 0 or c <= 0: raise ExceptionWT("BOX(x, y, z) requires positive dimensions x, y, z!")
     return CUBOID([a, b, c])
 BOX = BRICK
 # Czech::
@@ -1036,7 +1083,7 @@ BOITE = BRICK
 
 # English:
 def RECTANGLE (a, b):
-    if a <= 0 or b <= 0: raise Exception("RECTANGLE(x, y) requires positive dimensions x, y!")
+    if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE(x, y) requires positive dimensions x, y!")
     return CUBOID([a, b])
 # Czech::
 OBDELNIK = RECTANGLE
@@ -1052,7 +1099,7 @@ RETTANGOLO = RECTANGLE
 # Same as in English
 
 def RECTANGLE3D(a, b):
-    if a <= 0 or b <= 0: raise Exception("RECTANGLE3D(x, y) requires positive dimensions x, y!")
+    if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE3D(x, y) requires positive dimensions x, y!")
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
@@ -1074,7 +1121,7 @@ RETTANGOLO3D = RECTANGLE3D
 # English:
 # Original version: HEXAHEDRON = Plasm.cube(3,-1.0/math.sqrt(3.0),+1.0/math.sqrt(3.0))
 def HEXAHEDRON(size):
-    if size <= 0: raise Exception("HEXAHEDRON(x) requires a positive value of x!")
+    if size <= 0: raise ExceptionWT("HEXAHEDRON(x) requires a positive value of x!")
     c = CUBE(size)
     return T(c, -0.5 * size, -0.5 * size, -0.5 * size)
 HEX = HEXAHEDRON
@@ -1156,7 +1203,7 @@ def PLASM_CONVEXHULL (points):
 # English:
 def CONVEXHULL(*args):
     list1 = list(args)
-    if len(list1) <= 2: raise Exception("CONVEXHULL(...) requires at least three points!")
+    if len(list1) <= 2: raise ExceptionWT("CONVEXHULL(...) requires at least three points!")
     return PLASM_CONVEXHULL(list1)
 CHULL = CONVEXHULL
 CONVEX = CHULL
@@ -1361,7 +1408,7 @@ if self_test:
 # English:
 def ROTATERAD(obj, axis, angle_rad):
     if axis != 1 and axis != 2 and axis != 3: 
-      raise Exception("The second argument of the ROTATE command must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
+      raise ExceptionWT("The second argument of the ROTATE command must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
     if axis == 1: plane_indexes = [2, 3]
     elif axis == 2: plane_indexes = [1, 3]
     else: plane_indexes = [1, 2]
@@ -1403,7 +1450,7 @@ TOURNERAD = ROTATERAD
 # English:
 def ROTATEDEG(obj, axis, angle_deg):
     if axis != 1 and axis != 2 and axis != 3: 
-      raise Exception("The second argument of the ROTATE command must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
+      raise ExceptionWT("The second argument of the ROTATEDEG command must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
     angle_rad = angle_deg * PI / 180.0
     return ROTATERAD(obj, axis, angle_rad)
 ROTATE = ROTATEDEG
@@ -1524,7 +1571,7 @@ if self_test:
 # English:
 def STRUCT(*args):
     list1 = list(args)
-    if len(list1) <= 1: raise Exception("STRUCT(...) requires at least two objects!")
+    if len(list1) <= 1: raise ExceptionWT("STRUCT(...) requires at least two objects!")
     return PLASM_STRUCT(list1)
 # Czech:
 SPOJ = STRUCT
@@ -1559,7 +1606,7 @@ def PLASM_UNION(objs_list):
 # English:
 def UNION(*args):
     list1 = list(args)
-    if len(list1) <= 1: raise Exception("UNION(...) requires at least two objects!")
+    if len(list1) <= 1: raise ExceptionWT("UNION(...) requires at least two objects!")
     return PLASM_UNION(list1)
 U = UNION
 SUM = UNION
@@ -1598,7 +1645,7 @@ PLASM_I = PLASM_INTERSECTION
 # English:
 def INTERSECTION(*args):
     list1 = list(args)
-    if len(list1) <= 1: raise Exception("INTERSECTION(...) requires at least two objects!")
+    if len(list1) <= 1: raise ExceptionWT("INTERSECTION(...) requires at least two objects!")
     return PLASM_INTERSECTION(list1)
 I = INTERSECTION
 # Czech:
@@ -1631,7 +1678,7 @@ PLASM_DIFF = PLASM_DIFFERENCE
 # English:
 def DIFFERENCE(*args):
     list1 = list(args)
-    if len(list1) <= 1: raise Exception("DIFFERENCE(...) requires at least two objects!")
+    if len(list1) <= 1: raise ExceptionWT("DIFFERENCE(...) requires at least two objects!")
     return PLASM_DIFFERENCE(list1)
 DIFF = DIFFERENCE
 D = DIFF
@@ -1705,7 +1752,7 @@ def JOIN(a, b = None):
 def PLASM_POWER (objs_list):
      
      if not isinstance(objs_list,list) or len(objs_list)!=2:
-        raise Exception("POWER can only be applied to a list of 2 arguments!") 
+        raise ExceptionWT("POWER(b, h) requires two arguments: 2D object b and a height h!") 
 
      if ISNUM(objs_list[0]) and ISNUM(objs_list[1]):
         return math.pow(objs_list[0], objs_list[1])
@@ -1720,7 +1767,7 @@ if self_test:
 # English:
 def POWER(*args):
     list1 = list(args)
-    if len(list1) != 2: raise Exception("POWER(b, h) requires two arguments: 2D object b and a height h!!")
+    if len(list1) != 2: raise Exception("POWER(b, h) requires two arguments: 2D object b and a height h!")
     return PLASM_POWER(list1)
 PRODUCT = POWER
 # Czech:
@@ -1786,7 +1833,7 @@ def flatten(*args):
 # English:
 def GRID (*args):
     sequence = flatten(*args)
-    if len(sequence) == 0: raise Exception("GRID(...) requires at least one interval length!")
+    if len(sequence) == 0: raise ExceptionWT("GRID(...) requires at least one interval length!")
     cursor,points,hulls= (0,[[0]],[])
     for value in sequence:
         points = points + [[cursor + abs(value)]] 
@@ -2223,15 +2270,15 @@ def PLASM_TUBE (args):
 # English:
 def TUBE(r1, r2, h, division = 64):
     if r1 <= 0: 
-        raise Exception("Inner radius r1 in TUBE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Inner radius r1 in TUBE(r1, r2, h) must be positive!")
     if r2 <= 0: 
-        raise Exception("Outer radius r2 in TUBE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Outer radius r2 in TUBE(r1, r2, h) must be positive!")
     if h <= 0: 
-        raise Exception("Height h in TUBE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Height h in TUBE(r1, r2, h) must be positive!")
     if r1 >= r2: 
-        raise Exception("Inner radius r1 must be smaller than outer radius r2 in TUBE(r1, r2, h)!")
+        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in TUBE(r1, r2, h)!")
     if division < 3: 
-        raise Exception("The number of sides n in TUBE(r1, r2, h, n) must be at least 3!")
+        raise ExceptionWT("The number of sides n in TUBE(r1, r2, h, n) must be at least 3!")
     return PLASM_TUBE([r1, r2, h])(division)
 # Czech:
 TRUBICE = TUBE
@@ -2268,12 +2315,12 @@ if self_test:
 # English:
 def CIRCLE(r, division = [64, 32]):
     if r <= 0: 
-        raise Exception("Radius r in CIRCLE(r) must be positive!")
+        raise ExceptionWT("Radius r in CIRCLE(r) must be positive!")
     if type(division) == list: 
         return PLASM_CIRCLE(r)(division)
     else:
         if division < 3: 
-            raise Exception("Number of edges n in CIRCLE(r, n) must be at least 3!")
+            raise ExceptionWT("Number of edges n in CIRCLE(r, n) must be at least 3!")
         return PLASM_CIRCLE(r)([division, 32])
 # Czech:
 KRUH = CIRCLE
@@ -2294,7 +2341,7 @@ ROND = CIRCLE
 
 def CIRCLE3D(r, division = [64, 32]):
     if r <= 0: 
-        raise Exception("Radius r in CIRCLE3D(r) must be positive!")
+        raise ExceptionWT("Radius r in CIRCLE3D(r) must be positive!")
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
@@ -2302,7 +2349,7 @@ def CIRCLE3D(r, division = [64, 32]):
         return PRISM(PLASM_CIRCLE(r)(division), h)
     else:
         if division < 3: 
-            raise Exception("Number of edges n in CIRCLE3D(r, n) must be at least 3!")
+            raise ExceptionWT("Number of edges n in CIRCLE3D(r, n) must be at least 3!")
         return PRISM(PLASM_CIRCLE(r)([division, 32]), h)
 # Czech:
 KRUH3D = CIRCLE3D
@@ -2340,11 +2387,11 @@ if self_test:
 # English:
 def CYLINDER(r, h, division = 64):
     if r <= 0: 
-        raise Exception("Radius r in CYLINDER(r, h) must be positive!")
+        raise ExceptionWT("Radius r in CYLINDER(r, h) must be positive!")
     if h <= 0: 
-        raise Exception("Height h in CYLINDER(r, h) must be positive!")
+        raise ExceptionWT("Height h in CYLINDER(r, h) must be positive!")
     if division < 3: 
-        raise Exception("Number of sides n in CYLINDER(r, h, n) must be at least 3!")
+        raise ExceptionWT("Number of sides n in CYLINDER(r, h, n) must be at least 3!")
     return PLASM_CYLINDER([r, h])(division)
 CYL = CYLINDER
 # Czech:
@@ -2387,14 +2434,14 @@ if self_test:
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
 def SPHERE_SURFACE(radius, divisions = [24, 48]):
     if r <= 0: 
-        raise Exception("Radius r in SPHERE_SURFACE(r) must be positive!")
+        raise ExceptionWT("Radius r in SPHERE_SURFACE(r) must be positive!")
     # This is a surface:
     return PLASM_SPHERE(radius)(divisions)
 
 # English:
 def SPHERE(radius, divisions = [24, 48]):
     if r <= 0: 
-        raise Exception("Radius r in SPHERE(r) must be positive!")
+        raise ExceptionWT("Radius r in SPHERE(r) must be positive!")
     # Making it s solid:
     return PLASM_JOIN(PLASM_SPHERE(radius)(divisions))
 # Czech:
@@ -2438,11 +2485,11 @@ if self_test:
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
 def TORUS_SURFACE(r1, r2, divisions = [64, 32]):
     if r1 <= 0: 
-        raise Exception("Inner radius r1 in TORUS_SURFACE(r1, r2) must be positive!")
+        raise ExceptionWT("Inner radius r1 in TORUS_SURFACE(r1, r2) must be positive!")
     if r2 <= 0: 
-        raise Exception("Outer radius r2 in TORUS_SURFACE(r1, r2) must be positive!")
+        raise ExceptionWT("Outer radius r2 in TORUS_SURFACE(r1, r2) must be positive!")
     if r2 <= r1: 
-        raise Exception("Inner radius r1 must be smaller than outer radius r2 in TORUS_SURFACE(r1, r2)!")
+        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in TORUS_SURFACE(r1, r2)!")
     return PLASM_TORUS([r1, r2])(divisions)
 
 # =============================================
@@ -2469,11 +2516,11 @@ if self_test:
 # English:
 def TORUS(r1, r2, divisions = [64, 32]):
     if r1 <= 0: 
-        raise Exception("Inner radius r1 in TORUS(r1, r2) must be positive!")
+        raise ExceptionWT("Inner radius r1 in TORUS(r1, r2) must be positive!")
     if r2 <= 0: 
-        raise Exception("Outer radius r2 in TORUS(r1, r2) must be positive!")
+        raise ExceptionWT("Outer radius r2 in TORUS(r1, r2) must be positive!")
     if r2 <= r1: 
-        raise Exception("Inner radius r1 must be smaller than outer radius r2 in TORUS(r1, r2)!")
+        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in TORUS(r1, r2)!")
     return PLASM_SOLIDTORUS([r1, r2])([divisions[0], divisions[1], 1])
 DONUT = TORUS
 # Czech:
@@ -2508,11 +2555,11 @@ if self_test:
 # English:
 def CONE(r, h, division = 64):
     if r <= 0: 
-        raise Exception("Radius r in CONE(r, h) must be positive!")
+        raise ExceptionWT("Radius r in CONE(r, h) must be positive!")
     if h <= 0: 
-        raise Exception("Height h in CONE(r, h) must be positive!")
+        raise ExceptionWT("Height h in CONE(r, h) must be positive!")
     if division < 3: 
-        raise Exception("Number of sides n in CONE(r, h, n) must be at least 3!")
+        raise ExceptionWT("Number of sides n in CONE(r, h, n) must be at least 3!")
     return PLASM_CONE([r, h])(division)
 
 # Czech:
@@ -2549,13 +2596,13 @@ def PLASM_TRUNCONE (args):
 # English:
 def TRUNCONE(r1, r2, h, divisions = 64):
     if r1 <= 0: 
-        raise Exception("Bottom radius r1 in TRUNCONE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Bottom radius r1 in TRUNCONE(r1, r2, h) must be positive!")
     if r2 <= 0: 
-        raise Exception("Top radius r2 in TRUNCONE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Top radius r2 in TRUNCONE(r1, r2, h) must be positive!")
     if h <= 0: 
-        raise Exception("Height h in TRUNCONE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Height h in TRUNCONE(r1, r2, h) must be positive!")
     if divisions < 3: 
-        raise Exception("Number of sides n in TRUNCONE(r1, r2, h, n) must be at least 3!")
+        raise ExceptionWT("Number of sides n in TRUNCONE(r1, r2, h, n) must be at least 3!")
     # Changing to a solid:
     return PLASM_JOIN(PLASM_TRUNCONE([r1, r2, h])(divisions))
 TCONE = TRUNCONE
@@ -2676,16 +2723,16 @@ TETRAEDRE = TETRAHEDRON
 # English:
 def TRIANGLE(a, b, c):
     if not isinstance(a, list): 
-        raise Exception("First argument a in TRIANGLE(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
+        raise ExceptionWT("First argument a in TRIANGLE(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
     if not isinstance(b, list): 
-        raise Exception("Second argument b in TRIANGLE(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
+        raise ExceptionWT("Second argument b in TRIANGLE(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
     if not isinstance(c, list): 
-        raise Exception("Third argument c in TRIANGLE(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
+        raise ExceptionWT("Third argument c in TRIANGLE(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
     la = len(a)
     lb = len(b)
     lc = len(c)
     if la != lb or la != lc or lb != lc:
-        raise Exception("All points a, b, c in TRIANGLE(a, b, c) must be 2D points, or all must be 3D points!")
+        raise ExceptionWT("All points a, b, c in TRIANGLE(a, b, c) must be 2D points, or all must be 3D points!")
     return PLASM_CONVEXHULL([a, b, c])
 # Czech:
 TROJUHELNIK = TRIANGLE
@@ -2702,16 +2749,16 @@ TRIANGOLO = TRIANGLE
 
 def TRIANGLE3D(a, b, c):
     if not isinstance(a, list): 
-        raise Exception("First argument a in TRIANGLE3D(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
+        raise ExceptionWT("First argument a in TRIANGLE3D(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
     if not isinstance(b, list): 
-        raise Exception("Second argument b in TRIANGLE3D(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
+        raise ExceptionWT("Second argument b in TRIANGLE3D(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
     if not isinstance(c, list): 
-        raise Exception("Third argument c in TRIANGLE3D(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
+        raise ExceptionWT("Third argument c in TRIANGLE3D(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
     la = len(a)
     lb = len(b)
     lc = len(c)
     if la != lb or la != lc or lb != lc:
-        raise Exception("All points a, b, c in TRIANGLE3D(a, b, c) must be 2D points, or all must be 3D points!")
+        raise ExceptionWT("All points a, b, c in TRIANGLE3D(a, b, c) must be 2D points, or all must be 3D points!")
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
@@ -2885,7 +2932,7 @@ def PLASM_BEZIERCURVE (controlpoints):
 def BEZIER_1(*args):
     list1 = list(args)
     if len(list1) <= 1:
-        raise Exception("BEZIER curve expects at least two control points!")
+        raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S1)(list1)
 
 BE_1 = BEZIER_1
@@ -2893,7 +2940,7 @@ BE_1 = BEZIER_1
 def BEZIER_2(*args):
     list1 = list(args)
     if len(list1) <= 1:
-        raise Exception("BEZIER curve expects at least two control points!")
+        raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S2)(list1)
 
 BE_2 = BEZIER_2
@@ -2901,7 +2948,7 @@ BE_2 = BEZIER_2
 def BEZIER_3(*args):
     list1 = list(args)
     if len(list1) <= 1:
-        raise Exception("BEZIER curve expects at least two control points!")
+        raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S3)(list1)
 
 BE_3 = BEZIER_3
@@ -3283,7 +3330,7 @@ def PLASM_PRISM (HEIGHT):
 # NEW DEFINITION
 # English:
 def PRISM(basis, h):
-    if h <= 0: raise Exception("Height h in PRISM(base, h) must be positive!")
+    if h <= 0: raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
     return PLASM_PRISM(h)(basis)
 # Czech:
 HRANOL = PRISM
@@ -4416,19 +4463,19 @@ def COLOR(o, col):
     if col == []: return o
     # Sanity checks:
     if len(col) <> 3 and len(col) <> 4:
-      raise Exception("Color must be a list of length 3 (R, G, B) or 4 (R, G, B, A)!")
+      raise ExceptionWT("Color must be a list of length 3 (R, G, B) or 4 (R, G, B, A)!")
     if col[0] < 0 or col[0] > 255 or col[1] < 0 or col[1] > 255 or col[2] < 0 or col[2] > 255:
-       raise Exception("RGB values in color definition must lie between 0 and 255!")
+       raise ExceptionWT("RGB values in color definition must lie between 0 and 255!")
     if len(col) == 4:
       if col[3] < 0 or col[3] > 1:
-        raise Exception("Opacity value in color definition must be between 0 and 1!")
+        raise ExceptionWT("Opacity value in color definition must be between 0 and 1!")
     # Normalizing RGB between 0 and 1 if necessary:
     if col[0] > 1 or col[1] > 1 or col[2] > 1:
       col[0] = col[0] / 255.
       col[1] = col[1] / 255.
       col[2] = col[2] / 255.
   else:
-    raise Exception("Color must be a list: either [R, G, B] or [R, G, B, A]!")
+    raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
   return PLASM_COLOR(col)(o)
 C = COLOR
 # Czech:
@@ -4463,7 +4510,7 @@ def PLASM_COLOR(Cpl):
 		Cpl=Color4f(Cpl[0],Cpl[1],Cpl[2],Cpl[3] if len(Cpl)>=4 else 1.0)
 
 	if not isinstance(Cpl,Color4f):
-		raise Exception("Cannot transform " + repr(Cpl) + " to Color4f!")
+		raise ExceptionWT("Cannot transform " + repr(Cpl) + " to Color4f!")
 
 	def PLASM_COLOR0(pol):
 		return Plasm.addProperty(pol, "RGBcolor", formatColor(Cpl))
