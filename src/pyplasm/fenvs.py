@@ -914,74 +914,76 @@ def PLASM_VIEW (obj, Background = True):
     if self_test: Background = False
     Plasm.View(obj, Background) 
     return obj
+def VIEWBASE(sequence):
+    nclabinst.visualize(nclabinst.converter(sequence))
 
 # English:
 def VIEW(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("The VIEW(...) command must contain at least one object!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 def V(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("The V(...) command must contain at least one object!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 def SHOW(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("The SHOW(...) command must contain at least one object!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 # Czech:
 def UKAZ(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("Příkaz UKAZ(...) musí obsahovat alespoň jeden objekt!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 def ZOBRAZ(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("Příkaz ZOBRAZ(...) musí obsahovat alespoň jeden objekt!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 # Polish:
 def ZOBACZ(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("Poleceń ZOBACZ(...) musi zawierać co najmniej jeden obiekt!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 def POKAZ(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("Poleceń POKAZ(...) musi zawierać co najmniej jeden obiekt!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 # German:
 def ZEIGE(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("Der Befehl ZEIGE(...) muss mindestens ein Objekt enthalten!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 def ANSICHT(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("Der Befehl ANSICHT(...) muss mindestens ein Objekt enthalten!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 # Spanish:
 def MOSTRAR(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("El comando MOSTRAR(...) debe contener al menos un objeto!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 def MUESTRA(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("El comando MUESTRA(...) debe contener al menos un objeto!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 # Italian:
 def MOSTRARE(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("Il comando MOSTRARE(...) deve contenere almeno un oggetto!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 def MOSTRA(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("Il comando MOSTRA(...) deve contenere almeno un oggetto!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 # French:
 def MONTRER(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("La commande MONTRER(...) doit contenir au moins un objet!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 def MONTRE(*args):
     sequence = flatten(*args)
     if len(sequence == 0): raise ExceptionWT("La commande MONTRE(...) doit contenir au moins un objet!")
-    nclabinst.visualize(nclabinst.converter(sequence))
+    VIEWBASE(sequence)
 
 # ===================================================
 # CUBOID
