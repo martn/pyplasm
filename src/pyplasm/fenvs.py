@@ -928,61 +928,61 @@ def V(*args):
     VIEWBASE(sequence)
 def SHOW(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("The SHOW(...) command must contain at least one object!")
+    if len(sequence) == 0: raise ExceptionWT("The SHOW(...) command must contain at least one object!")
     VIEWBASE(sequence)
 # Czech:
 def UKAZ(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("Příkaz UKAZ(...) musí obsahovat alespoň jeden objekt!")
+    if len(sequence) == 0: raise ExceptionWT("Příkaz UKAZ(...) musí obsahovat alespoň jeden objekt!")
     VIEWBASE(sequence)
 def ZOBRAZ(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("Příkaz ZOBRAZ(...) musí obsahovat alespoň jeden objekt!")
+    if len(sequence) == 0: raise ExceptionWT("Příkaz ZOBRAZ(...) musí obsahovat alespoň jeden objekt!")
     VIEWBASE(sequence)
 # Polish:
 def ZOBACZ(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("Poleceń ZOBACZ(...) musi zawierać co najmniej jeden obiekt!")
+    if len(sequence) == 0: raise ExceptionWT("Poleceń ZOBACZ(...) musi zawierać co najmniej jeden obiekt!")
     VIEWBASE(sequence)
 def POKAZ(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("Poleceń POKAZ(...) musi zawierać co najmniej jeden obiekt!")
+    if len(sequence) == 0: raise ExceptionWT("Poleceń POKAZ(...) musi zawierać co najmniej jeden obiekt!")
     VIEWBASE(sequence)
 # German:
 def ZEIGE(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("Der Befehl ZEIGE(...) muss mindestens ein Objekt enthalten!")
+    if len(sequence) == 0: raise ExceptionWT("Der Befehl ZEIGE(...) muss mindestens ein Objekt enthalten!")
     VIEWBASE(sequence)
 def ANSICHT(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("Der Befehl ANSICHT(...) muss mindestens ein Objekt enthalten!")
+    if len(sequence) == 0: raise ExceptionWT("Der Befehl ANSICHT(...) muss mindestens ein Objekt enthalten!")
     VIEWBASE(sequence)
 # Spanish:
 def MOSTRAR(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("El comando MOSTRAR(...) debe contener al menos un objeto!")
+    if len(sequence) == 0: raise ExceptionWT("El comando MOSTRAR(...) debe contener al menos un objeto!")
     VIEWBASE(sequence)
 def MUESTRA(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("El comando MUESTRA(...) debe contener al menos un objeto!")
+    if len(sequence) == 0: raise ExceptionWT("El comando MUESTRA(...) debe contener al menos un objeto!")
     VIEWBASE(sequence)
 # Italian:
 def MOSTRARE(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("Il comando MOSTRARE(...) deve contenere almeno un oggetto!")
+    if len(sequence) == 0: raise ExceptionWT("Il comando MOSTRARE(...) deve contenere almeno un oggetto!")
     VIEWBASE(sequence)
 def MOSTRA(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("Il comando MOSTRA(...) deve contenere almeno un oggetto!")
+    if len(sequence) == 0: raise ExceptionWT("Il comando MOSTRA(...) deve contenere almeno un oggetto!")
     VIEWBASE(sequence)
 # French:
 def MONTRER(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("La commande MONTRER(...) doit contenir au moins un objet!")
+    if len(sequence) == 0: raise ExceptionWT("La commande MONTRER(...) doit contenir au moins un objet!")
     VIEWBASE(sequence)
 def MONTRE(*args):
     sequence = flatten(*args)
-    if len(sequence == 0): raise ExceptionWT("La commande MONTRE(...) doit contenir au moins un objet!")
+    if len(sequence) == 0: raise ExceptionWT("La commande MONTRE(...) doit contenir au moins un objet!")
     VIEWBASE(sequence)
 
 # ===================================================
