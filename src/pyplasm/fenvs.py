@@ -2435,14 +2435,14 @@ if self_test:
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
 def SPHERE_SURFACE(radius, divisions = [24, 48]):
-    if r <= 0: 
+    if radius <= 0: 
         raise ExceptionWT("Radius r in SPHERE_SURFACE(r) must be positive!")
     # This is a surface:
     return PLASM_SPHERE(radius)(divisions)
 
 # English:
 def SPHERE(radius, divisions = [24, 48]):
-    if r <= 0: 
+    if radius <= 0: 
         raise ExceptionWT("Radius r in SPHERE(r) must be positive!")
     # Making it s solid:
     return PLASM_JOIN(PLASM_SPHERE(radius)(divisions))
