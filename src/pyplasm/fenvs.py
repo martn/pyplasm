@@ -1708,6 +1708,7 @@ SOTTRARRE = DIFF
 SOTTRAI = DIFF
 # French:
 SOUSTRAIRE = DIFF
+SOUSTRAIS = DIFF
 # DIFF same as in English
 
 
