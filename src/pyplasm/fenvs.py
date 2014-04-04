@@ -1306,7 +1306,7 @@ if self_test:
 
 # NEW DEFINITION:
 # English:
-def TRANSLATE(obj, t1, t2, t3):
+def TRANSLATE(obj, t1, t2, t3 = 0):
     col = GETCOLOR(obj)
     obj = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj)
     if col != []: obj = COLOR(obj, col)
@@ -1408,9 +1408,9 @@ if self_test:
 
 # NEW DEFINITION
 # English:
-def ROTATERAD(obj, axis, angle_rad):
+def ROTATERAD(obj, angle_rad, axis = 3):
     if axis != 1 and axis != 2 and axis != 3: 
-      raise ExceptionWT("The second argument of the ROTATE command must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
+      raise ExceptionWT("The third argument of ROTATERAD must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
     if axis == 1: plane_indexes = [2, 3]
     elif axis == 2: plane_indexes = [1, 3]
     else: plane_indexes = [1, 2]
@@ -1450,11 +1450,11 @@ TOURNERRAD = ROTATERAD
 TOURNERAD = ROTATERAD
 
 # English:
-def ROTATEDEG(obj, axis, angle_deg):
+def ROTATEDEG(obj, angle_deg, axis = 3):
     if axis != 1 and axis != 2 and axis != 3: 
-      raise ExceptionWT("The second argument of the ROTATEDEG command must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
+      raise ExceptionWT("The third argument of ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
     angle_rad = angle_deg * PI / 180.0
-    return ROTATERAD(obj, axis, angle_rad)
+    return ROTATERAD(obj, angle_rad, axis)
 ROTATE = ROTATEDEG
 RDEG = ROTATEDEG
 R = ROTATEDEG
