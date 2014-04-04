@@ -1364,7 +1364,7 @@ if self_test:
 
 # NEW DEFINITION:
 # English:
-def SCALE(obj, a, b, c):
+def SCALE(obj, a, b, c = 1.0):
     col = GETCOLOR(obj)
     obj = PLASM_SCALE([1, 2, 3])([a, b, c])(obj)
     if col != []: obj = COLOR(obj, col)
