@@ -2385,12 +2385,12 @@ ROND3D = CIRCLE3D
 
 def PLASM_ARC (params):
     r1, r2, angle = params
-    def PLASM_CIRCLE0 (subs):
+    def PLASM_ARC0 (subs):
         N , M = subs
         domain= PLASM_POWER([PLASM_INTERVALS(angle*PI/180.)(N), PLASM_INTERVALS(r2 - r1)(M)])
         fun=lambda p: [(p[1] + r1)*math.cos(p[0]), (p[1] + r1)*math.sin(p[0])]
         return PLASM_MAP(fun)(domain)
-    return PLASM_CIRCLE0
+    return PLASM_ARC0
 
 # NEW DEFINITION
 # English:
