@@ -2268,7 +2268,7 @@ def RING(r1, r2, division = [64, 32]):
     if r1 >= r2: 
         raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in RING(r1, r2)!")
     if type(division) == list: 
-        return PLASM_RING(r1, r2)(division)
+        return PLASM_RING([r1, r2])(division)
     else:
         if division < 3: 
             raise ExceptionWT("Number of edges n in RING(r1, r2, n) must be at least 3!")
