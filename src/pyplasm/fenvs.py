@@ -3860,12 +3860,12 @@ if self_test:
 
 
 # ===================================================
-# ARC
+# ARC - OLD
 # ===================================================
 
-def ARC(args):
-	degrees , cents = args
-	return PI*(degrees+cents)/(100.0*180.0)
+#def ARC(args):
+#	degrees , cents = args
+#	return PI*(degrees+cents)/(100.0*180.0)
 
 
 # ===================================================
