@@ -2370,6 +2370,37 @@ ROND3D = CIRCLE3D
 
 
 # =============================================
+# CIRCULAR ARC 
+# =============================================
+
+def PLASM_ARC (params):
+    r1, r2, angle = params
+    def PLASM_CIRCLE0 (subs):
+        N , M = subs
+        domain= PLASM_POWER([PLASM_INTERVALS(angle*PI/180.)(N), PLASM_INTERVALS(r2 - r1)(M)])
+        fun=lambda p: [(p[1] + r1)*math.cos(p[0]), (p[1] + r1)*math.sin(p[0])]
+        return PLASM_MAP(fun)(domain)
+    return PLASM_CIRCLE0
+
+# NEW DEFINITION
+# English:
+def ARC(r1, r2, angle, division = [64, 32]):
+    if r1 < 0: 
+        raise ExceptionWT("Radius r1 in ARC(r1, r2, angle) must be nonnegative!")
+    if r2 <= r1: 
+        raise ExceptionWT("Radiuses r1 and r2 in ARC(r1, r2, angle) must satisfy r1 < r2!")
+    if angle <= 0: 
+        raise ExceptionWT("Angle in ARC(r1, r2, angle) must be positive!")
+    if type(division) == list: 
+        return PLASM_ARC([r1, r2, angle])(division)
+    else:
+        return PLASM_ARC([r1, r2, angle])([division, 32])
+# Czech
+# TODO
+
+
+
+# =============================================
 # MY_CYLINDER 
 # =============================================
 
