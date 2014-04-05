@@ -1,7 +1,7 @@
 PLASM (Programming LAnguage for Solid Modeling)
 ===============================================
 
-Plasm is a 'design language' for geometric and solid parametric design, 
+Plasm is a design language for geometric and solid parametric design,
 developed by the CAD Group at the Universities 'La Sapienza' and 'Roma Tre' in Italy.
 
 Plasm is available both as a desktop application and in NCLab (http://nclab.com).
@@ -18,7 +18,7 @@ Install FreeImage developer library::
     sudo apt-get install libfreeimage3 libfreeimage-dev
 
 Install Freetype2 developer library::
-  
+
     sudo apt-get install libfreetype6 libfreetype6-dev
 
 Install ALSA developer library::
@@ -26,7 +26,7 @@ Install ALSA developer library::
     sudo apt-get install libasound2 libasound2-dev
 
 Install Glew developer library (libglew1.6 for new 'oneiric' release)::
-	
+
     # For older Ubuntu install libglew1.5 instead of this.
     sudo apt-get install libglew1.6 libglew1.6-dev
 
@@ -63,7 +63,7 @@ To test the PyPlasm distribution, type::
     quit()
 
 To run some other tests, type::
-	
+
     python /usr/lib/python2.7/dist-packages/pyplasm/examples.py
 
 (OPTIONAL, only for DEBUGGING) if you want to run the self test procedure xgemain::
@@ -82,14 +82,14 @@ Install Freetype2 developer library::
 
     sudo yast --install libfreetype6
     sudo yast --install freetype2-devel
-    
+
 Install ALSA developer library::
 
     sudo yast --install alsa
     sudo yast --install alsa-devel
 
 Install Glew developer library::
-	
+
     sudo yast --install glew
     sudo yast --install libGLEW1_6
     sudo yast --install libGLEW1_6-devel
@@ -115,7 +115,7 @@ To test the PyPlasm distribution, type::
     quit()
 
 To run some other tests, type::
-	
+
     python /usr/lib/python2.7/site-packages/pyplasm/examples.py
 
 (OPTIONAL, only for DEBUGGING) if you want to run the self test procedure xgemain::
