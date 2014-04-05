@@ -2260,8 +2260,18 @@ if self_test:
     assert Plasm.limits(PLASM_RING([0.5,1])([8,8]))==Boxf(Vecf(1,-1,-1),Vecf(1,+1,+1))
 
 # NEW DEFINITION
-def RING(args, division = 64):
-    return PLASM_RING(args)(division)
+def RING(r1, r2, division = 64):
+    if r1 <= 0: 
+        raise ExceptionWT("Inner radius r1 in RING(r1, r2) must be positive!")
+    if r2 <= 0: 
+        raise ExceptionWT("Outer radius r2 in RING(r1, r2) must be positive!")
+    if r1 >= r2: 
+        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in RING(r1, r2)!")
+    if division < 3: 
+        raise ExceptionWT("The number of sides n in RING(r1, r2, n) must be at least 3!")
+    return PLASM_RING([r1, r2])(division)
+# Czech
+# TODO
 
 def PLASM_TUBE (args):
     r1 , r2 , height= args
