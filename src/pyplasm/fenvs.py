@@ -3328,6 +3328,8 @@ if self_test:
 # STAR
 # ===================================================
 
+from numpy import tan
+
 def STAR (r, n):
     if n < 5: ExceptionWT("In the STAR(r, n) command, n must be at least 5!")
     if r <= 0: ExceptionWT("In the STAR(r, n) command, the radius r must be positive!")
