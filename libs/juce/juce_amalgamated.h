@@ -280,10 +280,11 @@
   #define JUCE_DIRECTSOUND 1
 #endif
 
-/** JUCE_ALSA: Enables ALSA audio devices (Linux only). */
+/** JUCE_ALSA: Enables ALSA audio devices (Linux only). 
 #ifndef JUCE_ALSA
   #define JUCE_ALSA 1
 #endif
+*/
 
 /** JUCE_JACK: Enables JACK audio devices (Linux only). */
 #ifndef JUCE_JACK

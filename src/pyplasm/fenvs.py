@@ -2279,6 +2279,28 @@ def RING(r1, r2, division = [64, 32]):
 # Czech
 # TODO
 
+
+def RING3D(r1, r2, division = [64, 32]):
+    if r1 <= 0: 
+        raise ExceptionWT("Inner radius r1 in RING3D(r1, r2) must be positive!")
+    if r2 <= 0: 
+        raise ExceptionWT("Outer radius r2 in RING3D(r1, r2) must be positive!")
+    if r1 >= r2: 
+        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in RING3D(r1, r2)!")
+    h = 0.001
+    if type(division) == list: 
+        return PRISM(PLASM_RING([r1, r2])(division), h)
+    else:
+        if division < 3: 
+            raise ExceptionWT("Number of edges n in RING3D(r1, r2, n) must be at least 3!")
+        else: return PRISM(PLASM_RING([r1, r2])([division, 32]), h)
+# Czech
+# TODO
+
+
+
+
+
 def PLASM_TUBE (args):
     r1 , r2 , height= args
     def PLASM_TUBE0 (N):
@@ -2414,7 +2436,20 @@ def ARC(r1, r2, angle, division = [64, 32]):
 # Czech
 # TODO
 
-
+def ARC3D(r1, r2, angle, division = [64, 32]):
+    if r1 < 0: 
+        raise ExceptionWT("Radius r1 in ARC3D(r1, r2, angle) must be nonnegative!")
+    if r2 <= r1: 
+        raise ExceptionWT("Radiuses r1 and r2 in ARC3D(r1, r2, angle) must satisfy r1 < r2!")
+    if angle <= 0: 
+        raise ExceptionWT("Angle in ARC3D(r1, r2, angle) must be positive!")
+    # height is kept the same for add these thin objects,
+    # so that logical operations with them work:
+    h = 0.001
+    if type(division) == list: 
+        return PRISM(PLASM_ARC([r1, r2, angle])(division), h)
+    else:
+        return PRISM(PLASM_ARC([r1, r2, angle])([division, 32]), h)
 
 # =============================================
 # MY_CYLINDER 
@@ -4572,28 +4607,28 @@ def PLASM_COLOR(Cpl):
 	return PLASM_COLOR0
 
 # English:
-GRAY    = [128, 128, 128, 1.0]
-GREY    = [128, 128, 128, 1.0]
-GREEN   = [0, 255, 0, 1.0]
-BLACK   = [0, 0, 0, 1.0]
-BLUE    = [0, 0, 255, 1.0]
-BROWN   = [139, 69, 19, 1.0]
-CYAN    = [0, 255, 255, 1.0]
-PINK = [255, 0, 255, 1.0]
-MAGENTA = [255, 0, 255, 1.0]
-ORANGE  = [255, 153, 0, 1.0]
-PURPLE  = [128, 0, 128, 1.0]
-INDIGO = [75, 0, 130]
-VIOLET = [238, 130, 238]
-WHITE   = [255, 255, 255, 1.0]
-RED     = [255, 0, 0, 1.0]
-YELLOW  = [255, 255, 0, 1.0]
-STEEL = [255, 255, 255]
-BRASS = [255, 250, 83]
-COPPER = [184, 115, 51]
-BRONZE = [140, 120, 83]
-SILVER = [230, 232, 250]
-GOLD = [226, 178, 39]
+GRAY    = [128, 128, 128]
+GREY    = [128, 128, 128]
+GREEN   = [0, 255, 0]
+BLACK   = [0, 0, 0]
+BLUE    = [0, 0, 255]
+BROWN   = [139, 69, 19]
+CYAN    = [0, 255, 255]
+PINK =    [255, 0, 255]
+MAGENTA = [255, 0, 255]
+ORANGE  = [255, 153, 0]
+PURPLE  = [128, 0, 128]
+INDIGO =  [75, 0, 130]
+VIOLET =  [238, 130, 238]
+WHITE   = [255, 255, 255]
+RED     = [255, 0, 0]
+YELLOW  = [255, 255, 0]
+STEEL =   [255, 255, 255]
+BRASS =   [255, 250, 83]
+COPPER =  [184, 115, 51]
+BRONZE =  [140, 120, 83]
+SILVER =  [230, 232, 250]
+GOLD =    [226, 178, 39]
 # Czech:
 SEDA = GRAY
 SEDIVA = GRAY
