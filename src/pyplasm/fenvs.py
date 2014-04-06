@@ -3331,8 +3331,8 @@ if self_test:
 from numpy import tan
 
 def STAR (r, n):
-    if n < 5: ExceptionWT("In the STAR(r, n) command, n must be at least 5!")
-    if r <= 0: ExceptionWT("In the STAR(r, n) command, the radius r must be positive!")
+    if n < 5: raise ExceptionWT("In the STAR(r, n) command, n must be at least 5!")
+    if r <= 0: raise ExceptionWT("In the STAR(r, n) command, the radius r must be positive!")
     beta = 2.*PI/n
     x = r / tan(beta)
     t0 = TRIANGLE([-x, 0], [x, 0], [0, r])
