@@ -3328,15 +3328,17 @@ if self_test:
 # STAR
 # ===================================================
 
-def STAR (r, N):
-    def CIRCLEPOINTS (STARTANGLE):
-        def CIRCLEPOINTS1 (r1):
-            def CIRCLEPOINTS0 (N):
-                return AA((COMP([CONS([RAISE(PROD)([K(r1),COS]), RAISE(PROD)([K(r1),SIN])]), (RAISE(PLASM_SUM)([ID,K(STARTANGLE)]))])))(((COMP([COMP([AA(RAISE(PROD)), TRANS]), CONS([K((FROMTO([1,N]))), DIESIS(N)])]))((2*PI/N))))
-            return CIRCLEPOINTS0
-        return CIRCLEPOINTS1
-    return  (COMP([COMP([TRIANGLEFAN, CAT]), TRANS]))([CIRCLEPOINTS(0)(0.2*r)(N), CIRCLEPOINTS((PI/N))(r)(N)])
-
+def STAR (r, n):
+    if n < 5: ExceptionWT("In the STAR(r, n) command, n must be at least 5!")
+    if r <= 0: ExceptionWT("In the STAR(r, n) command, the radius r must be positive!")
+    beta = 2.*PI/n
+    x = r / tan(beta)
+    t0 = TRIANGLE([-x, 0], [x, 0],[0, r])
+    l1 = [t0]
+    angle = 360./n
+    for i in range(n-1):
+        l1.append(R(t0, angle))
+    return U(*l1)
 
 
 # ===================================================
