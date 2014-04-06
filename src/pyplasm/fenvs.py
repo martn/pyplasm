@@ -3335,11 +3335,11 @@ def STAR (r, n):
     if r <= 0: ExceptionWT("In the STAR(r, n) command, the radius r must be positive!")
     beta = 2.*PI/n
     x = r / tan(beta)
-    t0 = TRIANGLE([-x, 0], [x, 0],[0, r])
+    t0 = TRIANGLE([-x, 0], [x, 0], [0, r])
     l1 = [t0]
     angle = 360./n
     for i in range(n-1):
-        l1.append(R(t0, angle))
+        l1.append(R(t0, (i+1) * angle))
     return U(*l1)
 
 
