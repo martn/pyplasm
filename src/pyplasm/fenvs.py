@@ -3325,14 +3325,14 @@ if self_test:
 # STAR
 # ===================================================
 
-def STAR (N):
+def STAR (r, N):
     def CIRCLEPOINTS (STARTANGLE):
-        def CIRCLEPOINTS1 (R):
+        def CIRCLEPOINTS1 (r1):
             def CIRCLEPOINTS0 (N):
-                return AA((COMP([CONS([RAISE(PROD)([K(R),COS]), RAISE(PROD)([K(R),SIN])]), (RAISE(PLASM_SUM)([ID,K(STARTANGLE)]))])))(((COMP([COMP([AA(RAISE(PROD)), TRANS]), CONS([K((FROMTO([1,N]))), DIESIS(N)])]))((2*PI/N))))
+                return AA((COMP([CONS([RAISE(PROD)([K(r1),COS]), RAISE(PROD)([K(r1),SIN])]), (RAISE(PLASM_SUM)([ID,K(STARTANGLE)]))])))(((COMP([COMP([AA(RAISE(PROD)), TRANS]), CONS([K((FROMTO([1,N]))), DIESIS(N)])]))((2*PI/N))))
             return CIRCLEPOINTS0
         return CIRCLEPOINTS1
-    return  (COMP([COMP([TRIANGLEFAN, CAT]), TRANS]))([CIRCLEPOINTS(0)(1)(N), CIRCLEPOINTS((PI/N))(2.5)(N)])
+    return  (COMP([COMP([TRIANGLEFAN, CAT]), TRANS]))([CIRCLEPOINTS(0)(0.2*r)(N), CIRCLEPOINTS((PI/N))(r)(N)])
 
 
 
