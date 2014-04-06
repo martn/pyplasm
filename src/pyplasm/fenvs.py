@@ -1309,8 +1309,9 @@ if self_test:
 def TRANSLATE(obj, t1, t2, t3 = 0):
     col = GETCOLOR(obj)
     if t3 == 0:
-        PLASM_TRANSLATE([1, 2])([t1, t2])(obj)
-    else: obj = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj)
+        obj = PLASM_TRANSLATE([1, 2])([t1, t2])(obj)
+    else:
+        obj = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj)
     if col != []: obj = COLOR(obj, col)
     return obj
 
