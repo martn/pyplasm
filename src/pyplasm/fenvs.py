@@ -1514,7 +1514,7 @@ def RR(obj, angle_deg, axis = 3):
       obj = ROTATERAD(obj, angle_rad, axis)
       obj = T(obj, x, y, z)
     return obj
-
+ROTATER = RR
 
 # ===================================================
 #; Applica uno shearing con vettore shearing-vector-list sulla variabile
