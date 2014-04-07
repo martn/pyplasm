@@ -1087,7 +1087,8 @@ BOITE = BRICK
 def RECTANGLE (a, b):
     if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE(x, y) requires positive dimensions x, y!")
     return CUBOID([a, b])
-# Czech::
+RECT = RECTANGLE
+# Czech:
 OBDELNIK = RECTANGLE
 # Polish:
 PROSTOKAT = RECTANGLE
