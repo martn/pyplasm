@@ -1709,11 +1709,27 @@ def PLASM_DIFFERENCE (objs_list):
 PLASM_DIFF = PLASM_DIFFERENCE        
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+# AND FIRST ITEM CAN BE A LIST (THAT PLAYS THE ROLE OF A STRUCT)
 # English:
 def DIFFERENCE(*args):
     list1 = list(args)
-    if len(list1) <= 1: raise ExceptionWT("DIFFERENCE(...) requires at least two objects!")
-    return PLASM_DIFFERENCE(list1)
+    if len(list1) <= 1: 
+        raise ExceptionWT("DIFFERENCE(...) requires at least two objects!")
+    item1 = list1[0] # this is either a single item or a list
+    if not isinstance(item1, list):
+        return PLASM_DIFF(list1)
+    else:
+        item1 = list1.pop(0)
+        result = []
+        for x in item1:
+            list1_new = [x] + list1
+            result.append(PLASM_DIFF(list1_new))
+        return result
+# OLD DEFINITION
+#def DIFFERENCE(*args):
+#    list1 = list(args)
+#    if len(list1) <= 1: raise ExceptionWT("DIFFERENCE(...) requires at least two objects!")
+#    return PLASM_DIFFERENCE(list1)
 DIFF = DIFFERENCE
 D = DIFF
 SUBTRACT = DIFF
