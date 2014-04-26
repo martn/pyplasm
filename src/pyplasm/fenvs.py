@@ -4050,20 +4050,20 @@ if self_test:
 		[[2,2],[1,3],[1,2],[2,2]]]))))
 
 # ===================================================
-# EXTRUSION - ONE PIECE IN THE VERTICAL DIRECTION
+# PLASM_EXTRUSION - ONE PIECE IN THE VERTICAL DIRECTION
 # ===================================================
 
-def EXTRUSION (angle):
-	def EXTRUSION1 (height):
-		def EXTRUSION0 (pol):
+def PLASM_EXTRUSION (angle):
+	def PLASM_EXTRUSION1 (height):
+		def PLASM_EXTRUSION0 (pol):
 			dim = DIM(pol)
 			cells=SPLITCELLS( SKELETON(dim)(pol) )
 			slice=[EMBED(1)(c) for c in cells]
 			tensor=COMP([PLASM_T(dim+1)(1.0/height),PLASM_R([dim-1,dim])(angle/height)])
 			layer=Plasm.Struct([PLASM_JOIN([p,tensor(p)]) for p in slice])
 			return (COMP([COMP([PLASM_STRUCT, CAT]), DIESIS(height)]))([layer, tensor])
-		return EXTRUSION0
-	return EXTRUSION1
+		return PLASM_EXTRUSION0
+	return PLASM_EXTRUSION1
 
 # ===================================================
 # EXTRUSION - ARBITRATRY DIVISION IN VERTICAL DIRECTION
@@ -4074,9 +4074,9 @@ def EXT(shape2d, height, angle, n=1):
   angle = angle * PI / 180.0
   da = angle / float(n)
   print "dh, da:", dh, da
-  layer = EXTRUSION(da)(dh)(shape2d)
+  layer = PLASM_EXTRUSION(da)(dh)(shape2d)
   L = []
-  for i in range(division):
+  for i in range(n):
     L.append(layer)
     layer = T(layer, 0, 0, dh)
     layer = R(layer, da, 3)
@@ -4090,7 +4090,7 @@ def EX (args):
 	x1 ,x2 = args
 	def EX0 (pol):
 		dim = DIM(pol)
-		return PLASM_T(dim+1)(x1)(PLASM_S(dim+1)(x2-x1)(EXTRUSION(0.0)(1.0)(pol)))
+		return PLASM_T(dim+1)(x1)(PLASM_S(dim+1)(x2-x1)(PLASM_EXTRUSION(0.0)(1.0)(pol)))
 	return EX0
 
 # ===================================================
@@ -4109,7 +4109,7 @@ def LEX (args):
 				return (MAT(matrix))(POL)
 			return SHEARTENSOR0
 
-		ret=EXTRUSION(0)(1)(pol)
+		ret=PLASM_EXTRUSION(0)(1)(pol)
 		ret=SHEARTENSOR(x2-x1)(ret)
 		ret=S(DIM(pol)+1)(x2-x1)(ret)
 		ret=PLASM_T(DIM(pol)+1)(x1)(ret)
@@ -4125,7 +4125,7 @@ def SEX (args):
 	def SEX1 (height):
 		def SEX0 (pol):
 			dim = DIM(pol)
-			ret=EXTRUSION(x2-x1)(height)(pol)
+			ret=PLASM_EXTRUSION(x2-x1)(height)(pol)
 			ret=PLASM_S(dim+1)(x2-x1)(ret)
 			ret=PLASM_R([dim,dim-1])(x1)(ret)
 			return ret
