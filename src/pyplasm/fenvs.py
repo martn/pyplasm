@@ -4069,16 +4069,17 @@ def EXTRUSION (angle):
 # EXTRUSION - ARBITRATRY DIVISION IN VERTICAL DIRECTION
 # ===================================================
 
-def EXT(shape2d, height, angle, division=1):
-  dh = height / float(division)
+def EXT(shape2d, height, angle, n=1):
+  dh = height / float(n)
   angle = angle * PI / 180.0
-  da = angle / float(division)
+  da = angle / float(n)
+  print "dh, da:", dh, da
   layer = EXTRUSION(da)(dh)(shape2d)
   L = []
   for i in range(division):
-    layer = T(layer, 0, 0, dh*i)
-    layer = R(layer, da, 3)
     L.append(layer)
+    layer = T(layer, 0, 0, dh)
+    layer = R(layer, da, 3)
   return L
 
 # ===================================================
