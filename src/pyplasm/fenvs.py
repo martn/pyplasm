@@ -4075,11 +4075,11 @@ def EXT(shape2d, height, angle, n=1):
   da = angle / float(n)
   layer = PLASM_EXTRUSION(da)(1)(shape2d)
   layer = S(layer, 1, 1, dh)
-  L = []
-  for i in range(n):
-    L.append(layer)
+  L = [layer]
+  for i in range(n-1):
     layer = T(layer, 0, 0, dh)
     layer = R(layer, da, 3)
+    L.append(layer)
   return L
 
 # ===================================================
