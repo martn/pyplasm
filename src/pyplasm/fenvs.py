@@ -4076,7 +4076,7 @@ def EXT(shape2d, angle, height, division=1):
   L = []
   shape = shape2d
   for i in range(division):
-    addition = EXTRUSION(shape)(dh)(da)
+    addition = EXTRUSION(da)(dh)(shape)
     addition = T(addition, 0, 0, dh*i)
     L.append(addition)
     shape = R(shape, da)
