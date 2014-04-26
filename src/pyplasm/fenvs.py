@@ -4073,13 +4073,12 @@ def EXT(shape2d, height, angle, division=1):
   dh = height / float(division)
   angle = angle * PI / 180.0
   da = angle / float(division)
+  layer = EXTRUSION(da)(dh)(shape2d)
   L = []
-  shape = shape2d
   for i in range(division):
-    addition = EXTRUSION(da)(dh)(shape)
-    addition = T(addition, 0, 0, dh*i)
-    L.append(addition)
-    shape = R(shape, da)
+    layer = T(layer, 0, 0, dh*i)
+    layer = R(layer, da, 3)
+    L.append(layer)
   return L
 
 # ===================================================
