@@ -4077,10 +4077,12 @@ def PLASM_EXTRUSION (angle):
 # ===================================================
 
 def EXTRUDE(shape2d, height, angle, n=1):
+  col = GETCOLOR(shape2d)
   dh = float(height) / n
   angle = angle * PI / 180.0
   da = float(angle) / n
   layer = PLASM_EXTRUSION(da)(1)(shape2d)
+  if col != []: layer = COLOR(layer, col)
   layer = S(layer, 1, 1, dh)
   L = [layer]
   for i in range(n-1):
