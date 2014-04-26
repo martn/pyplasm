@@ -4080,7 +4080,7 @@ def EXTRUDE(shape2d, height, angle, n=1):
     layer = TRANSLATE(layer, 0, 0, dh)
     layer = ROTATE(layer, da*180.0/PI, 3)
     L.append(layer)
-  return UNION(*L)
+  return L # I tried to return a union but it took too much time
 
 EXT = EXTRUDE
 
