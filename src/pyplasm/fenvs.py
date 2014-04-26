@@ -4073,8 +4073,8 @@ def EXT(shape2d, height, angle, n=1):
   dh = height / float(n)
   angle = angle * PI / 180.0
   da = angle / float(n)
-  print "dh, da:", dh, da
-  layer = PLASM_EXTRUSION(da)(dh)(shape2d)
+  layer = PLASM_EXTRUSION(da)(1)(shape2d)
+  layer = S(layer, 1, 1, dh)
   L = []
   for i in range(n):
     L.append(layer)
