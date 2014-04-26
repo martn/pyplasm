@@ -3318,23 +3318,23 @@ def PLASM_HERMITE(args):
 # ======================================================
 # EXTRUDE
 # ======================================================
-
-def Q(H):
-	return Plasm.mkpol(1,[0,H],[[0,1]])
-
-def PLASM_EXTRUDE (args):
-	__N, Pol, H = args
-	return Plasm.power(Pol,Q(H))
-
+#
+#def Q(H):
+#	return Plasm.mkpol(1,[0,H],[[0,1]])
+#
+#def PLASM_EXTRUDE (args):
+#	__N, Pol, H = args
+#	return Plasm.power(Pol,Q(H))
+#
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
-def EXTRUDE(*args):
-    return PLASM_EXTRUDE(list(args))
-
-def MULTEXTRUDE (P):
-	def MULTEXTRUDE0 (H):
-		return Plasm.power(P,Q(H))
-	return MULTEXTRUDE0
-
+#def EXTRUDE(*args):
+#    return PLASM_EXTRUDE(list(args))
+#
+#def MULTEXTRUDE (P):
+#	def MULTEXTRUDE0 (H):
+#		return Plasm.power(P,Q(H))
+#	return MULTEXTRUDE0
+#
 
 # ======================================================
 # PROJECT
@@ -4069,7 +4069,7 @@ def PLASM_EXTRUSION (angle):
 # EXTRUSION - ARBITRATRY DIVISION IN VERTICAL DIRECTION
 # ===================================================
 
-def EXT(shape2d, height, angle, n=1):
+def EXTRUDE(shape2d, height, angle, n=1):
   dh = float(height) / n
   angle = angle * PI / 180.0
   da = float(angle) / n
@@ -4078,9 +4078,11 @@ def EXT(shape2d, height, angle, n=1):
   L = [layer]
   for i in range(n-1):
     layer = TRANSLATE(layer, 0, 0, dh)
-    layer = ROTATE(layer, da, 3)
+    layer = ROTATE(layer, da*180.0/PI, 3)
     L.append(layer)
   return L
+
+EXT = EXTRUDE
 
 # ===================================================
 # EX
