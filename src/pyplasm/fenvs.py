@@ -4069,7 +4069,7 @@ def EXTRUSION (angle):
 # EXTRUSION - ARBITRATRY DIVISION IN VERTICAL DIRECTION
 # ===================================================
 
-def EXT(shape2d, angle, height, division=1):
+def EXT(shape2d, height, angle, division=1):
   dh = height / float(division)
   angle = angle * PI / 180.0
   da = angle / float(division)
