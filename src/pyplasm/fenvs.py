@@ -4050,7 +4050,7 @@ if self_test:
 		[[2,2],[1,3],[1,2],[2,2]]]))))
 
 # ===================================================
-# EXTRUSION
+# EXTRUSION - ONE PIECE IN THE VERTICAL DIRECTION
 # ===================================================
 
 def EXTRUSION (angle):
@@ -4064,6 +4064,23 @@ def EXTRUSION (angle):
 			return (COMP([COMP([PLASM_STRUCT, CAT]), DIESIS(height)]))([layer, tensor])
 		return EXTRUSION0
 	return EXTRUSION1
+
+# ===================================================
+# EXTRUSION - ARBITRATRY DIVISION IN VERTICAL DIRECTION
+# ===================================================
+
+def EXT(shape2d, angle, height, division=1):
+  dh = height / float(division)
+  angle = angle * PI / 180.0
+  da = angle / float(division)
+  L = []
+  shape = shape2d
+  for i in range(division):
+    addition = EXTRUSION(shape)(dh)(da)
+    addition = T(addition, 0, 0, dh*i)
+    L.append(addition)
+    shape = R(shape, da)
+  return L
 
 # ===================================================
 # EX
