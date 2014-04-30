@@ -1422,7 +1422,8 @@ if self_test:
 
 # NEW DEFINITION
 # English:
-def ROTATERAD(obj, angle_rad, axis = 3):
+# ROTATE ONE OBJECT IN RADIANS
+def ROTATERAD_ONE(obj, angle_rad, axis = 3):
     if axis != 1 and axis != 2 and axis != 3: 
       raise ExceptionWT("The third argument of ROTATERAD must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
     if axis == 1: plane_indexes = [2, 3]
@@ -1435,6 +1436,15 @@ def ROTATERAD(obj, angle_rad, axis = 3):
     obj = PLASM_ROTATE2(obj)
     if col != []: obj = COLOR(obj, col)
     return obj
+# ROTATE ONE OBJECT OR A LIST
+def ROTATERAD(obj, angle_rad, axis = 3):
+    if not isinstance(obj, list):
+        return ROTATE_ONE(obj, angle_rad, axis)
+    else:
+        L = []
+        for oo in obj:
+            L.append(ROTATE_ONE(oo, angle_rad, axis))
+        return L
     
 RRAD = ROTATERAD
 # Czech:
