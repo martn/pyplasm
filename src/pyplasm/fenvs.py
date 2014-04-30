@@ -1640,13 +1640,13 @@ if self_test:
 def STRUCT(*args):
     list1 = list(args)
     list1 = flatten(list1) # flatten the rest as there may be structs
-    if len(list1) <= 1: raise ExceptionWT("STRUCT(...) requires at least two objects!")
+    if len(list1) < 1: raise ExceptionWT("STRUCT() must be applied to some objects!")
     return list1
 # OLD DEFINITION - THERE WERE PROBLEMS WITH COLORS
-def STRUCT(*args):
-    list1 = list(args)
-    if len(list1) <= 1: raise ExceptionWT("STRUCT(...) requires at least two objects!")
-    return PLASM_STRUCT(list1)
+#def STRUCT(*args):
+#    list1 = list(args)
+#    if len(list1) <= 1: raise ExceptionWT("STRUCT(...) requires at least two objects!")
+#    return PLASM_STRUCT(list1)
 # Czech:
 SPOJ = STRUCT
 SPOJIT = STRUCT
@@ -1676,15 +1676,22 @@ def PLASM_UNION(objs_list):
         if color != []: return COLOR(result, color)
 	else: return result
 
-# NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+# NEW DEFINITION - UNION IS JUST STRUCT
 # English:
 def UNION(*args):
     list1 = list(args)
-    if len(list1) < 1: raise ExceptionWT("UNION() must be applied to some objects!")
-    # This will decompose lists and everything into one simple list of objects,
-    # no lists in lists:
-    list1 = flatten(list1)
-    return PLASM_UNION(list1)
+    list1 = flatten(list1) # flatten the rest as there may be structs
+    if len(list1) < 1: raise ExceptionWT("STRUCT() must be applied to some objects!")
+    return list1
+# OLD DEFINITION - RESULTING OBJECT JUST HAD ONE COLOR, STUDENTS DID NOT LIKE IT
+#def UNION(*args):
+#    list1 = list(args)
+#    if len(list1) < 1: raise ExceptionWT("UNION() must be applied to some objects!")
+#    # This will decompose lists and everything into one simple list of objects,
+#    # no lists in lists:
+#    list1 = flatten(list1)
+#    return PLASM_UNION(list1)
+
 U = UNION
 SUM = UNION
 # Czech:
