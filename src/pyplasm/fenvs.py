@@ -1307,7 +1307,8 @@ if self_test:
 
 # NEW DEFINITION:
 # English:
-def TRANSLATE(obj, t1, t2, t3 = 0):
+# TRANSLATE JUST ONE OBJECT
+def TRANSLATE_ONE(obj, t1, t2, t3 = 0):
     col = GETCOLOR(obj)
     if t3 == 0:
         obj = PLASM_TRANSLATE([1, 2])([t1, t2])(obj)
@@ -1315,6 +1316,15 @@ def TRANSLATE(obj, t1, t2, t3 = 0):
         obj = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj)
     if col != []: obj = COLOR(obj, col)
     return obj
+# TRANSLATE EITHER ONE OBJECT OR LIST OF OBJECTS
+def TRANSLATE(obj, t1, t2, t3 = 0):
+    if not isinstance(obj, list):
+        return TRANSLATE_ONE(obj, t1, t2, t3)
+    else:
+        L = []
+        for oo in obj:
+            L.append(TRANSLATE_ONE(obj, t1, t2, t3))
+        return L
 
 T = TRANSLATE
 MOVE = TRANSLATE
@@ -1603,6 +1613,14 @@ if self_test:
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
 # English:
+# NEW DEFINITION - STRUCT IS JUST A LIST, IT CAN BE EASILY DECOMPOSED
+# BACK INTO INDIVIDUAL OBJECTS WHICH IS VERY MUCH NEEDED
+def STRUCT(*args):
+    list1 = list(args)
+    list1 = flatten(list1) # flatten the rest as there may be structs
+    if len(list1) <= 1: raise ExceptionWT("STRUCT(...) requires at least two objects!")
+    return list1
+# OLD DEFINITION - THERE WERE PROBLEMS WITH COLORS
 def STRUCT(*args):
     list1 = list(args)
     if len(list1) <= 1: raise ExceptionWT("STRUCT(...) requires at least two objects!")
