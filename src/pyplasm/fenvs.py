@@ -1519,13 +1519,15 @@ TOURNER = ROTATE
 TOURNE = ROTATE
 
 # ===================================================
-# RELATIVE ROTATION - ABOUT THE OBJECTS OWN CENTER
+# RELATIVE ROTATION - ABOUT THE OBJECT'S OWN CENTER
 # ===================================================
 
 # English:
 def RR(obj, angle_deg, axis = 3):
+    if isinstance(obj, list):
+      raise ExceptionWT("Command RR (rotation about objects own center) can only be applied to single objects!")
     if axis != 1 and axis != 2 and axis != 3: 
-      raise ExceptionWT("The third argument of ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
+      raise ExceptionWT("The third argument of the command RR (rotation about objects own center) must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
     angle_rad = angle_deg * PI / 180.0
     # Calculate the dimension:
     dim = DIM(obj)
@@ -1678,7 +1680,10 @@ def PLASM_UNION(objs_list):
 # English:
 def UNION(*args):
     list1 = list(args)
-    if len(list1) <= 1: raise ExceptionWT("UNION(...) requires at least two objects!")
+    if len(list1) < 1: raise ExceptionWT("UNION() must be applied to some objects!")
+    # This will decompose lists and everything into one simple list of objects,
+    # no lists in lists:
+    list1 = flatten(list1)
     return PLASM_UNION(list1)
 U = UNION
 SUM = UNION
