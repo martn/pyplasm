@@ -1439,11 +1439,11 @@ def ROTATERAD_ONE(obj, angle_rad, axis = 3):
 # ROTATE ONE OBJECT OR A LIST
 def ROTATERAD(obj, angle_rad, axis = 3):
     if not isinstance(obj, list):
-        return ROTATE_ONE(obj, angle_rad, axis)
+        return ROTATERAD_ONE(obj, angle_rad, axis)
     else:
         L = []
         for oo in obj:
-            L.append(ROTATE_ONE(oo, angle_rad, axis))
+            L.append(ROTATERAD_ONE(oo, angle_rad, axis))
         return L
     
 RRAD = ROTATERAD
