@@ -1378,11 +1378,21 @@ if self_test:
 
 # NEW DEFINITION:
 # English:
-def SCALE(obj, a, b, c = 1.0):
+# SCALE ONE OBJECT
+def SCALE_ONE(obj, a, b, c = 1.0):
     col = GETCOLOR(obj)
     obj = PLASM_SCALE([1, 2, 3])([a, b, c])(obj)
     if col != []: obj = COLOR(obj, col)
     return obj
+# SCALE ONE OBJECT OR A LIST
+def SCALE(obj, a, b, c):
+    if not isinstance(obj, list):
+        return SCALE_ONE(obj, a, b, c)
+    else:
+        L = []
+        for oo in obj:
+            L.append(SCALE_ONE(oo, a, b, c))
+        return L
 
 S = SCALE
 # Czech:
