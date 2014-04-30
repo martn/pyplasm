@@ -4669,8 +4669,9 @@ if self_test:
 
 # Change it to procedural style:
 # English:
-def COLOR(o, col):
-  # Check if it is a list:
+# COLORING ONE OBJECT ONLY
+def COLOR_ONE(o, col):
+  # Check if the color is a list:
   if type(col) is list:
     if col == []: return o
     # Sanity checks:
@@ -4689,6 +4690,16 @@ def COLOR(o, col):
   else:
     raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
   return PLASM_COLOR(col)(o)
+# COLORING ONE OR MORE OBJECTS
+def COLOR(obj, col):
+    if not isinstance(obj, list):
+        return COLOR_ONE(obj, col)
+    else:
+        L = []
+        for oo in obj:
+            L.append(COLOR_ONE(oo, col))
+        return L
+
 C = COLOR
 # Czech:
 BARVA = COLOR
