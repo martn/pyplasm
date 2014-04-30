@@ -1323,7 +1323,7 @@ def TRANSLATE(obj, t1, t2, t3 = 0):
     else:
         L = []
         for oo in obj:
-            L.append(TRANSLATE_ONE(obj, t1, t2, t3))
+            L.append(TRANSLATE_ONE(oo, t1, t2, t3))
         return L
 
 T = TRANSLATE
