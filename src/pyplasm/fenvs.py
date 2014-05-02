@@ -1025,7 +1025,7 @@ class BASEOBJ:
             self.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(self.geom)
         else:
             self.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(self.geom)
-        obj.setcolor(self.color)
+        self.setcolor(self.color)
 
 # ===================================================
 # CUBOID
