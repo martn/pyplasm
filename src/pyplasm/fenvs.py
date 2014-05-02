@@ -1038,9 +1038,25 @@ class BASEOBJ:
     def rotate(self, angle_deg, axis = 3):
         angle_rad = PI * angle_deg / 180.
         self.rotaterad(angle_rad, axis)
-
-
-
+    def rotaterel(self, angle_deg, axis = 3):
+        if axis != 1 and axis != 2 and axis != 3: 
+          raise ExceptionWT("The third argument of the command ROTATEREL (rotation about objects own center) must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
+        dim = DIM(self.geom)
+        if dim != 2 and dim != 3:
+           raise ExceptionWT("Error in ROTATEREL: Object dimension must be either 2 or 3.")
+        if dim == 2:
+          x = 0.5 * (MINX(self.geom) + MAXX(self.geom))
+          y = 0.5 * (MINY(self.geom) + MAXY(self.geom))
+          self.move(-x, -y)
+          self.rotate(angle_deg, axis)
+          self.move(x, y)
+        else:
+          x = 0.5 * (MINX(self.geom) + MAXX(self.geom))
+          y = 0.5 * (MINY(self.geom) + MAXY(self.geom))
+          z = 0.5 * (MINZ(self.geom) + MAXZ(self.geom))
+          self.move(-x, -y, -z)
+          self.rotate(angle_deg, axis)
+          self.move(x, y, z)
 
 # ===================================================
 # CUBOID
@@ -1586,29 +1602,10 @@ TOURNE = ROTATE
 # English:
 def RR(obj, angle_deg, axis = 3):
     if isinstance(obj, list):
-      raise ExceptionWT("Command RR (rotation about objects own center) can only be applied to a single object!")
-    if axis != 1 and axis != 2 and axis != 3: 
-      raise ExceptionWT("The third argument of the command RR (rotation about objects own center) must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
-    angle_rad = angle_deg * PI / 180.0
-    # Calculate the dimension:
-    dim = DIM(obj)
-    if dim != 2 and dim != 3:
-      raise ExceptionWT("Error in RR: Object dimension must be either 2 or 3.")
-    if dim == 2:
-      x = 0.5 * (MINX(obj) + MAXX(obj))
-      y = 0.5 * (MINY(obj) + MAXY(obj))
-      obj = T(obj, -x, -y)
-      obj = ROTATERAD(obj, angle_rad, axis)
-      obj = T(obj, x, y)
-    else:
-      x = 0.5 * (MINX(obj) + MAXX(obj))
-      y = 0.5 * (MINY(obj) + MAXY(obj))
-      z = 0.5 * (MINZ(obj) + MAXZ(obj))
-      obj = T(obj, -x, -y, -z)
-      obj = ROTATERAD(obj, angle_rad, axis)
-      obj = T(obj, x, y, z)
-    return obj
+        raise ExceptionWT("Command ROTATEREL (rotation about objects own center) can only be applied to a single object!")
+    obj.rotaterel(angle_deg, axis)
 ROTATER = RR
+ROTATEREL = RR
 
 # ===================================================
 #; Applica uno shearing con vettore shearing-vector-list sulla variabile
@@ -4762,8 +4759,7 @@ def COLOR(obj, col):
   if not isinstance(obj, list):
     obj.setcolor(col)
   else:
-    for x in obj:
-      x.setcolor(col)
+    for x in obj: x.setcolor(col)
 
 C = COLOR
 # Czech:
