@@ -4692,9 +4692,6 @@ if self_test:
 # English:
 # COLORING ONE OBJECT ONLY
 def COLOR_ONE(obj, col):
-  if not isinstance(obj, list):
-      raise ExceptionWT("Object in obsolete format. Please report this problem to NCLab support - thank you!")
-  #obj[0] = COLOR (obj[0], newcol)
   # Check if the color is a list:
   if type(col) is list:
     if col == []: return o
@@ -4713,18 +4710,16 @@ def COLOR_ONE(obj, col):
       col[2] = col[2] / 255.
   else:
     raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
-  obj[0] = PLASM_COLOR(col)(obj[0])
+  return PLASM_COLOR(col)(obj)
 # COLORING ONE OR MORE OBJECTS
 def COLOR(obj, col):
     if not isinstance(obj, list):
         raise ExceptionWT("Object in obsolete format. Please report this problem to NCLab support - thank you!")
-    item = obj[0]
-    if not isinstance(item, list):
-        COLOR_ONE(item, col)
+    if not isinstance(obj[0], list):
+        obj[0] = COLOR_ONE(obj[0], col)
     else:
-        L = []
-        for oo in item:
-            L.append(COLOR_ONE(oo, col))
+        for oo in obj[0]:
+            oo = COLOR_ONE(oo, col)
         return L
 
 C = COLOR
