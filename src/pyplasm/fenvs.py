@@ -4718,8 +4718,9 @@ def COLOR(obj, col):
     if not isinstance(obj[0], list):
         obj[0] = COLOR_ONE(obj[0], col)
     else:
-        for oo in obj[0]:
-            oo = COLOR_ONE(oo, col)
+        n = len(obj[0])
+        for i in range(n):
+            obj[0][i] = COLOR_ONE(obj[0][i], col)
 
 C = COLOR
 # Czech:
