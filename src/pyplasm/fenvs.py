@@ -1729,8 +1729,24 @@ PLASM_I = PLASM_INTERSECTION
 # English:
 def INTERSECTION(*args):
     list1 = list(args)
-    if len(list1) <= 1: raise ExceptionWT("INTERSECTION(...) requires at least two objects!")
-    return PLASM_INTERSECTION(list1)
+    l = len(list1)
+    if l < 2: 
+        raise ExceptionWT("INTERSECTION(...) requires at least two objects!")
+    for i in range(1, l):
+        if isinstance(list1[i], list):
+            raise ExceptionWT("Only the first argument of INTERSECTION(...) may be a struct (list)!")
+
+    item1 = list1[0] # this is either a single item or a list
+    if not isinstance(item1, list):
+        return PLASM_INTERSECTION(list1)
+    else:
+        list2 = list1.pop(0)
+        result = []
+        for x in list2:
+            list1_new = [x] + list1
+            result.append(PLASM_INTERSECTION(list1_new))
+        return result
+
 I = INTERSECTION
 # Czech:
 PRUNIK = INTERSECTION
@@ -1782,6 +1798,7 @@ def DIFFERENCE(*args):
             list1_new = [x] + list1
             result.append(PLASM_DIFF(list1_new))
         return result
+
 # OLD DEFINITION
 #def DIFFERENCE(*args):
 #    list1 = list(args)
