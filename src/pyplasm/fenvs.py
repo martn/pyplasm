@@ -1002,13 +1002,13 @@ if self_test:
 
 # English:
 class CUBE:
-    def __init__(self, size, color = STEEL):
+    def __init__(self, size):
         if size <= 0: 
             raise ExceptionWT("CUBE(x) requires a positive value of x!")
         self.size = size
-        self.color = color
+        self.color = STEEL
 	self.geom = CUBOID([size, size, size])
-        self.geom = PLASM_COLOR(color)(self.geom)
+        self.geom = PLASM_COLOR(STEEL)(self.geom)
     def setsize(self, size):
         self.size = size
         self.geom = CUBOID([size, size, size])
