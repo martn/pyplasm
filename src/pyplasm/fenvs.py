@@ -1003,13 +1003,11 @@ if self_test:
 # English:
 class CUBE:
     def __init__(self, size):
+        self.setsize(size)
+        self.setcolor(STEEL)
+    def setsize(self, size):
         if size <= 0: 
             raise ExceptionWT("CUBE(x) requires a positive value of x!")
-        self.size = size
-        self.color = STEEL
-	self.geom = CUBOID([size, size, size])
-        self.geom = PLASM_COLOR(STEEL)(self.geom)
-    def setsize(self, size):
         self.size = size
         self.geom = CUBOID([size, size, size])
     def setcolor(self, color):
@@ -2779,6 +2777,25 @@ def CONE(r, h, division = 64):
     if division < 3: 
         raise ExceptionWT("Number of sides n in CONE(r, h, n) must be at least 3!")
     return [PLASM_CONE([r, h])(division)]
+
+class CONE:
+    def __init__(self, r, h, division = 64):
+        self.setsize(r, h, division)
+        self.setcolor(STEEL)
+    def setsize(self, r, h, division = 64):
+        if r <= 0: 
+            raise ExceptionWT("Radius r in CONE(r, h) must be positive!")
+        self.r = r
+        if h <= 0: 
+            raise ExceptionWT("Height h in CONE(r, h) must be positive!")
+        self.h = h
+        if division < 3: 
+            raise ExceptionWT("Number of sides n in CONE(r, h, n) must be at least 3!")
+        self.geom = PLASM_CONE([r, h])(division)
+    
+    def setcolor(self, color):
+        self.color = color
+        self.geom = PLASM_COLOR(color)(self.geom)
 
 # Czech:
 KUZEL = CONE
@@ -4704,8 +4721,8 @@ if self_test:
 
 # Change it to procedural style:
 # English:
-# COLORING ONE OBJECT ONLY
-def COLOR_ONE(obj, col):
+# COLORING ONE OR MORE OBJECTS
+def COLOR(obj, col):
   # Check if the color is a list:
   if type(col) is list:
     if col == []: return o
@@ -4722,19 +4739,14 @@ def COLOR_ONE(obj, col):
       col[0] = col[0] / 255.
       col[1] = col[1] / 255.
       col[2] = col[2] / 255.
-  else:
-    raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
-  obj.setcolor(col)
-# COLORING ONE OR MORE OBJECTS
-def COLOR(obj, col):
-    if not isinstance(obj, list):
-        raise ExceptionWT("Object in obsolete format. Please report this problem to NCLab support - thank you!")
-    if not isinstance(obj[0], list):
-        obj[0] = COLOR_ONE(obj[0], col)
     else:
-        n = len(obj[0])
-        for i in range(n):
-            obj[0][i] = COLOR_ONE(obj[0][i], col)
+      raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
+  # obj may be a single object or a list of objects
+  if not isinstance(obj, list):
+    obj.setcolor(col)
+  else:
+    for x in obj:
+      x.setcolor(col)
 
 C = COLOR
 # Czech:
