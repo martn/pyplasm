@@ -1525,7 +1525,7 @@ TOURNE = ROTATE
 # English:
 def RR(obj, angle_deg, axis = 3):
     if isinstance(obj, list):
-      raise ExceptionWT("Command RR (rotation about objects own center) can only be applied to single objects!")
+      raise ExceptionWT("Command RR (rotation about objects own center) can only be applied to a single object!")
     if axis != 1 and axis != 2 and axis != 3: 
       raise ExceptionWT("The third argument of the command RR (rotation about objects own center) must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
     angle_rad = angle_deg * PI / 180.0
@@ -4143,11 +4143,15 @@ def PLASM_EXTRUSION (angle):
 # EXTRUSION - ARBITRATRY DIVISION IN VERTICAL DIRECTION
 # ===================================================
 
-def EXTRUDE(shape2d, height, angle, n=1):
+def EXTRUDE(shape2d, height, angle_deg, n=1):
+  if DIM(shape2d) <> 2:
+      raise ExceptionWT("Base object in EXTRUDE(...) must be 2-dimensional!")
+  if height <= 0:
+      raise ExceptionWT("Extrusion height in EXTRUDE(...) must be positive!")
   col = GETCOLOR(shape2d)
   dh = float(height) / n
-  angle = angle * PI / 180.0
-  da = float(angle) / n
+  angle_rad = angle_deg * PI / 180.0
+  da = float(angle_rad) / n
   layer = PLASM_EXTRUSION(da)(1)(shape2d)
   if col != []: layer = COLOR(layer, col)
   layer = S(layer, 1, 1, dh)
