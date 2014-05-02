@@ -996,10 +996,9 @@ class BASEOBJ:
     def __init__(self):
         self.color = STEEL
         self.geom = CUBOID([1, 1, 1])
-    def setcolor(self, color):
+    def setcolor(self, color = STEEL):
         # Check if the color is a list:
         if type(color) is list:
-          if color == []: color = STEEL
           # Sanity checks:
           if len(color) <> 3 and len(color) <> 4:
             raise ExceptionWT("Color must be a list of length 3 (R, G, B) or 4 (R, G, B, A)!")
@@ -1057,9 +1056,16 @@ CUBO = CUBE
 # CUBE same as English
 
 # English:
-def SQUARE (side):
-    if side <= 0: raise ExceptionWT("SQUARE(x) requires a positive value of x!")
-    return CUBOID([side, side])
+class SQUARE(BASEOBJ):
+    def __init__(self, size):
+        self.setsize(size)
+        self.setcolor(STEEL)
+    def setsize(self, size):
+        if size <= 0: 
+            raise ExceptionWT("SQUARE(x) requires a positive value of x!")
+        self.size = size
+        self.geom = CUBOID([side, side])
+
 # Czech::
 CTVEREC = SQUARE
 # Polish:
@@ -1340,7 +1346,6 @@ def PLASM_TRANSLATE (axis):
     return lambda values: PLASM_TRANSLATE1(axis,values)
 PLASM_T = PLASM_TRANSLATE
 
-
 if self_test: 
 	assert(Plasm.limits(PLASM_TRANSLATE([1, 2, 3])([0, 0, 2])(Plasm.cube(2)))==Boxf(Vecf(1,0,0,2),Vecf(1,1,1,2)))
 	assert(Plasm.limits(PLASM_TRANSLATE([1, 2, 3])([1, 0, 2])(Plasm.cube(2)))==Boxf(Vecf(1,1,0,2),Vecf(1,2,1,2)))
@@ -1349,12 +1354,12 @@ if self_test:
 # English:
 # TRANSLATE JUST ONE OBJECT
 def TRANSLATE_ONE(obj, t1, t2, t3 = 0):
-    col = GETCOLOR(obj)
+    col = obj.color
     if t3 == 0:
-        obj = PLASM_TRANSLATE([1, 2])([t1, t2])(obj)
+        obj.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(obj.geom)
     else:
-        obj = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj)
-    if col != []: obj = COLOR(obj, col)
+        obj.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj.geom)
+    if col != []: obj.setcolor(col)
     return obj
 # TRANSLATE EITHER ONE OBJECT OR LIST OF OBJECTS
 def TRANSLATE(obj, t1, t2, t3 = 0):
