@@ -989,6 +989,20 @@ def MONTRE(*args):
     VIEWBASE(sequence)
 
 # ===================================================
+# BASE OBJECT
+# ===================================================
+
+def BASEOBJ:
+    def __init__(self):
+        self.color = STEEL
+        self.geom = CUBOID([1, 1, 1])
+    def setcolor(self, color):
+        self.color = color
+        self.geom = PLASM_COLOR(color)(self.geom)
+
+ 
+
+# ===================================================
 # CUBOID
 # ===================================================
 
@@ -1001,7 +1015,7 @@ if self_test:
 	assert(Plasm.limits(CUBOID([1,2,3]))==Boxf(Vecf(1,0,0,0),Vecf(1,1,2,3)))
 
 # English:
-class CUBE:
+class CUBE(BASEOBJ):
     def __init__(self, size):
         self.setsize(size)
         self.setcolor(STEEL)
@@ -1010,9 +1024,6 @@ class CUBE:
             raise ExceptionWT("CUBE(x) requires a positive value of x!")
         self.size = size
         self.geom = CUBOID([size, size, size])
-    def setcolor(self, color):
-        self.color = color
-        self.geom = PLASM_COLOR(color)(self.geom)
 # Czech:
 KRYCHLE = CUBE
 KOSTKA  = CUBE
@@ -2769,16 +2780,7 @@ if self_test:
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
 # English:
-def CONE(r, h, division = 64):
-    if r <= 0: 
-        raise ExceptionWT("Radius r in CONE(r, h) must be positive!")
-    if h <= 0: 
-        raise ExceptionWT("Height h in CONE(r, h) must be positive!")
-    if division < 3: 
-        raise ExceptionWT("Number of sides n in CONE(r, h, n) must be at least 3!")
-    return [PLASM_CONE([r, h])(division)]
-
-class CONE:
+class CONE(BASEOBJ):
     def __init__(self, r, h, division = 64):
         self.setsize(r, h, division)
         self.setcolor(STEEL)
@@ -2792,10 +2794,6 @@ class CONE:
         if division < 3: 
             raise ExceptionWT("Number of sides n in CONE(r, h, n) must be at least 3!")
         self.geom = PLASM_CONE([r, h])(division)
-    
-    def setcolor(self, color):
-        self.color = color
-        self.geom = PLASM_COLOR(color)(self.geom)
 
 # Czech:
 KUZEL = CONE
