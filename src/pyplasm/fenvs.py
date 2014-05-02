@@ -9,6 +9,9 @@ nclabinst = NCLab.instance()
 # Import exceptions without traceback:
 from nclab.tools import ExceptionWT
 
+#def ExceptionWT(a):
+#  print a
+
 # This is needed to measure time:
 import time
 start = time.clock()
@@ -994,9 +997,9 @@ def MONTRE(*args):
 
 class BASEOBJ:
     def __init__(self):
-        self.color = STEEL
+        self.color = [255, 255, 255]
         self.geom = CUBOID([1, 1, 1])
-    def setcolor(self, color = STEEL):
+    def setcolor(self, color = [255, 255, 255]):
         # Check if the color is a list:
         if type(color) is list:
           # Sanity checks:
@@ -1030,11 +1033,15 @@ def CUBOID (sizes_list):
 if self_test: 
 	assert(Plasm.limits(CUBOID([1,2,3]))==Boxf(Vecf(1,0,0,0),Vecf(1,1,2,3)))
 
+# ===================================================
+# CUBE
+# ===================================================
+
 # English:
 class CUBE(BASEOBJ):
     def __init__(self, size):
         self.setsize(size)
-        self.setcolor(STEEL)
+        self.setcolor([255, 255, 255])
     def setsize(self, size):
         if size <= 0: 
             raise ExceptionWT("CUBE(x) requires a positive value of x!")
@@ -1059,7 +1066,7 @@ CUBO = CUBE
 class SQUARE(BASEOBJ):
     def __init__(self, size):
         self.setsize(size)
-        self.setcolor(STEEL)
+        self.setcolor([255, 255, 255])
     def setsize(self, size):
         if size <= 0: 
             raise ExceptionWT("SQUARE(x) requires a positive value of x!")
@@ -2802,7 +2809,7 @@ if self_test:
 class CONE(BASEOBJ):
     def __init__(self, r, h, division = 64):
         self.setsize(r, h, division)
-        self.setcolor(STEEL)
+        self.setcolor([255, 255, 255])
     def setsize(self, r, h, division = 64):
         if r <= 0: 
             raise ExceptionWT("Radius r in CONE(r, h) must be positive!")
