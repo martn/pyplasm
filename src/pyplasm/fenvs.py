@@ -4720,7 +4720,6 @@ def COLOR(obj, col):
     else:
         for oo in obj[0]:
             oo = COLOR_ONE(oo, col)
-        return L
 
 C = COLOR
 # Czech:
