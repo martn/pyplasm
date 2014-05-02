@@ -1360,16 +1360,13 @@ def TRANSLATE_ONE(obj, t1, t2, t3 = 0):
     else:
         obj.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj.geom)
     if col != []: obj.setcolor(col)
-    return obj
 # TRANSLATE EITHER ONE OBJECT OR LIST OF OBJECTS
 def TRANSLATE(obj, t1, t2, t3 = 0):
     if not isinstance(obj, list):
         return TRANSLATE_ONE(obj, t1, t2, t3)
     else:
-        L = []
         for oo in obj:
-            L.append(TRANSLATE_ONE(oo, t1, t2, t3))
-        return L
+            TRANSLATE_ONE(oo, t1, t2, t3)
 
 T = TRANSLATE
 MOVE = TRANSLATE
