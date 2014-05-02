@@ -914,11 +914,11 @@ def PLASM_VIEW (obj, Background = True):
     if self_test: Background = False
     Plasm.View(obj, Background) 
     return obj
-def VIEWBASE(sequence):
-    L = []
-    for x in sequence:
-        L.append(x.geom)
-    nclabinst.visualize(nclabinst.converter(sequence))
+def VIEWBASE(objects):
+    geoms = []
+    for x in objects:
+        geoms.append(x.geom)
+    nclabinst.visualize(nclabinst.converter(geoms))
 
 # English:
 def VIEW(*args):
