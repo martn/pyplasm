@@ -1000,7 +1000,7 @@ if self_test:
 # English:
 def CUBE (side):
     if side <= 0: raise ExceptionWT("CUBE(x) requires a positive value of x!")
-    return CUBOID([side, side, side])
+    return [CUBOID([side, side, side])]
 # Czech:
 KRYCHLE = CUBE
 KOSTKA  = CUBE
@@ -4691,7 +4691,10 @@ if self_test:
 # Change it to procedural style:
 # English:
 # COLORING ONE OBJECT ONLY
-def COLOR_ONE(o, col):
+def COLOR_ONE(obj, col):
+  if not isinstance(obj, list):
+      raise ExceptionWT("Object in obsolete format. Please report this problem to NCLab support - thank you!")
+  #obj[0] = COLOR (obj[0], newcol)
   # Check if the color is a list:
   if type(col) is list:
     if col == []: return o
@@ -4710,14 +4713,17 @@ def COLOR_ONE(o, col):
       col[2] = col[2] / 255.
   else:
     raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
-  return PLASM_COLOR(col)(o)
+  obj[0] = PLASM_COLOR(col)(obj[0])
 # COLORING ONE OR MORE OBJECTS
 def COLOR(obj, col):
     if not isinstance(obj, list):
-        return COLOR_ONE(obj, col)
+        raise ExceptionWT("Object in obsolete format. Please report this problem to NCLab support - thank you!")
+    item = obj[0]
+    if not isinstance(item, list):
+        COLOR_ONE(item, col)
     else:
         L = []
-        for oo in obj:
+        for oo in item:
             L.append(COLOR_ONE(oo, col))
         return L
 
