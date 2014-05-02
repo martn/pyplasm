@@ -2764,7 +2764,7 @@ def CONE(r, h, division = 64):
         raise ExceptionWT("Height h in CONE(r, h) must be positive!")
     if division < 3: 
         raise ExceptionWT("Number of sides n in CONE(r, h, n) must be at least 3!")
-    return PLASM_CONE([r, h])(division)
+    return [PLASM_CONE([r, h])(division)]
 
 # Czech:
 KUZEL = CONE
