@@ -1020,6 +1020,12 @@ class BASEOBJ:
             raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
         self.color = color
 	self.geom = PLASM_COLOR(col)(self.geom)
+    def move(self, t1, t2, t3 = 0):
+        if t3 == 0:
+            self.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(self.geom)
+        else:
+            self.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(self.geom)
+        obj.setcolor(self.color)
 
 # ===================================================
 # CUBOID
@@ -1359,21 +1365,12 @@ if self_test:
 
 # NEW DEFINITION:
 # English:
-# TRANSLATE JUST ONE OBJECT
-def TRANSLATE_ONE(obj, t1, t2, t3 = 0):
-    col = obj.color
-    if t3 == 0:
-        obj.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(obj.geom)
-    else:
-        obj.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(obj.geom)
-    if col != []: obj.setcolor(col)
 # TRANSLATE EITHER ONE OBJECT OR LIST OF OBJECTS
 def TRANSLATE(obj, t1, t2, t3 = 0):
     if not isinstance(obj, list):
-        return TRANSLATE_ONE(obj, t1, t2, t3)
+        obj.move(t1, t2, t3)
     else:
-        for oo in obj:
-            TRANSLATE_ONE(oo, t1, t2, t3)
+        for oo in obj: oo.move(t1, t2, t3)
 
 T = TRANSLATE
 MOVE = TRANSLATE
