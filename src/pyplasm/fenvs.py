@@ -915,6 +915,9 @@ def PLASM_VIEW (obj, Background = True):
     Plasm.View(obj, Background) 
     return obj
 def VIEWBASE(sequence):
+    L = []
+    for x in sequence:
+        L.append(x.geom)
     nclabinst.visualize(nclabinst.converter(sequence))
 
 # English:
@@ -998,9 +1001,15 @@ if self_test:
 	assert(Plasm.limits(CUBOID([1,2,3]))==Boxf(Vecf(1,0,0,0),Vecf(1,1,2,3)))
 
 # English:
-def CUBE (side):
-    if side <= 0: raise ExceptionWT("CUBE(x) requires a positive value of x!")
-    return [CUBOID([side, side, side])]
+class CUBE:
+    def __init__(self, size):
+        if size <= 0: 
+            raise ExceptionWT("CUBE(x) requires a positive value of x!")
+        self.size = size
+        self.color = STEEL
+	self.geom = CUBOID([size, size, size])
+        self.geom = PLASM_COLOR(self.color)(self.geom)
+
 # Czech:
 KRYCHLE = CUBE
 KOSTKA  = CUBE
