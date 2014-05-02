@@ -1543,11 +1543,13 @@ TOURNERRAD = ROTATERAD
 TOURNERAD = ROTATERAD
 
 # English:
+# ROTATE ONE OR MORE OBJECTS (ANGLE IN DEGREES)
 def ROTATEDEG(obj, angle_deg, axis = 3):
-    if axis != 1 and axis != 2 and axis != 3: 
-      raise ExceptionWT("The third argument of ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
-    angle_rad = angle_deg * PI / 180.0
-    return ROTATERAD(obj, angle_rad, axis)
+    if not isinstance(obj, list):
+        obj.rotate(angle_deg, axis)
+    else:
+        for oo in obj: oo.rotate(angle_deg, axis)
+
 ROTATE = ROTATEDEG
 RDEG = ROTATEDEG
 R = ROTATEDEG
