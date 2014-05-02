@@ -992,7 +992,7 @@ def MONTRE(*args):
 # BASE OBJECT
 # ===================================================
 
-def BASEOBJ:
+class BASEOBJ:
     def __init__(self):
         self.color = STEEL
         self.geom = CUBOID([1, 1, 1])
