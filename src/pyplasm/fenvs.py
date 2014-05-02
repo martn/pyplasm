@@ -1026,6 +1026,21 @@ class BASEOBJ:
         else:
             self.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(self.geom)
         self.setcolor(self.color)
+    def rotaterad(self, angle_rad, axis = 3):
+        if axis != 1 and axis != 2 and axis != 3: 
+            raise ExceptionWT("The third argument of ROTATERAD must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
+        if axis == 1: plane_indexes = [2, 3]
+        elif axis == 2: plane_indexes = [1, 3]
+        else: plane_indexes = [1, 2]
+        dim = max(plane_indexes)
+	self.geom = Plasm.rotate(self.geom, dim, plane_indexes[0], plane_indexes[1], angle_rad)
+        self.setcolor(self.color)
+    def rotate(self, angle_deg, axis = 3):
+        angle_rad = PI * angle_deg / 180.
+        self.rotaterad(angle_rad, axis)
+
+
+
 
 # ===================================================
 # CUBOID
@@ -1114,9 +1129,17 @@ CARRE3D = SQUARE3D
 
 
 # English:
-def BRICK (a, b, c):
-    if a <= 0 or b <= 0 or c <= 0: raise ExceptionWT("BOX(x, y, z) requires positive dimensions x, y, z!")
-    return CUBOID([a, b, c])
+class BRICK(BASEOBJ):
+    def __init__(self, a, b, c):
+        self.setsize(a, b, c)
+        self.setcolor([255, 255, 255])
+    def setsize(self, a, b, c):
+        if a <= 0 or b <= 0 or c <= 0: raise ExceptionWT("BOX(x, y, z) requires positive dimensions x, y, z!")
+        self.a = a
+        self.b = b
+        self.c = c
+        self.geom = CUBOID([a, b, c])
+
 BOX = BRICK
 # Czech::
 KVADR = BRICK
@@ -1143,9 +1166,16 @@ BRIQUE = BRICK
 BOITE = BRICK
 
 # English:
-def RECTANGLE (a, b):
-    if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE(x, y) requires positive dimensions x, y!")
-    return CUBOID([a, b])
+class RECTANGLE(BASEOBJ):
+    def __init__(self, a, b):
+        self.setsize(a, b)
+        self.setcolor([255, 255, 255])
+    def setsize(self, a, b):
+        if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE(x, y) requires positive dimensions x, y!")
+        self.a = a
+        self.b = b
+        self.geom = CUBOID([a, b])
+
 RECT = RECTANGLE
 # Czech:
 OBDELNIK = RECTANGLE
@@ -1478,29 +1508,12 @@ if self_test:
 
 # NEW DEFINITION
 # English:
-# ROTATE ONE OBJECT IN RADIANS
-def ROTATERAD_ONE(obj, angle_rad, axis = 3):
-    if axis != 1 and axis != 2 and axis != 3: 
-      raise ExceptionWT("The third argument of ROTATERAD must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
-    if axis == 1: plane_indexes = [2, 3]
-    elif axis == 2: plane_indexes = [1, 3]
-    else: plane_indexes = [1, 2]
-    col = GETCOLOR(obj)
-    def PLASM_ROTATE2 (pol):
-        dim = max(plane_indexes)
-	return Plasm.rotate(pol, dim, plane_indexes[0] , plane_indexes[1], angle_rad)
-    obj = PLASM_ROTATE2(obj)
-    if col != []: obj = COLOR(obj, col)
-    return obj
-# ROTATE ONE OBJECT OR A LIST
+# ROTATE ONE OR MORE OBJECTS (ANGLE IN RADIANS)
 def ROTATERAD(obj, angle_rad, axis = 3):
     if not isinstance(obj, list):
-        return ROTATERAD_ONE(obj, angle_rad, axis)
+        obj.rotaterad(angle_rad, axis)
     else:
-        L = []
-        for oo in obj:
-            L.append(ROTATERAD_ONE(oo, angle_rad, axis))
-        return L
+        for oo in obj: oo.rotaterad(angle_rad, axis)
     
 RRAD = ROTATERAD
 # Czech:
