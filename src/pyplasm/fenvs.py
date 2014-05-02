@@ -997,10 +997,27 @@ class BASEOBJ:
         self.color = STEEL
         self.geom = CUBOID([1, 1, 1])
     def setcolor(self, color):
+        # Check if the color is a list:
+        if type(color) is list:
+          if color == []: color = STEEL
+          # Sanity checks:
+          if len(color) <> 3 and len(color) <> 4:
+            raise ExceptionWT("Color must be a list of length 3 (R, G, B) or 4 (R, G, B, A)!")
+          if color[0] < 0 or color[0] > 255 or color[1] < 0 or color[1] > 255 or color[2] < 0 or color[2] > 255:
+            raise ExceptionWT("RGB values in color definition must lie between 0 and 255!")
+          if len(color) == 4:
+            if color[3] < 0 or color[3] > 1:
+              raise ExceptionWT("Opacity value in color definition must be between 0 and 1!")
+          # Normalizing RGB between 0 and 1 if necessary:
+          col = [0, 0, 0]
+          if color[0] > 1 or color[1] > 1 or color[2] > 1:
+            col[0] = color[0] / 255.
+            col[1] = color[1] / 255.
+	    col[2] = color[2] / 255.
+          else:
+            raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
         self.color = color
-        self.geom = PLASM_COLOR(color)(self.geom)
-
- 
+	self.geom = PLASM_COLOR(col)(self.geom)
 
 # ===================================================
 # CUBOID
@@ -4719,26 +4736,7 @@ if self_test:
 
 # Change it to procedural style:
 # English:
-# COLORING ONE OR MORE OBJECTS
 def COLOR(obj, col):
-  # Check if the color is a list:
-  if type(col) is list:
-    if col == []: return o
-    # Sanity checks:
-    if len(col) <> 3 and len(col) <> 4:
-      raise ExceptionWT("Color must be a list of length 3 (R, G, B) or 4 (R, G, B, A)!")
-    if col[0] < 0 or col[0] > 255 or col[1] < 0 or col[1] > 255 or col[2] < 0 or col[2] > 255:
-       raise ExceptionWT("RGB values in color definition must lie between 0 and 255!")
-    if len(col) == 4:
-      if col[3] < 0 or col[3] > 1:
-        raise ExceptionWT("Opacity value in color definition must be between 0 and 1!")
-    # Normalizing RGB between 0 and 1 if necessary:
-    if col[0] > 1 or col[1] > 1 or col[2] > 1:
-      col[0] = col[0] / 255.
-      col[1] = col[1] / 255.
-      col[2] = col[2] / 255.
-    else:
-      raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
   # obj may be a single object or a list of objects
   if not isinstance(obj, list):
     obj.setcolor(col)
