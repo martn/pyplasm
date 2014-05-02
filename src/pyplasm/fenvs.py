@@ -1002,14 +1002,19 @@ if self_test:
 
 # English:
 class CUBE:
-    def __init__(self, size):
+    def __init__(self, size, color = STEEL):
         if size <= 0: 
             raise ExceptionWT("CUBE(x) requires a positive value of x!")
         self.size = size
-        self.color = STEEL
+        self.color = color
 	self.geom = CUBOID([size, size, size])
-        self.geom = PLASM_COLOR(self.color)(self.geom)
-
+        self.geom = PLASM_COLOR(color)(self.geom)
+    def setsize(self, size):
+        self.size = size
+        self.geom = CUBOID([size, size, size])
+    def setcolor(self, color):
+        self.color = color
+        self.geom = PLASM_COLOR(color)(self.geom)
 # Czech:
 KRYCHLE = CUBE
 KOSTKA  = CUBE
@@ -4719,7 +4724,7 @@ def COLOR_ONE(obj, col):
       col[2] = col[2] / 255.
   else:
     raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
-  return PLASM_COLOR(col)(obj)
+  obj.setcolor(col)
 # COLORING ONE OR MORE OBJECTS
 def COLOR(obj, col):
     if not isinstance(obj, list):
