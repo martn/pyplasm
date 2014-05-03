@@ -1020,6 +1020,8 @@ class BASEOBJ:
             raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
         self.color = color
 	self.geom = PLASM_COLOR(col)(self.geom)
+    def getcolor(self):
+        return self.color
     def move(self, t1, t2, t3 = 0):
         if t3 == 0:
             self.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(self.geom)
@@ -1039,10 +1041,12 @@ class BASEOBJ:
         angle_rad = PI * angle_deg / 180.
         self.rotaterad(angle_rad, axis)
         self.setcolor(self.color)
+    def getdimension(self):
+        return PLASM_DIM(self.geom)
     def rotaterel(self, angle_deg, axis = 3):
         if axis != 1 and axis != 2 and axis != 3: 
           raise ExceptionWT("The third argument of the command ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
-        dim = DIM(self.geom)
+        dim = self.getdimension()
         if dim != 2 and dim != 3:
            raise ExceptionWT("Error in ROTATE: Object dimension must be either 2 or 3.")
         if dim == 2:
@@ -1303,17 +1307,17 @@ def PRINT(obj):
 # ===================================================
 
 def RN (pol): return Plasm.getSpaceDim(pol)
-def DIM (pol):return Plasm.getPointDim(pol)
+def PLASM_DIM (pol):return Plasm.getPointDim(pol)
 
 def ISPOLDIM (dims):
     def ISPOLDIM1(pol):
         d = dims[0]
         n = dims[1]
-        return  (d == DIM(pol)) and (n == RN(pol))
+        return  (d == PLASM_DIM(pol)) and (n == RN(pol))
     return ISPOLDIM1
 
 if self_test: 
-	assert(RN(Plasm.cube(2))==2 and DIM(Plasm.cube(2))==2)
+	assert(RN(Plasm.cube(2))==2 and PLASM_DIM(Plasm.cube(2))==2)
 
 # ===================================================
 # MKPOL
@@ -1754,8 +1758,9 @@ STRUTTURA = STRUCT
 # ===================================================
 
 #also +, or SUM, can be used to indicate UNION
+# THIS WAS TOO COMPUTATIONALLY EXPENSIVE, NOT USED ANYMORE
 def PLASM_UNION(objs_list):
-        color = GETCOLOR(objs_list[0])
+        color = PLASM_GETCOLOR(objs_list[0])
         result = Plasm.boolop(BOOL_CODE_OR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
         if color != []: return COLOR(result, color)
 	else: return result
@@ -1969,6 +1974,7 @@ def JOIN(a, b = None):
 # ===================================================
 # also ** can be used to indicates POWER
 # ===================================================
+
 def PLASM_POWER (objs_list):
      
      if not isinstance(objs_list,list) or len(objs_list)!=2:
@@ -4240,7 +4246,7 @@ def SOLIDIFY(pol):
 		return MKPOL([verts,cells,pols])
 
 	def IsFull(pol):
-		return DIM(pol)==RN(pol)
+		return PLASM_DIM(pol)==RN(pol)
 
 	ret=SPLITCELLS(pol)
 	ret=[PLASM_JOIN([pol,InftyProject(pol)]) for pol in ret]
@@ -4260,7 +4266,7 @@ if self_test:
 def PLASM_EXTRUSION (angle):
 	def PLASM_EXTRUSION1 (height):
 		def PLASM_EXTRUSION0 (pol):
-			dim = DIM(pol)
+			dim = PLASM_DIM(pol)
 			cells=SPLITCELLS( SKELETON(dim)(pol) )
 			slice=[EMBED(1)(c) for c in cells]
 			tensor=COMP([PLASM_T(dim+1)(1.0/height),PLASM_R([dim-1,dim])(angle/height)])
@@ -4270,25 +4276,25 @@ def PLASM_EXTRUSION (angle):
 	return PLASM_EXTRUSION1
 
 # ===================================================
-# EXTRUSION - ARBITRATRY DIVISION IN VERTICAL DIRECTION
+# EXTRUSION - WITH ARBITRATRY DIVISION IN VERTICAL DIRECTION
 # ===================================================
 
 def EXTRUDE(shape2d, height, angle_deg, n=1):
-  if DIM(shape2d) <> 2:
+  if shape2d.getdimension() <> 2:
       raise ExceptionWT("Base object in EXTRUDE(...) must be 2-dimensional!")
   if height <= 0:
       raise ExceptionWT("Extrusion height in EXTRUDE(...) must be positive!")
-  col = GETCOLOR(shape2d)
+  col = shape2d.getcolor()
   dh = float(height) / n
   angle_rad = angle_deg * PI / 180.0
   da = float(angle_rad) / n
-  layer = PLASM_EXTRUSION(da)(1)(shape2d)
-  if col != []: layer = COLOR(layer, col)
-  layer = S(layer, 1, 1, dh)
+  layer = BASEOBJ(PLASM_EXTRUSION(da)(1)(shape2d))
+  if col != []: COLOR(layer, col)
+  S(layer, 1, 1, dh)
   L = [layer]
   for i in range(n-1):
-    layer = TRANSLATE(layer, 0, 0, dh)
-    layer = ROTATE(layer, da*180.0/PI, 3)
+    TRANSLATE(layer, 0, 0, dh)
+    ROTATE(layer, da*180.0/PI, 3)
     L.append(layer)
   return L # I tried to return a union but it took too much time
 
@@ -4301,7 +4307,7 @@ EXT = EXTRUDE
 def EX (args):
 	x1 ,x2 = args
 	def EX0 (pol):
-		dim = DIM(pol)
+		dim = PLASM_DIM(pol)
 		return PLASM_T(dim+1)(x1)(PLASM_S(dim+1)(x2-x1)(PLASM_EXTRUSION(0.0)(1.0)(pol)))
 	return EX0
 
@@ -4314,7 +4320,7 @@ def LEX (args):
 	def LEX0 (pol):
 		def SHEARTENSOR (A):
 			def SHEARTENSOR0 (POL):
-				dim = DIM(POL)
+				dim = PLASM_DIM(POL)
 				newrow = K((AR([CAT([[0, 1],DIESIS((dim-2))(0)]),A])))
 				update = (COMP([CONS, CAT]))([[S1, newrow],AA(SEL)((FROMTO([3,dim+1])))])
 				matrix=  update(IDNT(dim+1))              
@@ -4323,8 +4329,8 @@ def LEX (args):
 
 		ret=PLASM_EXTRUSION(0)(1)(pol)
 		ret=SHEARTENSOR(x2-x1)(ret)
-		ret=S(DIM(pol)+1)(x2-x1)(ret)
-		ret=PLASM_T(DIM(pol)+1)(x1)(ret)
+		ret=S(PLASM_DIM(pol)+1)(x2-x1)(ret)
+		ret=PLASM_T(PLASM_DIM(pol)+1)(x1)(ret)
 		return ret
 	return LEX0
 
@@ -4336,7 +4342,7 @@ def SEX (args):
 	x1 , x2 = args
 	def SEX1 (height):
 		def SEX0 (pol):
-			dim = DIM(pol)
+			dim = PLASM_DIM(pol)
 			ret=PLASM_EXTRUSION(x2-x1)(height)(pol)
 			ret=PLASM_S(dim+1)(x2-x1)(ret)
 			ret=PLASM_R([dim,dim-1])(x1)(ret)
@@ -5039,7 +5045,7 @@ OR = GOLD
 
 # Returns a list of three numbers between 0 and 255: [R, G, B]
 # A and other properties not taken into account yet.
-def GETCOLOR(obj):
+def PLASM_GETCOLOR(obj):
    if not ISPOL(obj):
       raise Exception(repr(obj) + " is not a Plasm object!")
    string = Plasm.getProperty(obj, "RGBcolor")
