@@ -3041,7 +3041,9 @@ def build_ICOSAHEDRON():
     rectx = PLASM_TRANSLATE([1, 2, 3])([-g, -1, 0])(CUBOID([2*g, 2]))
     recty = PLASM_R([1, 3])(PI/2)(PLASM_R([1, 2])(PI/2)(rectx))
     rectz = PLASM_R([2, 3])(PI/2)(PLASM_R([1, 2])(PI/2)(rectx))
-    return PLASM_S([1, 2, 3])([b, b, b])(PLASM_JOIN([rectx, recty, rectz]))
+    geom = PLASM_S([1, 2, 3])([b, b, b])(PLASM_JOIN([rectx, recty, rectz]))
+    obj = BASEOBJ(geom)
+    return obj
 
 # English:
 ICOSAHEDRON = build_ICOSAHEDRON()
