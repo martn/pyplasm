@@ -1821,10 +1821,8 @@ INTERSECA = INTERSECTION
 
 #also -, or DIFF, can be used to indicates DIFFERENCE
 def PLASM_DIFFERENCE (objs_list):
-        color = GETCOLOR(objs_list[0])
         result = Plasm.boolop(BOOL_CODE_DIFF, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        if color != []: return COLOR(result, color)
-	else: return result
+	return result
 
 PLASM_DIFF = PLASM_DIFFERENCE        
 
@@ -1858,8 +1856,9 @@ def DIFFERENCE(*args):
    	    geoms = []
             for x in list1_new:
                 geoms.append(x.geom)
-                obj = BASEOBJ(PLASM_DIFF(geoms))
-                obj.setcolor(item1.color)
+	    obj = BASEOBJ(PLASM_DIFF(geoms))
+	    obj.setcolor(x.color)
+            result.append(obj)
         return result
 
 # OLD DEFINITION
