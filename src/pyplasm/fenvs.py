@@ -1735,16 +1735,8 @@ def PLASM_UNION(objs_list):
 def UNION(*args):
     list1 = list(args)
     list1 = flatten(list1) # flatten the rest as there may be structs
-    if len(list1) < 1: raise ExceptionWT("STRUCT() must be applied to some objects!")
+    if len(list1) < 2: raise ExceptionWT("UNION() must be applied to at least two objects!")
     return list1
-# OLD DEFINITION - RESULTING OBJECT JUST HAD ONE COLOR, STUDENTS DID NOT LIKE IT
-#def UNION(*args):
-#    list1 = list(args)
-#    if len(list1) < 1: raise ExceptionWT("UNION() must be applied to some objects!")
-#    # This will decompose lists and everything into one simple list of objects,
-#    # no lists in lists:
-#    list1 = flatten(list1)
-#    return PLASM_UNION(list1)
 
 U = UNION
 SUM = UNION
@@ -1901,7 +1893,7 @@ def PLASM_XOR(objs_list):
     result = Plasm.boolop(BOOL_CODE_XOR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
     return result
 
-# NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+# NEW DEFINITION
 # English:
 def XOR(a, b):
     L = []
