@@ -4902,21 +4902,21 @@ COULEUR = COLOR
 # Original PLaSM color command:
 def PLASM_COLOR(Cpl):
 
+        print "%s %s %s %s" % (Cpl.r,Cpl.g,Cpl.b,Cpl.a)
+
 	def formatColor(Cpl):
 		assert isinstance(Cpl,Color4f) 
 		return "%s %s %s %s" % (Cpl.r,Cpl.g,Cpl.b,Cpl.a)
 
 	# convert list to Color
-	if isinstance(Cpl,list) and len(Cpl) in (3,4):
+	if isinstance(Cpl, list) and len(Cpl) in (3, 4):
                 # Normalizing RGB between 0 and 1 if necessary:
                 if Cpl[0] > 1 or Cpl[1] > 1 or Cpl[2] > 1:
                         Cpl[0] = Cpl[0] / 255.
                         Cpl[1] = Cpl[1] / 255.
                         Cpl[2] = Cpl[2] / 255.
 		Cpl=Color4f(Cpl[0],Cpl[1],Cpl[2],Cpl[3] if len(Cpl)>=4 else 1.0)
-
-	if not isinstance(Cpl,Color4f):
-		raise ExceptionWT("Cannot transform " + repr(Cpl) + " to Color4f!")
+        else: ExceptionWT("Invalid color!")
 
 	def PLASM_COLOR0(pol):
 		return Plasm.addProperty(pol, "RGBcolor", formatColor(Cpl))
