@@ -3681,15 +3681,12 @@ def PLASM_PRISM (height):
     return PLASM_PRISM0
 
 # NEW DEFINITION
-class PRISM(BASEOBJ):
-    def __init__(self, basis, h):
-        if basis.getdimension() <> 2: 
-            raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!")
-        if h <= 0: 
-            raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
-        color = basis.getcolor()
-        self.geom = PLASM_POWER(h)(basis.geom)
-        self.color = color
+def PRISM(basis, h):
+    if basis.getdimension() <> 2: 
+        raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!")
+    if h <= 0: 
+        raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
+    return PRODUCT(basis, GRID(h))
 
 # English:
 # Czech:
