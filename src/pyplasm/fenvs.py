@@ -3686,8 +3686,9 @@ class PRISM(BASEOBJ):
             raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!")
         if h <= 0: 
             raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
+        color = basis.getcolor()
         self.geom = PLASM_PRISM(h)(basis.geom)
-        self.color = basis.getcolor()
+        self.color = color
 
 # English:
 # Czech:
