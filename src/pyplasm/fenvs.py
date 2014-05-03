@@ -1176,11 +1176,13 @@ CARRE = SQUARE
 # ===================================================
 
 def SQUARE3D (a):
-    if a <= 0: raise ExceptionWT("SQUARE3D(x) requires a positive value of x!")
+    if a <= 0: 
+        raise ExceptionWT("SQUARE3D(x) requires a positive value of x!")
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
-    return CUBOID([a, a, h])
+    return BASEOBJ(CUBOID([a, a, h]))
+
 # English:
 # Czech:
 CTVEREC3D = SQUARE3D
