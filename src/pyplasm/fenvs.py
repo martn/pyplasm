@@ -2528,19 +2528,22 @@ if self_test:
     assert Plasm.limits(PLASM_RING([0.5,1])([8,8]))==Boxf(Vecf(1,-1,-1),Vecf(1,+1,+1))
 
 # NEW DEFINITION
-def RING(r1, r2, division = [64, 32]):
-    if r1 <= 0: 
-        raise ExceptionWT("Inner radius r1 in RING(r1, r2) must be positive!")
-    if r2 <= 0: 
-        raise ExceptionWT("Outer radius r2 in RING(r1, r2) must be positive!")
-    if r1 >= r2: 
-        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in RING(r1, r2)!")
-    if type(division) == list: 
-        return PLASM_RING([r1, r2])(division)
-    else:
-        if division < 3: 
-            raise ExceptionWT("Number of edges n in RING(r1, r2, n) must be at least 3!")
-        else: return PLASM_RING([r1, r2])([division, 32])
+class RING(BASEOBJ):
+    def __init__(r1, r2, division = [64, 32]):
+        if r1 <= 0: 
+            raise ExceptionWT("Inner radius r1 in RING(r1, r2) must be positive!")
+        if r2 <= 0: 
+            raise ExceptionWT("Outer radius r2 in RING(r1, r2) must be positive!")
+        if r1 >= r2: 
+            raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in RING(r1, r2)!")
+        if type(division) == list: 
+            self.geom = PLASM_RING([r1, r2])(division)
+        else:
+            if division < 3: 
+                raise ExceptionWT("Number of edges n in RING(r1, r2, n) must be at least 3!")
+            else: self.geom = PLASM_RING([r1, r2])([division, 32])
+        self.color = [255, 255, 255]
+
 # Czech
 # TODO
 
