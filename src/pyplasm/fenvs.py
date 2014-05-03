@@ -1854,8 +1854,8 @@ def DIFFERENCE(*args):
         for x in list2:
             list1_new = [x] + list1
    	    geoms = []
-            for x in list1_new:
-                geoms.append(x.geom)
+            for y in list1_new:
+                geoms.append(y.geom)
 	    obj = BASEOBJ(PLASM_DIFF(geoms))
 	    obj.setcolor(x.color)
             result.append(obj)
