@@ -2529,7 +2529,7 @@ if self_test:
 
 # NEW DEFINITION
 class RING(BASEOBJ):
-    def __init__(r1, r2, division = [64, 32]):
+    def __init__(self, r1, r2, division = [64, 32]):
         if r1 <= 0: 
             raise ExceptionWT("Inner radius r1 in RING(r1, r2) must be positive!")
         if r2 <= 0: 
@@ -3680,14 +3680,14 @@ def PLASM_PRISM (height):
     return PLASM_PRISM0
 
 # NEW DEFINITION
-def PRISM(basis, h):
-    if basis.getdimension() <> 2: 
-        raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!")
-    if h <= 0: 
-        raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
-    obj = BASEOBJ(PLASM_PRISM(h)(basis.geom))
-    obj.setcolor(basis.getcolor())
-    return obj
+class PRISM(BASEOBJ):
+    def _init__(basis, h):
+        if basis.getdimension() <> 2: 
+            raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!")
+        if h <= 0: 
+            raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
+        obj = BASEOBJ(PLASM_PRISM(h)(basis.geom))
+        obj.setcolor(basis.getcolor())
 
 # English:
 # Czech:
