@@ -996,9 +996,9 @@ def MONTRE(*args):
 # ===================================================
 
 class BASEOBJ:
-    def __init__(self):
+    def __init__(self, basegeom):
         self.color = [255, 255, 255]
-        self.geom = CUBOID([1, 1, 1])
+        self.geom = basegeom
     def setcolor(self, color = [255, 255, 255]):
         # Check if the color is a list:
         if type(color) is list:
@@ -1833,7 +1833,7 @@ PLASM_DIFF = PLASM_DIFFERENCE
 # English:
 def DIFFERENCE(*args):
     list1 = list(args)
-    if len(list1) <= 1: 
+    if len(list1) < 2: 
         raise ExceptionWT("DIFFERENCE(...) requires at least two objects!")
     item1 = list1[0] # this is either a single item or a list
     item2 = list1[1] # this is either a single item or a list
@@ -1843,14 +1843,23 @@ def DIFFERENCE(*args):
         item1 = list1.pop(0)
         list1 = flatten(list1) # flatten the rest as there may be structs
         list1 = [item1] + list1
-        return PLASM_DIFF(list1)
+	geoms = []
+        for x in list1:
+            geoms.append(x.geom)
+        obj = BASEOBJ(PLASM_DIFF(geoms))
+        obj.setcolor(item1.color)
+        return obj
     else:
         list2 = list1.pop(0)
         list1 = flatten(list1) # flatten the rest as there may be structs
         result = []
         for x in list2:
             list1_new = [x] + list1
-            result.append(PLASM_DIFF(list1_new))
+   	    geoms = []
+            for x in list1_new:
+                geoms.append(x.geom)
+                obj = BASEOBJ(PLASM_DIFF(geoms))
+                obj.setcolor(item1.color)
         return result
 
 # OLD DEFINITION
