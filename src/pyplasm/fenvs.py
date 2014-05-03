@@ -1764,10 +1764,8 @@ SOMME = UNION
 
 #also ^ can be used to indicates INTERSECTION
 def PLASM_INTERSECTION (objs_list):
-        color = GETCOLOR(objs_list[0])
-        result = Plasm.boolop(BOOL_CODE_AND, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        if color != []: return COLOR(result, color)
-	else: return result
+    result = Plasm.boolop(BOOL_CODE_AND, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
+    return result
 
 PLASM_I = PLASM_INTERSECTION
 
@@ -1784,13 +1782,23 @@ def INTERSECTION(*args):
 
     item1 = list1[0] # this is either a single item or a list
     if not isinstance(item1, list):
-        return PLASM_INTERSECTION(list1)
+        geoms = []
+        fox x in list1:
+            geoms.append(x.geom)
+        obj = BASEOBJECT(PLASM_INTERSECTION(geoms))
+        obj.setcolor(list1[0].color)
+        return obj
     else:
         list2 = list1.pop(0)
         result = []
         for x in list2:
             list1_new = [x] + list1
-            result.append(PLASM_INTERSECTION(list1_new))
+            geoms = []
+            for y in list1_new:
+                geoms.append(y.geom)
+            obj = PLASM_INTERSECTION(geoms)
+            obj.setcolor(list1_new[0].color)
+            result.append(obj)
         return result
 
 I = INTERSECTION
