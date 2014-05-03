@@ -1120,7 +1120,7 @@ class SQUARE(BASEOBJ):
         if size <= 0: 
             raise ExceptionWT("SQUARE(x) requires a positive value of x!")
         self.size = size
-        self.geom = CUBOID([side, side])
+        self.geom = CUBOID([size, size])
 
 # English:
 # Czech::
