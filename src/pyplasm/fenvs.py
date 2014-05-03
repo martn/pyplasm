@@ -4902,10 +4902,10 @@ def PLASM_COLOR(Cpl):
 	# convert list to Color
 	if isinstance(Cpl, list) and len(Cpl) in (3, 4):
                 # Normalizing RGB between 0 and 1 if necessary:
-                #if Cpl[0] > 1 or Cpl[1] > 1 or Cpl[2] > 1:
-		Cpl[0] = Cpl[0] / 255.
-		Cpl[1] = Cpl[1] / 255.
-		Cpl[2] = Cpl[2] / 255.
+                if Cpl[0] > 1 or Cpl[1] > 1 or Cpl[2] > 1:
+		    Cpl[0] = Cpl[0] / 255.
+		    Cpl[1] = Cpl[1] / 255.
+		    Cpl[2] = Cpl[2] / 255.
 		Cpl=Color4f(Cpl[0],Cpl[1],Cpl[2],Cpl[3] if len(Cpl)>=4 else 1.0)
         else: ExceptionWT("Invalid color!")
 
