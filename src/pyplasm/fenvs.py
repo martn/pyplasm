@@ -2923,22 +2923,16 @@ if self_test:
    assert Plasm.limits(PLASM_CONE([1.0,3.0])(16)).fuzzyEqual(Boxf(Vecf(1,-1,-1,0),Vecf(1,+1,+1,3)))
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
-# English:
-class CONE(BASEOBJ):
-    def __init__(self, r, h, division = 64):
-        self.setsize(r, h, division)
-        self.setcolor([255, 255, 255])
-    def setsize(self, r, h, division = 64):
-        if r <= 0: 
-            raise ExceptionWT("Radius r in CONE(r, h) must be positive!")
-        self.r = r
-        if h <= 0: 
-            raise ExceptionWT("Height h in CONE(r, h) must be positive!")
-        self.h = h
-        if division < 3: 
-            raise ExceptionWT("Number of sides n in CONE(r, h, n) must be at least 3!")
-        self.geom = PLASM_CONE([r, h])(division)
+def CONE(r, h, division = 64):
+    if r <= 0: 
+        raise ExceptionWT("Radius r in CONE(r, h) must be positive!")
+    if h <= 0: 
+        raise ExceptionWT("Height h in CONE(r, h) must be positive!")
+    if division < 3: 
+        raise ExceptionWT("Number of sides n in CONE(r, h, n) must be at least 3!")
+    return BASEOBJ(PLASM_CONE([r, h])(division))
 
+# English:
 # Czech:
 KUZEL = CONE
 # Polish:
@@ -4901,9 +4895,6 @@ COULEUR = COLOR
 
 # Original PLaSM color command:
 def PLASM_COLOR(Cpl):
-
-        print "%s %s %s %s" % (Cpl[0], Cpl[1], Cpl[2], Cpl[3])
-
 	def formatColor(Cpl):
 		assert isinstance(Cpl, Color4f) 
 		return "%s %s %s %s" % (Cpl.r,Cpl.g,Cpl.b,Cpl.a)
@@ -4911,10 +4902,10 @@ def PLASM_COLOR(Cpl):
 	# convert list to Color
 	if isinstance(Cpl, list) and len(Cpl) in (3, 4):
                 # Normalizing RGB between 0 and 1 if necessary:
-                if Cpl[0] > 1 or Cpl[1] > 1 or Cpl[2] > 1:
-                        Cpl[0] = Cpl[0] / 255.
-                        Cpl[1] = Cpl[1] / 255.
-                        Cpl[2] = Cpl[2] / 255.
+                #if Cpl[0] > 1 or Cpl[1] > 1 or Cpl[2] > 1:
+		Cpl[0] = Cpl[0] / 255.
+		Cpl[1] = Cpl[1] / 255.
+		Cpl[2] = Cpl[2] / 255.
 		Cpl=Color4f(Cpl[0],Cpl[1],Cpl[2],Cpl[3] if len(Cpl)>=4 else 1.0)
         else: ExceptionWT("Invalid color!")
 
