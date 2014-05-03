@@ -1002,8 +1002,6 @@ class BASEOBJ:
     def __init__(self, basegeom):
         self.color = [255, 255, 255]
         self.geom = basegeom
-    def copy(self):
-        return copy.deepcopy(self) 
     def setcolor(self, color = [255, 255, 255]):
         # Check if the color is a list:
         if type(color) is list:
@@ -1078,11 +1076,11 @@ class BASEOBJ:
 
 def COPY(obj):
     if not isinstance(obj, list):
-        return obj.copy()
+        return copy.deepcopy(obj)
     else:
         newlist = []
         for x in obj:
-            newlist.append(x.copy())
+            newlist.append(copy.deepcopy(x))
         return newlist
 
 # ===================================================
@@ -4311,8 +4309,8 @@ def EXTRUDE(shape2d, height, angle_deg, n=1):
   S(layer, 1, 1, dh)
   L = [layer]
   for i in range(n-1):
-    newlayer = L[i].copy()
-    TRANSLATE(newlayer, 0, 0, dh)
+    newlayer = COPY(L[i])
+    MOVE(newlayer, 0, 0, dh)
     ROTATE(newlayer, da*180.0/PI, 3)
     L.append(newlayer)
   return L # I tried to return a union but it took too much time
