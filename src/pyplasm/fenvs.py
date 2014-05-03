@@ -1276,7 +1276,7 @@ def RECTANGLE3D(a, b):
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
-    return CUBOID([a, b, 0.001])
+    return BASEOBJ(CUBOID([a, b, 0.001]))
 
 # Czech::
 OBDELNIK3D = RECTANGLE3D
@@ -1298,7 +1298,8 @@ RETTANGOLO3D = RECTANGLE3D
 def HEXAHEDRON(size):
     if size <= 0: raise ExceptionWT("HEXAHEDRON(x) requires a positive value of x!")
     c = CUBE(size)
-    return T(c, -0.5 * size, -0.5 * size, -0.5 * size)
+    T(c, -0.5 * size, -0.5 * size, -0.5 * size)
+    return c
 
 # English:
 HEX = HEXAHEDRON
@@ -1320,10 +1321,10 @@ HEXAEDRE = HEXAHEDRON
 # ===================================================
 
 def SIMPLEX (dim):
-    return Plasm.simplex(dim)
+    return BASEOBJ(Plasm.simplex(dim))
 
 if self_test: 
-	assert(Plasm.limits(SIMPLEX(3))==Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1)))
+	assert(Plasm.limits(SIMPLEX(3).geom)==Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1)))
 
 
 # ===================================================
@@ -2519,7 +2520,7 @@ if self_test:
 # circle 
 # =============================================
 
-def CIRCLE_POINTS(R,N):
+def CIRCLE_POINTS(R, N):
    return [ [R*math.cos(i*2*PI/N),R*math.sin(i*2*PI/N)] for i in range(0,N) ]
 
 def CIRCUMFERENCE (R):
@@ -2592,7 +2593,7 @@ def TUBE(r1, r2, h, division = 64):
         raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in TUBE(r1, r2, h)!")
     if division < 3: 
         raise ExceptionWT("The number of sides n in TUBE(r1, r2, h, n) must be at least 3!")
-    return PLASM_TUBE([r1, r2, h])(division)
+    return BASEOBJ(PLASM_TUBE([r1, r2, h])(division))
 # Czech:
 TRUBICE = TUBE
 TRUBKA = TUBE
@@ -2633,15 +2634,15 @@ if self_test:
 
 # NEW DEFINITION
 # English:
-def CIRCLE(r, division = [64, 32]):
+def CIRCLE(r, division = [64, 1]):
     if r <= 0: 
         raise ExceptionWT("Radius r in CIRCLE(r) must be positive!")
     if type(division) == list: 
-        return PLASM_CIRCLE(r)(division)
+        return BASEOBJ(PLASM_CIRCLE(r)(division))
     else:
         if division < 3: 
             raise ExceptionWT("Number of edges n in CIRCLE(r, n) must be at least 3!")
-        return PLASM_CIRCLE(r)([division, 32])
+        return BASEOBJ(PLASM_CIRCLE(r)([division, 32]))
 # Czech:
 KRUH = CIRCLE
 KRUZNICE = CIRCLE
@@ -2666,11 +2667,11 @@ def CIRCLE3D(r, division = [64, 32]):
     # so that logical operations with them work:
     h = 0.001
     if type(division) == list: 
-        return PRISM(PLASM_CIRCLE(r)(division), h)
+        return BASEOBJ(PRISM(PLASM_CIRCLE(r)(division), h))
     else:
         if division < 3: 
             raise ExceptionWT("Number of edges n in CIRCLE3D(r, n) must be at least 3!")
-        return PRISM(PLASM_CIRCLE(r)([division, 32]), h)
+        return BASEOBJ(PRISM(PLASM_CIRCLE(r)([division, 32]), h))
 # Czech:
 KRUH3D = CIRCLE3D
 # Polish:
@@ -2709,9 +2710,9 @@ def ARC(r1, r2, angle, division = [64, 32]):
     if angle <= 0: 
         raise ExceptionWT("Angle in ARC(r1, r2, angle) must be positive!")
     if type(division) == list: 
-        return PLASM_ARC([r1, r2, angle])(division)
+        return BASEOBJ(PLASM_ARC([r1, r2, angle])(division))
     else:
-        return PLASM_ARC([r1, r2, angle])([division, 32])
+        return BASEOBJ(PLASM_ARC([r1, r2, angle])([division, 32]))
 # Czech
 # TODO
 
@@ -2726,9 +2727,9 @@ def ARC3D(r1, r2, angle, division = [64, 32]):
     # so that logical operations with them work:
     h = 0.001
     if type(division) == list: 
-        return PRISM(PLASM_ARC([r1, r2, angle])(division), h)
+        return BASEOBJ(PRISM(PLASM_ARC([r1, r2, angle])(division), h))
     else:
-        return PRISM(PLASM_ARC([r1, r2, angle])([division, 32]), h)
+        return BASEOBJ(PRISM(PLASM_ARC([r1, r2, angle])([division, 32]), h))
 
 # =============================================
 # MY_CYLINDER 
@@ -2748,7 +2749,6 @@ if self_test:
    assert(Plasm.limits(PLASM_CYLINDER([1.0,2.0])(8)).fuzzyEqual(Boxf(Vecf(1,-1,-1,0),Vecf(1,+1,+1,2))))
 
 # NEW DEFINITION
-# English:
 def CYLINDER(r, h, division = 64):
     if r <= 0: 
         raise ExceptionWT("Radius r in CYLINDER(r, h) must be positive!")
@@ -2756,7 +2756,9 @@ def CYLINDER(r, h, division = 64):
         raise ExceptionWT("Height h in CYLINDER(r, h) must be positive!")
     if division < 3: 
         raise ExceptionWT("Number of sides n in CYLINDER(r, h, n) must be at least 3!")
-    return PLASM_CYLINDER([r, h])(division)
+    return BASEOBJ(PLASM_CYLINDER([r, h])(division))
+
+# English:
 CYL = CYLINDER
 # Czech:
 VALEC = CYLINDER
@@ -2800,14 +2802,14 @@ def SPHERE_SURFACE(radius, divisions = [24, 48]):
     if radius <= 0: 
         raise ExceptionWT("Radius r in SPHERE_SURFACE(r) must be positive!")
     # This is a surface:
-    return PLASM_SPHERE(radius)(divisions)
+    return BASEOBJ(PLASM_SPHERE(radius)(divisions))
 
 # English:
 def SPHERE(radius, divisions = [24, 48]):
     if radius <= 0: 
         raise ExceptionWT("Radius r in SPHERE(r) must be positive!")
     # Making it s solid:
-    return PLASM_JOIN(PLASM_SPHERE(radius)(divisions))
+    return BASEOBJ(PLASM_JOIN(PLASM_SPHERE(radius)(divisions)))
 # Czech:
 KOULE = SPHERE
 # Polish:
@@ -2854,7 +2856,7 @@ def TORUS_SURFACE(r1, r2, divisions = [64, 32]):
         raise ExceptionWT("Outer radius r2 in TORUS_SURFACE(r1, r2) must be positive!")
     if r2 <= r1: 
         raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in TORUS_SURFACE(r1, r2)!")
-    return PLASM_TORUS([r1, r2])(divisions)
+    return BASEOBJ(PLASM_TORUS([r1, r2])(divisions))
 
 # =============================================
 # TORUS - SOLID
@@ -2877,7 +2879,6 @@ if self_test:
 	PLASM_VIEW(SKELETON(1)(PLASM_SOLIDTORUS([1.5,2])([18,24,1])))
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
-# English:
 def TORUS(r1, r2, divisions = [64, 32]):
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in TORUS(r1, r2) must be positive!")
@@ -2885,7 +2886,9 @@ def TORUS(r1, r2, divisions = [64, 32]):
         raise ExceptionWT("Outer radius r2 in TORUS(r1, r2) must be positive!")
     if r2 <= r1: 
         raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in TORUS(r1, r2)!")
-    return PLASM_SOLIDTORUS([r1, r2])([divisions[0], divisions[1], 1])
+    return BASEOBJ(PLASM_SOLIDTORUS([r1, r2])([divisions[0], divisions[1], 1]))
+
+# English:
 DONUT = TORUS
 # Czech:
 # It is also "TORUS"
@@ -2963,7 +2966,6 @@ def PLASM_TRUNCONE (args):
 	return PLASM_TRUNCONE0
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
-# English:
 def TRUNCONE(r1, r2, h, divisions = 64):
     if r1 <= 0: 
         raise ExceptionWT("Bottom radius r1 in TRUNCONE(r1, r2, h) must be positive!")
@@ -2974,7 +2976,9 @@ def TRUNCONE(r1, r2, h, divisions = 64):
     if divisions < 3: 
         raise ExceptionWT("Number of sides n in TRUNCONE(r1, r2, h, n) must be at least 3!")
     # Changing to a solid:
-    return PLASM_JOIN(PLASM_TRUNCONE([r1, r2, h])(divisions))
+    return BASEOBJ(PLASM_JOIN(PLASM_TRUNCONE([r1, r2, h])(divisions)))
+
+# English:
 TCONE = TRUNCONE
 # Czech:
 KOMOLYKUZEL = TRUNCONE
@@ -3073,9 +3077,10 @@ def build_TETRAHEDRON():
 
 PLASM_TETRAHEDRON = build_TETRAHEDRON()
 
-# English:
 def TETRAHEDRON(a, b, c, d):
-    return PLASM_CONVEXHULL([a, b, c, d])
+    return BASEOBJ(PLASM_CONVEXHULL([a, b, c, d]))
+
+# English:
 # Czech:
 TETRAEDR = TETRAHEDRON
 CTYRSTEN = TETRAHEDRON
@@ -3095,7 +3100,6 @@ TETRAEDRE = TETRAHEDRON
 # TRIANGLE
 # =============================================
 
-# English:
 def TRIANGLE(a, b, c):
     if not isinstance(a, list): 
         raise ExceptionWT("First argument a in TRIANGLE(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
@@ -3108,7 +3112,9 @@ def TRIANGLE(a, b, c):
     lc = len(c)
     if la != lb or la != lc or lb != lc:
         raise ExceptionWT("All points a, b, c in TRIANGLE(a, b, c) must be 2D points, or all must be 3D points!")
-    return PLASM_CONVEXHULL([a, b, c])
+    return BASEOBJ(PLASM_CONVEXHULL([a, b, c]))
+
+# English:
 # Czech:
 TROJUHELNIK = TRIANGLE
 # Polish:
@@ -3152,7 +3158,7 @@ def TRIANGLE3D(a, b, c):
     c_low = [c[0], c[1], 0]
     c_high = [c[0], c[1], h]
     # Get the convex hull:
-    return PLASM_CONVEXHULL([a_low, a_high, b_low, b_high, c_low, c_high])
+    return BASEOBJ(PLASM_CONVEXHULL([a_low, a_high, b_low, b_high, c_low, c_high]))
 # Czech:
 TROJUHELNIK3D = TRIANGLE3D
 # Polish:
