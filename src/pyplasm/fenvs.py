@@ -1079,7 +1079,6 @@ if self_test:
 # CUBE
 # ===================================================
 
-# English:
 class CUBE(BASEOBJ):
     def __init__(self, size):
         self.setsize(size)
@@ -1089,6 +1088,7 @@ class CUBE(BASEOBJ):
             raise ExceptionWT("CUBE(x) requires a positive value of x!")
         self.size = size
         self.geom = CUBOID([size, size, size])
+# English:
 # Czech:
 KRYCHLE = CUBE
 KOSTKA  = CUBE
@@ -1104,7 +1104,10 @@ CUBO = CUBE
 # French:
 # CUBE same as English
 
-# English:
+# ===================================================
+# SQUARE
+# ===================================================
+
 class SQUARE(BASEOBJ):
     def __init__(self, size):
         self.setsize(size)
@@ -1115,6 +1118,7 @@ class SQUARE(BASEOBJ):
         self.size = size
         self.geom = CUBOID([side, side])
 
+# English:
 # Czech::
 CTVEREC = SQUARE
 # Polish:
@@ -1128,14 +1132,18 @@ QUADRATO = SQUARE
 # French:
 CARRE = SQUARE
 
-# English:
+# ===================================================
+# SQUARE3D
+# ===================================================
+
 def SQUARE3D (a):
     if a <= 0: raise ExceptionWT("SQUARE3D(x) requires a positive value of x!")
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
     return CUBOID([a, a, h])
-# Czech::
+# English:
+# Czech:
 CTVEREC3D = SQUARE3D
 # Polish:
 KWADRAT3D = SQUARE3D
@@ -1148,8 +1156,10 @@ QUADRATO3D = SQUARE3D
 # French:
 CARRE3D = SQUARE3D
 
+# ===================================================
+# BRICK, BOX
+# ===================================================
 
-# English:
 class BRICK(BASEOBJ):
     def __init__(self, a, b, c):
         self.setsize(a, b, c)
@@ -1161,6 +1171,7 @@ class BRICK(BASEOBJ):
         self.c = c
         self.geom = CUBOID([a, b, c])
 
+# English:
 BOX = BRICK
 # Czech::
 KVADR = BRICK
@@ -1186,7 +1197,10 @@ PARALELLEPIPEDO = BRICK
 BRIQUE = BRICK
 BOITE = BRICK
 
-# English:
+# ===================================================
+# RECTANGLE
+# ===================================================
+
 class RECTANGLE(BASEOBJ):
     def __init__(self, a, b):
         self.setsize(a, b)
@@ -1197,6 +1211,7 @@ class RECTANGLE(BASEOBJ):
         self.b = b
         self.geom = CUBOID([a, b])
 
+# English:
 RECT = RECTANGLE
 # Czech:
 OBDELNIK = RECTANGLE
@@ -1211,12 +1226,17 @@ RETTANGOLO = RECTANGLE
 # French:
 # Same as in English
 
+# ===================================================
+# RECTANGLE3D
+# ===================================================
+
 def RECTANGLE3D(a, b):
     if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE3D(x, y) requires positive dimensions x, y!")
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
     return CUBOID([a, b, 0.001])
+
 # Czech::
 OBDELNIK3D = RECTANGLE3D
 # Polish:
@@ -1230,13 +1250,16 @@ RETTANGOLO3D = RECTANGLE3D
 # French:
 # Same as in English
 
+# ===================================================
+# HEXAHEDRON
+# ===================================================
 
-# English:
-# Original version: HEXAHEDRON = Plasm.cube(3,-1.0/math.sqrt(3.0),+1.0/math.sqrt(3.0))
 def HEXAHEDRON(size):
     if size <= 0: raise ExceptionWT("HEXAHEDRON(x) requires a positive value of x!")
     c = CUBE(size)
     return T(c, -0.5 * size, -0.5 * size, -0.5 * size)
+
+# English:
 HEX = HEXAHEDRON
 # Czech:
 HEXAEDR = HEXAHEDRON
@@ -1308,17 +1331,15 @@ if self_test:
 # mkpol of a single point
 MK = COMP([MKPOL, CONS([LIST, K([[1]]), K([[1]])])])
 
+# ===================================================
+# CONVEX HULL, CHULL
+# ===================================================
+
 # convex hull of points
 def PLASM_CONVEXHULL (points):
     return MKPOL([points, [range(1,len(points)+1)], [[1]]])
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
-# English:
-def CONVEXHULL(*args):
-    list1 = list(args)
-    if len(list1) <= 2: raise ExceptionWT("CONVEXHULL(...) requires at least three points!")
-    return PLASM_CONVEXHULL(list1)
-
 class CONVEXHULL(BASEOBJ):
     def __init__(self, *args):
         list1 = list(args)
@@ -1326,6 +1347,7 @@ class CONVEXHULL(BASEOBJ):
         self.geom = PLASM_CONVEXHULL(list1)
         self.setcolor([255, 255, 255])
 
+# English:
 CHULL = CONVEXHULL
 CONVEX = CHULL
 CH = CHULL
@@ -1903,14 +1925,16 @@ SOUSTRAIRE = DIFF
 SOUSTRAIS = DIFF
 # DIFF same as in English
 
+# ===================================================
+# XOR
+# ===================================================
 
-# xor
+# original definition, now internal
 def PLASM_XOR(objs_list):
     result = Plasm.boolop(BOOL_CODE_XOR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
     return result
 
-# NEW DEFINITION
-# English:
+# NEW DEFINITION, JUST FOR TWO OBJECTS
 def XOR(a, b):
     L = []
     L.append(DIFF(a, b))    
@@ -1923,10 +1947,10 @@ if self_test:
 	assert(Plasm.limits(PLASM_DIFFERENCE([Plasm.cube(2,0,1),Plasm.cube(2,0.5,1.5)])).fuzzyEqual(Boxf(Vecf(1,0,0),Vecf(1,1,1))))
 	assert(Plasm.limits(PLASM_XOR([Plasm.cube(2,0,1),Plasm.cube(2,0.5,1.5)])).fuzzyEqual(Boxf(Vecf(1,0,0),Vecf(1,1.5,1.5))))
 
-
 # ===================================================
 # JOIN
 # ===================================================
+
 def PLASM_JOIN (pol_list):
    if  ISPOL(pol_list): pol_list=[pol_list]
    return Plasm.join(pol_list,plasm_config.tolerance())
@@ -1960,11 +1984,18 @@ if self_test:
 	assert(Plasm.limits(PLASM_POWER([Plasm.cube(2),Plasm.cube(1)])).fuzzyEqual(Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1))))
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+class POWER(BASEOBJ):
+    def __init__(self, *args):
+        list1 = list(args)
+        if len(list1) != 2: 
+            raise Exception("POWER(...) requires two arguments!")
+        geoms = []
+        for x in list1:
+            geoms.append(x.geom)
+        self.geom = PLASM_POWER(geoms)
+        self.setcolor([255, 255, 255])
+
 # English:
-def POWER(*args):
-    list1 = list(args)
-    if len(list1) != 2: raise Exception("POWER(b, h) requires two arguments: 2D object b and a height h!")
-    return PLASM_POWER(list1)
 PRODUCT = POWER
 # Czech:
 MOCNINA = POWER
@@ -2014,9 +2045,10 @@ if self_test:
 
 
 # ===================================================
-# GRID
+# FLATTEN
 # ===================================================
 
+# takes lists (possibly including other lists) and returns one plain list
 def flatten(*args):
     output = []
     for arg in args:
@@ -2026,16 +2058,23 @@ def flatten(*args):
             output.append(arg)
     return output
 
+# ===================================================
+# GRID
+# ===================================================
+
+class GRID(BASEOBJ):
+    def __init__(self, *args):
+        sequence = flatten(*args)
+        if len(sequence) == 0: raise ExceptionWT("GRID(...) requires at least one interval length!")
+        cursor,points,hulls= (0,[[0]],[])
+        for value in sequence:
+            points = points + [[cursor + abs(value)]] 
+            if value>=0: hulls += [[len(points)-2,len(points)-1]]
+            cursor = cursor + abs(value)
+        self.geom = Plasm.mkpol(1, CAT(points), hulls,plasm_config.tolerance())
+        self.setcolor([255, 255, 255])
+
 # English:
-def GRID (*args):
-    sequence = flatten(*args)
-    if len(sequence) == 0: raise ExceptionWT("GRID(...) requires at least one interval length!")
-    cursor,points,hulls= (0,[[0]],[])
-    for value in sequence:
-        points = points + [[cursor + abs(value)]] 
-        if value>=0: hulls += [[len(points)-2,len(points)-1]]
-        cursor = cursor + abs(value)
-    return  Plasm.mkpol(1, CAT(points), hulls,plasm_config.tolerance())   
 QUOTE = GRID
 # Czech:
 SIT = GRID
