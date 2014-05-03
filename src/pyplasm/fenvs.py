@@ -2978,6 +2978,7 @@ TRONCONE = TCONE
 # DODECAHEDRON
 # =============================================
 
+# This function returns an instance of BASEOBJ:
 def build_DODECAHEDRON ():
 	a = 1.0/(math.sqrt(3.0))
 	g = 0.5*(math.sqrt(5.0)-1)
@@ -2985,13 +2986,16 @@ def build_DODECAHEDRON ():
 	basis = EMBED(1)(CUBOID([2, 2]))
 	roof = PLASM_TRANSLATE([1, 2, 3])([-1,-1,-1])(PLASM_JOIN([basis, top]))
 	roofpair = PLASM_STRUCT([roof, PLASM_ROTATE([2, 3])(PI), roof])
-	return PLASM_S([1, 2, 3])([a, a, a])(PLASM_STRUCT([ 
+	geom = PLASM_S([1, 2, 3])([a, a, a])(PLASM_STRUCT([ 
 		Plasm.cube(3,-1,+1),
 		roofpair, 
 		PLASM_R([1, 3])(PI/2), PLASM_R([1, 2])(PI/2), 
 		roofpair, 
 		PLASM_R([1, 2])(PI/2), PLASM_R([2, 3])(PI/2), 
 		roofpair]))
+        obj = BASEOBJ(geom)
+        obj.setcolor([255, 255, 255])
+        return obj
 
 # English:
 DODECAHEDRON = build_DODECAHEDRON()
@@ -3680,7 +3684,7 @@ def PLASM_PRISM (height):
         return Plasm.power(basis, PLASM_QUOTE([height]))
     return PLASM_PRISM0
 
-# NEW DEFINITION
+# NEW DEFINITION - RETURNS AN INSTANCE OF CLASS "PRODUCT"
 def PRISM(basis, h):
     if basis.getdimension() <> 2: 
         raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!")
