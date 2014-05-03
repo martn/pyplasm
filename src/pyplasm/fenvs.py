@@ -4902,10 +4902,10 @@ COULEUR = COLOR
 # Original PLaSM color command:
 def PLASM_COLOR(Cpl):
 
-        print "%s %s %s %s" % (Cpl.r,Cpl.g,Cpl.b,Cpl.a)
+        print "%s %s %s %s" % (Cpl[0], Cpl[1], Cpl[2], Cpl[3])
 
 	def formatColor(Cpl):
-		assert isinstance(Cpl,Color4f) 
+		assert isinstance(Cpl, Color4f) 
 		return "%s %s %s %s" % (Cpl.r,Cpl.g,Cpl.b,Cpl.a)
 
 	# convert list to Color
