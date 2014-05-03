@@ -1984,19 +1984,19 @@ if self_test:
 	assert(Plasm.limits(PLASM_POWER([Plasm.cube(2),Plasm.cube(1)])).fuzzyEqual(Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1))))
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
-class POWER(BASEOBJ):
+class PRODUCT(BASEOBJ):
     def __init__(self, *args):
         list1 = list(args)
         if len(list1) != 2: 
             raise Exception("POWER(...) requires two arguments!")
-        geoms = []
+        list2 = []
         for x in list1:
-            geoms.append(x.geom)
-        self.geom = PLASM_POWER(geoms)
+            list2.append(x.geom)
+        self.geom = PLASM_POWER(list2)
         self.setcolor([255, 255, 255])
 
 # English:
-PRODUCT = POWER
+POWER = PRODUCT
 # Czech:
 MOCNINA = POWER
 PRODUKT = POWER
@@ -2062,10 +2062,24 @@ def flatten(*args):
 # GRID
 # ===================================================
 
+# original definition:
+def PLASM_GRID (*args):
+    sequence = flatten(*args)
+    if len(sequence) == 0: raise ExceptionWT("GRID(...) requires at least one interval length!")
+    cursor,points,hulls= (0,[[0]],[])
+    for value in sequence:
+        points = points + [[cursor + abs(value)]] 
+        if value>=0: hulls += [[len(points)-2,len(points)-1]]
+        cursor = cursor + abs(value)
+    return  Plasm.mkpol(1, CAT(points), hulls,plasm_config.tolerance())   
+PLASM_QUOTE = PLASM_GRID
+
+# NEW DEFINITION:
 class GRID(BASEOBJ):
     def __init__(self, *args):
         sequence = flatten(*args)
-        if len(sequence) == 0: raise ExceptionWT("GRID(...) requires at least one interval length!")
+        if len(sequence) == 0: 
+            raise ExceptionWT("GRID(...) requires at least one interval length!")
         cursor,points,hulls= (0,[[0]],[])
         for value in sequence:
             points = points + [[cursor + abs(value)]] 
@@ -2093,11 +2107,11 @@ GRIGLIA = GRID
 GRILLE = GRID
 
 if self_test: 
-	assert(Plasm.limits(QUOTE([1,-1,1]))==Boxf(Vecf([1,0]),Vecf([1,3])))
-	assert(Plasm.limits(QUOTE([-1,1,-1,1]))==Boxf(Vecf([1,1]),Vecf([1,4])))
+	assert(Plasm.limits(PLASM_QUOTE([1,-1,1]))==Boxf(Vecf([1,0]),Vecf([1,3])))
+	assert(Plasm.limits(PLASM_QUOTE([-1,1,-1,1]))==Boxf(Vecf([1,1]),Vecf([1,4])))
 
 
-Q = COMP([QUOTE, IF([ISSEQ, ID, CONS([ID])])])
+Q = COMP([PLASM_QUOTE, IF([ISSEQ, ID, CONS([ID])])])
 
 # ===================================================
 # INTERVALS 
@@ -2105,7 +2119,7 @@ Q = COMP([QUOTE, IF([ISSEQ, ID, CONS([ID])])])
 
 def PLASM_INTERVALS (A):
     def PLASM_INTERVALS0 (N):
-        return QUOTE([float(A)/float(N) for i in range(N)])
+        return PLASM_QUOTE([float(A)/float(N) for i in range(N)])
     return PLASM_INTERVALS0
 
 if self_test:
@@ -2533,7 +2547,7 @@ def RING3D(r1, r2, division = [64, 32]):
 def PLASM_TUBE (args):
     r1 , r2 , height= args
     def PLASM_TUBE0 (N):
-        return Plasm.power(PLASM_RING([r1, r2])([N, 1]),QUOTE([height]))
+        return Plasm.power(PLASM_RING([r1, r2])([N, 1]), PLASM_QUOTE([height]))
     return PLASM_TUBE0
 
 # NEW DEFINITION
@@ -2902,7 +2916,7 @@ CONO = CONE
 def PLASM_TRUNCONE (args):
 	R1 , R2 , H = args
 	def PLASM_TRUNCONE0 (N):
-		domain = Plasm.power( QUOTE([2*PI/N for i in range(N)]) , QUOTE([1])  )
+		domain = Plasm.power( PLASM_QUOTE([2*PI/N for i in range(N)]) , PLASM_QUOTE([1])  )
 		def fn(p):
 			return [
 				(R1+p[1]*(R2-R1))*math.cos(p[0]),	
@@ -3648,7 +3662,7 @@ def FINITECONE (pol):
 
 def PLASM_PRISM (HEIGHT):
     def PLASM_PRISM0 (BASIS):
-        return Plasm.power(BASIS,QUOTE([HEIGHT]))
+        return Plasm.power(BASIS, PLASM_QUOTE([HEIGHT]))
     return PLASM_PRISM0
 
 # NEW DEFINITION
@@ -4165,7 +4179,7 @@ def PYRAMID (H):
 # ===================================================
 
 def MESH (seq):
-	return INSL(RAISE(PROD))([QUOTE(i) for i in seq])
+	return INSL(RAISE(PROD))([PLASM_QUOTE(i) for i in seq])
 
 
 
@@ -4364,7 +4378,7 @@ if self_test:
 def SWEEP (v):
     def SWEEP0 (pol):
 
-		ret=Plasm.power(pol,QUOTE([1]))
+		ret=Plasm.power(pol, PLASM_QUOTE([1]))
 
 		# shear operation
 		mat=IDNT(len(v)+2)
@@ -4421,7 +4435,7 @@ def OFFSET (v):
 				mat[i+1][len(shear)+1]=shear[i]
 			
 			# apply shearing
-			ret=MAT(mat)((Plasm.power(ret,QUOTE([1]))))
+			ret=MAT(mat)((Plasm.power(ret, PLASM_QUOTE([1]))))
 
 		return PROJECT(len(v))(ret)
 	return OFFSET0
@@ -4617,7 +4631,7 @@ def PLASM_BEZIERSTRIPE (args):
 
 if self_test:
 	vertices=[[0,0],[1.5,0],[-1,2],[2,2],[2,0]]
-	PLASM_VIEW(Plasm.Struct([ POLYLINE(vertices) , Plasm.power(PLASM_BEZIERSTRIPE([vertices,0.25,22]),QUOTE([0.9]))  ]))
+	PLASM_VIEW(Plasm.Struct([ POLYLINE(vertices) , Plasm.power(PLASM_BEZIERSTRIPE([vertices,0.25,22]), PLASM_QUOTE([0.9]))  ]))
 
 
 
@@ -4699,7 +4713,7 @@ def NUBSPLINE(degree,totpoints=80):
 			v=[tsiz/float(totpoints-1) for i in range(totpoints-1)]
 			assert len(v)+1==totpoints
 			v=[-tmin] + v
-			domain=QUOTE(v)
+			domain = PLASM_QUOTE(v)
 			return PLASM_MAP(BSPLINE(degree)(knots)(points))(domain)
 		return NUBSPLINE2
 	return NUBSPLINE1
@@ -4767,7 +4781,7 @@ def NURBSPLINE(degree,totpoints=80):
 			v=[tsiz/float(totpoints-1) for i in range(totpoints-1)]
 			assert len(v)+1==totpoints
 			v=[-tmin] + v
-			domain=QUOTE(v)
+			domain = PLASM_QUOTE(v)
 			return PLASM_MAP(RATIONALBSPLINE(degree)(knots)(points))(domain)
 		return NURBSPLINE2
 	return NURBSPLINE1
