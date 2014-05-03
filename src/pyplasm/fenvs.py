@@ -1898,15 +1898,19 @@ SOUSTRAIS = DIFF
 
 # xor
 def PLASM_XOR(objs_list):
-        color = GETCOLOR(objs_list[0])
-        result = Plasm.boolop(BOOL_CODE_XOR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
-        if color != []: return COLOR(result, color)
-	else: return result
+    result = Plasm.boolop(BOOL_CODE_XOR, objs_list,plasm_config.tolerance(),plasm_config.maxnumtry(),plasm_config.useOctreePlanes())
+    return result
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
 # English:
 def XOR(*args):
-    return PLASM_XOR(list(args))
+    list1 = list(args)
+    geoms = []
+    for x in list1:
+        geoms.append(x.geom)    
+    obj = BASEOBJ(PLASM_XOR(geoms))
+    obj.color = list1[0].color
+    return obj
 
 if self_test: 
 	assert(Plasm.limits(PLASM_UNION([Plasm.cube(2,0,1),Plasm.cube(2,0.5,1.5)])).fuzzyEqual(Boxf(Vecf(1,0,0),Vecf(1,1.5,1.5))))
