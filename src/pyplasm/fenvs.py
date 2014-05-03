@@ -1318,6 +1318,14 @@ def CONVEXHULL(*args):
     list1 = list(args)
     if len(list1) <= 2: raise ExceptionWT("CONVEXHULL(...) requires at least three points!")
     return PLASM_CONVEXHULL(list1)
+
+class CONVEXHULL(BASEOBJ):
+    def __init__(self, *args):
+        list1 = list(args)
+        if len(list1) <= 2: raise ExceptionWT("CONVEXHULL(...) requires at least three points!")
+        self.geom = PLASM_CONVEXHULL(list1)
+        self.setcolor([255, 255, 255])
+
 CHULL = CONVEXHULL
 CONVEX = CHULL
 CH = CHULL
