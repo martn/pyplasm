@@ -1796,7 +1796,7 @@ def INTERSECTION(*args):
             geoms = []
             for y in list1_new:
                 geoms.append(y.geom)
-            obj = PLASM_INTERSECTION(geoms)
+            obj = BASEOBJ(PLASM_INTERSECTION(geoms))
             obj.setcolor(list1_new[0].color)
             result.append(obj)
         return result
