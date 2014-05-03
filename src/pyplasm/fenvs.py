@@ -4292,13 +4292,10 @@ def EXTRUDE(shape2d, height, angle_deg, n=1):
   COLOR(layer, col)
   S(layer, 1, 1, dh)
   L = [layer]
-  layer0 = layer
   for i in range(n-1):
-    layer_new = layer0
-    TRANSLATE(layer_new, 0, 0, dh)
-    ROTATE(layer_new, da*180.0/PI, 3)
-    L.append(layer_new)
-    layer0 = layer_new
+    L.append(L[i].copy())
+    TRANSLATE(L[i], 0, 0, dh)
+    ROTATE(L[i], da*180.0/PI, 3)
   return L # I tried to return a union but it took too much time
 
 EXT = EXTRUDE
