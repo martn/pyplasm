@@ -2642,7 +2642,7 @@ def CIRCLE(r, division = [64, 1]):
     else:
         if division < 3: 
             raise ExceptionWT("Number of edges n in CIRCLE(r, n) must be at least 3!")
-        return BASEOBJ(PLASM_CIRCLE(r)([division, 32]))
+        return BASEOBJ(PLASM_CIRCLE(r)([division, 1]))
 # Czech:
 KRUH = CIRCLE
 KRUZNICE = CIRCLE
