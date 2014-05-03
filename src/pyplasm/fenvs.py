@@ -1095,11 +1095,11 @@ class BASEOBJ:
 
 def COPY(obj):
     if not isinstance(obj, list):
-        return copy.deepcopy(obj)
+        return copy.copy(obj)
     else:
         newlist = []
         for x in obj:
-            newlist.append(copy.deepcopy(x))
+            newlist.append(copy.copy(x))
         return newlist
 
 # ===================================================
