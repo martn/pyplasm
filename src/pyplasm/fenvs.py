@@ -1783,7 +1783,7 @@ def INTERSECTION(*args):
     item1 = list1[0] # this is either a single item or a list
     if not isinstance(item1, list):
         geoms = []
-        fox x in list1:
+        for x in list1:
             geoms.append(x.geom)
         obj = BASEOBJECT(PLASM_INTERSECTION(geoms))
         obj.setcolor(list1[0].color)
