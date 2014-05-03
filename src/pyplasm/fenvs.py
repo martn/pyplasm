@@ -2012,10 +2012,11 @@ class PRODUCT(BASEOBJ):
         if len(list1) != 2: 
             raise Exception("POWER(...) requires two arguments!")
         list2 = []
+        color = list1[0].color
         for x in list1:
             list2.append(x.geom)
         self.geom = PLASM_POWER(list2)
-        self.setcolor([255, 255, 255])
+        self.setcolor(color)
 
 # English:
 POWER = PRODUCT
@@ -3687,7 +3688,7 @@ class PRISM(BASEOBJ):
         if h <= 0: 
             raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
         color = basis.getcolor()
-        self.geom = PLASM_PRISM(h)(basis.geom)
+        self.geom = PLASM_POWER(h)(basis.geom)
         self.color = color
 
 # English:
