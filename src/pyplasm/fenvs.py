@@ -4288,7 +4288,7 @@ def EXTRUDE(shape2d, height, angle_deg, n=1):
   dh = float(height) / n
   angle_rad = angle_deg * PI / 180.0
   da = float(angle_rad) / n
-  layer = BASEOBJ(PLASM_EXTRUSION(da)(1)(shape2d))
+  layer = BASEOBJ(PLASM_EXTRUSION(da)(1)(shape2d.geom))
   if col != []: COLOR(layer, col)
   S(layer, 1, 1, dh)
   L = [layer]
