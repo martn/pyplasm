@@ -2544,27 +2544,9 @@ def RING(r1, r2, division = [64, 32]):
 # Czech
 # TODO
 
-
-def RING3D(r1, r2, division = [64, 32]):
-    if r1 <= 0: 
-        raise ExceptionWT("Inner radius r1 in RING3D(r1, r2) must be positive!")
-    if r2 <= 0: 
-        raise ExceptionWT("Outer radius r2 in RING3D(r1, r2) must be positive!")
-    if r1 >= r2: 
-        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in RING3D(r1, r2)!")
-    h = 0.001
-    if type(division) == list: 
-        return PRISM(PLASM_RING([r1, r2])(division), h)
-    else:
-        if division < 3: 
-            raise ExceptionWT("Number of edges n in RING3D(r1, r2, n) must be at least 3!")
-        else: return PRISM(PLASM_RING([r1, r2])([division, 32]), h)
-# Czech
-# TODO
-
-
-
-
+# =============================================
+# TUBE
+# =============================================
 
 def PLASM_TUBE (args):
     r1 , r2 , height= args
@@ -2601,6 +2583,13 @@ TUBO = TUBE
 # Same as in Spanish
 # French:
 # Same as in English
+
+# =============================================
+# RING3D IS JUST A SHORT TUBE
+# =============================================
+
+def RING3D(r1, r2, division = [64, 32]):
+    return TUBE(r1, r2, 0.001)
 
 # =============================================
 # CIRCLE 
@@ -3682,16 +3671,22 @@ def FINITECONE (pol):
 # PRISM
 # ===================================================
 
-def PLASM_PRISM (HEIGHT):
-    def PLASM_PRISM0 (BASIS):
-        return Plasm.power(BASIS, PLASM_QUOTE([HEIGHT]))
+def PLASM_PRISM (height):
+    def PLASM_PRISM0 (basis):
+        return Plasm.power(basis, PLASM_QUOTE([height]))
     return PLASM_PRISM0
 
 # NEW DEFINITION
-# English:
 def PRISM(basis, h):
-    if h <= 0: raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
-    return PLASM_PRISM(h)(basis)
+    if basis.getdimension() <> 2: 
+        raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!")
+    if h <= 0: 
+        raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
+    obj = BASEOBJ(PLASM_PRISM(h)(basis.geom))
+    obj.setcolor(basis.getcolor())
+    return obj
+
+# English:
 # Czech:
 HRANOL = PRISM
 # Polish:
