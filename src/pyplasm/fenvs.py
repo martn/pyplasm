@@ -1476,7 +1476,7 @@ if self_test:
 # NEW DEFINITION:
 # English:
 # SCALE ONE OBJECT OR A LIST
-def SCALE(obj, a, b, c):
+def SCALE(obj, a, b, c = 1):
     if not isinstance(obj, list):
         return obj.scale(a, b, c)
     else:
