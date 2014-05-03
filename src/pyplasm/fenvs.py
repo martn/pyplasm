@@ -1903,14 +1903,11 @@ def PLASM_XOR(objs_list):
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
 # English:
-def XOR(*args):
-    list1 = list(args)
-    geoms = []
-    for x in list1:
-        geoms.append(x.geom)    
-    obj = BASEOBJ(PLASM_XOR(geoms))
-    obj.color = list1[0].color
-    return obj
+def XOR(a, b):
+    L = []
+    L.append(DIFF(a, b))    
+    L.append(DIFF(b, a))    
+    return L
 
 if self_test: 
 	assert(Plasm.limits(PLASM_UNION([Plasm.cube(2,0,1),Plasm.cube(2,0.5,1.5)])).fuzzyEqual(Boxf(Vecf(1,0,0),Vecf(1,1.5,1.5))))
