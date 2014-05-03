@@ -1028,7 +1028,7 @@ class BASEOBJ:
         self.setcolor(self.color)
     def rotaterad(self, angle_rad, axis = 3):
         if axis != 1 and axis != 2 and axis != 3: 
-            raise ExceptionWT("The third argument of ROTATERAD must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
+            raise ExceptionWT("The third argument of ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
         if axis == 1: plane_indexes = [2, 3]
         elif axis == 2: plane_indexes = [1, 3]
         else: plane_indexes = [1, 2]
@@ -1038,12 +1038,13 @@ class BASEOBJ:
     def rotate(self, angle_deg, axis = 3):
         angle_rad = PI * angle_deg / 180.
         self.rotaterad(angle_rad, axis)
+        self.setcolor(self.color)
     def rotaterel(self, angle_deg, axis = 3):
         if axis != 1 and axis != 2 and axis != 3: 
-          raise ExceptionWT("The third argument of the command ROTATEREL (rotation about objects own center) must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
+          raise ExceptionWT("The third argument of the command ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
         dim = DIM(self.geom)
         if dim != 2 and dim != 3:
-           raise ExceptionWT("Error in ROTATEREL: Object dimension must be either 2 or 3.")
+           raise ExceptionWT("Error in ROTATE: Object dimension must be either 2 or 3.")
         if dim == 2:
           x = 0.5 * (MINX(self.geom) + MAXX(self.geom))
           y = 0.5 * (MINY(self.geom) + MAXY(self.geom))
@@ -1057,6 +1058,10 @@ class BASEOBJ:
           self.move(-x, -y, -z)
           self.rotate(angle_deg, axis)
           self.move(x, y, z)
+        self.setcolor(self.color)
+    def scale(self, a, b, c = 1.0):
+        self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
+        self.setcolor(self.color)
 
 # ===================================================
 # CUBOID
@@ -1470,21 +1475,12 @@ if self_test:
 
 # NEW DEFINITION:
 # English:
-# SCALE ONE OBJECT
-def SCALE_ONE(obj, a, b, c = 1.0):
-    col = GETCOLOR(obj)
-    obj = PLASM_SCALE([1, 2, 3])([a, b, c])(obj)
-    if col != []: obj = COLOR(obj, col)
-    return obj
 # SCALE ONE OBJECT OR A LIST
 def SCALE(obj, a, b, c):
     if not isinstance(obj, list):
-        return SCALE_ONE(obj, a, b, c)
+        return obj.scale(a, b, c)
     else:
-        L = []
-        for oo in obj:
-            L.append(SCALE_ONE(oo, a, b, c))
-        return L
+        for oo in obj: oo.scale(a, b, c)
 
 S = SCALE
 # Czech:
