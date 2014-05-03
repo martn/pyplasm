@@ -2556,7 +2556,7 @@ if self_test:
 
 # NEW DEFINITION
 class RING(BASEOBJ):
-    def __init__(self, r1, r2, division = [64, 32]):
+    def __init__(self, r1, r2, division = [64, 1]):
         if r1 <= 0: 
             raise ExceptionWT("Inner radius r1 in RING(r1, r2) must be positive!")
         if r2 <= 0: 
@@ -2568,7 +2568,7 @@ class RING(BASEOBJ):
         else:
             if division < 3: 
                 raise ExceptionWT("Number of edges n in RING(r1, r2, n) must be at least 3!")
-            else: self.geom = PLASM_RING([r1, r2])([division, 32])
+            else: self.geom = PLASM_RING([r1, r2])([division, 1])
         self.color = [255, 255, 255]
 
 # Czech
@@ -2618,8 +2618,8 @@ TUBO = TUBE
 # RING3D IS JUST A SHORT TUBE
 # =============================================
 
-def RING3D(r1, r2, division = [64, 32]):
-    return TUBE(r1, r2, 0.001)
+def RING3D(r1, r2, division = 64):
+    return TUBE(r1, r2, 0.001, division)
 
 # =============================================
 # CIRCLE 
@@ -2664,7 +2664,7 @@ CERCHIO = CIRCLE
 CERCLE = CIRCLE
 ROND = CIRCLE
 
-def CIRCLE3D(r, division = [64, 32]):
+def CIRCLE3D(r, division = [64, 1]):
     if r <= 0: 
         raise ExceptionWT("Radius r in CIRCLE3D(r) must be positive!")
     # height is kept the same for add these thin objects,
@@ -2675,7 +2675,7 @@ def CIRCLE3D(r, division = [64, 32]):
     else:
         if division < 3: 
             raise ExceptionWT("Number of edges n in CIRCLE3D(r, n) must be at least 3!")
-        return BASEOBJ(PRISM(PLASM_CIRCLE(r)([division, 32]), h))
+        return BASEOBJ(PRISM(PLASM_CIRCLE(r)([division, 1]), h))
 # Czech:
 KRUH3D = CIRCLE3D
 # Polish:
@@ -2706,7 +2706,7 @@ def PLASM_ARC (params):
 
 # NEW DEFINITION
 # English:
-def ARC(r1, r2, angle, division = [64, 32]):
+def ARC(r1, r2, angle, division = [64, 1]):
     if r1 < 0: 
         raise ExceptionWT("Radius r1 in ARC(r1, r2, angle) must be nonnegative!")
     if r2 <= r1: 
@@ -2716,11 +2716,11 @@ def ARC(r1, r2, angle, division = [64, 32]):
     if type(division) == list: 
         return BASEOBJ(PLASM_ARC([r1, r2, angle])(division))
     else:
-        return BASEOBJ(PLASM_ARC([r1, r2, angle])([division, 32]))
+        return BASEOBJ(PLASM_ARC([r1, r2, angle])([division, 1]))
 # Czech
 # TODO
 
-def ARC3D(r1, r2, angle, division = [64, 32]):
+def ARC3D(r1, r2, angle, division = [64, 1]):
     if r1 < 0: 
         raise ExceptionWT("Radius r1 in ARC3D(r1, r2, angle) must be nonnegative!")
     if r2 <= r1: 
@@ -2733,7 +2733,7 @@ def ARC3D(r1, r2, angle, division = [64, 32]):
     if type(division) == list: 
         return BASEOBJ(PRISM(PLASM_ARC([r1, r2, angle])(division), h))
     else:
-        return BASEOBJ(PRISM(PLASM_ARC([r1, r2, angle])([division, 32]), h))
+        return BASEOBJ(PRISM(PLASM_ARC([r1, r2, angle])([division, 1]), h))
 
 # =============================================
 # MY_CYLINDER 
