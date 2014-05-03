@@ -10,10 +10,10 @@ from nclab.engines.python import NCLab
 nclabinst = NCLab.instance()
 
 # Import exceptions without traceback:
-#from nclab.tools import ExceptionWT
+from nclab.tools import ExceptionWT
 
-def ExceptionWT(a):
-  print a
+#def ExceptionWT(a):
+#  print a
 
 # This is needed to measure time:
 import time
@@ -1053,15 +1053,15 @@ class BASEOBJ:
         if dim != 2 and dim != 3:
            raise ExceptionWT("Error in ROTATE: Object dimension must be either 2 or 3.")
         if dim == 2:
-          x = 0.5 * (MINX(self.geom) + MAXX(self.geom))
-          y = 0.5 * (MINY(self.geom) + MAXY(self.geom))
+          x = 0.5 * (self.minx() + self.maxx())
+          y = 0.5 * (self.miny() + self.maxy())
           self.move(-x, -y)
           self.rotate(angle_deg, axis)
           self.move(x, y)
         else:
-          x = 0.5 * (MINX(self.geom) + MAXX(self.geom))
-          y = 0.5 * (MINY(self.geom) + MAXY(self.geom))
-          z = 0.5 * (MINZ(self.geom) + MAXZ(self.geom))
+          x = 0.5 * (self.minx() + self.maxx())
+          y = 0.5 * (self.miny() + self.maxy())
+          z = 0.5 * (self.minz() + self.maxz())
           self.move(-x, -y, -z)
           self.rotate(angle_deg, axis)
           self.move(x, y, z)
@@ -1069,6 +1069,25 @@ class BASEOBJ:
     def scale(self, a, b, c = 1.0):
         self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
         self.setcolor(self.color)
+    def minx(self):
+        return MIN(1)(self.geom)
+    def miny(self):
+        return MIN(2)(self.geom)
+    def minz(self):
+        return MIN(3)(self.geom)
+    def maxx(self):
+        return MAX(1)(self.geom)
+    def maxy(self):
+        return MAX(2)(self.geom)
+    def maxz(self):
+        return MAX(3)(self.geom)
+    def sizex(self):
+        return MAX(1)(self.geom) - MIN(1)(self.geom)
+    def sizey(self):
+        return MAX(2)(self.geom) - MIN(2)(self.geom)
+    def sizez(self):
+        return MAX(3)(self.geom) - MIN(3)(self.geom)
+
 
 # ===================================================
 # COPYING OBJECTS AND LISTS OF OBJECTS
@@ -2231,17 +2250,17 @@ def MID  (List):
     return MID1
 
 def MINX(obj):
-    return MIN(1)(obj) 
+    return obj.minx()
 def MINY(obj):
-    return MIN(2)(obj) 
+    return obj.miny() 
 def MINZ(obj):
-    return MIN(3)(obj) 
+    return obj.minz() 
 def MAXX(obj):
-    return MAX(1)(obj) 
+    return obj.maxx() 
 def MAXY(obj):
-    return MAX(2)(obj) 
+    return obj.maxy() 
 def MAXZ(obj):
-    return MAX(3)(obj) 
+    return obj.maxz() 
 
 if self_test: 
 	assert(MIN(1)(Plasm.cube(2))==0)
@@ -4468,7 +4487,7 @@ if self_test:
 	cells = [[1,2],[2,3],[3,4],[4,1],[5,6],[6,7],[7,8],[8,5],[1,5],[2,6],[3,7],[4,8],[5,9],[8,9],[6,10],[7,10], [9,10]]
 	pols = [[1]]
 	House = MKPOL([verts,cells,pols])
-	out=Plasm.Struct([ OFFSET([0.1,0.2,0.1])(House), PLASM_T(1)(1.2*SIZE(1)(House))(House)])
+	out=Plasm.Struct([ OFFSET([0.1,0.2,0.1])(House), PLASM_T(1)(1.2*PLASM_SIZE(1)(House))(House)])
 	PLASM_VIEW(out)
 
 
@@ -5297,9 +5316,9 @@ def BOUNDARY(hpc,dim):
 # the entire object "obj":
 def HASOBJECT(tested, obj):
     test = DIFF(obj, INTERSECTION(tested, obj))
-    s1 = SIZE(test, 1)
-    s2 = SIZE(test, 2)
-    s3 = SIZE(test, 3)
+    s1 = test.sizex()
+    s2 = test.sizey()
+    s3 = test.sizez()
     if s1 < 1e-8 and s2 < 1e-8 and s3 < 1e-8:
       return True
     else:
@@ -5309,9 +5328,9 @@ def HASOBJECT(tested, obj):
 # no part of object "obj":
 def HASNTOBJECT(tested, obj):
     test = INTERSECTION(tested, obj)
-    s1 = SIZE(test, 1)
-    s2 = SIZE(test, 2)
-    s3 = SIZE(test, 3)
+    s1 = test.sizex()
+    s2 = test.sizey()
+    s3 = test.sizez()
     if s1 < 1e-8 and s2 < 1e-8 and s3 < 1e-8:
       return True
     else:
@@ -5344,72 +5363,72 @@ def HASNTBRICK(tested, centerx, centery, centerz, sizex, sizey, sizez):
 # Checks if object "tested" has dimensions sizex, sizey, sizez
 # with a given tolerance:
 def SIZETEST(tested, sizex, sizey, sizez, eps = 0.0):
-    a1 = (SIZE(tested, 1) - sizex <= eps)
-    a2 = (SIZE(tested, 2) - sizey <= eps)
-    a3 = (SIZE(tested, 3) - sizez <= eps)
+    a1 = (tested.sizex() - sizex <= eps)
+    a2 = (tested.sizey() - sizey <= eps)
+    a3 = (tested.sizez() - sizez <= eps)
     return (a1 and a2 and a3)
 
 # Checks if objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
 def SIZEMATCH(tested, ref, eps = 0.0):
-    a1 = (SIZE(tested, 1) - SIZE(ref, 1) <= eps)
-    a2 = (SIZE(tested, 2) - SIZE(ref, 2) <= eps)
-    a3 = (SIZE(tested, 3) - SIZE(ref, 3) <= eps)
+    a1 = (tested.sizex() - ref.sizex() <= eps)
+    a2 = (tested.sizey() - ref.sizey() <= eps)
+    a3 = (tested.sizez() - ref.sizez() <= eps)
     return (a1 and a2 and a3)
 
 # Checks if object "tested" has given minx, miny, minz 
 # coordinates in the x, y, z directions, with a given tolerance:
 def POSITIONTEST(tested, minx, miny, minz, eps = 0.0):
-    b1 = (abs(MINX(tested) - minx) <= eps)
-    b2 = (abs(MINY(tested) - miny) <= eps)
-    b3 = (abs(MINZ(tested) - minz) <= eps)
+    b1 = (abs(tested.minx() - minx) <= eps)
+    b2 = (abs(tested.miny() - miny) <= eps)
+    b3 = (abs(tested.minz() - minz) <= eps)
     return (b1 and b2 and b3)
 
 # Checks if objects "tested" and "ref" have the same 
 # minimum coordinates in the x, y, z directions, 
 # with a given tolerance:
 def POSITIONMATCH(tested, ref, eps = 0.0):
-    b1 = (abs(MINX(tested) - MINX(ref)) <= eps)
-    b2 = (abs(MINY(tested) - MINY(ref)) <= eps)
-    b3 = (abs(MINZ(tested) - MINZ(ref)) <= eps)
+    b1 = (abs(tested.minx() - ref.minx()) <= eps)
+    b2 = (abs(tested.miny() - ref.miny()) <= eps)
+    b3 = (abs(tested.minz() - ref.minz()) <= eps)
     return (b1 and b2 and b3)
 
 # Move object "tested" so that it has given minx, miny, minz:
 def ADJUSTPOSITION(tested, minx, miny, minz):
-    xmintested = MINX(tested)
-    ymintested = MINY(tested)
-    zmintested = MINZ(tested)
+    xmintested = tested.minx()
+    ymintested = tested.miny()
+    zmintested = tested.minz()
     return T(tested, minx - xmintested, miny - ymintested, minz - zmintested)
 
 # Move object "tested" so that its minx coincides with minx of object ref,
 # its miny coincides with miny of object ref. and its minz coincides 
 # with minz of object ref:
 def ALIGNOBJECTS(tested, ref):
-    xmintested = MINX(tested)
-    ymintested = MINY(tested)
-    zmintested = MINZ(tested)
-    xminref = MINX(ref)
-    yminref = MINY(ref)
-    zminref = MINZ(ref)
+    xmintested = tested.minx()
+    ymintested = tested.miny()
+    zmintested = tested.minz()
+    xminref = ref.minx()
+    yminref = ref.miny()
+    zminref = ref.minz()
     return T(tested, xminref - xmintested, yminref - ymintested, zminref - zmintested)
 
 # Returns a brick which is the bounding box of an object "tested":
 def BBOX(tested):
-    brick = BRICK(MAXX(tested) - MINX(tested), MAXY(tested) - MINY(tested), MAXZ(tested) - MINZ(tested))
-    brick = T(brick, MINX(tested), MINY(tested), MINZ(tested))
+    brick = BOX(tested.maxx() - tested.minx(), tested.maxy() - tested.miny(), tested.maxz() - tested.minz())
+    brick = T(brick, tested.minx(), tested.miny(), tested.minz())
     return brick
 
 # Returns the frame of a bounding box "bbox". Bars of 
 # the frame will have thickness "eps"
 def BBOXFRAME(bbox, eps):
-    x = SIZE(bbox, 1)
-    y = SIZE(bbox, 2)
-    z = SIZE(bbox, 3)
-    brickx = BRICK(x, y - 2*eps, z - 2*eps)
+    x = bbox.sizex()
+    y = bbox.sizey()
+    z = bbox.sizez()
+    brickx = BOX(x, y - 2*eps, z - 2*eps)
     brickx = T(brickx, 0, eps, eps)
-    bricky = BRICK(x - 2*eps, y, z - 2*eps)
+    bricky = BOX(x - 2*eps, y, z - 2*eps)
     bricky = T(bricky, eps, 0, eps)
-    brickz = BRICK(x - 2*eps, y - 2*eps, z)
+    brickz = BOX(x - 2*eps, y - 2*eps, z)
     brickz = T(brickz, eps, eps, 0)
     return DIFF(bbox, brickx, bricky, brickz)
 
