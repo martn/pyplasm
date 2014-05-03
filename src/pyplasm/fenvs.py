@@ -1785,7 +1785,7 @@ def INTERSECTION(*args):
         geoms = []
         for x in list1:
             geoms.append(x.geom)
-        obj = BASEOBJECT(PLASM_INTERSECTION(geoms))
+        obj = BASEOBJ(PLASM_INTERSECTION(geoms))
         obj.setcolor(list1[0].color)
         return obj
     else:
