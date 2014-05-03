@@ -1320,11 +1320,15 @@ HEXAEDRE = HEXAHEDRON
 # SIMPLEX
 # ===================================================
 
-def SIMPLEX (dim):
-    return BASEOBJ(Plasm.simplex(dim))
+def PLASM_SIMPLEX (dim):
+    return Plasm.simplex(dim)
 
 if self_test: 
-	assert(Plasm.limits(SIMPLEX(3).geom)==Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1)))
+	assert(Plasm.limits(PLASM_SIMPLEX(3))==Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1)))
+
+# NEW DEFINITION:
+def SIMPLEX (dim):
+    return BASEOBJ(Plasm.simplex(dim))
 
 
 # ===================================================
@@ -2911,7 +2915,7 @@ def PLASM_CONE (args):
      radius , height = args
      def PLASM_CONE0(N):
         basis = PLASM_CIRCLE(radius)([N,1])
-        apex = PLASM_TRANSLATE([1, 2, 3])([0, 0, height])(SIMPLEX(0))
+        apex = PLASM_TRANSLATE([1, 2, 3])([0, 0, height])(PLASM_SIMPLEX(0))
         return  PLASM_JOIN([basis, apex])
      return PLASM_CONE0
 
@@ -3690,9 +3694,9 @@ def SCHLEGEL3D (D):
 
 
 if self_test:
-	PLASM_VIEW(SCHLEGEL3D(0.2)(SKEL_1(PLASM_T([1,2,3,4])([-1.0/3.0,-1.0/3.0,-1,+1])(SIMPLEX(4)))))
+	PLASM_VIEW(SCHLEGEL3D(0.2)(SKEL_1(PLASM_T([1,2,3,4])([-1.0/3.0,-1.0/3.0,-1,+1])(PLASM_SIMPLEX(4)))))
 	PLASM_VIEW(SCHLEGEL3D(0.2)(SKEL_1(PLASM_T([1,2,3,4])([-1,-1,-1,1])(CUBOID([2,2,2,2])))))
-	PLASM_VIEW(SCHLEGEL3D(0.2)(SKEL_1(PLASM_T([1,2,3,4])([-1.0/3.0,-1.0/3.0,-1,+1])(Plasm.power(SIMPLEX(2),SIMPLEX(2))))))
+	PLASM_VIEW(SCHLEGEL3D(0.2)(SKEL_1(PLASM_T([1,2,3,4])([-1.0/3.0,-1.0/3.0,-1,+1])(Plasm.power(PLASM_SIMPLEX(2),PLASM_SIMPLEX(2))))))
 
 # ===================================================
 # FINITECONE
@@ -4161,7 +4165,7 @@ def FRACTALSIMPLEX (D):
 		expand = COMP([COMP([AA(COMPONENT), DISTR]), CONS([COMP([INTSTO, LEN]), ID])])
 		splitting = (COMP([COMP, DIESIS(N)]))((COMP([CAT, AA(expand)])))
 	
-		return (COMP([COMP([COMP([COMP([mkpols, splitting]), CONS([S1])])])]))(UKPOL(SIMPLEX(D)))
+		return (COMP([COMP([COMP([COMP([mkpols, splitting]), CONS([S1])])])]))(UKPOL(PLASM_SIMPLEX(D)))
 
     return FRACTALSIMPLEX0
 
