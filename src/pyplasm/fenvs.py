@@ -10,10 +10,10 @@ from nclab.engines.python import NCLab
 nclabinst = NCLab.instance()
 
 # Import exceptions without traceback:
-from nclab.tools import ExceptionWT
+#from nclab.tools import ExceptionWT
 
-#def ExceptionWT(a):
-#  print a
+def ExceptionWT(a):
+  print a
 
 # This is needed to measure time:
 import time
@@ -2994,7 +2994,6 @@ def build_DODECAHEDRON ():
 		PLASM_R([1, 2])(PI/2), PLASM_R([2, 3])(PI/2), 
 		roofpair]))
         obj = BASEOBJ(geom)
-        obj.setcolor([255, 255, 255])
         return obj
 
 # English:
