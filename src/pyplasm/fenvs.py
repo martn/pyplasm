@@ -2,6 +2,9 @@
 
 from scipy import reshape
 
+# for copying objects
+import copy
+
 # This is needed to access NCLab's object "nclabinst":
 from nclab.engines.python import NCLab
 nclabinst = NCLab.instance()
@@ -999,6 +1002,8 @@ class BASEOBJ:
     def __init__(self, basegeom):
         self.color = [255, 255, 255]
         self.geom = basegeom
+    def copy(self):
+        return copy.deepcopy(self) 
     def setcolor(self, color = [255, 255, 255]):
         # Check if the color is a list:
         if type(color) is list:
@@ -1066,6 +1071,19 @@ class BASEOBJ:
     def scale(self, a, b, c = 1.0):
         self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
         self.setcolor(self.color)
+
+# ===================================================
+# COPYING OBJECTS AND LISTS OF OBJECTS
+# ===================================================
+
+def COPY(obj):
+    if not isinstance(obj, list):
+        return obj.copy()
+    else:
+        newlist = []
+        for x in obj:
+            newlist.append(x.copy())
+        return newlist
 
 # ===================================================
 # CUBOID
