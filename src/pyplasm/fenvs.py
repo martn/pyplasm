@@ -4289,13 +4289,16 @@ def EXTRUDE(shape2d, height, angle_deg, n=1):
   angle_rad = angle_deg * PI / 180.0
   da = float(angle_rad) / n
   layer = BASEOBJ(PLASM_EXTRUSION(da)(1)(shape2d.geom))
-  if col != []: COLOR(layer, col)
+  COLOR(layer, col)
   S(layer, 1, 1, dh)
   L = [layer]
+  layer0 = layer
   for i in range(n-1):
-    TRANSLATE(layer, 0, 0, dh)
-    ROTATE(layer, da*180.0/PI, 3)
-    L.append(layer)
+    layer_new = layer0
+    TRANSLATE(layer_new, 0, 0, dh)
+    ROTATE(layer_new, da*180.0/PI, 3)
+    L.append(layer_new)
+    layer0 = layer_new
   return L # I tried to return a union but it took too much time
 
 EXT = EXTRUDE
