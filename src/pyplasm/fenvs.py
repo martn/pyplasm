@@ -2009,7 +2009,8 @@ def PRODUCT(*args):
     color = list1[0].color
     for x in list1:
         list2.append(x.geom)
-    obj = PLASM_POWER(list2)
+    obj = BASEOBJ(PLASM_POWER(list2))
+    obj.setcolor(color)
     return obj
 
 # English:
@@ -3683,7 +3684,10 @@ def PRISM(basis, h):
         raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!")
     if h <= 0: 
         raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
-    return PRODUCT(basis, GRID(h))
+    color = basis.getcolor()
+    obj = PRODUCT(basis, GRID(h))  # PRODUCT returns a class instance!
+    obj.setcolor(color)
+    return obj
 
 # English:
 # Czech:
