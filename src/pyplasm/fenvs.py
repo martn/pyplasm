@@ -2293,6 +2293,7 @@ def TOP(obj1, obj2): # obj2 goes on top of obj1
     cy1 = 0.5*(obj1.miny() + obj1.maxy())
     cy2 = 0.5*(obj2.miny() + obj2.maxy())
     T(obj2, 0, cy1 - cy2, 0)
+    return U(obj1, obj2)
 
 # MOVE THE SECOND OBJECT TO BE CENTERED BELOW THE FIRST ONE
 def BOTTOM(obj1, obj2):
@@ -2301,6 +2302,7 @@ def BOTTOM(obj1, obj2):
     TOP(obj1, obj2)
     R(obj1, -180, 1)    
     R(obj2, -180, 1)
+    return U(obj1, obj2)
 
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE LEFT OF THE FIRST ONE
 def LEFT(obj1, obj2):
@@ -2309,7 +2311,8 @@ def LEFT(obj1, obj2):
     TOP(obj1, obj2)
     R(obj1, 90, 2)    
     R(obj2, 90, 2)
-   
+    return U(obj1, obj2)
+  
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE RIGHT OF THE FIRST ONE
 def RIGHT(obj1, obj2):
     R(obj1, 90, 2)    
@@ -2317,6 +2320,7 @@ def RIGHT(obj1, obj2):
     TOP(obj1, obj2)
     R(obj1, -90, 2)    
     R(obj2, -90, 2)
+    return U(obj1, obj2)
    
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE FRONT OF THE FIRST ONE
 def FRONT(obj1, obj2):
@@ -2325,6 +2329,7 @@ def FRONT(obj1, obj2):
     TOP(obj1, obj2)
     R(obj1, 90, 1)    
     R(obj2, 90, 1)
+    return U(obj1, obj2)
 
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE REAR OF THE FIRST ONE
 def REAR(obj1, obj2):
@@ -2333,6 +2338,7 @@ def REAR(obj1, obj2):
     TOP(obj1, obj2)
     R(obj1, -90, 1)    
     R(obj2, -90, 1)
+    return U(obj1, obj2)
 
 # ===================================================
 # PLASM_BOX of a pol complex
