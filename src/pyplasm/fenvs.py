@@ -2010,7 +2010,6 @@ def PRODUCT(*args):
     for x in list1:
         list2.append(x.geom)
     obj = PLASM_POWER(list2)
-    obj.setcolor(color)
     return obj
 
 # English:
@@ -2103,7 +2102,6 @@ def GRID(*args):
         if value>=0: hulls += [[len(points)-2,len(points)-1]]
         cursor = cursor + abs(value)
     obj = BASEOBJ(Plasm.mkpol(1, CAT(points), hulls,plasm_config.tolerance()))
-    obj.setcolor([255, 255, 255])
     return obj
 
 # English:
