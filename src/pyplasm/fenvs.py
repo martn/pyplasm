@@ -2278,6 +2278,8 @@ def SPLIT_2PI(N):
 if self_test: 
 	assert(SPLIT_2PI(4)[2]==PI)
 
+""" ALIGN IS NOT USED ANYMORE 
+
 # =============================================
 # alignment
 # =============================================
@@ -2312,6 +2314,7 @@ if self_test:
    assert(Plasm.limits(PLASM_RIGHT([Plasm.cube(3),Plasm.cube(3)]))==Boxf(Vecf(1,0,0,0),Vecf(1,2,1,1)))
    assert(Plasm.limits(PLASM_UP([Plasm.cube(3,0,1),Plasm.cube(3,5,6)]))==Boxf(Vecf(1,0,0,0),Vecf(1,6,2,1)))
    assert(Plasm.limits(PLASM_DOWN([Plasm.cube(3,0,1),Plasm.cube(3,5,6)]))==Boxf(Vecf(1,0,-1,0),Vecf(1,6,1,1)))
+"""
 
 # NEW DEFINITIONS:
 # MOVE THE SECOND OBJECT TO BE CENTERED ON TOP THE FIRST ONE
@@ -2369,13 +2372,14 @@ def REAR(obj1, obj2):
     R(obj1, -90, 1)    
     R(obj2, -90, 1)
 
-
+""" UNUSED
 def ALIGN(obj1, obj2, align1 = None, align2 = None, align3 = None):
     L = []
     if align1 != None: L.append(align1) 
     if align2 != None: L.append(align2) 
     if align3 != None: L.append(align3) 
     return PLASM_ALIGN(L)([obj1, obj2])
+"""
 
 # ===================================================
 # PLASM_BOX of a pol complex
