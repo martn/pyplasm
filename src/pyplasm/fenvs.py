@@ -2326,7 +2326,7 @@ def TOP(obj1, obj2): # obj2 goes on top of obj1
     # y-direction:
     cy1 = 0.5*(obj1.miny() + obj1.maxy())
     cy2 = 0.5*(obj2.miny() + obj2.maxy())
-    T(obj2, 0, cy1 - cy2, 0, 0)
+    T(obj2, 0, cy1 - cy2, 0)
 
 def BOTTOM(pol1, pol2):
     return PLASM_BOTTOM([pol1, pol2])
