@@ -4900,7 +4900,9 @@ LIGHTBROWN   = [204, 102, 0]
 BROWN   = [153, 76, 0]
 DARKBROWN   = [102, 51, 0]
 
-CYAN    = [0, 255, 255]
+LIGHTCYAN    = [0, 255, 255]
+CYAN    = [0, 180, 180]
+DARKCYAN    = [0, 100, 100]
 
 PINK =    [255, 0, 255]
 
