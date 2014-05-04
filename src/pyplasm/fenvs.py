@@ -4886,32 +4886,56 @@ def PLASM_COLOR(Cpl):
 # English:
 GRAY    = [128, 128, 128]
 GREY    = [128, 128, 128]
+
 LIGHTGREEN   = [0, 255, 0]
 GREEN   = [0, 180, 0]
 DARKGREEN   = [0, 100, 0]
+
 BLACK   = [0, 0, 0]
+
 LIGHTBLUE    = [0, 0, 255]
 BLUE    = [0, 0, 180]
 DARKBLUE    = [0, 0, 100]
-BROWN   = [139, 69, 19]
+
+LIGHTBROWN   = [204, 102, 0]
+BROWN   = [153, 76, 0]
+DARKBROWN   = [102, 51, 0]
+
 CYAN    = [0, 255, 255]
+
 PINK =    [255, 0, 255]
-MAGENTA = [255, 0, 255]
-ORANGE  = [255, 153, 0]
+
+LIGHTMAGENTA = [255, 0, 255]
+MAGENTA = [180, 0, 180]
+DARKMAGENTA = [100, 0, 100]
+
+LIGHTORANGE  = [255, 153, 0]
+ORANGE  = [180, 107, 0]
+DARKORANGE  = [100, 60, 0]
+
 PURPLE  = [128, 0, 128]
+
 INDIGO =  [75, 0, 130]
+
 VIOLET =  [238, 130, 238]
+
 WHITE   = [255, 255, 255]
+
 LIGHTRED     = [255, 0, 0]
 RED     = [180, 0, 0]
 DARKRED     = [100, 0, 0]
-YELLOW  = [255, 255, 0]
+
+LIGHTYELLOW  = [255, 255, 0]
+YELLOW  = [180, 180, 0]
+DARKYELLOW  = [100, 100, 0]
+
 STEEL =   [255, 255, 255]
 BRASS =   [255, 250, 83]
 COPPER =  [184, 115, 51]
 BRONZE =  [140, 120, 83]
 SILVER =  [230, 232, 250]
 GOLD =    [226, 178, 39]
+
 # Czech:
 SEDA = GRAY
 SEDIVA = GRAY
