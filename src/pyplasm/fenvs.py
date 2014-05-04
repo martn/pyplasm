@@ -1019,8 +1019,6 @@ class BASEOBJ:
             col[0] = color[0] / 255.
             col[1] = color[1] / 255.
 	    col[2] = color[2] / 255.
-          else:
-            raise ExceptionWT("Color must be a list: either [R, G, B] or [R, G, B, A]!")
         self.color = color
 	self.geom = PLASM_COLOR(col)(self.geom)
     def getcolor(self):
