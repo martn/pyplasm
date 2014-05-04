@@ -1794,9 +1794,12 @@ def PLASM_UNION(objs_list):
 def WELD(*args):
         objs = list(args)
         objs = flatten(objs)
+        objs2 = []
+        for x in objs:
+            objs2.append(x.geom)
         color = objs[0].getcolor()
-        result = BASEOBJ(Plasm.boolop(BOOL_CODE_OR, objs, plasm_config.tolerance(), plasm_config.maxnumtry(), plasm_config.useOctreePlanes()))
-        if color != []: result.setcolor(color)
+        result = BASEOBJ(Plasm.boolop(BOOL_CODE_OR, objs2, plasm_config.tolerance(), plasm_config.maxnumtry(), plasm_config.useOctreePlanes()))
+        result.setcolor(color)
 	return result
 
 
