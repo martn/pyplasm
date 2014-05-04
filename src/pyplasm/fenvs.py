@@ -4882,7 +4882,6 @@ def PLASM_COLOR(Cpl):
 		return Plasm.addProperty(pol, "RGBcolor", formatColor(Cpl))
 
 	return PLASM_COLOR0
-
 # English:
 GRAY    = [128, 128, 128]
 GREY    = [128, 128, 128]
