@@ -1014,13 +1014,15 @@ class BASEOBJ:
             if color[3] < 0 or color[3] > 1:
               raise ExceptionWT("Opacity value in color definition must be between 0 and 1!")
           # Normalizing RGB between 0 and 1 if necessary:
-          col = [0, 0, 0]
-          if color[0] > 1 or color[1] > 1 or color[2] > 1:
-            col[0] = color[0] / 255.
-            col[1] = color[1] / 255.
-	    col[2] = color[2] / 255.
+          #col = [0, 0, 0]
+          #if color[0] > 1 or color[1] > 1 or color[2] > 1:
+          #  col[0] = color[0] / 255.
+          #  col[1] = color[1] / 255.
+	  #  col[2] = color[2] / 255.
+        else: 
+            raise ExceptionWT("Color must be a list, either [R, G, B] or [R, G, B, A]!")
         self.color = color
-	self.geom = PLASM_COLOR(col)(self.geom)
+	self.geom = PLASM_COLOR(color)(self.geom)
     def getcolor(self):
         return self.color
     def move(self, t1, t2, t3 = 0):
