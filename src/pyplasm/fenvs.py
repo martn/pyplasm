@@ -2318,6 +2318,7 @@ def TOP(pol1, pol2):
     color = pol1.getcolor()
     obj = BASEOBJ(PLASM_TOP([pol1.geom, pol2.geom]))
     obj.setcolor(color)
+    return obj
 def BOTTOM(pol1, pol2):
     return PLASM_BOTTOM([pol1, pol2])
 def LEFT(pol1, pol2):
