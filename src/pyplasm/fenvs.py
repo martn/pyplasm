@@ -2314,6 +2314,7 @@ if self_test:
    assert(Plasm.limits(PLASM_DOWN([Plasm.cube(3,0,1),Plasm.cube(3,5,6)]))==Boxf(Vecf(1,0,-1,0),Vecf(1,6,1,1)))
 
 # NEW DEFINITIONS:
+# MOVE THE SECOND OBJECT TO BE CENTERED ON TOP THE FIRST ONE
 def TOP(obj1, obj2): # obj2 goes on top of obj1
     # z-direction:
     maxz1 = obj1.maxz()
@@ -2328,8 +2329,14 @@ def TOP(obj1, obj2): # obj2 goes on top of obj1
     cy2 = 0.5*(obj2.miny() + obj2.maxy())
     T(obj2, 0, cy1 - cy2, 0)
 
-def BOTTOM(pol1, pol2):
-    return PLASM_BOTTOM([pol1, pol2])
+# MOVE THE SECOND OBJECT TO BE CENTERED BELOW THE FIRST ONE
+def BOTTOM(obj1, obj2):
+    R(obj1, 180, 1)    
+    R(obj2, 180, 1)
+    TOP(obj1, obj2)
+    R(obj1, -180, 1)    
+    R(obj2, -180, 1)
+
 def LEFT(pol1, pol2):
     return PLASM_LEFT([pol1, pol2])
 def RIGHT(pol1, pol2):
