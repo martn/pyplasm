@@ -1791,7 +1791,8 @@ def PLASM_UNION(objs_list):
 # WELD = HARD UNION (ORIGINAL, COMPUTATIONALLY EXPENSIVE)
 # ===================================================
 
-def WELD(objs):
+def WELD(*args):
+        objs = list(args)
         objs = flatten(objs)
         color = PLASM_GETCOLOR(objs[0])
         result = BASEOBJ(Plasm.boolop(BOOL_CODE_OR, objs, plasm_config.tolerance(), plasm_config.maxnumtry(), plasm_config.useOctreePlanes()))
