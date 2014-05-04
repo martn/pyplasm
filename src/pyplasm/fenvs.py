@@ -2339,26 +2339,36 @@ def BOTTOM(obj1, obj2):
 
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE LEFT OF THE FIRST ONE
 def LEFT(obj1, obj2):
-    R(obj1, 90, 2)    
-    R(obj2, 90, 2)
-    TOP(obj1, obj2)
     R(obj1, -90, 2)    
     R(obj2, -90, 2)
+    TOP(obj1, obj2)
+    R(obj1, 90, 2)    
+    R(obj2, 90, 2)
    
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE RIGHT OF THE FIRST ONE
 def RIGHT(obj1, obj2):
-    R(obj1, -90, 2)    
-    R(obj2, -90, 2)
-    TOP(obj1, obj2)
     R(obj1, 90, 2)    
     R(obj2, 90, 2)
+    TOP(obj1, obj2)
+    R(obj1, -90, 2)    
+    R(obj2, -90, 2)
    
+# MOVE THE SECOND OBJECT TO BE CENTERED ON THE FRONT OF THE FIRST ONE
+def FRONT(obj1, obj2):
+    R(obj1, -90, 1)    
+    R(obj2, -90, 1)
+    TOP(obj1, obj2)
+    R(obj1, 90, 1)    
+    R(obj2, 90, 1)
 
+# MOVE THE SECOND OBJECT TO BE CENTERED ON THE REAR OF THE FIRST ONE
+def REAR(obj1, obj2):
+    R(obj1, 90, 1)    
+    R(obj2, 90, 1)
+    TOP(obj1, obj2)
+    R(obj1, -90, 1)    
+    R(obj2, -90, 1)
 
-def UP(pol1, pol2):
-    return PLASM_UP([pol1, pol2])
-def DOWN(pol1, pol2):
-    return PLASM_DOWN([pol1, pol2])
 
 def ALIGN(obj1, obj2, align1 = None, align2 = None, align3 = None):
     L = []
