@@ -2337,10 +2337,24 @@ def BOTTOM(obj1, obj2):
     R(obj1, -180, 1)    
     R(obj2, -180, 1)
 
-def LEFT(pol1, pol2):
-    return PLASM_LEFT([pol1, pol2])
-def RIGHT(pol1, pol2):
-    return PLASM_RIGHT([pol1, pol2])
+# MOVE THE SECOND OBJECT TO BE CENTERED ON THE LEFT OF THE FIRST ONE
+def LEFT(obj1, obj2):
+    R(obj1, 90, 2)    
+    R(obj2, 90, 2)
+    TOP(obj1, obj2)
+    R(obj1, -90, 2)    
+    R(obj2, -90, 2)
+   
+# MOVE THE SECOND OBJECT TO BE CENTERED ON THE RIGHT OF THE FIRST ONE
+def RIGHT(obj1, obj2):
+    R(obj1, -90, 2)    
+    R(obj2, -90, 2)
+    TOP(obj1, obj2)
+    R(obj1, 90, 2)    
+    R(obj2, 90, 2)
+   
+
+
 def UP(pol1, pol2):
     return PLASM_UP([pol1, pol2])
 def DOWN(pol1, pol2):
