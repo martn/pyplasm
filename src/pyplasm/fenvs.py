@@ -1529,9 +1529,15 @@ if self_test:
 # SCALE ONE OBJECT OR A LIST
 def SCALE(obj, a, b, c = 1):
     if not isinstance(obj, list):
-        return obj.scale(a, b, c)
+        obj.scale(a, b, c)
+        obj2 = COPY(obj)
+        return obj2
     else:
-        for oo in obj: oo.scale(a, b, c)
+        obj2 = []
+        for oo in obj: 
+            oo.scale(a, b, c)
+            obj2.append(COPY(oo))
+            return obj2
 
 S = SCALE
 # Czech:
@@ -1575,8 +1581,14 @@ if self_test:
 def ROTATERAD(obj, angle_rad, axis = 3):
     if not isinstance(obj, list):
         obj.rotaterad(angle_rad, axis)
+        obj2 = COPY(obj)
+        return obj2
     else:
-        for oo in obj: oo.rotaterad(angle_rad, axis)
+        obj2 = []
+        for oo in obj: 
+            oo.rotaterad(angle_rad, axis)
+            obj2.append(COPY(oo))
+        return obj2
     
 RRAD = ROTATERAD
 # Czech:
@@ -1610,8 +1622,14 @@ TOURNERAD = ROTATERAD
 def ROTATEDEG(obj, angle_deg, axis = 3):
     if not isinstance(obj, list):
         obj.rotate(angle_deg, axis)
+        obj2 = COPY(obj)
+        return obj2
     else:
-        for oo in obj: oo.rotate(angle_deg, axis)
+        obj2 = []
+        for oo in obj: 
+            oo.rotate(angle_deg, axis)
+            obj2.append(COPY(oo))
+        return obj2
 
 ROTATE = ROTATEDEG
 RDEG = ROTATEDEG
@@ -1651,6 +1669,8 @@ def RR(obj, angle_deg, axis = 3):
     if isinstance(obj, list):
         raise ExceptionWT("Command ROTATEREL (rotation about objects own center) can only be applied to a single object!")
     obj.rotaterel(angle_deg, axis)
+    obj2 = COPY(obj)
+    return obj2
 ROTATER = RR
 ROTATEREL = RR
 
