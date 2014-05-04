@@ -1013,12 +1013,6 @@ class BASEOBJ:
           if len(color) == 4:
             if color[3] < 0 or color[3] > 1:
               raise ExceptionWT("Opacity value in color definition must be between 0 and 1!")
-          # Normalizing RGB between 0 and 1 if necessary:
-          #col = [0, 0, 0]
-          #if color[0] > 1 or color[1] > 1 or color[2] > 1:
-          #  col[0] = color[0] / 255.
-          #  col[1] = color[1] / 255.
-	  #  col[2] = color[2] / 255.
         else: 
             raise ExceptionWT("Color must be a list, either [R, G, B] or [R, G, B, A]!")
         self.color = color
@@ -4892,9 +4886,13 @@ def PLASM_COLOR(Cpl):
 # English:
 GRAY    = [128, 128, 128]
 GREY    = [128, 128, 128]
-GREEN   = [0, 255, 0]
+LIGHTGREEN   = [0, 255, 0]
+GREEN   = [0, 180, 0]
+DARKGREEN   = [0, 100, 0]
 BLACK   = [0, 0, 0]
-BLUE    = [0, 0, 255]
+LIGHTBLUE    = [0, 0, 255]
+BLUE    = [0, 0, 180]
+DARKBLUE    = [0, 0, 100]
 BROWN   = [139, 69, 19]
 CYAN    = [0, 255, 255]
 PINK =    [255, 0, 255]
@@ -4904,7 +4902,9 @@ PURPLE  = [128, 0, 128]
 INDIGO =  [75, 0, 130]
 VIOLET =  [238, 130, 238]
 WHITE   = [255, 255, 255]
-RED     = [255, 0, 0]
+LIGHTRED     = [255, 0, 0]
+RED     = [180, 0, 0]
+DARKRED     = [100, 0, 0]
 YELLOW  = [255, 255, 0]
 STEEL =   [255, 255, 255]
 BRASS =   [255, 250, 83]
