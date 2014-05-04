@@ -2314,11 +2314,20 @@ if self_test:
    assert(Plasm.limits(PLASM_DOWN([Plasm.cube(3,0,1),Plasm.cube(3,5,6)]))==Boxf(Vecf(1,0,-1,0),Vecf(1,6,1,1)))
 
 # NEW DEFINITIONS:
-def TOP(pol1, pol2):
-    color = pol1.getcolor()
-    obj = BASEOBJ(PLASM_TOP([pol1.geom, pol2.geom]))
-    obj.setcolor(color)
-    return obj
+def TOP(obj1, obj2): # obj2 goes on top of obj1
+    # z-direction:
+    maxz1 = obj1.maxz()
+    minz2 = obj2.minz()
+    T(obj2, 0, 0, maxz1 - minz2)    
+    # x-direction:
+    cx1 = 0.5*(obj1.minx() + obj1.maxx())
+    cx2 = 0.5*(obj2.minx() + obj2.maxx())
+    T(obj2, cx1 - cx2, 0, 0)
+    # y-direction:
+    cy1 = 0.5*(obj1.miny() + obj1.maxy())
+    cy2 = 0.5*(obj2.miny() + obj2.maxy())
+    T(obj2, 0, cy1 - cy2, 0, 0)
+
 def BOTTOM(pol1, pol2):
     return PLASM_BOTTOM([pol1, pol2])
 def LEFT(pol1, pol2):
