@@ -1794,7 +1794,7 @@ def PLASM_UNION(objs_list):
 def WELD(*args):
         objs = list(args)
         objs = flatten(objs)
-        color = PLASM_GETCOLOR(objs[0])
+        color = objs[0].getcolor()
         result = BASEOBJ(Plasm.boolop(BOOL_CODE_OR, objs, plasm_config.tolerance(), plasm_config.maxnumtry(), plasm_config.useOctreePlanes()))
         if color != []: result.setcolor(color)
 	return result
