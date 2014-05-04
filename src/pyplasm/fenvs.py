@@ -2278,44 +2278,6 @@ def SPLIT_2PI(N):
 if self_test: 
 	assert(SPLIT_2PI(4)[2]==PI)
 
-""" ALIGN IS NOT USED ANYMORE 
-
-# =============================================
-# alignment
-# =============================================
-
-def PLASM_ALIGN (args):
-    def PLASM_ALIGN0 (args,pols):
-        pol1 , pol2 = pols
-        box1,box2=(Plasm.limits(pol1),Plasm.limits(pol2))
-        if isinstance(args,list) and len(args)>0 and ISNUM(args[0]): 
-                args=[args] # if I get something like [index,pos1,pos2]... i need [[index,pos1,pos2],[index,pos1,pos2],...]
-        max_index=max([index for index,pos1,po2 in args])
-        vt=Vecf(max_index) 
-        for index,pos1,pos2 in args:
-                p1=box1.p1 if pos1 is MIN else (box1.p2 if pos1 is MAX else box1.center());p1=p1[index] if index<=p1.dim else 0.0
-                p2=box2.p1 if pos2 is MIN else (box2.p2 if pos2 is MAX else box2.center());p2=p2[index] if index<=p2.dim else 0.0                
-                vt.set(index,vt[index]-(p2-p1))
-        return Plasm.Struct([pol1,Plasm.translate(pol2,vt)])
-    return lambda pol: PLASM_ALIGN0(args,pol)
-
-PLASM_TOP = PLASM_ALIGN([[3, MAX, MIN], [1, MID, MID], [2, MID, MID]])
-PLASM_BOTTOM = PLASM_ALIGN([[3, MIN, MAX], [1, MID, MID], [2, MID, MID]])
-PLASM_LEFT = PLASM_ALIGN([[1, MIN, MAX], [3, MIN, MIN]])
-PLASM_RIGHT = PLASM_ALIGN([[1, MAX, MIN], [3, MIN, MIN]])
-PLASM_UP = PLASM_ALIGN([[2, MAX, MIN], [3, MIN, MIN]])
-PLASM_DOWN = PLASM_ALIGN([[2, MIN, MAX], [3, MIN, MIN]])
-
-if self_test: 
-   assert(Plasm.limits(ALIGN([3,MAX,MIN])([Plasm.cube(3),Plasm.cube(3)]))==Boxf(Vecf(1,0,0,0),Vecf(1,1,1,2)))
-   assert(Plasm.limits(PLASM_TOP([Plasm.cube(3),Plasm.cube(3)]))==Boxf(Vecf(1,0,0,0),Vecf(1,1,1,2)))
-   assert(Plasm.limits(PLASM_BOTTOM([Plasm.cube(3),Plasm.cube(3)]))==Boxf(Vecf(1,0,0,-1),Vecf(1,1,1,1)))
-   assert(Plasm.limits(PLASM_LEFT([Plasm.cube(3),Plasm.cube(3)]))==Boxf(Vecf(1,-1,0,0),Vecf(1,1,1,1)))
-   assert(Plasm.limits(PLASM_RIGHT([Plasm.cube(3),Plasm.cube(3)]))==Boxf(Vecf(1,0,0,0),Vecf(1,2,1,1)))
-   assert(Plasm.limits(PLASM_UP([Plasm.cube(3,0,1),Plasm.cube(3,5,6)]))==Boxf(Vecf(1,0,0,0),Vecf(1,6,2,1)))
-   assert(Plasm.limits(PLASM_DOWN([Plasm.cube(3,0,1),Plasm.cube(3,5,6)]))==Boxf(Vecf(1,0,-1,0),Vecf(1,6,1,1)))
-"""
-
 # NEW DEFINITIONS:
 # MOVE THE SECOND OBJECT TO BE CENTERED ON TOP THE FIRST ONE
 def TOP(obj1, obj2): # obj2 goes on top of obj1
@@ -2371,15 +2333,6 @@ def REAR(obj1, obj2):
     TOP(obj1, obj2)
     R(obj1, -90, 1)    
     R(obj2, -90, 1)
-
-""" UNUSED
-def ALIGN(obj1, obj2, align1 = None, align2 = None, align3 = None):
-    L = []
-    if align1 != None: L.append(align1) 
-    if align2 != None: L.append(align2) 
-    if align3 != None: L.append(align3) 
-    return PLASM_ALIGN(L)([obj1, obj2])
-"""
 
 # ===================================================
 # PLASM_BOX of a pol complex
@@ -3819,8 +3772,6 @@ def ROTN (args):
 # MKVECTOR
 # ===================================================
 
-MKVERSORK = PLASM_TOP([PLASM_CYLINDER([1.0/100.0, 7.0/8.0])(6),PLASM_CONE([1.0/16.0,1.0/8])(8)])
-
 def MKVECTOR (P1):
     def MKVECTOR0 (P2):
         TR = PLASM_T([1, 2, 3])(P1)
@@ -4480,20 +4431,6 @@ def MINKOWSKI (vects):
 			ret=SWEEP(vects[i])(ret)
 		return ret
 	return MINKOWSKI0
-
-if self_test:
-	p = MKPOL([[[0,0]],[[1]],[[1]]])
-	B = MINKOWSKI([  [-1.0/2.0,-1*math.sqrt(3.0/2.0)] , [-1.0/2.0,math.sqrt(3.0/2.0)] , [1,0] ])(p)
-	vertices = [[0,0],[1,0],[1,0.5],[0.5,0.5],[0.5,1],[0,1]]
-	pol1D = MKPOL([vertices,[[1,2],[2,3],[3,4],[4,5],[5,6],[6,1]],[[1],[2],[3],[4],[5],[6]]])
-	pol2D = MKPOL( [vertices,[[1,2,3,4],[4,5,6,1]],[[1,2]]])
-	Min0 = PLASM_STRUCT([PLASM_T([1,2])(v)(PLASM_S([1,2])([0.1,0.1])(B)) for v in vertices ])
-	Min1 = MINKOWSKI ([[0.1*-1.0/2.0,0.1*-1*math.sqrt(3.0/2.0)],[0.1*-1.0/2.0,0.1*math.sqrt(3.0/2.0)],[0.1*1,0.1*0]])(pol1D)
-	Min2 = MINKOWSKI ([[0.1*-1.0/2.0,0.1*-1*math.sqrt(3.0/2.0)],[0.1*-1.0/2.0,0.1*math.sqrt(3.0/2.0)],[0.1*1,0.1*0]])(pol2D)
-	Atest=Plasm.power(Min2,Q(0.05))
-	Btest=Plasm.power(Min0,Q(0.70))
-	Ctest=Plasm.power(Min1,Q(0.05))
-	PLASM_VIEW(PLASM_TOP([PLASM_TOP([Atest,Btest]),Ctest]) )
 
 # ===================================================
 # OFFSET 
