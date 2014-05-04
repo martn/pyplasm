@@ -2301,19 +2301,49 @@ if self_test:
 # NEW DEFINITIONS:
 # MOVE THE SECOND OBJECT TO BE CENTERED ON TOP THE FIRST ONE
 def TOP(obj1, obj2): # obj2 goes on top of obj1
-    # z-direction:
-    maxz1 = obj1.maxz()
-    minz2 = obj2.minz()
-    T(obj2, 0, 0, maxz1 - minz2)    
-    # x-direction:
-    cx1 = 0.5*(obj1.minx() + obj1.maxx())
-    cx2 = 0.5*(obj2.minx() + obj2.maxx())
-    T(obj2, cx1 - cx2, 0, 0)
-    # y-direction:
-    cy1 = 0.5*(obj1.miny() + obj1.maxy())
-    cy2 = 0.5*(obj2.miny() + obj2.maxy())
-    T(obj2, 0, cy1 - cy2, 0)
-    return U(obj1, obj2)
+    if isinstance(obj2, list):
+        raise ExceptionWT("Second argument of TOP(...) may not be a list!")
+    if not isinstance(obj1, list):
+        # z-direction:
+        maxz1 = obj1.maxz()
+        minz2 = obj2.minz()
+        T(obj2, 0, 0, maxz1 - minz2)    
+        # x-direction:
+        cx1 = 0.5*(obj1.minx() + obj1.maxx())
+        cx2 = 0.5*(obj2.minx() + obj2.maxx())
+        T(obj2, cx1 - cx2, 0, 0)
+        # y-direction:
+        cy1 = 0.5*(obj1.miny() + obj1.maxy())
+        cy2 = 0.5*(obj2.miny() + obj2.maxy())
+        T(obj2, 0, cy1 - cy2, 0)
+        return U(obj1, obj2)
+    else:
+        maxx1 = obj1[0].maxx()
+        minx1 = obj1[0].minx()
+        maxy1 = obj1[0].maxy()
+        miny1 = obj1[0].miny()
+        maxz1 = obj1[0].maxz()
+        minz1 = obj1[0].minz()
+        for x in obj1:
+            if x.maxx() > maxx1: maxx1 = x.maxx()
+            if x.minx() < minx1: minx1 = x.minx()
+            if x.maxy() > maxy1: maxy1 = x.maxy()
+            if x.miny() < miny1: miny1 = x.miny()
+            if x.maxz() > maxz1: maxz1 = x.maxz()
+            if x.minz() < minz1: minz1 = x.minz()
+        # z-direction:
+        minz2 = obj2.minz()
+        T(obj2, 0, 0, maxz1 - minz2)    
+        # x-direction:
+        cx1 = 0.5*(minx1 + maxx1)
+        cx2 = 0.5*(obj2.minx() + obj2.maxx())
+        T(obj2, cx1 - cx2, 0, 0)
+        # y-direction:
+        cy1 = 0.5*(miny1 + maxy1)
+        cy2 = 0.5*(obj2.miny() + obj2.maxy())
+        T(obj2, 0, cy1 - cy2, 0)
+        return U(obj1, obj2)
+        
 
 # MOVE THE SECOND OBJECT TO BE CENTERED BELOW THE FIRST ONE
 def BOTTOM(obj1, obj2):
