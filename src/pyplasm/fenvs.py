@@ -1118,15 +1118,10 @@ if self_test:
 # CUBE
 # ===================================================
 
-class CUBE(BASEOBJ):
-    def __init__(self, size):
-        self.setsize(size)
-        self.setcolor([255, 255, 255])
-    def setsize(self, size):
-        if size <= 0: 
-            raise ExceptionWT("CUBE(x) requires a positive value of x!")
-        self.size = size
-        self.geom = CUBOID([size, size, size])
+def CUBE(size):
+    if size <= 0: 
+        raise ExceptionWT("CUBE(x) requires a positive value of x!")
+    return BASEOBJ(CUBOID([size, size, size]))
 # English:
 # Czech:
 KRYCHLE = CUBE
@@ -1147,15 +1142,10 @@ CUBO = CUBE
 # SQUARE
 # ===================================================
 
-class SQUARE(BASEOBJ):
-    def __init__(self, size):
-        self.setsize(size)
-        self.setcolor([255, 255, 255])
-    def setsize(self, size):
-        if size <= 0: 
-            raise ExceptionWT("SQUARE(x) requires a positive value of x!")
-        self.size = size
-        self.geom = CUBOID([size, size])
+def SQUARE(size):
+    if size <= 0: 
+        raise ExceptionWT("SQUARE(x) requires a positive value of x!")
+    return BASEOBJ(CUBOID([size, size]))
 
 # English:
 # Czech::
@@ -1201,19 +1191,12 @@ CARRE3D = SQUARE3D
 # BRICK, BOX
 # ===================================================
 
-class BRICK(BASEOBJ):
-    def __init__(self, a, b, c):
-        self.setsize(a, b, c)
-        self.setcolor([255, 255, 255])
-    def setsize(self, a, b, c):
-        if a <= 0 or b <= 0 or c <= 0: raise ExceptionWT("BOX(x, y, z) requires positive dimensions x, y, z!")
-        self.a = a
-        self.b = b
-        self.c = c
-        self.geom = CUBOID([a, b, c])
+def BOX(a, b, c):
+    if a <= 0 or b <= 0 or c <= 0: raise ExceptionWT("BOX(x, y, z) requires positive dimensions x, y, z!")
+    return BASEOBJ(CUBOID([a, b, c]))
 
 # English:
-BOX = BRICK
+BRICK = BOX
 # Czech::
 KVADR = BRICK
 CIHLA = BRICK
@@ -1242,15 +1225,9 @@ BOITE = BRICK
 # RECTANGLE
 # ===================================================
 
-class RECTANGLE(BASEOBJ):
-    def __init__(self, a, b):
-        self.setsize(a, b)
-        self.setcolor([255, 255, 255])
-    def setsize(self, a, b):
-        if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE(x, y) requires positive dimensions x, y!")
-        self.a = a
-        self.b = b
-        self.geom = CUBOID([a, b])
+def RECTANGLE(a, b):
+    if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE(x, y) requires positive dimensions x, y!")
+    return BASEOBJ(CUBOID([a, b]))
 
 # English:
 RECT = RECTANGLE
@@ -1386,12 +1363,10 @@ def PLASM_CONVEXHULL (points):
     return MKPOL([points, [range(1,len(points)+1)], [[1]]])
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
-class CONVEXHULL(BASEOBJ):
-    def __init__(self, *args):
-        list1 = list(args)
-        if len(list1) <= 2: raise ExceptionWT("CONVEXHULL(...) requires at least three points!")
-        self.geom = PLASM_CONVEXHULL(list1)
-        self.setcolor([255, 255, 255])
+def CONVEXHULL(*args):
+    list1 = list(args)
+    if len(list1) <= 2: raise ExceptionWT("CONVEXHULL(...) requires at least three points!")
+    return BASEOBJ(PLASM_CONVEXHULL(list1))
 
 # English:
 CHULL = CONVEXHULL
@@ -2032,17 +2007,17 @@ if self_test:
 	assert(Plasm.limits(PLASM_POWER([Plasm.cube(2),Plasm.cube(1)])).fuzzyEqual(Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1))))
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
-class PRODUCT(BASEOBJ):
-    def __init__(self, *args):
-        list1 = list(args)
-        if len(list1) != 2: 
-            raise Exception("POWER(...) requires two arguments!")
-        list2 = []
-        color = list1[0].color
-        for x in list1:
-            list2.append(x.geom)
-        self.geom = PLASM_POWER(list2)
-        self.setcolor(color)
+def PRODUCT(*args):
+    list1 = list(args)
+    if len(list1) != 2: 
+        raise Exception("POWER(...) requires two arguments!")
+    list2 = []
+    color = list1[0].color
+    for x in list1:
+        list2.append(x.geom)
+    obj = PLASM_POWER(list2)
+    obj.setcolor(color)
+    return obj
 
 # English:
 POWER = PRODUCT
@@ -2124,18 +2099,18 @@ def PLASM_GRID (*args):
 PLASM_QUOTE = PLASM_GRID
 
 # NEW DEFINITION:
-class GRID(BASEOBJ):
-    def __init__(self, *args):
-        sequence = flatten(*args)
-        if len(sequence) == 0: 
-            raise ExceptionWT("GRID(...) requires at least one interval length!")
-        cursor,points,hulls= (0,[[0]],[])
-        for value in sequence:
-            points = points + [[cursor + abs(value)]] 
-            if value>=0: hulls += [[len(points)-2,len(points)-1]]
-            cursor = cursor + abs(value)
-        self.geom = Plasm.mkpol(1, CAT(points), hulls,plasm_config.tolerance())
-        self.setcolor([255, 255, 255])
+def GRID(*args):
+    sequence = flatten(*args)
+    if len(sequence) == 0: 
+        raise ExceptionWT("GRID(...) requires at least one interval length!")
+    cursor,points,hulls= (0,[[0]],[])
+    for value in sequence:
+        points = points + [[cursor + abs(value)]] 
+        if value>=0: hulls += [[len(points)-2,len(points)-1]]
+        cursor = cursor + abs(value)
+    obj = BASEOBJ(Plasm.mkpol(1, CAT(points), hulls,plasm_config.tolerance()))
+    obj.setcolor([255, 255, 255])
+    return obj
 
 # English:
 QUOTE = GRID
@@ -2555,21 +2530,21 @@ if self_test:
     assert Plasm.limits(PLASM_RING([0.5,1])([8,8]))==Boxf(Vecf(1,-1,-1),Vecf(1,+1,+1))
 
 # NEW DEFINITION
-class RING(BASEOBJ):
-    def __init__(self, r1, r2, division = [64, 1]):
-        if r1 <= 0: 
-            raise ExceptionWT("Inner radius r1 in RING(r1, r2) must be positive!")
-        if r2 <= 0: 
-            raise ExceptionWT("Outer radius r2 in RING(r1, r2) must be positive!")
-        if r1 >= r2: 
-            raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in RING(r1, r2)!")
-        if type(division) == list: 
-            self.geom = PLASM_RING([r1, r2])(division)
-        else:
-            if division < 3: 
-                raise ExceptionWT("Number of edges n in RING(r1, r2, n) must be at least 3!")
-            else: self.geom = PLASM_RING([r1, r2])([division, 1])
-        self.color = [255, 255, 255]
+def RING(r1, r2, division = [64, 1]):
+    if r1 <= 0: 
+        raise ExceptionWT("Inner radius r1 in RING(r1, r2) must be positive!")
+    if r2 <= 0: 
+        raise ExceptionWT("Outer radius r2 in RING(r1, r2) must be positive!")
+    if r1 >= r2: 
+        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in RING(r1, r2)!")
+    obj = BASEOBJ(CUBE(1)) # just to create the variable
+    if type(division) == list: 
+        obj = BASEOBJ(PLASM_RING([r1, r2])(division))
+    else:
+        if division < 3: 
+            raise ExceptionWT("Number of edges n in RING(r1, r2, n) must be at least 3!")
+        else: obj = BASEOBJ(PLASM_RING([r1, r2])([division, 1]))
+    return obj
 
 # Czech
 # TODO
