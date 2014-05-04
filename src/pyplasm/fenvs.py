@@ -4899,6 +4899,7 @@ def COLOR(obj, col):
   else:
     obj = flatten(obj)
     for x in obj: x.setcolor(col)
+  return COPY(obj)
 
 C = COLOR
 # Czech:
