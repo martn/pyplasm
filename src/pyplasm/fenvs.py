@@ -1359,6 +1359,7 @@ def PLASM_CONVEXHULL (points):
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
 def CONVEXHULL(*args):
     list1 = list(args)
+    list1 = flatten(list1)
     if len(list1) <= 2: raise ExceptionWT("CONVEXHULL(...) requires at least three points!")
     return BASEOBJ(PLASM_CONVEXHULL(list1))
 
