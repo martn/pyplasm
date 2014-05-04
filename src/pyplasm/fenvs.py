@@ -1787,14 +1787,30 @@ def PLASM_UNION(objs_list):
         if color != []: return COLOR(result, color)
 	else: return result
 
+# ===================================================
+# WELD = HARD UNION (ORIGINAL, COMPUTATIONALLY EXPENSIVE)
+# ===================================================
+
+def WELD(objs):
+        objs = flatten(objs)
+        color = PLASM_GETCOLOR(objs[0])
+        result = BASEOBJ(Plasm.boolop(BOOL_CODE_OR, objs, plasm_config.tolerance(), plasm_config.maxnumtry(), plasm_config.useOctreePlanes()))
+        if color != []: result.setcolor(color)
+	return result
+
+
+# ===================================================
+# SOFT UNION = STRUCT
+# ===================================================
+
 # NEW DEFINITION - UNION IS JUST STRUCT
-# English:
 def UNION(*args):
     list1 = list(args)
     list1 = flatten(list1) # flatten the rest as there may be structs
     if len(list1) < 2: raise ExceptionWT("UNION() must be applied to at least two objects!")
     return list1
 
+# English:
 U = UNION
 SUM = UNION
 # Czech:
