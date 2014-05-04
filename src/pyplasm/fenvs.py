@@ -1096,6 +1096,18 @@ def COPY(obj):
             newlist.append(copy.copy(x))
         return newlist
 
+# Czech:
+KOPIE = COPY
+# Polish:
+KOPIA = COPY
+# German:
+# Like Czech
+# Spanish:
+# Italian:
+COPIA = COPY
+# French:
+COPIE = COPY
+
 # ===================================================
 # CUBOID
 # ===================================================
