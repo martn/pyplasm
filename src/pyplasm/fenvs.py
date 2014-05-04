@@ -1474,6 +1474,7 @@ def TRANSLATE(obj, t1, t2, t3 = 0):
 
 T = TRANSLATE
 MOVE = TRANSLATE
+M = MOVE
 SHIFT = TRANSLATE
 # Czech:
 POSUN = TRANSLATE
@@ -3114,6 +3115,7 @@ def TETRAHEDRON(a, b, c, d):
     return BASEOBJ(PLASM_CONVEXHULL([a, b, c, d]))
 
 # English:
+TET = TETRAHEDRON
 # Czech:
 TETRAEDR = TETRAHEDRON
 CTYRSTEN = TETRAHEDRON
@@ -4379,6 +4381,7 @@ def EXTRUDE(shape2d, height, angle_deg, n=1):
   return L # I tried to return a union but it took too much time
 
 EXT = EXTRUDE
+E = EXTRUDE
 
 # ===================================================
 # EX
