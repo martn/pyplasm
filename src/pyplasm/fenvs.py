@@ -4847,6 +4847,7 @@ def COLOR(obj, col):
   if not isinstance(obj, list):
     obj.setcolor(col)
   else:
+    obj = flatten(obj)
     for x in obj: x.setcolor(col)
 
 C = COLOR
