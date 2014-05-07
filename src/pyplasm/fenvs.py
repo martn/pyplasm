@@ -2224,7 +2224,7 @@ if self_test:
 
 # NEW_DEFINITION:
 def SIZE(pol, List):
-    return PLASM_SIZE(List)(pol)
+    return PLASM_SIZE(List)(pol.geom)
 # Czech:
 VELIKOST = SIZE
 ROZMER = SIZE
