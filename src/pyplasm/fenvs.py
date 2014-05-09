@@ -1000,9 +1000,9 @@ def MONTRE(*args):
 
 class BASEOBJ:
     def __init__(self, basegeom):
-        self.color = [255, 255, 255]
+        self.color = [200, 200, 200]
         self.geom = basegeom
-    def setcolor(self, color = [255, 255, 255]):
+    def setcolor(self, color = [200, 200, 200]):
         # Check if the color is a list:
         if type(color) is list:
           # Sanity checks:
@@ -3717,8 +3717,8 @@ def STAR (r, n):
     l1 = [t0]
     angle = 360./n
     for i in range(n-1):
-        l1.append(R(t0, (i+1) * angle))
-    return U(*l1)
+        l1.append(R(COPY(t0), (i+1) * angle))
+    return U(l1)
 
 
 # ===================================================
@@ -5000,7 +5000,7 @@ LIGHTYELLOW  = [255, 255, 0]
 YELLOW  = [180, 180, 0]
 DARKYELLOW  = [100, 100, 0]
 
-STEEL =   [255, 255, 255]
+STEEL =   [200, 200, 200]
 BRASS =   [255, 250, 83]
 COPPER =  [184, 115, 51]
 BRONZE =  [140, 120, 83]
