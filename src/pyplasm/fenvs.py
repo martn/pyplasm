@@ -4426,7 +4426,7 @@ def EXTRUDE(basis, height, angle_deg, n=1):
         obj = []
         for oo in basis:
             color = oo.getcolor()
-            oo3d = EXTRUDEONE(oo3d, height, angle_deg, n)
+            oo3d = EXTRUDEONE(oo, height, angle_deg, n)
             oo3d.setcolor(color)
             obj.append(oo3d)
         obj = flatten(obj)
