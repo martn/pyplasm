@@ -3775,7 +3775,7 @@ def PRISM(basis, h):
     else:
         basis = flatten(basis)
         for obj in basis:
-            if basis.getdimension() <> 2: 
+            if obj.getdimension() <> 2: 
                 raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!") 
         if h <= 0: 
             raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
