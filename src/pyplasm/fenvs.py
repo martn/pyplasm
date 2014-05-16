@@ -3759,17 +3759,34 @@ def PLASM_PRISM (height):
         return Plasm.power(basis, PLASM_QUOTE([height]))
     return PLASM_PRISM0
 
-# NEW DEFINITION - RETURNS AN INSTANCE OF CLASS "PRODUCT"
+# NEW DEFINITION - RETURNS AN INSTANCE OF CLASS "PRODUCT" OR A LIST
+# OF PRODUCTS:
 def PRISM(basis, h):
-    if basis.getdimension() <> 2: 
-        raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!")
-    if h <= 0: 
-        raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
-    color = basis.getcolor()
-    obj = PRODUCT(basis, GRID(h))  # PRODUCT returns a class instance!
-    obj.setcolor(color)
-    return obj
-
+    # Check that the basis is two-dimensional:
+    if not isinstance(basis, list):
+        if basis.getdimension() <> 2: 
+            raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!")
+        if h <= 0: 
+            raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
+        color = basis.getcolor()
+        obj = PRODUCT(basis, GRID(h))  # PRODUCT returns a class instance!
+        obj.setcolor(color)
+        return obj
+    else:
+        basis = flatten(basis)
+        for obj in basis:
+            if basis.getdimension() <> 2: 
+                raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!") 
+        if h <= 0: 
+            raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
+        obj = []
+        for oo in basis:
+            color = oo.getcolor()
+            oo3d = PRODUCT(oo, GRID(h))  # PRODUCT returns a class instance!
+            oo3d.setcolor(color)
+            obj.append(oo3d)
+        return obj
+     
 # English:
 # Czech:
 HRANOL = PRISM
