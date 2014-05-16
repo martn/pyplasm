@@ -3762,12 +3762,12 @@ def PLASM_PRISM (height):
 # NEW DEFINITION - RETURNS AN INSTANCE OF CLASS "PRODUCT" OR A LIST
 # OF PRODUCTS:
 def PRISM(basis, h):
+    if h <= 0: 
+        raise ExceptionWT("Height in PRISM(base, height) must be positive!")
     # Check that the basis is two-dimensional:
     if not isinstance(basis, list):
         if basis.getdimension() <> 2: 
-            raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!")
-        if h <= 0: 
-            raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
+            raise ExceptionWT("The base object in PRISM(base, height) must be 2-dimensional!")
         color = basis.getcolor()
         obj = PRODUCT(basis, GRID(h))  # PRODUCT returns a class instance!
         obj.setcolor(color)
@@ -3776,9 +3776,7 @@ def PRISM(basis, h):
         basis = flatten(basis)
         for obj in basis:
             if obj.getdimension() <> 2: 
-                raise ExceptionWT("The base object in PRISM(base, h) must be 2-dimensional!") 
-        if h <= 0: 
-            raise ExceptionWT("Height h in PRISM(base, h) must be positive!")
+                raise ExceptionWT("The base object in PRISM(base, height) must be 2-dimensional!") 
         obj = []
         for oo in basis:
             color = oo.getcolor()
@@ -4389,7 +4387,7 @@ def PLASM_EXTRUSION (angle):
 # EXTRUSION - WITH ARBITRATRY DIVISION IN VERTICAL DIRECTION
 # ===================================================
 
-def EXTRUDE(shape2d, height, angle_deg, n=1):
+def EXTRUDEONE(shape2d, height, angle_deg, n=1):
   if shape2d.getdimension() <> 2:
       raise ExceptionWT("Base object in EXTRUDE(...) must be 2-dimensional!")
   if height <= 0:
@@ -4409,6 +4407,31 @@ def EXTRUDE(shape2d, height, angle_deg, n=1):
     L.append(newlayer)
   return L # I tried to return a union but it took too much time
 
+def EXTRUDE(basis, height, angle_deg, n=1):
+    if height <= 0: 
+        raise ExceptionWT("Height in EXTRUDE(base, height, angle, n) must be positive!")
+    # Check that the basis is two-dimensional:
+    if not isinstance(basis, list):
+        if basis.getdimension() <> 2: 
+            raise ExceptionWT("The base object in EXTRUDE(base, height, angle, n) must be 2-dimensional!")
+        color = basis.getcolor()
+        obj = EXTRUDEONE(basis, height, angle_deg, n)
+        obj.setcolor(color)
+        return obj
+    else:
+        basis = flatten(basis)
+        for obj in basis:
+            if obj.getdimension() <> 2: 
+                raise ExceptionWT("The base object in EXTRUDE(base, height, angle, n) must be 2-dimensional!") 
+        obj = []
+        for oo in basis:
+            color = oo.getcolor()
+            oo3d = EXTRUDEONE(oo3d, height, angle_deg, n)
+            oo3d.setcolor(color)
+            obj.append(oo3d)
+        obj = flatten(obj)
+        return obj
+     
 EXT = EXTRUDE
 E = EXTRUDE
 
