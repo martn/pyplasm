@@ -1880,6 +1880,7 @@ def INTERSECTION(*args):
         return obj
     else:
         list2 = list1.pop(0)
+        list2 = flatten(list2)
         result = []
         for x in list2:
             list1_new = [x] + list1
