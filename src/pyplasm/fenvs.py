@@ -1879,10 +1879,10 @@ def INTERSECTION(*args):
         obj.setcolor(list1[0].color)
         return obj
     else:
-        list2 = list1.pop(0)
-        list2 = flatten(list2)
+        item1 = list1.pop(0)
+        item1flat = flatten(item1)
         result = []
-        for x in list2:
+        for x in item1flat:
             list1_new = [x] + list1
             geoms = []
             for y in list1_new:
