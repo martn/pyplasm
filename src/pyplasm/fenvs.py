@@ -1259,7 +1259,7 @@ def RECTANGLE3D(a, b):
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
-    return BASEOBJ(CUBOID([a, b, 0.001]))
+    return BASEOBJ(CUBOID([a, b, h]))
 
 # Czech::
 OBDELNIK3D = RECTANGLE3D
@@ -2667,7 +2667,8 @@ TUBO = TUBE
 # =============================================
 
 def RING3D(r1, r2, division = 64):
-    return TUBE(r1, r2, 0.001, division)
+    h = 0.001
+    return TUBE(r1, r2, h, division)
 
 # =============================================
 # CIRCLE 
@@ -2719,11 +2720,11 @@ def CIRCLE3D(r, division = [64, 1]):
     # so that logical operations with them work:
     h = 0.001
     if type(division) == list: 
-        return PRISM(PLASM_CIRCLE(r)(division), h)
+        return PRISM(BASEOBJ(PLASM_CIRCLE(r)(division)), h)
     else:
         if division < 3: 
             raise ExceptionWT("Number of edges n in CIRCLE3D(r, n) must be at least 3!")
-        return PRISM(PLASM_CIRCLE(r)([division, 1]), h)
+        return PRISM(BASEOBJ(PLASM_CIRCLE(r)([division, 1])), h)
 # Czech:
 KRUH3D = CIRCLE3D
 # Polish:
@@ -2779,9 +2780,9 @@ def ARC3D(r1, r2, angle, division = [64, 1]):
     # so that logical operations with them work:
     h = 0.001
     if type(division) == list: 
-        return PRISM(PLASM_ARC([r1, r2, angle])(division), h)
+        return PRISM(BASEOBJ(PLASM_ARC([r1, r2, angle])(division)), h)
     else:
-        return PRISM(PLASM_ARC([r1, r2, angle])([division, 1]), h)
+        return PRISM(BASEOBJ(PLASM_ARC([r1, r2, angle])([division, 1])), h)
 
 # =============================================
 # MY_CYLINDER 
