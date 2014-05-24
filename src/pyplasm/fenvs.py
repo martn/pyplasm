@@ -1486,9 +1486,13 @@ if self_test:
 # TRANSLATE EITHER ONE OBJECT OR LIST OF OBJECTS
 def TRANSLATE(obj, t1, t2, t3 = 0):
     if not isinstance(obj, list):
+        if obj.dim <> 3 and t3 <> 0:
+            ExceptionWT("2D objects may be moved in the xy-plane only, not in 3D!")
         obj.move(t1, t2, t3)
     else:
         for oo in obj: 
+            if oo.dim <> 3 and t3 <> 0:
+                ExceptionWT("2D objects may be moved in the xy-plane only, not in 3D!")
             oo.move(t1, t2, t3)
     return COPY(obj)
 
