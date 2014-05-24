@@ -1021,7 +1021,7 @@ class BASEOBJ:
     def getcolor(self):
         return self.color
     def move(self, t1, t2, t3 = 0):
-        if abs(t3) < 1e-8:
+        if t3 == 0:
             self.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(self.geom)
         else:
             if self.dim <> 3:
