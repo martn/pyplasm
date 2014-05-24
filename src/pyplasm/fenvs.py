@@ -1024,14 +1024,14 @@ class BASEOBJ:
         if t3 == 0:
             self.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(self.geom)
         else:
-            if self.getdimension() <> 3:
+            if self.dim <> 3:
                 ExceptionWT("2D objects may be moved in the xy-plane only, not in 3D!")
             self.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(self.geom)
         self.setcolor(self.color)
     def rotaterad(self, angle_rad, axis = 3):
         if axis != 1 and axis != 2 and axis != 3: 
             raise ExceptionWT("The third argument of ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
-	if self.getdimension() == 2 and axis <> 3:
+	if self.dim == 2 and axis <> 3:
             ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
         if axis == 1: plane_indexes = [2, 3]
         elif axis == 2: plane_indexes = [1, 3]
@@ -1048,12 +1048,11 @@ class BASEOBJ:
     def rotaterel(self, angle_deg, axis = 3):
         if axis != 1 and axis != 2 and axis != 3: 
           raise ExceptionWT("The third argument of the command ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
-        dim = self.getdimension()
-	if dim == 2 and axis <> 3:
+	if self.dim == 2 and axis <> 3:
             ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
-        if dim != 2 and dim != 3:
+        if self.dim != 2 and self.dim != 3:
            raise ExceptionWT("Error in ROTATE: Object dimension must be either 2 or 3.")
-        if dim == 2:
+        if self.dim == 2:
           x = 0.5 * (self.minx() + self.maxx())
           y = 0.5 * (self.miny() + self.maxy())
           self.move(-x, -y)
@@ -1068,7 +1067,7 @@ class BASEOBJ:
           self.move(x, y, z)
         self.setcolor(self.color)
     def scale(self, a, b, c = 1.0):
-	if self.getdimension() == 2 and c <> 1.0:
+	if self.dim == 2 and c <> 1.0:
             ExceptionWT("2D objects may be scaled in the xy-plane only, not in 3D!")
         self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
         self.setcolor(self.color)
@@ -3777,7 +3776,7 @@ def PRISM(basis, h):
         raise ExceptionWT("Height in PRISM(base, height) must be positive!")
     # Check that the basis is two-dimensional:
     if not isinstance(basis, list):
-        if basis.getdimension() <> 2: 
+        if basis.dim <> 2: 
             raise ExceptionWT("The base object in PRISM(base, height) must be 2-dimensional!")
         color = basis.getcolor()
         obj = PRODUCT(basis, GRID(h))  # PRODUCT returns a class instance!
@@ -3786,7 +3785,7 @@ def PRISM(basis, h):
     else:
         basis = flatten(basis)
         for obj in basis:
-            if obj.getdimension() <> 2: 
+            if obj.dim <> 2: 
                 raise ExceptionWT("The base object in PRISM(base, height) must be 2-dimensional!") 
         obj = []
         for oo in basis:
@@ -4399,7 +4398,7 @@ def PLASM_EXTRUSION (angle):
 # ===================================================
 
 def EXTRUDEONE(shape2d, height, angle_deg, n=1):
-  if shape2d.getdimension() <> 2:
+  if shape2d.dim <> 2:
       raise ExceptionWT("Base object in EXTRUDE(...) must be 2-dimensional!")
   if height <= 0:
       raise ExceptionWT("Extrusion height in EXTRUDE(...) must be positive!")
@@ -4423,7 +4422,7 @@ def EXTRUDE(basis, height, angle_deg, n=1):
         raise ExceptionWT("Height in EXTRUDE(base, height, angle, n) must be positive!")
     # Check that the basis is two-dimensional:
     if not isinstance(basis, list):
-        if basis.getdimension() <> 2: 
+        if basis.dim <> 2: 
             raise ExceptionWT("The base object in EXTRUDE(base, height, angle, n) must be 2-dimensional!")
         color = basis.getcolor()
         obj = EXTRUDEONE(basis, height, angle_deg, n)
@@ -4432,7 +4431,7 @@ def EXTRUDE(basis, height, angle_deg, n=1):
     else:
         basis = flatten(basis)
         for obj in basis:
-            if obj.getdimension() <> 2: 
+            if obj.dim <> 2: 
                 raise ExceptionWT("The base object in EXTRUDE(base, height, angle, n) must be 2-dimensional!") 
         obj = []
         for oo in basis:
