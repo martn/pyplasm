@@ -1025,6 +1025,7 @@ class BASEOBJ:
             self.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(self.geom)
         else:
             if self.dim <> 3:
+                print "I am here"
                 ExceptionWT("2D objects may be moved in the xy-plane only, not in 3D!")
             self.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(self.geom)
         self.setcolor(self.color)
