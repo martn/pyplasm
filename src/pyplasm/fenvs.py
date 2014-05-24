@@ -1021,7 +1021,7 @@ class BASEOBJ:
     def getcolor(self):
         return self.color
     def move(self, t1, t2, t3 = 0):
-        if t3 == 0:
+        if abs(t3) < 1e-8:
             self.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(self.geom)
         else:
             if self.dim <> 3:
@@ -1485,15 +1485,10 @@ if self_test:
 # English:
 # TRANSLATE EITHER ONE OBJECT OR LIST OF OBJECTS
 def TRANSLATE(obj, t1, t2, t3 = 0):
-    print "I am here."
     if not isinstance(obj, list):
-        if obj.dim <> 3 and t3 <> 0:
-            ExceptionWT("2D objects may be moved in the xy-plane only, not in 3D!")
         obj.move(t1, t2, t3)
     else:
         for oo in obj: 
-            if oo.dim <> 3 and t3 <> 0:
-                ExceptionWT("2D objects may be moved in the xy-plane only, not in 3D!")
             oo.move(t1, t2, t3)
     return COPY(obj)
 
