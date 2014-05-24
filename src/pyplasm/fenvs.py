@@ -1025,15 +1025,14 @@ class BASEOBJ:
             self.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(self.geom)
         else:
             if self.dim <> 3:
-                print "I am here"
-                ExceptionWT("2D objects may be moved in the xy-plane only, not in 3D!")
+                raise ExceptionWT("2D objects may be moved in the xy-plane only, not in 3D!")
             self.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(self.geom)
         self.setcolor(self.color)
     def rotaterad(self, angle_rad, axis = 3):
         if axis != 1 and axis != 2 and axis != 3: 
             raise ExceptionWT("The third argument of ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
 	if self.dim == 2 and axis <> 3:
-            ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
+            raise ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
         if axis == 1: plane_indexes = [2, 3]
         elif axis == 2: plane_indexes = [1, 3]
         else: plane_indexes = [1, 2]
@@ -1050,7 +1049,7 @@ class BASEOBJ:
         if axis != 1 and axis != 2 and axis != 3: 
           raise ExceptionWT("The third argument of the command ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
 	if self.dim == 2 and axis <> 3:
-            ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
+            raise ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
         if self.dim != 2 and self.dim != 3:
            raise ExceptionWT("Error in ROTATE: Object dimension must be either 2 or 3.")
         if self.dim == 2:
@@ -1069,7 +1068,7 @@ class BASEOBJ:
         self.setcolor(self.color)
     def scale(self, a, b, c = 1.0):
 	if self.dim == 2 and c <> 1.0:
-            ExceptionWT("2D objects may be scaled in the xy-plane only, not in 3D!")
+            raise ExceptionWT("2D objects may be scaled in the xy-plane only, not in 3D!")
         self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
         self.setcolor(self.color)
     def minx(self):
