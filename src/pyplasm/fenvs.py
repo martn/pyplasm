@@ -1002,6 +1002,7 @@ class BASEOBJ:
     def __init__(self, basegeom):
         self.color = [200, 200, 200]
         self.geom = basegeom
+        self.dim = PLASM_DIM(basegeom)
     def setcolor(self, color = [200, 200, 200]):
         # Check if the color is a list:
         if type(color) is list:
@@ -1043,7 +1044,7 @@ class BASEOBJ:
         self.rotaterad(angle_rad, axis)
         self.setcolor(self.color)
     def getdimension(self):
-        return PLASM_DIM(self.geom)
+        return self.dim
     def rotaterel(self, angle_deg, axis = 3):
         if axis != 1 and axis != 2 and axis != 3: 
           raise ExceptionWT("The third argument of the command ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
