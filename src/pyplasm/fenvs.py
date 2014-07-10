@@ -1003,6 +1003,19 @@ class BASEOBJ:
         self.color = [200, 200, 200]
         self.geom = basegeom
         self.dim = PLASM_DIM(basegeom)
+        self.material = [1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100]
+    def setmaterial(self, mat):
+        # Check if the material is a list:
+        if type(mat) is list:
+            if len(mat) != 17:
+                raise ExceptionWT("Material must be a list of 17 values: ambientRGBA, diffuseRGBA specularRGBA emissionRGBA shininess")
+            else:
+                self.material = mat
+                self.geom = PLASM_MATERIAL(mat)(self.geom)
+        else:
+            raise ExceptionWT("Material must be a list of 17 values: ambientRGBA, diffuseRGBA specularRGBA emissionRGBA shininess")
+    def getmaterial():
+        return self.material
     def setcolor(self, color = [200, 200, 200]):
         # Check if the color is a list:
         if type(color) is list:
@@ -5246,12 +5259,12 @@ if self_test:
 
 #===================================================================================
 # Materials (want a list of 17 elements(ambientRGBA, diffuseRGBA specularRGBA emissionRGBA shininess)
-# Example MATERIAL([1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100])(pol)
+# Example PLASM_MATERIAL([1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100])(pol)
 #===================================================================================
 
-def MATERIAL(M):
+def PLASM_MATERIAL(M):
 
-	def MATERIAL0(pol):
+	def PLASM_MATERIAL0(pol):
 
 		svalue="%s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s %s" % (M[ 0],M[ 1],M[ 2],M[ 3],M[ 4],M[ 5],M[ 6],M[ 7],M[ 8],M[ 9],M[10],M[11],M[12],M[13],M[14],M[15],M[16])
 		return Plasm.addProperty(pol, "VRMLmaterial", svalue) 
@@ -5271,12 +5284,20 @@ def MATERIAL(M):
 	if not (isinstance(M,list) and len(M)==17):
 		raise Exception("cannot transform " + repr(M) + " in a material (which is a list of 17 floats, ambient,diffuse,specular,emission,shininess)!")
 
-	return MATERIAL0
+	return PLASM_MATERIAL0
 
 if self_test:
-   (Plasm.getProperty(MATERIAL([1,0,0,1,  0,1,0,1,  0,0,0,1,  0,0,0,1,  100])(Plasm.cube(3)),"VRMLmaterial")==[1,0,0,1,0,1,0,1,0,0,0,1,0,0,0,1,100])
+   (Plasm.getProperty(PLASM_MATERIAL([1,0,0,1,  0,1,0,1,  0,0,0,1,  0,0,0,1,  100])(Plasm.cube(3)),"VRMLmaterial")==[1,0,0,1,0,1,0,1,0,0,0,1,0,0,0,1,100])
 
-
+# New definition:
+def MATERIAL(obj, mat):
+  # obj may be a single object or a list of objects
+  if not isinstance(obj, list):
+    obj.setmaterial(mat)
+  else:
+    obj = flatten(obj)
+    for x in obj: x.setmaterial(mat)
+  return COPY(obj)
 
 #===================================================================================
 # Textures (wants a list [url:string,repeatS:bool,repeatT:bool,cx::float,cy::float,rot::float,sx::float,sy::float,tx::float,ty::float]
