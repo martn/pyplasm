@@ -2464,7 +2464,7 @@ if self_test:
 	assert VECTNORM([1,0,0])==1 
 
 
-INNERPROD = COMP([COMP([RAISE(PLASM_SUM), AA(RAISE(PROD))]), TRANS])
+INNERPROD = COMP([COMP([RAISE(PLASM_SUM), AA(RAISE(PLASM_PROD))]), TRANS])
 
 if self_test:
   assert INNERPROD ([[1,2,3],[4,5,6]])==32
