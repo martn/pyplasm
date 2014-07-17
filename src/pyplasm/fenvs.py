@@ -355,7 +355,7 @@ if self_test:
 # INSR
 # ===================================================
 
-def INSR(f):
+def PLASM_INSR(f):
     def INSR0(seq):
         length=len(seq)
         res = seq[-1]
@@ -366,7 +366,7 @@ def INSR(f):
   
 
 if self_test: 
-	assert(INSR(lambda x: x[0]-x[1])([1,2,3])==2)
+	assert(PLASM_INSR(lambda x: x[0]-x[1])([1,2,3])==2)
 
 # ===================================================
 # INSL
@@ -585,18 +585,18 @@ if self_test:
 # n-ary PRODuct 
 # ===================================================
 
-def PROD(args):        
+def PLASM_PROD(args):        
     if isinstance(args,list) and ISPOL(args[0]): return  PLASM_POWER(args)
     if isinstance(args,list) and ISSEQOF(ISNUM)(args): return reduce(lambda x,y: x * y, args)
     if isinstance(args,list) and len(args) == 2 and ISSEQOF(ISNUM)(args[0]) and ISSEQOF(ISNUM)(args[1]): return  Vecf(args[0])*Vecf(args[1])
-    raise Exception("PROD function has been applied to %s!" % repr(args))
+    raise Exception("PLASM_PROD function has been applied to %s!" % repr(args))
 
 
 
 if self_test: 
-	assert(PROD([1,2,3,4])==24 and PROD([[1,2,3],[4,5,6]])==32)
+	assert(PLASM_PROD([1,2,3,4])==24 and PLASM_PROD([[1,2,3],[4,5,6]])==32)
 
-SQR = RAISE(RAISE(PROD))([ID,ID])
+SQR = RAISE(RAISE(PLASM_PROD))([ID,ID])
 
 
 # ===================================================
@@ -2584,7 +2584,7 @@ def ISMATOF (ISTYPE): return COMP([COMP([AND, AR]), CONS([COMP([AA(ISTYPE), CAT]
 # ===================================================
 
 def FACT (N):
-    return PROD(INTSTO(N)) if N>0 else 1
+    return PLASM_PROD(INTSTO(N)) if N>0 else 1
 
 if self_test: 
 	assert FACT(4)==24 and FACT(0)==1
@@ -2883,8 +2883,13 @@ def SPHERE_SURFACE(radius, divisions = [24, 48]):
 def SPHERE(radius, divisions = [12, 24]):
     if radius <= 0: 
         raise ExceptionWT("Radius r in SPHERE(r) must be positive!")
+    divisionslist = divisions
+    if not isinstance(divisions, list): 
+        if divisions/2 <= 0:
+            raise ExceptionWT("Bad division in the SPHERE command!")
+        divisionslist = [divisions/2, divisions]
     # Making it s solid:
-    return BASEOBJ(PLASM_JOIN(PLASM_SPHERE(radius)(divisions)))
+    return BASEOBJ(PLASM_JOIN(PLASM_SPHERE(radius)(divisionslist)))
 # Czech:
 KOULE = SPHERE
 # Polish:
@@ -2943,7 +2948,7 @@ def PLASM_SOLIDTORUS (radius):
         N, M, P = subdomains
         a=0.5*(r2-r1)
         c=0.5*(r1+r2)
-        domain = INSR(PROD)([PLASM_INTERVALS(2*PI)(N), PLASM_INTERVALS(2*PI)(M), PLASM_INTERVALS(1)(P)])
+        domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(2*PI)(N), PLASM_INTERVALS(2*PI)(M), PLASM_INTERVALS(1)(P)])
         fx =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.cos(p[0])
         fy =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.sin(p[0])
         fz =   lambda p: p[2]*a*math.sin(p[1])
@@ -2954,14 +2959,19 @@ if self_test:
 	PLASM_VIEW(SKELETON(1)(PLASM_SOLIDTORUS([1.5,2])([18,24,1])))
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
-def TORUS(r1, r2, divisions = [64, 32]):
+def TORUS(r1, r2, divisions = [24, 12]):
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in TORUS(r1, r2) must be positive!")
     if r2 <= 0: 
         raise ExceptionWT("Outer radius r2 in TORUS(r1, r2) must be positive!")
     if r2 <= r1: 
         raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in TORUS(r1, r2)!")
-    return BASEOBJ(PLASM_SOLIDTORUS([r1, r2])([divisions[0], divisions[1], 1]))
+    divisionslist = divisions
+    if not isinstance(divisions, list): 
+        if divisions/2 <= 0:
+            raise ExceptionWT("Bad division in the TORUS command!")
+        divisionslist = [divisions, divisions/2]
+    return BASEOBJ(PLASM_SOLIDTORUS([r1, r2])([divisionslist[0], divisionslist[1], 1]))
 
 # English:
 DONUT = TORUS
@@ -3897,7 +3907,7 @@ def MKVECTOR (P1):
 # Matrix stuff
 # ===================================================
 
-SCALARMATPROD = COMP([COMP([(COMP([AA, AA]))(RAISE(PROD)), AA(DISTL)]), DISTL])
+SCALARMATPROD = COMP([COMP([(COMP([AA, AA]))(RAISE(PLASM_PROD)), AA(DISTL)]), DISTL])
 
 MATDOTPROD = COMP([INNERPROD, AA(CAT)])
 
@@ -4316,7 +4326,7 @@ def PYRAMID (H):
 # ===================================================
 
 def MESH (seq):
-	return INSL(RAISE(PROD))([PLASM_QUOTE(i) for i in seq])
+	return INSL(RAISE(PLASM_PROD))([PLASM_QUOTE(i) for i in seq])
 
 
 
@@ -4326,7 +4336,7 @@ def MESH (seq):
 
 def NU_GRID (data):
 	polylines=[POLYLINE(i) for i in data]
-	return INSL(RAISE(PROD))(polylines)
+	return INSL(RAISE(PLASM_PROD))(polylines)
 
 
 
