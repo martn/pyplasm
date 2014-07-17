@@ -2880,7 +2880,7 @@ def SPHERE_SURFACE(radius, divisions = [24, 48]):
     return BASEOBJ(PLASM_SPHERE(radius)(divisions))
 
 # English:
-def SPHERE(radius, divisions = [24, 48]):
+def SPHERE(radius, divisions = [12, 24]):
     if radius <= 0: 
         raise ExceptionWT("Radius r in SPHERE(r) must be positive!")
     # Making it s solid:
