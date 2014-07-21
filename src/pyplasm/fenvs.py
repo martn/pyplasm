@@ -5486,122 +5486,210 @@ def BOUNDARY(hpc,dim):
 
 # Base function. Returns True if object "tested" contains 
 # the entire object "obj":
-def HASOBJECT(tested, obj):
-    test = DIFF(obj, INTERSECTION(tested, obj))
+def HASOBJECT(tested, obj, tol = 1e-8):
+    objint = INTERSECTION(tested, obj)
+    test = DIFF(obj, objint)
     s1 = test.sizex()
     s2 = test.sizey()
-    s3 = test.sizez()
-    if s1 < 1e-8 and s2 < 1e-8 and s3 < 1e-8:
+    s3 = 0
+    if test.getdimension() == 3:
+      s3 = test.sizez()
+    if s1 < tol and s2 < tol and s3 < tol:
       return True
     else:
       return False
 
 # Base function. Returns True if object "tested" contains 
 # no part of object "obj":
-def HASNTOBJECT(tested, obj):
+def HASNTOBJECT(tested, obj, tol = 1e-8):
     test = INTERSECTION(tested, obj)
     s1 = test.sizex()
     s2 = test.sizey()
-    s3 = test.sizez()
-    if s1 < 1e-8 and s2 < 1e-8 and s3 < 1e-8:
+    s3 = 0
+    if test.getdimension() == 3:
+      s3 = test.sizez()
+    if s1 < tol and s2 < tol and s3 < tol:
       return True
     else:
       return False
 
+# Returns True if the entire square "square" lies in object "tested":
+def HASSQUARE(tested, centerx, centery, size):
+    square = SQUARE(size)
+    MOVE(square, centerx - 0.5*size, centery - 0.5*size)
+    return HASOBJECT(tested, square)
+
+# Returns True if no part of square "square" lies in object "tested":
+def HASNTSQUARE(tested, centerx, centery, size):
+    square = SQUARE(size)
+    MOVE(square, centerx - 0.5*size, centery - 0.5*size)
+    return HASNTOBJECT(tested, square)
+
 # Returns True if the entire cube "cube" lies in object "tested":
 def HASCUBE(tested, centerx, centery, centerz, size):
     cube = CUBE(size)
-    cube = TRANSLATE(cube, centerx - 0.5*size, centery - 0.5*size, centerz - 0.5*size)
+    MOVE(cube, centerx - 0.5*size, centery - 0.5*size, centerz - 0.5*size)
     return HASOBJECT(tested, cube)
 
 # Returns True if no part of cube "cube" lies in object "tested":
 def HASNTCUBE(tested, centerx, centery, centerz, size):
     cube = CUBE(size)
-    cube = TRANSLATE(cube, centerx - 0.5*size, centery - 0.5*size, centerz - 0.5*size)
+    MOVE(cube, centerx - 0.5*size, centery - 0.5*size, centerz - 0.5*size)
     return HASNTOBJECT(tested, cube)
+
+# Returns True if entire rectangle "rect" lies in object "tested":
+def HASRECTANGLE(tested, centerx, centery, sizex, sizey):
+    rect = RECTANGLE(sizex, sizey)
+    MOVE(rect, centerx - 0.5*sizex, centery - 0.5*sizey)
+    return HASOBJECT(tested, rect)
+
+# Returns True if no part of rectangle "rect" lies in object "tested":
+def HASNTRECTANGLE(tested, centerx, centery, sizex, sizey):
+    rect = RECTANGLE(sizex, sizey)
+    MOVE(rect, centerx - 0.5*sizex, centery - 0.5*sizey)
+    return HASNTOBJECT(tested, rect)
 
 # Returns True if entire brick "brick" lies in object "tested":
 def HASBRICK(tested, centerx, centery, centerz, sizex, sizey, sizez):
     brick = BRICK(sizex, sizey, sizez)
-    brick = TRANSLATE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
+    MOVE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
     return HASOBJECT(tested, brick)
 
 # Returns True if no part of brick "brick" lies in object "tested":
 def HASNTBRICK(tested, centerx, centery, centerz, sizex, sizey, sizez):
     brick = BRICK(sizex, sizey, sizez)
-    brick = TRANSLATE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
+    MOVE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
     return HASNTOBJECT(tested, brick)
 
-# Checks if object "tested" has dimensions sizex, sizey, sizez
+# Checks if 2D object "tested" has dimensions sizex, sizey
 # with a given tolerance:
-def SIZETEST(tested, sizex, sizey, sizez, eps = 0.0):
+def SIZETEST2D(tested, sizex, sizey, eps = 0.0):
+    a1 = (tested.sizex() - sizex <= eps)
+    a2 = (tested.sizey() - sizey <= eps)
+    return (a1 and a2)
+
+# Checks if 3D object "tested" has dimensions sizex, sizey, sizez
+# with a given tolerance:
+def SIZETEST3D(tested, sizex, sizey, sizez, eps = 0.0):
     a1 = (tested.sizex() - sizex <= eps)
     a2 = (tested.sizey() - sizey <= eps)
     a3 = (tested.sizez() - sizez <= eps)
     return (a1 and a2 and a3)
 
-# Checks if objects "tested" and "ref" have the same dimensions, 
+# Checks if 2D objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
-def SIZEMATCH(tested, ref, eps = 0.0):
+def SIZEMATCH2D(tested, ref, eps = 0.0):
+    a1 = (tested.sizex() - ref.sizex() <= eps)
+    a2 = (tested.sizey() - ref.sizey() <= eps)
+    return (a1 and a2)
+
+# Checks if 3D objects "tested" and "ref" have the same dimensions, 
+# with a given tolerance:
+def SIZEMATCH3D(tested, ref, eps = 0.0):
     a1 = (tested.sizex() - ref.sizex() <= eps)
     a2 = (tested.sizey() - ref.sizey() <= eps)
     a3 = (tested.sizez() - ref.sizez() <= eps)
     return (a1 and a2 and a3)
 
-# Checks if object "tested" has given minx, miny, minz 
+# Checks if 2D object "tested" has given minx, miny 
+# coordinates in the x, y directions, with a given tolerance:
+def POSITIONTEST2D(tested, minx, miny, eps = 0.0):
+    b1 = (abs(tested.minx() - minx) <= eps)
+    b2 = (abs(tested.miny() - miny) <= eps)
+    return (b1 and b2)
+
+# Checks if 3D object "tested" has given minx, miny, minz 
 # coordinates in the x, y, z directions, with a given tolerance:
-def POSITIONTEST(tested, minx, miny, minz, eps = 0.0):
+def POSITIONTEST3D(tested, minx, miny, minz, eps = 0.0):
     b1 = (abs(tested.minx() - minx) <= eps)
     b2 = (abs(tested.miny() - miny) <= eps)
     b3 = (abs(tested.minz() - minz) <= eps)
     return (b1 and b2 and b3)
 
-# Checks if objects "tested" and "ref" have the same 
+# Checks if 2D objects "tested" and "ref" have the same 
+# minimum coordinates in the x, y directions, 
+# with a given tolerance:
+def POSITIONMATCH2D(tested, ref, eps = 0.0):
+    b1 = (abs(tested.minx() - ref.minx()) <= eps)
+    b2 = (abs(tested.miny() - ref.miny()) <= eps)
+    return (b1 and b2)
+
+# Checks if 3D objects "tested" and "ref" have the same 
 # minimum coordinates in the x, y, z directions, 
 # with a given tolerance:
-def POSITIONMATCH(tested, ref, eps = 0.0):
+def POSITIONMATCH3D(tested, ref, eps = 0.0):
     b1 = (abs(tested.minx() - ref.minx()) <= eps)
     b2 = (abs(tested.miny() - ref.miny()) <= eps)
     b3 = (abs(tested.minz() - ref.minz()) <= eps)
     return (b1 and b2 and b3)
 
-# Move object "tested" so that it has given minx, miny, minz:
-def ADJUSTPOSITION(tested, minx, miny, minz):
+# Move 2D object "tested" so that it has given minx, miny:
+def ADJUSTPOSITION3D(tested, minx, miny):
+    xmintested = tested.minx()
+    ymintested = tested.miny()
+    return MOVE(tested, minx - xmintested, miny - ymintested)
+
+# Move 3D object "tested" so that it has given minx, miny, minz:
+def ADJUSTPOSITION3D(tested, minx, miny, minz):
     xmintested = tested.minx()
     ymintested = tested.miny()
     zmintested = tested.minz()
     return T(tested, minx - xmintested, miny - ymintested, minz - zmintested)
 
-# Move object "tested" so that its minx coincides with minx of object ref,
+# Move 2D object "tested" so that its minx coincides with minx of object ref,
+# and its miny coincides with miny of object ref:
+def ALIGNOBJECTS2D(tested, ref):
+    xmintested = tested.minx()
+    ymintested = tested.miny()
+    xminref = ref.minx()
+    yminref = ref.miny()
+    return MOVE(tested, xminref - xmintested, yminref - ymintested)
+
+# Move 3D object "tested" so that its minx coincides with minx of object ref,
 # its miny coincides with miny of object ref. and its minz coincides 
 # with minz of object ref:
-def ALIGNOBJECTS(tested, ref):
+def ALIGNOBJECTS3D(tested, ref):
     xmintested = tested.minx()
     ymintested = tested.miny()
     zmintested = tested.minz()
     xminref = ref.minx()
     yminref = ref.miny()
     zminref = ref.minz()
-    return T(tested, xminref - xmintested, yminref - ymintested, zminref - zmintested)
+    return MOVE(tested, xminref - xmintested, yminref - ymintested, zminref - zmintested)
 
-# Returns a brick which is the bounding box of an object "tested":
-def BBOX(tested):
+# Returns a rectangle which is the bounding box of a 2D object "tested":
+def BBOX2D(tested):
+    rect = RECTANGLE(tested.maxx() - tested.minx(), tested.maxy() - tested.miny())
+    MOVE(rect, tested.minx(), tested.miny())
+    return rect
+
+# Returns a brick which is the bounding box of a 3D object "tested":
+def BBOX3D(tested):
     brick = BOX(tested.maxx() - tested.minx(), tested.maxy() - tested.miny(), tested.maxz() - tested.minz())
-    brick = T(brick, tested.minx(), tested.miny(), tested.minz())
+    MOVE(brick, tested.minx(), tested.miny(), tested.minz())
     return brick
 
-# Returns the frame of a bounding box "bbox". Bars of 
+# Returns the frame of a 2D bounding box "bbox". Bars of 
 # the frame will have thickness "eps"
-def BBOXFRAME(bbox, eps):
+def BBOXFRAME2D(bbox, eps):
+    x = bbox.sizex()
+    y = bbox.sizey()
+    rect = RECTANGLE(x - 2*eps, y - 2*eps)
+    MOVE(rect, eps, eps)
+    return DIFF(bbox, rect)
+
+# Returns the frame of a 3D bounding box "bbox". Bars of 
+# the frame will have thickness "eps"
+def BBOXFRAME3D(bbox, eps):
     x = bbox.sizex()
     y = bbox.sizey()
     z = bbox.sizez()
     brickx = BOX(x, y - 2*eps, z - 2*eps)
-    brickx = T(brickx, 0, eps, eps)
+    T(brickx, 0, eps, eps)
     bricky = BOX(x - 2*eps, y, z - 2*eps)
-    bricky = T(bricky, eps, 0, eps)
+    T(bricky, eps, 0, eps)
     brickz = BOX(x - 2*eps, y - 2*eps, z)
-    brickz = T(brickz, eps, eps, 0)
+    T(brickz, eps, eps, 0)
     return DIFF(bbox, brickx, bricky, brickz)
 
 # Alberto's changes to make Cartesian products simplicial:
