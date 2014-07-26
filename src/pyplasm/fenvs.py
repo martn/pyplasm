@@ -1108,6 +1108,8 @@ class BASEOBJ:
           self.move(x, y, z)
         self.setcolor(self.color)
     def scale(self, a, b, c = 1.0):
+        if a <= 0 or b <= 0 or c <= 0:
+            raise ExceptionWT("When scaling an object, all axial coefficients must be greater than zero!")
 	if self.dim == 2 and c <> 1.0:
             raise ExceptionWT("2D objects may be scaled in the xy-plane only, not in 3D!")
         self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
