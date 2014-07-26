@@ -1529,6 +1529,7 @@ def TRANSLATE(obj, t1, t2, t3 = 0):
     if not isinstance(obj, list):
         obj.move(t1, t2, t3)
     else:
+        obj = flatten(obj)
         for oo in obj: 
             oo.move(t1, t2, t3)
     return COPY(obj)
@@ -1591,6 +1592,7 @@ def SCALE(obj, a, b, c = 1):
     if not isinstance(obj, list):
         obj.scale(a, b, c)
     else:
+        obj = flatten(obj)
         for oo in obj: 
             oo.scale(a, b, c)
     return COPY(obj)
@@ -1638,6 +1640,7 @@ def ROTATERAD(obj, angle_rad, axis = 3, point = [0, 0, 0]):
     if not isinstance(obj, list):
         obj.rotaterad(angle_rad, axis, point)
     else:
+        obj = flatten(obj)
         for oo in obj: 
             oo.rotaterad(angle_rad, axis, point)
     return COPY(obj)
@@ -1675,6 +1678,7 @@ def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
     if not isinstance(obj, list):
         obj.rotate(angle_deg, axis, point)
     else:
+        obj = flatten(obj)
         for oo in obj: 
             oo.rotate(angle_deg, axis, point)
     return COPY(obj)
