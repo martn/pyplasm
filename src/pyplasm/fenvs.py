@@ -1041,7 +1041,7 @@ class BASEOBJ:
                 raise ExceptionWT("2D objects may be moved in the xy-plane only, not in 3D!")
             self.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(self.geom)
         self.setcolor(self.color)
-    def rotaterad(self, angle_rad, axis = 3):
+    def rotaterad(self, angle_rad, axis = 3, point = [0, 0, 0]):
         if axis != 1 and axis != 2 and axis != 3: 
             raise ExceptionWT("The third argument of ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
 	if self.dim == 2 and axis <> 3:
@@ -1049,12 +1049,40 @@ class BASEOBJ:
         if axis == 1: plane_indexes = [2, 3]
         elif axis == 2: plane_indexes = [1, 3]
         else: plane_indexes = [1, 2]
+        # sanity check for the point:
+        if not isinstance(point, list):
+            raise ExceptionWT("The optional point in ROTATE must be a list!")
+        pointdim = len(point)
+        if pointdim != 2 and pointdim != 3:
+            raise ExceptionWT("The optional point in ROTATE must be a list of either 2 or 3 coordinates!")
+        # if 3D object and 2D point, make third coordinate zero:
+        if pointdim == 2 and self.dim == 3:
+            point.append(0)
+        # if 2D object and 3D point, ignore third coordinate:
+        if pointdim == 3 and self.dim == 2:
+            forgetlast = point.pop()        
+        # if point is not zero, move object first:
+        if self.dim == 2:
+            if point[0] != 0 or point[1] != 0:
+                self.geom = PLASM_TRANSLATE([1, 2])([-point[0], -point[1]])(self.geom)   
+        else:
+            if point[0] != 0 or point[1] != 0 or point[2] != 0:
+                self.geom = PLASM_TRANSLATE([1, 2, 3])([-point[0], -point[1], -point[2]])(self.geom)  
+        # call the PLaSM rotate command:
         dim = max(plane_indexes)
 	self.geom = Plasm.rotate(self.geom, dim, plane_indexes[0], plane_indexes[1], angle_rad)
+        # if point is not zero, return object back:
+        if self.dim == 2:
+            if point[0] != 0 or point[1] != 0:
+                self.geom = PLASM_TRANSLATE([1, 2])([point[0], point[1]])(self.geom)   
+        else:
+            if point[0] != 0 or point[1] != 0 or point[2] != 0:
+                self.geom = PLASM_TRANSLATE([1, 2, 3])([point[0], point[1], point[2]])(self.geom)
+        # return color:
         self.setcolor(self.color)
-    def rotate(self, angle_deg, axis = 3):
+    def rotate(self, angle_deg, axis = 3, point = [0, 0, 0]):
         angle_rad = PI * angle_deg / 180.
-        self.rotaterad(angle_rad, axis)
+        self.rotaterad(angle_rad, axis, point)
         self.setcolor(self.color)
     def getdimension(self):
         return self.dim
@@ -1606,12 +1634,12 @@ if self_test:
 # NEW DEFINITION
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN RADIANS)
-def ROTATERAD(obj, angle_rad, axis = 3):
+def ROTATERAD(obj, angle_rad, axis = 3, point = [0, 0, 0]):
     if not isinstance(obj, list):
-        obj.rotaterad(angle_rad, axis)
+        obj.rotaterad(angle_rad, axis, point)
     else:
         for oo in obj: 
-            oo.rotaterad(angle_rad, axis)
+            oo.rotaterad(angle_rad, axis, point)
     return COPY(obj)
     
 RRAD = ROTATERAD
@@ -1643,12 +1671,12 @@ TOURNERAD = ROTATERAD
 
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN DEGREES)
-def ROTATEDEG(obj, angle_deg, axis = 3):
+def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
     if not isinstance(obj, list):
-        obj.rotate(angle_deg, axis)
+        obj.rotate(angle_deg, axis, point)
     else:
         for oo in obj: 
-            oo.rotate(angle_deg, axis)
+            oo.rotate(angle_deg, axis, point)
     return COPY(obj)
 
 ROTATE = ROTATEDEG
@@ -1680,9 +1708,9 @@ RUOTA = ROTATE
 TOURNER = ROTATE
 TOURNE = ROTATE
 
-# ===================================================
-# RELATIVE ROTATION - ABOUT THE OBJECT'S OWN CENTER
-# ===================================================
+# ===================================================================
+# RELATIVE ROTATION - ABOUT THE OBJECT'S OWN CENTER - ONE OBJECT ONLY
+# ===================================================================
 
 # English:
 def RR(obj, angle_deg, axis = 3):
@@ -1691,6 +1719,7 @@ def RR(obj, angle_deg, axis = 3):
     obj.rotaterel(angle_deg, axis)
     return COPY(obj)
 ROTATER = RR
+RREL = RR
 ROTATEREL = RR
 
 # ===================================================
