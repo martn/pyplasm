@@ -1140,16 +1140,17 @@ class BASEOBJ:
         return MAX(3)(self.geom) - MIN(3)(self.geom)
 
 
-# ===================================================
-# COPYING OBJECTS AND LISTS OF OBJECTS
-# ===================================================
+# =========================================================
+# COPYING OBJECTS AND LISTS OF OBJECTS (LISTS ARE FLATTENED
+# =========================================================
 
 def COPY(obj):
     if not isinstance(obj, list):
         return copy.copy(obj)
     else:
+        obj1 = flatten(obj) # flatten the rest as there may be structs
         newlist = []
-        for x in obj:
+        for x in obj1:
             newlist.append(copy.copy(x))
         return newlist
 
