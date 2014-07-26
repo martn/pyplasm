@@ -2184,6 +2184,8 @@ def flatten(*args):
             output.append(arg)
     return output
 
+FLATTEN = flatten
+
 # ===================================================
 # GRID
 # ===================================================
