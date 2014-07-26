@@ -1042,6 +1042,12 @@ class BASEOBJ:
             self.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(self.geom)
         self.setcolor(self.color)
     def rotaterad(self, angle_rad, axis = 3, point = [0, 0, 0]):
+        # this is a bit nasty but it allows to give center point without the axis in 2D:
+        centerpoint = point
+        if self.dim == 2 and isinstance(axis, list):
+            centerpoint = axis
+            axis = 3
+        # check the axis:
         if axis != 1 and axis != 2 and axis != 3: 
             raise ExceptionWT("The third argument of ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
 	if self.dim == 2 and axis <> 3:
@@ -1049,35 +1055,35 @@ class BASEOBJ:
         if axis == 1: plane_indexes = [2, 3]
         elif axis == 2: plane_indexes = [1, 3]
         else: plane_indexes = [1, 2]
-        # sanity check for the point:
-        if not isinstance(point, list):
-            raise ExceptionWT("The optional point in ROTATE must be a list!")
-        pointdim = len(point)
-        if pointdim != 2 and pointdim != 3:
-            raise ExceptionWT("The optional point in ROTATE must be a list of either 2 or 3 coordinates!")
+        # sanity check for the center point:
+        if not isinstance(centerpoint, list):
+            raise ExceptionWT("The optional center point in ROTATE must be a list!")
+        centerpointdim = len(centerpoint)
+        if centerpointdim != 2 and centerpointdim != 3:
+            raise ExceptionWT("The optional center point in ROTATE must be a list of either 2 or 3 coordinates!")
         # if 3D object and 2D point, make third coordinate zero:
-        if pointdim == 2 and self.dim == 3:
-            point.append(0)
+        if centerpointdim == 2 and self.dim == 3:
+            centerpoint.append(0)
         # if 2D object and 3D point, ignore third coordinate:
-        if pointdim == 3 and self.dim == 2:
-            forgetlast = point.pop()        
+        if centerpointdim == 3 and self.dim == 2:
+            forgetlast = centerpoint.pop()        
         # if point is not zero, move object first:
         if self.dim == 2:
-            if point[0] != 0 or point[1] != 0:
-                self.geom = PLASM_TRANSLATE([1, 2])([-point[0], -point[1]])(self.geom)   
+            if centerpoint[0] != 0 or centerpoint[1] != 0:
+                self.geom = PLASM_TRANSLATE([1, 2])([-centerpoint[0], -centerpoint[1]])(self.geom)   
         else:
-            if point[0] != 0 or point[1] != 0 or point[2] != 0:
-                self.geom = PLASM_TRANSLATE([1, 2, 3])([-point[0], -point[1], -point[2]])(self.geom)  
+            if centerpoint[0] != 0 or centerpoint[1] != 0 or centerpoint[2] != 0:
+                self.geom = PLASM_TRANSLATE([1, 2, 3])([-centerpoint[0], -centerpoint[1], -centerpoint[2]])(self.geom)  
         # call the PLaSM rotate command:
         dim = max(plane_indexes)
 	self.geom = Plasm.rotate(self.geom, dim, plane_indexes[0], plane_indexes[1], angle_rad)
         # if point is not zero, return object back:
         if self.dim == 2:
-            if point[0] != 0 or point[1] != 0:
-                self.geom = PLASM_TRANSLATE([1, 2])([point[0], point[1]])(self.geom)   
+            if centerpoint[0] != 0 or centerpoint[1] != 0:
+                self.geom = PLASM_TRANSLATE([1, 2])([centerpoint[0], centerpoint[1]])(self.geom)   
         else:
-            if point[0] != 0 or point[1] != 0 or point[2] != 0:
-                self.geom = PLASM_TRANSLATE([1, 2, 3])([point[0], point[1], point[2]])(self.geom)
+            if centerpoint[0] != 0 or centerpoint[1] != 0 or centerpoint[2] != 0:
+                self.geom = PLASM_TRANSLATE([1, 2, 3])([centerpoint[0], centerpoint[1], centerpoint[2]])(self.geom)
         # return color:
         self.setcolor(self.color)
     def rotate(self, angle_deg, axis = 3, point = [0, 0, 0]):
