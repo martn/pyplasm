@@ -2777,7 +2777,7 @@ def RING(r1, r2, division = [64, 1]):
         raise ExceptionWT("Outer radius r2 in RING(r1, r2) must be positive!")
     if r1 >= r2: 
         raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in RING(r1, r2)!")
-    obj = BASEOBJ(PLASM_CUBE(1)) # just to create the variable
+    obj = BASEOBJ(CUBOID([1, 1, 1])) # just to create the variable
     if type(division) == list: 
         obj = BASEOBJ(PLASM_RING([r1, r2])(division))
     else:
