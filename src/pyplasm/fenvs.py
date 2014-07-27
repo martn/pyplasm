@@ -1184,6 +1184,18 @@ class BASEOBJ:
     def sizez(self):
         return MAX(3)(self.geom) - MIN(3)(self.geom)
 
+# ===================
+# SIZEX, SIZEY, SIZEZ
+# ===================
+
+def SIZEX(obj):
+    return obj.sizex()
+
+def SIZEY(obj):
+    return obj.sizey()
+
+def SIZEZ(obj):
+    return obj.sizez()
 
 # =========================================================
 # COPYING OBJECTS AND LISTS OF OBJECTS (LISTS ARE FLATTENED
