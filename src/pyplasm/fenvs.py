@@ -1183,6 +1183,12 @@ class BASEOBJ:
         return MAX(2)(self.geom) - MIN(2)(self.geom)
     def sizez(self):
         return MAX(3)(self.geom) - MIN(3)(self.geom)
+    def cutxy(self):
+        if self.minz() < 0:
+            bbox = BOX(self.maxx() - self.minx() + 2, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 1)
+            MOVE(brick, self.minx() - 1, self.miny() - 1, self.minz() - self.maxz() - 1)
+    	    self.geom = PLASM_DIFF([self.geom, bbox.geom])
+            self.setcolor(self.color)
 
 # ===================
 # SIZEX, SIZEY, SIZEZ
@@ -1196,6 +1202,19 @@ def SIZEY(obj):
 
 def SIZEZ(obj):
     return obj.sizez()
+
+# ==========================================================
+# CUTXY - REMOVE PART OF OBJECT THAT LIES UNDER THE XY PLANE
+# ==========================================================
+
+def CUTXY(obj):
+    if not isinstance(obj, list):
+        obj.cutxy()
+    else:
+        obj = flatten(obj) # flatten the rest as there may be structs
+        for oo in obj:
+            oo.cutxy()
+    return COPY(obj)
 
 # =========================================================
 # COPYING OBJECTS AND LISTS OF OBJECTS (LISTS ARE FLATTENED
