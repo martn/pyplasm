@@ -1213,9 +1213,9 @@ def SIZEY(obj):
 def SIZEZ(obj):
     return obj.sizez()
 
-# =======================================================
-# CUTX - REMOVE PART OF OBJECT THAT LIES UNDER THE X AXIS
-# =======================================================
+# =============================================================
+# CUTX - REMOVE PART OF OBJECT THAT LIES NEGATIVE OF THE X AXIS
+# =============================================================
 
 def CUTX(obj):
     if not isinstance(obj, list):
@@ -1226,9 +1226,26 @@ def CUTX(obj):
             oo.cutx()
     return COPY(obj)
 
-# ==========================================================
-# CUTXY - REMOVE PART OF OBJECT THAT LIES UNDER THE XY PLANE
-# ==========================================================
+# =============================================================
+# CUTY - REMOVE PART OF OBJECT THAT LIES NEGATIVE OF THE Y AXIS
+# =============================================================
+
+def CUTY(obj):
+    if not isinstance(obj, list):
+        obj.rotate(90)
+        obj.cutx()
+        obj.rotate(-90)
+    else:
+        obj = flatten(obj) # flatten the rest as there may be structs
+        for oo in obj:
+            obj.rotate(90)
+            oo.cutx()
+            obj.rotate(-90)
+    return COPY(obj)
+
+# ================================================================
+# CUTXY - REMOVE PART OF OBJECT THAT LIES NEGATIVE OF THE XY PLANE
+# ================================================================
 
 def CUTXY(obj):
     if not isinstance(obj, list):
@@ -1237,6 +1254,40 @@ def CUTXY(obj):
         obj = flatten(obj) # flatten the rest as there may be structs
         for oo in obj:
             oo.cutxy()
+    return COPY(obj)
+
+# ================================================================
+# CUTYZ - REMOVE PART OF OBJECT THAT LIES NEGATIVE OF THE YZ PLANE
+# ================================================================
+
+def CUTYZ(obj):
+    if not isinstance(obj, list):
+        obj.rotate(90, 2)
+        obj.cutxy()
+        obj.rotate(-90, 2)
+    else:
+        obj = flatten(obj) # flatten the rest as there may be structs
+        for oo in obj:
+            oo.rotate(90, 2)
+            oo.cutxy()
+            oo.rotate(-90, 2)
+    return COPY(obj)
+
+# ================================================================
+# CUTXZ - REMOVE PART OF OBJECT THAT LIES NEGATIVE OF THE XZ PLANE
+# ================================================================
+
+def CUTYZ(obj):
+    if not isinstance(obj, list):
+        obj.rotate(90, 1)
+        obj.cutxy()
+        obj.rotate(-90, 1)
+    else:
+        obj = flatten(obj) # flatten the rest as there may be structs
+        for oo in obj:
+            oo.rotate(90, 1)
+            oo.cutxy()
+            oo.rotate(-90, 1)
     return COPY(obj)
 
 # =========================================================
@@ -1354,10 +1405,14 @@ CARRE3D = SQUARE3D
 # BRICK, BOX
 # ===================================================
 
-def BOX(a, b, c):
-    if a <= 0 or b <= 0 or c <= 0: raise ExceptionWT("BOX(x, y, z) requires positive dimensions x, y, z!")
-    return BASEOBJ(CUBOID([a, b, c]))
-
+def BOX(a, b, c = 0):   
+    if c != 0: # the box is 3D
+        if a <= 0 or b <= 0 or c < 0: raise ExceptionWT("BOX(x, y, z) requires positive dimensions x, y, z!")
+        return BASEOBJ(CUBOID([a, b, c]))
+    else:      # the box is 2D
+        if a <= 0 or b <= 0: raise ExceptionWT("BOX(x, y) requires positive dimensions x, y!")
+        return BASEOBJ(CUBOID([a, b]))
+        
 # English:
 BRICK = BOX
 # Czech::
