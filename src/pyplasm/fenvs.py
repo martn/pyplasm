@@ -1184,10 +1184,12 @@ class BASEOBJ:
     def sizez(self):
         return MAX(3)(self.geom) - MIN(3)(self.geom)
     def cutxy(self):
+        if self.dim < 3:
+            raise ExceptionWT("The CUTXY() command may be used for 3D objects only!")
         if self.minz() < 0:
-            bbox = BOX(self.maxx() - self.minx() + 2, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 1)
+            brick = BOX(self.maxx() - self.minx() + 2, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 1)
             MOVE(brick, self.minx() - 1, self.miny() - 1, self.minz() - self.maxz() - 1)
-    	    self.geom = PLASM_DIFF([self.geom, bbox.geom])
+    	    self.geom = PLASM_DIFF([self.geom, brick.geom])
             self.setcolor(self.color)
 
 # ===================
