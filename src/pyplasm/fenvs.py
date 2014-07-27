@@ -1183,13 +1183,21 @@ class BASEOBJ:
         return MAX(2)(self.geom) - MIN(2)(self.geom)
     def sizez(self):
         return MAX(3)(self.geom) - MIN(3)(self.geom)
+    def cutx(self):
+        if self.dim > 2:
+            raise ExceptionWT("The CUTX() command may be used for 2D objects only!")
+        if self.miny() < 0:
+            box = RECT(self.maxx() - self.minx() + 2, self.maxy() - self.miny() + 1)
+            MOVE(box, self.minx() - 1, self.miny() - 1)
+    	    self.geom = PLASM_DIFF([self.geom, box.geom])
+            self.setcolor(self.color)
     def cutxy(self):
         if self.dim < 3:
             raise ExceptionWT("The CUTXY() command may be used for 3D objects only!")
         if self.minz() < 0:
-            brick = BOX(self.maxx() - self.minx() + 2, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 1)
-            MOVE(brick, self.minx() - 1, self.miny() - 1, self.minz() - self.maxz() - 1)
-    	    self.geom = PLASM_DIFF([self.geom, brick.geom])
+            box = BOX(self.maxx() - self.minx() + 2, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 1)
+            MOVE(box, self.minx() - 1, self.miny() - 1, self.minz() - self.maxz() - 1)
+    	    self.geom = PLASM_DIFF([self.geom, box.geom])
             self.setcolor(self.color)
 
 # ===================
@@ -1204,6 +1212,19 @@ def SIZEY(obj):
 
 def SIZEZ(obj):
     return obj.sizez()
+
+# =======================================================
+# CUTX - REMOVE PART OF OBJECT THAT LIES UNDER THE X AXIS
+# =======================================================
+
+def CUTX(obj):
+    if not isinstance(obj, list):
+        obj.cutx()
+    else:
+        obj = flatten(obj) # flatten the rest as there may be structs
+        for oo in obj:
+            oo.cutx()
+    return COPY(obj)
 
 # ==========================================================
 # CUTXY - REMOVE PART OF OBJECT THAT LIES UNDER THE XY PLANE
