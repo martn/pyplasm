@@ -1188,7 +1188,7 @@ class BASEOBJ:
             raise ExceptionWT("The CUTX() command may be used for 2D objects only!")
         if self.miny() < 0:
             box = RECT(self.maxx() - self.minx() + 2, self.maxy() - self.miny() + 1)
-            MOVE(box, self.minx() - 1, self.miny() - 1)
+            MOVE(box, self.minx() - 1, self.miny() - self.maxy() - 1)
     	    self.geom = PLASM_DIFF([self.geom, box.geom])
             self.setcolor(self.color)
     def cutxy(self):
