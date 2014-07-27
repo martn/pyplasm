@@ -1277,7 +1277,7 @@ def CUTYZ(obj):
 # CUTXZ - REMOVE PART OF OBJECT THAT LIES NEGATIVE OF THE XZ PLANE
 # ================================================================
 
-def CUTYZ(obj):
+def CUTXZ(obj):
     if not isinstance(obj, list):
         obj.rotate(90, 1)
         obj.cutxy()
