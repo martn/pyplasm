@@ -1224,8 +1224,6 @@ def ERASE(obj, axis, minval, maxval):
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
     if maxval <= minval:
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be less than maxval!")
-    if obj.dim == 2 and axis == 3:
-        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
   
     if not isinstance(obj, list):
         if axis == 1:
@@ -1235,6 +1233,8 @@ def ERASE(obj, axis, minval, maxval):
             obj.erasex(minval, maxval)
             obj.rotate(90, 3)
         if axis == 3:
+            if obj.dim == 2:
+                 raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
             obj.rotate(-90, 2)
             obj.erasex(minval, maxval)
             obj.rotate(90, 2)
@@ -1248,6 +1248,8 @@ def ERASE(obj, axis, minval, maxval):
                 oo.erasex(minval, maxval)
                 oo.rotate(90, 3)
             if axis == 3:
+                if oo.dim == 2:
+                    raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
                 oo.rotate(-90, 2)
                 oo.erasex(minval, maxval)
                 oo.rotate(90, 2)
