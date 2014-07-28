@@ -1200,15 +1200,6 @@ class BASEOBJ:
             MOVE(box, erasexmin, self.miny() - 1, self.minz() - 1)
     	    self.geom = PLASM_DIFF([self.geom, box.geom])
             self.setcolor(self.color)
-  
-    def cutxy(self):
-        if self.dim < 3:
-            raise ExceptionWT("The CUTXY() command may be used for 3D objects only!")
-        if self.minz() < 0:
-            box = BOX(self.maxx() - self.minx() + 2, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 1)
-            MOVE(box, self.minx() - 1, self.miny() - 1, self.minz() - self.maxz() - 1)
-    	    self.geom = PLASM_DIFF([self.geom, box.geom])
-            self.setcolor(self.color)
 
 # ===================
 # SIZEX, SIZEY, SIZEZ
@@ -1223,36 +1214,6 @@ def SIZEY(obj):
 def SIZEZ(obj):
     return obj.sizez()
 
-# =============================================================
-# CUTX - REMOVE PART OF OBJECT THAT LIES NEGATIVE OF THE X AXIS
-# =============================================================
-
-def CUTX(obj):
-    if not isinstance(obj, list):
-        obj.cutx()
-    else:
-        obj = flatten(obj) # flatten the rest as there may be structs
-        for oo in obj:
-            oo.cutx()
-    return COPY(obj)
-
-# =============================================================
-# CUTY - REMOVE PART OF OBJECT THAT LIES NEGATIVE OF THE Y AXIS
-# =============================================================
-
-def CUTY(obj):
-    if not isinstance(obj, list):
-        obj.rotate(90)
-        obj.cutx()
-        obj.rotate(-90)
-    else:
-        obj = flatten(obj) # flatten the rest as there may be structs
-        for oo in obj:
-            obj.rotate(90)
-            oo.cutx()
-            obj.rotate(-90)
-    return COPY(obj)
-
 # ===========================================================
 # ERASE(obj, axis, min, max) - ERASE PART OF OBJECT THAT LIES 
 # BETWEEN MIN AND MAX in AXIAL DIRECTION "axis"
@@ -1263,48 +1224,33 @@ def ERASE(obj, axis, minval, maxval):
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
     if maxval <= minval:
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be less than maxval!")
+    if obj.dim == 2 and axis == 3:
+        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
+  
     if not isinstance(obj, list):
         if axis == 1:
             obj.erasex(minval, maxval)
+        if axis == 2:
+            obj.rotate(-90, 3)
+            obj.erasex(minval, maxval)
+            obj.rotate(90, 3)
+        if axis == 3:
+            obj.rotate(-90, 2)
+            obj.erasex(minval, maxval)
+            obj.rotate(90, 2)
     else:
         obj = flatten(obj) # flatten the rest as there may be structs
         for oo in obj:
             if axis == 1:
                 oo.erasex(minval, maxval)
-    return COPY(obj)
-
-# ================================================================
-# CUTYZ - REMOVE PART OF OBJECT THAT LIES NEGATIVE OF THE YZ PLANE
-# ================================================================
-
-def CUTYZ(obj):
-    if not isinstance(obj, list):
-        obj.rotate(90, 2)
-        obj.cutxy()
-        obj.rotate(-90, 2)
-    else:
-        obj = flatten(obj) # flatten the rest as there may be structs
-        for oo in obj:
-            oo.rotate(90, 2)
-            oo.cutxy()
-            oo.rotate(-90, 2)
-    return COPY(obj)
-
-# ================================================================
-# CUTXZ - REMOVE PART OF OBJECT THAT LIES NEGATIVE OF THE XZ PLANE
-# ================================================================
-
-def CUTXZ(obj):
-    if not isinstance(obj, list):
-        obj.rotate(90, 1)
-        obj.cutxy()
-        obj.rotate(-90, 1)
-    else:
-        obj = flatten(obj) # flatten the rest as there may be structs
-        for oo in obj:
-            oo.rotate(90, 1)
-            oo.cutxy()
-            oo.rotate(-90, 1)
+            if axis == 2:
+                oo.rotate(-90, 3)
+                oo.erasex(minval, maxval)
+                oo.rotate(90, 3)
+            if axis == 3:
+                oo.rotate(-90, 2)
+                oo.erasex(minval, maxval)
+                oo.rotate(90, 2)
     return COPY(obj)
 
 # =========================================================
