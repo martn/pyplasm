@@ -1264,11 +1264,11 @@ def ERASE(obj, axis, minval, maxval):
     if maxval <= minval:
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be less than maxval!")
     if not isinstance(obj, list):
-        obj.erasex(obj, axis, minval, maxval)
+        obj.erasex(axis, minval, maxval)
     else:
         obj = flatten(obj) # flatten the rest as there may be structs
         for oo in obj:
-            oo.erasex(obj, axis, minval, maxval)
+            oo.erasex(axis, minval, maxval)
     return COPY(obj)
 
 # ================================================================
