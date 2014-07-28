@@ -1183,14 +1183,24 @@ class BASEOBJ:
         return MAX(2)(self.geom) - MIN(2)(self.geom)
     def sizez(self):
         return MAX(3)(self.geom) - MIN(3)(self.geom)
-    def cutx(self):
-        if self.dim > 2:
-            raise ExceptionWT("The CUTX() command may be used for 2D objects only!")
-        if self.miny() < 0:
-            box = RECT(self.maxx() - self.minx() + 2, self.maxy() - self.miny() + 1)
-            MOVE(box, self.minx() - 1, self.miny() - self.maxy() - 1)
+    def erasex(self, erasexmin, erasexmax):
+        minx = self.minx()
+        maxx = self.maxx()
+        miny = self.miny()
+        maxy = self.maxy()        
+        if self.dim == 2:
+            box = RECT(erasexmin, erasexmax, self.maxy() - self.miny() + 2)
+            MOVE(box, 0, self.miny() - self.maxy() - 1)
     	    self.geom = PLASM_DIFF([self.geom, box.geom])
             self.setcolor(self.color)
+        else:
+            minz = self.minz()
+            maxz = self.maxz()
+            box = RECT(erasexmin, erasexmax, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 2)
+            MOVE(box, 0, self.miny() - self.maxy() - 1, self.minz() - self.maxz() - 1)
+    	    self.geom = PLASM_DIFF([self.geom, box.geom])
+            self.setcolor(self.color)
+  
     def cutxy(self):
         if self.dim < 3:
             raise ExceptionWT("The CUTXY() command may be used for 3D objects only!")
@@ -1243,17 +1253,22 @@ def CUTY(obj):
             obj.rotate(-90)
     return COPY(obj)
 
-# ================================================================
-# CUTXY - REMOVE PART OF OBJECT THAT LIES NEGATIVE OF THE XY PLANE
-# ================================================================
+# ===========================================================
+# ERASE(obj, axis, min, max) - ERASE PART OF OBJECT THAT LIES 
+# BETWEEN MIN AND MAX in AXIAL DIRECTION "axis"
+# ===========================================================
 
-def CUTXY(obj):
+def ERASE(obj, axis, minval, maxval):
+    if axis != 1 and axis != 2 and axis != 3:
+        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
+    if maxval <= minval:
+        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be less than maxval!")
     if not isinstance(obj, list):
-        obj.cutxy()
+        obj.erasex(obj, axis, minval, maxval)
     else:
         obj = flatten(obj) # flatten the rest as there may be structs
         for oo in obj:
-            oo.cutxy()
+            oo.erasex(obj, axis, minval, maxval)
     return COPY(obj)
 
 # ================================================================
