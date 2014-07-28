@@ -1300,7 +1300,7 @@ def SPLIT(obj, axis, coord):
             if obj.dim == 2:
                  raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
             obj.rotate(-90, 2)
-            obj.splitx(coord)
+            obj1, obj2 = obj.splitx(coord)
             obj1.rotate(90, 2)
             obj2.rotate(90, 2)
     else:
@@ -1319,7 +1319,7 @@ def SPLIT(obj, axis, coord):
                 if oo.dim == 2:
                     raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
                 oo.rotate(-90, 2)
-                oo.splitx(coord)
+                oo1, oo2 = oo.splitx(coord)
                 oo1.rotate(90, 2)
                 oo2.rotate(90, 2)
             obj1.append(oo1)
