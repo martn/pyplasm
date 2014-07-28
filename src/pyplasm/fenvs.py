@@ -1223,7 +1223,7 @@ class BASEOBJ:
     	    obj2 = BASEOBJ(PLASM_INTERSECTION([self.geom, box2.geom]))
             obj1.setcolor(self.color)
             obj2.setcolor(self.color)
-    return obj1, obj2
+        return obj1, obj2
 
 # ===================
 # SIZEX, SIZEY, SIZEZ
