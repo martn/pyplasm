@@ -1189,15 +1189,15 @@ class BASEOBJ:
         miny = self.miny()
         maxy = self.maxy()        
         if self.dim == 2:
-            box = RECT(erasexmin, erasexmax, self.maxy() - self.miny() + 2)
-            MOVE(box, 0, self.miny() - self.maxy() - 1)
+            box = BOX(erasexmax - erasexmin, self.maxy() - self.miny() + 2)
+            MOVE(box, erasexmin, self.miny() - 1)
     	    self.geom = PLASM_DIFF([self.geom, box.geom])
             self.setcolor(self.color)
         else:
             minz = self.minz()
             maxz = self.maxz()
-            box = RECT(erasexmin, erasexmax, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 2)
-            MOVE(box, 0, self.miny() - self.maxy() - 1, self.minz() - self.maxz() - 1)
+            box = BOX(erasexmax - erasexmin, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 2)
+            MOVE(box, erasexmin, self.miny() - 1, self.minz() - 1)
     	    self.geom = PLASM_DIFF([self.geom, box.geom])
             self.setcolor(self.color)
   
