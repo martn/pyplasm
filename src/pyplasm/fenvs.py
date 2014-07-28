@@ -87,8 +87,6 @@ def every (predicate, iterable):
         if not(predicate(x)):return False
     return True
 
-
-
 if self_test: 
 	assert(every(lambda x: x>=0,[1,2,3,4]) and not every(lambda x: x>0,[1,-2,3,4]))
 
@@ -1200,6 +1198,32 @@ class BASEOBJ:
             MOVE(box, erasexmin, self.miny() - 1, self.minz() - 1)
     	    self.geom = PLASM_DIFF([self.geom, box.geom])
             self.setcolor(self.color)
+    def splitx(self, coord):
+        minx = self.minx()
+        maxx = self.maxx()
+        miny = self.miny()
+        maxy = self.maxy()        
+        if self.dim == 2:
+            box1 = BOX(coord - minx + 1, self.maxy() - self.miny() + 2)
+            box2 = BOX(maxx - coord + 1, self.maxy() - self.miny() + 2)
+            MOVE(box1, minx - 1, self.miny() - 1)
+            MOVE(box2, coord, self.miny() - 1)
+    	    obj1 = BASEOBJ(PLASM_INTERSECTION([self.geom, box1.geom]))
+    	    obj2 = BASEOBJ(PLASM_INTERSECTION([self.geom, box2.geom]))
+            obj1.setcolor(self.color)
+            obj2.setcolor(self.color)
+        else:
+            minz = self.minz()
+            maxz = self.maxz()
+            box1 = BOX(coord - minx + 1, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 2)
+            box2 = BOX(maxx - coord + 1, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 2)
+            MOVE(box1, minx - 1, self.miny() - 1, self.minz() - 1)
+            MOVE(box2, coord, self.miny() - 1, self.minz() - 1)
+    	    obj1 = BASEOBJ(PLASM_INTERSECTION([self.geom, box1.geom]))
+    	    obj2 = BASEOBJ(PLASM_INTERSECTION([self.geom, box2.geom]))
+            obj1.setcolor(self.color)
+            obj2.setcolor(self.color)
+    return obj1, obj2
 
 # ===================
 # SIZEX, SIZEY, SIZEZ
@@ -1254,6 +1278,53 @@ def ERASE(obj, axis, minval, maxval):
                 oo.erasex(minval, maxval)
                 oo.rotate(90, 2)
     return COPY(obj)
+
+# ============================================================
+# SPLIT(obj, axis, coord) - SPLIT AN OBJECT IN AXIAL DIRECTION 
+# "axis" INTO TWO PARTS SEPARATED AT COORDINATE "coord"
+# ============================================================
+
+def SPLIT(obj, axis, coord):
+    if axis != 1 and axis != 2 and axis != 3:
+        raise ExceptionWT("In SPLIT(obj, axis, coord), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
+  
+    if not isinstance(obj, list):
+        if axis == 1:
+            obj1, obj2 = obj.splitx(coord)
+        if axis == 2:
+            obj.rotate(-90, 3)
+            obj1, obj2 = obj.splitx(coord)
+            obj1.rotate(90, 3)
+            obj2.rotate(90, 3)
+        if axis == 3:
+            if obj.dim == 2:
+                 raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
+            obj.rotate(-90, 2)
+            obj.splitx(coord)
+            obj1.rotate(90, 2)
+            obj2.rotate(90, 2)
+    else:
+        obj = flatten(obj) # flatten the rest as there may be structs
+        obj1 = []
+        obj2 = []
+        for oo in obj:
+            if axis == 1:
+                oo1, oo2 = oo.splitx(coord)
+            if axis == 2:
+                oo.rotate(-90, 3)
+                oo1, oo2 = oo.splitx(coord)
+                oo1.rotate(90, 3)
+                oo2.rotate(90, 3)
+            if axis == 3:
+                if oo.dim == 2:
+                    raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
+                oo.rotate(-90, 2)
+                oo.splitx(coord)
+                oo1.rotate(90, 2)
+                oo2.rotate(90, 2)
+            obj1.append(oo1)
+            obj1.append(oo2)
+    return obj1, obj2
 
 # =========================================================
 # COPYING OBJECTS AND LISTS OF OBJECTS (LISTS ARE FLATTENED
