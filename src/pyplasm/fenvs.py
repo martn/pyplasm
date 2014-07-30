@@ -1310,7 +1310,7 @@ def SPLIT(obj, axis, coord):
         for oo in obj:
             if axis == 1:
                 oo1, oo2 = oo.splitx(coord)
-            if axis == 2:
+           if axis == 2:
                 oo.rotate(-90, 3)
                 oo1, oo2 = oo.splitx(coord)
                 oo1.rotate(90, 3)
@@ -1323,7 +1323,7 @@ def SPLIT(obj, axis, coord):
                 oo1.rotate(90, 2)
                 oo2.rotate(90, 2)
             obj1.append(oo1)
-            obj1.append(oo2)
+            obj2.append(oo2)
     return obj1, obj2
 
 # =========================================================
@@ -3121,7 +3121,7 @@ def SPHERE(radius, divisions = [12, 24]):
         raise ExceptionWT("Radius r in SPHERE(r) must be positive!")
     divisionslist = divisions
     if not isinstance(divisions, list): 
-        if divisions/2 <= 0:
+        if divisions <= 4:
             raise ExceptionWT("Bad division in the SPHERE command!")
         divisionslist = [divisions/2, divisions]
     # Making it s solid:
