@@ -1310,7 +1310,7 @@ def SPLIT(obj, axis, coord):
         for oo in obj:
             if axis == 1:
                 oo1, oo2 = oo.splitx(coord)
-           if axis == 2:
+            if axis == 2:
                 oo.rotate(-90, 3)
                 oo1, oo2 = oo.splitx(coord)
                 oo1.rotate(90, 3)
