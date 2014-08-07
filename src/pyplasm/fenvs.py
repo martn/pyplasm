@@ -5720,6 +5720,30 @@ def BOUNDARY(hpc,dim):
 # AUTOGRADING FUNCTIONALITY
 #===================================================================================
 
+# Is the object "tested" two-dimensional?
+def IS2D(tested):
+  if not isinstance(tested, list):
+    return (tested.dim == 2)
+  else:
+    result = True
+    flat = flatten(tested)
+    for obj in flat:
+      if obj.dim <> 2:
+        result = False
+    return result
+
+# Is the object "tested" three-dimensional?
+def IS3D(tested):
+  if not isinstance(tested, list):
+    return (tested.dim == 3)
+  else:
+    result = True
+    flat = flatten(tested)
+    for obj in flat:
+      if obj.dim <> 3:
+        result = False
+    return result
+
 # Base function. Returns True if object "tested" contains 
 # the entire object "obj":
 def HASOBJECT(tested, obj, tol = 1e-8):
@@ -5749,53 +5773,42 @@ def HASNTOBJECT(tested, obj, tol = 1e-8):
     else:
       return False
 
-# Returns True if the entire square "square" lies in object "tested":
-def HASSQUARE(tested, centerx, centery, size):
-    square = SQUARE(size)
-    MOVE(square, centerx - 0.5*size, centery - 0.5*size)
-    return HASOBJECT(tested, square)
+# Returns True if the entire 2D box "box2d" lies in object "tested":
+def HASBOX2D(tested, centerx, centery, sizex, sizey):
+    box2d = BOX(sizex, sizey)
+    MOVE(box2d, centerx - 0.5*sizex, centery - 0.5*sizey)
+    return HASOBJECT(tested, box2d)
 
-# Returns True if no part of square "square" lies in object "tested":
-def HASNTSQUARE(tested, centerx, centery, size):
-    square = SQUARE(size)
-    MOVE(square, centerx - 0.5*size, centery - 0.5*size)
-    return HASNTOBJECT(tested, square)
+# Returns True if no part of the 2D box "box2d" lies in object "tested":
+def HASNTBOX2D(tested, centerx, centery, sizex, sizey):
+    box2d = BOX(sizex, sizey)
+    MOVE(box2d, centerx - 0.5*sizex, centery - 0.5*sizey)
+    return HASNTOBJECT(tested, box2d)
 
-# Returns True if the entire cube "cube" lies in object "tested":
-def HASCUBE(tested, centerx, centery, centerz, size):
-    cube = CUBE(size)
-    MOVE(cube, centerx - 0.5*size, centery - 0.5*size, centerz - 0.5*size)
-    return HASOBJECT(tested, cube)
+# Returns True if object "tested" lies within a 2D box of given dimensions:
+def ISINBOX2D(tested, minx, maxx, miny, maxy, tol = 1e-8):
+    xok = (tested.minx() >= minx - tol) and (tested.maxx() <= maxx + tol)
+    yok = (tested.miny() >= miny - tol) and (tested.maxy() <= maxy + tol)
+    return xok and yok
 
-# Returns True if no part of cube "cube" lies in object "tested":
-def HASNTCUBE(tested, centerx, centery, centerz, size):
-    cube = CUBE(size)
-    MOVE(cube, centerx - 0.5*size, centery - 0.5*size, centerz - 0.5*size)
-    return HASNTOBJECT(tested, cube)
+# Returns True if entire 3D box "box3d" lies in object "tested":
+def HASBOX3D(tested, centerx, centery, centerz, sizex, sizey, sizez):
+    box3d = BRICK(sizex, sizey, sizez)
+    MOVE(box3d, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
+    return HASOBJECT(tested, box3d)
 
-# Returns True if entire rectangle "rect" lies in object "tested":
-def HASRECTANGLE(tested, centerx, centery, sizex, sizey):
-    rect = RECTANGLE(sizex, sizey)
-    MOVE(rect, centerx - 0.5*sizex, centery - 0.5*sizey)
-    return HASOBJECT(tested, rect)
-
-# Returns True if no part of rectangle "rect" lies in object "tested":
-def HASNTRECTANGLE(tested, centerx, centery, sizex, sizey):
-    rect = RECTANGLE(sizex, sizey)
-    MOVE(rect, centerx - 0.5*sizex, centery - 0.5*sizey)
-    return HASNTOBJECT(tested, rect)
-
-# Returns True if entire brick "brick" lies in object "tested":
-def HASBRICK(tested, centerx, centery, centerz, sizex, sizey, sizez):
-    brick = BRICK(sizex, sizey, sizez)
-    MOVE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
-    return HASOBJECT(tested, brick)
-
-# Returns True if no part of brick "brick" lies in object "tested":
-def HASNTBRICK(tested, centerx, centery, centerz, sizex, sizey, sizez):
+# Returns True if no part of the 3D box "box3d" lies in object "tested":
+def HASNTBOX3D(tested, centerx, centery, centerz, sizex, sizey, sizez):
     brick = BRICK(sizex, sizey, sizez)
     MOVE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
     return HASNTOBJECT(tested, brick)
+
+# Returns True if object "tested" lies within a 3D box of given dimensions:
+def ISINBOX3D(tested, minx, maxx, miny, maxy, minz, maxz, tol = 1e-8):
+    xok = (tested.minx() >= minx - tol) and (tested.maxx() <= maxx + tol)
+    yok = (tested.miny() >= miny - tol) and (tested.maxy() <= maxy + tol)
+    yok = (tested.minz() >= minz - tol) and (tested.maxz() <= maxz + tol)
+    return xok and yok and zok
 
 # Checks if 2D object "tested" has dimensions sizex, sizey
 # with a given tolerance:
