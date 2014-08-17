@@ -1447,7 +1447,7 @@ def BOX(*args):
     if len(list1) == 1:
         a = list1[0]
         if a <= 0: raise ExceptionWT("Dimensions of a BOX must be positive!")
-        return BASEOBJ(CUBOID([a])) 
+        return BASEOBJ(CUBOID([a, a])) 
     if len(list1) == 2:
         a = list1[0]
         b = list1[1]
