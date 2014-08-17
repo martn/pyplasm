@@ -2301,8 +2301,9 @@ if self_test:
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
 def PRODUCT(*args):
     list1 = list(args)
+    list1 = flatten(list1)
     if len(list1) != 2: 
-        raise Exception("POWER(...) requires two arguments!")
+        raise Exception("PRODUCT(...) requires two arguments!")
     list2 = []
     color = list1[0].color
     for x in list1:
@@ -2444,7 +2445,7 @@ if self_test:
 
 # NEW DEFINITION:
 def INTERVALS(a, n):
-    return PLASM_INTERVALS(a)(n)
+    return BASEOBJ(PLASM_INTERVALS(a)(n))
 DIVISION = INTERVALS
 # Czech:
 DELENI = INTERVALS
