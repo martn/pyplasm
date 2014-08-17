@@ -1762,11 +1762,14 @@ if self_test:
 def TRANSLATE(obj, t1, t2, t3 = 0):
     if not isinstance(obj, list):
         obj.move(t1, t2, t3)
+        return COPY(obj)
     else:
         obj = flatten(obj)
+        newobj = []
         for oo in obj: 
             oo.move(t1, t2, t3)
-    return COPY(obj)
+            newobj.append(COPY(oo))
+        return newobj
 
 T = TRANSLATE
 MOVE = TRANSLATE
