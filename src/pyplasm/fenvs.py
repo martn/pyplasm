@@ -2445,7 +2445,7 @@ if self_test:
 
 # NEW DEFINITION:
 def INTERVALS(a, n):
-    return BASEOBJ(PLASM_INTERVALS(a)(n))
+    return PLASM_INTERVALS(a)(n)
 DIVISION = INTERVALS
 # Czech:
 DELENI = INTERVALS
@@ -2799,7 +2799,7 @@ if self_test:
 
 # NEW DEFINITION:
 def MAP(ref_domain, args):
-    return PLASM_MAP(args)(ref_domain)
+    return BASEOBJ(PLASM_MAP(args)(ref_domain.geom))
 
 # ===================================================
 # OTHER TESTS
@@ -6008,8 +6008,8 @@ def SIMPLEXGRID(size):
 
 def REF_DOMAIN(a, b, m, n):
     #return POWER(INTERVALS(a, m), INTERVALS(b, n))
-    return SIMPLEXGRID([a, b])([m, n])
+    return BASEOBJ(SIMPLEXGRID([a, b])([m, n]))
 
 def UNIT_SQUARE(n, m):
     #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
-    return SIMPLEXGRID([1.0, 1.0])([m, n])
+    return BASEOBJ(SIMPLEXGRID([1.0, 1.0])([m, n]))
