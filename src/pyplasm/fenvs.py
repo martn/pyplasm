@@ -1441,13 +1441,48 @@ CARRE3D = SQUARE3D
 # BRICK, BOX
 # ===================================================
 
-def BOX(a, b, c = 0):   
-    if c != 0: # the box is 3D
-        if a <= 0 or b <= 0 or c < 0: raise ExceptionWT("BOX(x, y, z) requires positive dimensions x, y, z!")
-        return BASEOBJ(CUBOID([a, b, c]))
-    else:      # the box is 2D
-        if a <= 0 or b <= 0: raise ExceptionWT("BOX(x, y) requires positive dimensions x, y!")
-        return BASEOBJ(CUBOID([a, b]))
+def BOX(*args):   
+    list1 = list(args)
+    list1 == flatten(list1)
+    if len(list1) == 1:
+        a = list1[0]
+        if a <= 0: raise ExceptionWT("Dimensions of a BOX must be positive!")
+        return BASEOBJ(CUBOID([a])) 
+    if len(list1) == 2:
+        a = list1[0]
+        b = list1[1]
+        if a <= 0 or b <= 0: raise ExceptionWT("Dimensions of a BOX must be positive!")
+        return BASEOBJ(CUBOID([a, b])) 
+    if len(list1) == 3:
+        a = list1[0]
+        b = list1[1]
+        c = list1[2]
+        if a <= 0 or b <= 0 or c <= 0: raise ExceptionWT("Dimensions of a BOX must be positive!")
+        return BASEOBJ(CUBOID([a, b, c])) 
+    if len(list1) == 4:
+        xmin = list1[0]
+        xmax = list1[1]
+        ymin = list1[2]
+        ymax = list1[3]
+        if xmin >= xmax: raise ExceptionWT("xmin >= xmax in the BOX command!")
+        if ymin >= ymax: raise ExceptionWT("ymin >= ymax in the BOX command!")
+        obj = BASEOBJ(CUBOID([xmax - xmin, ymax - ymin])) 
+        MOVE(obj, xmin, ymin)
+        return obj
+    if len(list1) == 6:
+        xmin = list1[0]
+        xmax = list1[1]
+        ymin = list1[2]
+        ymax = list1[3]
+        zmin = list1[4]
+        zmax = list1[5]
+        if xmin >= xmax: raise ExceptionWT("xmin >= xmax in the BOX command!")
+        if ymin >= ymax: raise ExceptionWT("ymin >= ymax in the BOX command!")
+        if zmin >= zmax: raise ExceptionWT("zmin >= zmax in the BOX command!")
+        obj = BASEOBJ(CUBOID([xmax - xmin, ymax - ymin, zmax - zmin])) 
+        MOVE(obj, xmin, ymin, zmin)
+        return obj
+    raise ExceptionWT("The BOX command accepts 1, 2, 3, 4 or 6 parameters!")
         
 # English:
 BRICK = BOX
