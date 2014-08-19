@@ -2230,8 +2230,10 @@ def DIFFERENCE(*args):
         item1 = list1.pop(0)
         list1 = flatten(list1) # flatten the rest as there may be structs
         list1 = [item1] + list1
-	geoms = []
+        geoms = []
         for x in list1:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
             geoms.append(x.geom)
         obj = BASEOBJ(PLASM_DIFF(geoms))
         obj.setcolor(item1.color)
@@ -2244,6 +2246,8 @@ def DIFFERENCE(*args):
             list1_new = [x] + list1
    	    geoms = []
             for y in list1_new:
+                if not isinstance(y, BASEOBJ):
+                    raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
                 geoms.append(y.geom)
 	    obj = BASEOBJ(PLASM_DIFF(geoms))
 	    obj.setcolor(x.color)
