@@ -1,4 +1,4 @@
-# coding=UTF-8
+#coding=UTF-8
 
 from scipy import reshape
 
@@ -5784,31 +5784,34 @@ def IS3D(tested):
         result = False
     return result
 
-# Base function. Returns True if object "tested" contains 
-# the entire object "obj":
-def HASOBJECT(tested, obj, tol = 1e-8):
+# Base function. Returns True if object "obj" is subset of object "tested":
+def SUBSET(obj, tested, tol = 1e-8):
     objint = INTERSECTION(tested, obj)
     test = DIFF(obj, objint)
-    s1 = test.sizex()
-    s2 = test.sizey()
-    s3 = 0
+    s1 = abs(test.sizex())
+    s2 = abs(test.sizey())
+    s3 = 1e20
+    # THIS IS AN UGLY HACK BECAUSE PLASM DOES NOT RETURN 
+    # ZERO SIZES FOR EMPTY OBJECTS. NEEDS TO BE FIXED.
     if test.getdimension() == 3:
-      s3 = test.sizez()
-    if s1 < tol and s2 < tol and s3 < tol:
+      s3 = abs(test.sizez())
+    if s1 > 1e10 and s2 > 1e10 and s3 > 1e10:
       return True
     else:
       return False
 
-# Base function. Returns True if object "tested" contains 
-# no part of object "obj":
-def HASNTOBJECT(tested, obj, tol = 1e-8):
+# Base function. Returns True if object "tested" has an empty
+# intersection with object "obj":
+def DISJOINT(tested, obj, tol = 1e-8):
     test = INTERSECTION(tested, obj)
-    s1 = test.sizex()
-    s2 = test.sizey()
-    s3 = 0
+    s1 = abs(test.sizex())
+    s2 = abs(test.sizey())
+    s3 = 1e20
     if test.getdimension() == 3:
-      s3 = test.sizez()
-    if s1 < tol and s2 < tol and s3 < tol:
+      s3 = abs(test.sizez())
+    # THIS IS AN UGLY HACK BECAUSE PLASM DOES NOT RETURN 
+    # ZERO SIZES FOR EMPTY OBJECTS. NEEDS TO BE FIXED.
+    if s1 > 1e10 and s2 > 1e10 and s3 > 1e10:
       return True
     else:
       return False
@@ -5817,13 +5820,13 @@ def HASNTOBJECT(tested, obj, tol = 1e-8):
 def HASBOX2D(tested, centerx, centery, sizex, sizey):
     box2d = BOX(sizex, sizey)
     MOVE(box2d, centerx - 0.5*sizex, centery - 0.5*sizey)
-    return HASOBJECT(tested, box2d)
+    return SUBSET(box2d, tested)
 
 # Returns True if no part of the 2D box "box2d" lies in object "tested":
 def HASNTBOX2D(tested, centerx, centery, sizex, sizey):
     box2d = BOX(sizex, sizey)
     MOVE(box2d, centerx - 0.5*sizex, centery - 0.5*sizey)
-    return HASNTOBJECT(tested, box2d)
+    return DISJOINT(tested, box2d)
 
 # Returns True if object "tested" lies within a 2D box of given dimensions:
 def ISINBOX2D(tested, minx, maxx, miny, maxy, tol = 1e-8):
@@ -5835,13 +5838,13 @@ def ISINBOX2D(tested, minx, maxx, miny, maxy, tol = 1e-8):
 def HASBOX3D(tested, centerx, centery, centerz, sizex, sizey, sizez):
     box3d = BRICK(sizex, sizey, sizez)
     MOVE(box3d, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
-    return HASOBJECT(tested, box3d)
+    return SUBSET(box3d, tested)
 
 # Returns True if no part of the 3D box "box3d" lies in object "tested":
 def HASNTBOX3D(tested, centerx, centery, centerz, sizex, sizey, sizez):
     brick = BRICK(sizex, sizey, sizez)
     MOVE(brick, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
-    return HASNTOBJECT(tested, brick)
+    return DISJOINT(brick, tested)
 
 # Returns True if object "tested" lies within a 3D box of given dimensions:
 def ISINBOX3D(tested, minx, maxx, miny, maxy, minz, maxz, tol = 1e-8):
