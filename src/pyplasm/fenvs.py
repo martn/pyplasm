@@ -2486,6 +2486,8 @@ Q = COMP([PLASM_QUOTE, IF([ISSEQ, ID, CONS([ID])])])
 
 def PLASM_INTERVALS (A):
     def PLASM_INTERVALS0 (N):
+        if not isinstance(N, int):
+            raise ExceptionWT("Division must be an integer")
         return PLASM_QUOTE([float(A)/float(N) for i in range(N)])
     return PLASM_INTERVALS0
 
