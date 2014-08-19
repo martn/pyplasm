@@ -1041,9 +1041,12 @@ def MONTRE(*args):
 # BASE OBJECT
 # ===================================================
 
+# Default color of objects:
+STEEL = [200, 200, 200]
+
 class BASEOBJ:
     def __init__(self, basegeom):
-        self.color = [200, 200, 200]
+        self.color = STEEL
         self.geom = basegeom
         self.dim = PLASM_DIM(basegeom)
         self.material = [1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100]
@@ -1059,7 +1062,7 @@ class BASEOBJ:
             raise ExceptionWT("Material must be a list of 17 values: ambientRGBA, diffuseRGBA specularRGBA emissionRGBA shininess")
     def getmaterial():
         return self.material
-    def setcolor(self, color = [200, 200, 200]):
+    def setcolor(self, color = STEEL):
         # Check if the color is a list:
         if type(color) is list:
           # Sanity checks:
@@ -5363,7 +5366,6 @@ DARKRED     = [100, 0, 0]
 YELLOW  = [255, 255, 0]
 DARKYELLOW  = [180, 180, 0]
 
-STEEL =   [200, 200, 200]
 BRASS =   [255, 250, 83]
 COPPER =  [184, 115, 51]
 BRONZE =  [140, 120, 83]
