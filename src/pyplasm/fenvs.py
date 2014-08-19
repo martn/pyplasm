@@ -1050,6 +1050,8 @@ class BASEOBJ:
         self.geom = basegeom
         self.dim = PLASM_DIM(basegeom)
         self.material = [1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100]
+    def __repr__(self):
+        return "Plasm %sD object" % self.dim
     def setmaterial(self, mat):
         # Check if the material is a list:
         if type(mat) is list:
@@ -1916,10 +1918,14 @@ TOURNERAD = ROTATERAD
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN DEGREES)
 def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
     if not isinstance(obj, list):
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("The first argument of rotation must be an object!")
         obj.rotate(angle_deg, axis, point)
     else:
         obj = flatten(obj)
         for oo in obj: 
+            if not isinstance(obj, BASEOBJ):
+                raise ExceptionWT("The first argument of rotation must be an object or list of objects!")
             oo.rotate(angle_deg, axis, point)
     return COPY(obj)
 
@@ -2226,8 +2232,10 @@ def DIFFERENCE(*args):
         item1 = list1.pop(0)
         list1 = flatten(list1) # flatten the rest as there may be structs
         list1 = [item1] + list1
-	geoms = []
+        geoms = []
         for x in list1:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
             geoms.append(x.geom)
         obj = BASEOBJ(PLASM_DIFF(geoms))
         obj.setcolor(item1.color)
@@ -2240,6 +2248,8 @@ def DIFFERENCE(*args):
             list1_new = [x] + list1
    	    geoms = []
             for y in list1_new:
+                if not isinstance(y, BASEOBJ):
+                    raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
                 geoms.append(y.geom)
 	    obj = BASEOBJ(PLASM_DIFF(geoms))
 	    obj.setcolor(x.color)
@@ -2478,6 +2488,8 @@ Q = COMP([PLASM_QUOTE, IF([ISSEQ, ID, CONS([ID])])])
 
 def PLASM_INTERVALS (A):
     def PLASM_INTERVALS0 (N):
+        if not isinstance(N, int):
+            raise ExceptionWT("Division must be an integer")
         return PLASM_QUOTE([float(A)/float(N) for i in range(N)])
     return PLASM_INTERVALS0
 
