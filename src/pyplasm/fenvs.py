@@ -5845,7 +5845,7 @@ def HASNTBOX3D(tested, centerx, centery, centerz, sizex, sizey, sizez):
 def ISINBOX3D(tested, minx, maxx, miny, maxy, minz, maxz, tol = 1e-8):
     xok = (tested.minx() >= minx - tol) and (tested.maxx() <= maxx + tol)
     yok = (tested.miny() >= miny - tol) and (tested.maxy() <= maxy + tol)
-    yok = (tested.minz() >= minz - tol) and (tested.maxz() <= maxz + tol)
+    zok = (tested.minz() >= minz - tol) and (tested.maxz() <= maxz + tol)
     return xok and yok and zok
 
 # Checks if 2D object "tested" has dimensions sizex, sizey
