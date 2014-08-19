@@ -1050,6 +1050,8 @@ class BASEOBJ:
         self.geom = basegeom
         self.dim = PLASM_DIM(basegeom)
         self.material = [1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100]
+    def __repr__(self):
+        return "Plasm %sD object" % self.dim
     def setmaterial(self, mat):
         # Check if the material is a list:
         if type(mat) is list:
