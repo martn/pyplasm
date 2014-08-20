@@ -1079,13 +1079,45 @@ class BASEOBJ:
             raise ExceptionWT("Color must be a list, either [R, G, B] or [R, G, B, A]!")
         self.color = color
 	self.geom = PLASM_COLOR(color)(self.geom)
-    # Subtract a single object from self:
+    # Subtract a single object or list of objects from self, changing self's geometry:
     def subtract(self, obj):
-        if self.dim != obj.dim:
+        geoms = [self.geom]
+        if not isinstance(obj, list):
+            if not isinstance(obj, BASEOBJ):
+                raise ExceptionWT("Invalid object found while subtracting objects!")
+            if self.dim != obj.dim:
                 raise ExceptionWT("Trying to subtract objects of different dimensions?")
-        newgeom = PLASM_DIFF([self.geom, obj.geom])
+            geoms.append(obj.geom)
+        else:
+            for x in obj:
+                if not isinstance(x, BASEOBJ):
+                    raise ExceptionWT("Invalid object found while subtracting objects!")
+                if self.dim != x.dim:
+                    raise ExceptionWT("Trying to subtract objects of different dimensions?")
+                geoms.append(x.geom)
+        newgeom = PLASM_DIFF(geoms)
         self.geom = newgeom
         self.setcolor(self.color)
+    # Subtract a single object or list of objects from self, NOT changing self's geometry:
+    def diff(self, obj):
+        geoms = [self.geom]
+        if not isinstance(obj, list):
+            if not isinstance(obj, BASEOBJ):
+                raise ExceptionWT("Invalid object found while subtracting objects!")
+            if self.dim != obj.dim:
+                raise ExceptionWT("Trying to subtract objects of different dimensions?")
+            geoms.append(obj.geom)
+        else:
+            for x in obj:
+                if not isinstance(x, BASEOBJ):
+                    raise ExceptionWT("Invalid object found while subtracting objects!")
+                if self.dim != x.dim:
+                    raise ExceptionWT("Trying to subtract objects of different dimensions?")
+                geoms.append(x.geom)
+        newgeom = PLASM_DIFF(geoms)
+        newobj = BASEOBJ(newgeom)
+        newobj.setcolor(self.color)
+        return newobj
     def getcolor(self):
         return self.color
     def move(self, t1, t2, t3 = 0):
@@ -2224,8 +2256,9 @@ def PLASM_DIFFERENCE (objs_list):
 
 PLASM_DIFF = PLASM_DIFFERENCE        
 
-# DIFF IS ALWAYS BINARY BUT EITHER ITEM CAN BE A LIST (NOT BOTH)
-def DIFFERENCE(a, b):
+# SUBTRACT IS ALWAYS BINARY BUT EITHER ITEM CAN BE A LIST.
+# SECOND OBJECT IS SUBTRACTED FROM THE FIRST, AND THE FIRST OBJECT CHANGES:
+def SUBTRACT(a, b):
     if isinstance(a, list): 
         if a == []: raise ExceptionWT("Are you trying to subtract an object from an empty list of objects?")
     if isinstance(b, list): 
@@ -2237,18 +2270,13 @@ def DIFFERENCE(a, b):
     # a is single object, b is a list:
     if not isinstance(a, list) and isinstance(b, list):
         flatb = flatten(b) # flatten the list as there may be structs
-        for x in flatb:
-            if not isinstance(x, BASEOBJ):
-                raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
-            a.subtract(x)
+        a.subtract(flatb)
         return COPY(a)
     # a is a list, b is single object:
     if isinstance(a, list) and not isinstance(b, list):
         flata = flatten(a) # flatten the list as there may be structs
         newlist = []
         for x in flata:
-            if not isinstance(x, BASEOBJ):
-                raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
             x.subtract(b)
             newlist.append(COPY(x))
         return newlist
@@ -2258,47 +2286,80 @@ def DIFFERENCE(a, b):
         flatb = flatten(b) # flatten the list as there may be structs
         newlist = []
         for x in flata:
-            if not isinstance(x, BASEOBJ):
-                raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
-            for y in flatb:
-                if not isinstance(y, BASEOBJ):
-                    raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
-                x.subtract(y)
+            x.subtract(flatb)
             newlist.append(COPY(x))
         return newlist
 
-# OLD DEFINITION
-#def DIFFERENCE(*args):
-#    list1 = list(args)
-#    if len(list1) <= 1: raise ExceptionWT("DIFFERENCE(...) requires at least two objects!")
-#    return PLASM_DIFFERENCE(list1)
+# English:
+MINUS = SUBTRACT
+# Czech:
+ODECTI = SUBTRACT
+ODECIST = SUBTRACT
+# Polish:
+ODEJMIJ = SUBTRACT
+# German:
+ABZIEHE = SUBTRACT
+SUBTRAHIERE = SUBTRACT
+# Spanish:
+SUSTRAER = SUBTRACT
+SUSTRAE = SUBTRACT
+# Italian:
+SOTTRARRE = SUBTRACT
+SOTTRAI = SUBTRACT
+# French:
+SOUSTRAIRE = SUBTRACT
+SOUSTRAIS = SUBTRACT
+# DIFF same as in English
+
+# DIFF IS ALWAYS BINARY BUT EITHER ITEM CAN BE A LIST.
+# RETURNS DIFFERENCE OF OBJECTS, DOES NOT CHANGE OBJECTS:
+def DIFFERENCE(a, b):
+    if isinstance(a, list): 
+        if a == []: raise ExceptionWT("Are you trying to subtract an object from an empty list of objects?")
+    if isinstance(b, list): 
+        if b == []: raise ExceptionWT("Are you trying to subtract an empty list of objects from an object?")
+    # a is single object, b is single object:
+    if not isinstance(a, list) and not isinstance(b, list):
+        out = a.diff(b)
+        return out
+    # a is single object, b is a list:
+    if not isinstance(a, list) and isinstance(b, list):
+        flatb = flatten(b) # flatten the list as there may be structs
+        out = a.diff(flatb)
+        return out
+    # a is a list, b is single object:
+    if isinstance(a, list) and not isinstance(b, list):
+        flata = flatten(a) # flatten the list as there may be structs
+        newlist = []
+        for x in flata:
+            out = x.diff(b)
+            newlist.append(out)
+        return newlist
+    # a is a list, b is a list:
+    if isinstance(a, list) and isinstance(b, list):
+        flata = flatten(a) # flatten the list as there may be structs
+        flatb = flatten(b) # flatten the list as there may be structs
+        newlist = []
+        for x in flata:
+            out = x.diff(flatb)
+            newlist.append(out)
+        return newlist
+
+# English:
 DIFF = DIFFERENCE
 D = DIFF
-SUBTRACT = DIFF
-MINUS = DIFF
 # Czech:
 ROZDIL = DIFF
-ODECTI = DIFF
-ODECIST = DIFF
 # Polish:
 ROZNICA = DIFF
-ODEJMIJ = DIFF
 # German:
 DIFFERENZ = DIFF
-ABZIEHE = DIFF
-SUBTRAHIERE = DIFF
 # Spanish:
 DIFERENCIA = DIFF
-SUSTRAER = DIFF
-SUSTRAE = DIFF
 DIF = DIFF
 # Italian:
 DIFERENCIA = DIFF
-SOTTRARRE = DIFF
-SOTTRAI = DIFF
 # French:
-SOUSTRAIRE = DIFF
-SOUSTRAIS = DIFF
 # DIFF same as in English
 
 # ===================================================
