@@ -1079,6 +1079,10 @@ class BASEOBJ:
             raise ExceptionWT("Color must be a list, either [R, G, B] or [R, G, B, A]!")
         self.color = color
 	self.geom = PLASM_COLOR(color)(self.geom)
+    def subtract(self, obj):
+        objgeom = obj.geom
+        newgeom = PLASM_DIFF(self.geom, objgeom)
+        self.geom = newgeom
     def getcolor(self):
         return self.color
     def move(self, t1, t2, t3 = 0):
@@ -2227,16 +2231,12 @@ def DIFFERENCE(a, b):
         raise ExceptionWT("Subtracting a list of objects from another list of objects is not allowed!")
     if not isinstance(a, list):
         list2 = flatten(b) # flatten the rest as there may be structs
-        geoms = [a.geom]
         for x in list2:
             if not isinstance(x, BASEOBJ):
                 raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
-            geoms.append(x.geom)
-        newgeom = PLASM_DIFF(geoms)
-        a.geom = newgeom
-        obj = BASEOBJ(newgeom)
-        obj.setcolor(a.color)
-        return obj
+            a.subtract(x)
+        newobj = COPY(a)
+        return newobj
     else:
         list2 = list1.pop(0)
         list1 = flatten(list1) # flatten the rest as there may be structs
