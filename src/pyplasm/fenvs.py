@@ -2229,20 +2229,17 @@ def DIFFERENCE(*args):
     if isinstance(item1, list) and isinstance(item2, list):
         raise ExceptionWT("DIFFERENCE(...): Subtracting lists of objects from each other is not allowed.")
     if not isinstance(item1, list):
-        color = item1.color
         list2 = list1[1:]
         list2 = flatten(list2) # flatten the rest as there may be structs
         list2 = [item1] + list2
         geoms = []
-        for x in list1:
+        for x in list2:
             if not isinstance(x, BASEOBJ):
                 raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
             geoms.append(x.geom)
         newgeom = PLASM_DIFF(geoms)
-        list1[0].geom = newgeom
-        list1[0].color = color
         obj = BASEOBJ(newgeom)
-        obj.setcolor(color)
+        obj.setcolor(item1.color)
         return obj
     else:
         list2 = list1.pop(0)
@@ -2256,7 +2253,6 @@ def DIFFERENCE(*args):
                     raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
                 geoms.append(y.geom)
             newgeom = PLASM_DIFF(geoms)
-            x.geom = newgeom
 	    obj = BASEOBJ(newgeom)
 	    obj.setcolor(x.color)
             result.append(obj)
