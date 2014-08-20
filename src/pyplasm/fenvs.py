@@ -2240,6 +2240,7 @@ def DIFFERENCE(*args):
             geoms.append(x.geom)
         newgeom = PLASM_DIFF(geoms)
         list1[0].geom = newgeom
+        list1[0].color = color
         obj = BASEOBJ(newgeom)
         obj.setcolor(color)
         return obj
