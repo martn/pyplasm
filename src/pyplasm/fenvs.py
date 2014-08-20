@@ -2217,29 +2217,25 @@ def PLASM_DIFFERENCE (objs_list):
 
 PLASM_DIFF = PLASM_DIFFERENCE        
 
-# NEW DEFINITION (ALLOWS OMITTING BRACKETS)
-# AND FIRST ITEM CAN BE A LIST
-# English:
-def DIFFERENCE(*args):
-    list1 = list(args)
-    if len(list1) < 2: 
-        raise ExceptionWT("DIFFERENCE(...) requires at least two objects!")
-    item1 = list1[0] # this is either a single item or a list
-    item2 = list1[1] # this is either a single item or a list
-    if isinstance(item1, list) and isinstance(item2, list):
-        raise ExceptionWT("DIFFERENCE(...): Subtracting lists of objects from each other is not allowed.")
-    if not isinstance(item1, list):
-        list2 = list1[1:]
-        list2 = flatten(list2) # flatten the rest as there may be structs
-        list2 = [item1] + list2
-        geoms = []
+# DIFF IS ALWAYS BINARY BUT EITHER ITEM CAN BE A LIST (NOT BOTH)
+def DIFFERENCE(a, b):
+    if isinstance(a, list): 
+        if a == []: raise ExceptionWT("Are you trying to subtract an object from an empty list of objects?")
+    if isinstance(b, list): 
+        if b == []: raise ExceptionWT("Are you trying to subtract an empty list of objects from an object?")
+    if isinstance(a, list) and isinstance(b, list):
+        raise ExceptionWT("Subtracting a list of objects from another list of objects is not allowed!")
+    if not isinstance(a, list):
+        list2 = flatten(b) # flatten the rest as there may be structs
+        geoms = [a.geom]
         for x in list2:
             if not isinstance(x, BASEOBJ):
                 raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
             geoms.append(x.geom)
         newgeom = PLASM_DIFF(geoms)
+        a.geom = newgeom
         obj = BASEOBJ(newgeom)
-        obj.setcolor(item1.color)
+        obj.setcolor(a.color)
         return obj
     else:
         list2 = list1.pop(0)
