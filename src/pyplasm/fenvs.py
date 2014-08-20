@@ -2239,7 +2239,7 @@ def DIFFERENCE(*args):
                 raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
             geoms.append(x.geom)
         newgeom = PLASM_DIFF(geoms)
-        item1.geom = newgeom
+        list1[0].geom = newgeom
         obj = BASEOBJ(newgeom)
         obj.setcolor(color)
         return obj
