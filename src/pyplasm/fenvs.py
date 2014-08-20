@@ -2230,32 +2230,42 @@ def DIFFERENCE(a, b):
         if a == []: raise ExceptionWT("Are you trying to subtract an object from an empty list of objects?")
     if isinstance(b, list): 
         if b == []: raise ExceptionWT("Are you trying to subtract an empty list of objects from an object?")
-    if isinstance(a, list) and isinstance(b, list):
-        raise ExceptionWT("Subtracting a list of objects from another list of objects is not allowed!")
-    if not isinstance(a, list):
-        list2 = flatten(b) # flatten the rest as there may be structs
-        for x in list2:
+    # a is single object, b is single object:
+    if not isinstance(a, list) and not isinstance(b, list):
+        a.subtract(b)
+        return COPY(a)
+    # a is single object, b is a list:
+    if not isinstance(a, list) and isinstance(b, list):
+        flatb = flatten(b) # flatten the list as there may be structs
+        for x in flatb:
             if not isinstance(x, BASEOBJ):
                 raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
             a.subtract(x)
-        newobj = COPY(a)
-        return newobj
-    else:
-        list2 = list1.pop(0)
-        list1 = flatten(list1) # flatten the rest as there may be structs
-        result = []
-        for x in list2:
-            list1_new = [x] + list1
-   	    geoms = []
-            for y in list1_new:
+        return COPY(a)
+    # a is a list, b is single object:
+    if isinstance(a, list) and not isinstance(b, list):
+        flata = flatten(a) # flatten the list as there may be structs
+        newlist = []
+        for x in flata:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
+            x.subtract(b)
+            newlist.append(COPY(x))
+        return newlist
+    # a is a list, b is a list:
+    if isinstance(a, list) and isinstance(b, list):
+        flata = flatten(a) # flatten the list as there may be structs
+        flatb = flatten(b) # flatten the list as there may be structs
+        newlist = []
+        for x in flata:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
+            for y in flatb:
                 if not isinstance(y, BASEOBJ):
                     raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
-                geoms.append(y.geom)
-            newgeom = PLASM_DIFF(geoms)
-	    obj = BASEOBJ(newgeom)
-	    obj.setcolor(x.color)
-            result.append(obj)
-        return result
+                x.subtract(y)
+            newlist.append(COPY(x))
+        return newlist
 
 # OLD DEFINITION
 #def DIFFERENCE(*args):
