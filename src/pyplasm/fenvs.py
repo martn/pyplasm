@@ -2218,7 +2218,7 @@ def PLASM_DIFFERENCE (objs_list):
 PLASM_DIFF = PLASM_DIFFERENCE        
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
-# AND FIRST ITEM CAN BE A LIST (THAT PLAYS THE ROLE OF A STRUCT)
+# AND FIRST ITEM CAN BE A LIST
 # English:
 def DIFFERENCE(*args):
     list1 = list(args)
@@ -2227,7 +2227,7 @@ def DIFFERENCE(*args):
     item1 = list1[0] # this is either a single item or a list
     item2 = list1[1] # this is either a single item or a list
     if isinstance(item1, list) and isinstance(item2, list):
-        raise ExceptionWT("DIFFERENCE(...): Subtracting of a struct (list) from another struct is not allowed.")
+        raise ExceptionWT("DIFFERENCE(...): Subtracting lists of objects is not allowed.")
     if not isinstance(item1, list):
         item1 = list1.pop(0)
         list1 = flatten(list1) # flatten the rest as there may be structs
@@ -2237,7 +2237,9 @@ def DIFFERENCE(*args):
             if not isinstance(x, BASEOBJ):
                 raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
             geoms.append(x.geom)
-        obj = BASEOBJ(PLASM_DIFF(geoms))
+        newgeom = PLASM_DIFF(geoms)
+        item1.geom = newgeom
+        obj = BASEOBJ(newgeom)
         obj.setcolor(item1.color)
         return obj
     else:
@@ -2251,7 +2253,9 @@ def DIFFERENCE(*args):
                 if not isinstance(y, BASEOBJ):
                     raise ExceptionWT("Arguments of DIFFERENCE(...) must be objects!")
                 geoms.append(y.geom)
-	    obj = BASEOBJ(PLASM_DIFF(geoms))
+            newgeom = PLASM_DIFF(geoms)
+            x.geom = newgeom
+	    obj = BASEOBJ(newgeom)
 	    obj.setcolor(x.color)
             result.append(obj)
         return result
@@ -2264,11 +2268,11 @@ def DIFFERENCE(*args):
 DIFF = DIFFERENCE
 D = DIFF
 SUBTRACT = DIFF
+MINUS = DIFF
 # Czech:
 ROZDIL = DIFF
 ODECTI = DIFF
 ODECIST = DIFF
-MINUS = DIFF
 # Polish:
 ROZNICA = DIFF
 ODEJMIJ = DIFF
