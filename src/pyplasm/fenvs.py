@@ -1924,7 +1924,7 @@ def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
     else:
         obj = flatten(obj)
         for oo in obj: 
-            if not isinstance(obj, BASEOBJ):
+            if not isinstance(oo, BASEOBJ):
                 raise ExceptionWT("The first argument of rotation must be an object or list of objects!")
             oo.rotate(angle_deg, axis, point)
     return COPY(obj)
