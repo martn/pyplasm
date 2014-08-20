@@ -1079,9 +1079,11 @@ class BASEOBJ:
             raise ExceptionWT("Color must be a list, either [R, G, B] or [R, G, B, A]!")
         self.color = color
 	self.geom = PLASM_COLOR(color)(self.geom)
+    # Subtract a single object from self:
     def subtract(self, obj):
-        objgeom = obj.geom
-        newgeom = PLASM_DIFF(self.geom, objgeom)
+        if self.dim != obj.dim:
+                raise ExceptionWT("Trying to subtract objects of different dimensions?")
+        newgeom = PLASM_DIFF([self.geom, obj.geom])
         self.geom = newgeom
     def getcolor(self):
         return self.color
