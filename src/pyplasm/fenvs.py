@@ -1085,6 +1085,7 @@ class BASEOBJ:
                 raise ExceptionWT("Trying to subtract objects of different dimensions?")
         newgeom = PLASM_DIFF([self.geom, obj.geom])
         self.geom = newgeom
+        self.setcolor(self.color)
     def getcolor(self):
         return self.color
     def move(self, t1, t2, t3 = 0):
