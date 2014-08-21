@@ -1957,16 +1957,15 @@ TOURNERAD = ROTATERAD
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN DEGREES)
 def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
     if not isinstance(obj, list):
-        if not isinstance(obj, BASEOBJ):
-            raise ExceptionWT("The first argument of rotation must be an object!")
         obj.rotate(angle_deg, axis, point)
+        return COPY(obj)
     else:
         obj = flatten(obj)
+        newobj = []
         for oo in obj: 
-            if not isinstance(oo, BASEOBJ):
-                raise ExceptionWT("The first argument of rotation must be an object or list of objects!")
             oo.rotate(angle_deg, axis, point)
-    return COPY(obj)
+            newobj.append(COPY(oo))
+        return newobj
 
 ROTATE = ROTATEDEG
 RDEG = ROTATEDEG
