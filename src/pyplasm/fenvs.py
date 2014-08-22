@@ -1963,6 +1963,7 @@ def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
         obj = flatten(obj)
         newobj = []
         for oo in obj: 
+            # Just a comment to test git:
             oo.rotate(angle_deg, axis, point)
             newobj.append(COPY(oo))
         return newobj
