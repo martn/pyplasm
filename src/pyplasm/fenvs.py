@@ -1123,7 +1123,7 @@ class BASEOBJ:
     def move(self, t1, t2, t3 = 0):
         if t3 == 0:
             self.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(self.geom)
-        #else:
+        else:
             # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
             #if self.dim <> 3:
             #    raise ExceptionWT("2D objects may be moved in the xy-plane only, not in 3D!")
