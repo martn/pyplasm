@@ -5887,18 +5887,21 @@ def EMPTYSET(obj):
   else: return False
 
 # Base function. Returns True if object "obj" is subset of object "tested":
-def SUBSET(obj, tested, tol = 1e-8):
-    objint = INTERSECTION(tested, obj)
-    if EMPTYSET(objint): return False
-    # Next we can assume that objint is not empty:
-    test = DIFF(obj, objint)
-    if EMPTYSET(objint): return True
+def SUBSET(small, big):
+    intersection = INTERSECTION(small, big)
+    # If they do not overlap at all, return False:
+    if EMPTYSET(intersection): return False
+    # If "small" is subset of "big", then their intersection is the same 
+    # object as "small", and therefore the following set difference must 
+    # be an empty set:
+    test = DIFF(small, intersection)
+    if EMPTYSET(test): return True
     else: return False
 
 # Base function. Returns True if object "tested" has an empty
 # intersection with object "obj":
-def DISJOINT(tested, obj, tol = 1e-8):
-    test = INTERSECTION(tested, obj)
+def DISJOINT(obj1, obj2, tol = 1e-8):
+    test = INTERSECTION(obj1, obj2)
     if EMPTYSET(test): return True
     else: return False
 
