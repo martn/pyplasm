@@ -5347,8 +5347,10 @@ if self_test:
 
 # Change it to procedural style:
 # English:
-def COLOR(obj, col):
+def COLOR(obj, col = None):
   # obj may be a single object or a list of objects
+  if col is None:
+    raise ExceptionWT("The COLOR command takes two arguments: object and the color.")
   if not isinstance(obj, list):
     obj.setcolor(col)
   else:
