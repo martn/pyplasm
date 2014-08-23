@@ -1212,23 +1212,32 @@ class BASEOBJ:
         self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
         self.setcolor(self.color)
     def minx(self):
-        return MIN(1)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Minimum X coordinate was requested for an empty set.")
+        else: return MIN(1)(self.geom)
     def miny(self):
-        return MIN(2)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Minimum Y coordinate was requested for an empty set.")
+        else: return MIN(2)(self.geom)
     def minz(self):
-        return MIN(3)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Minimum Z coordinate was requested for an empty set.")
+        else: return MIN(3)(self.geom)
     def maxx(self):
-        return MAX(1)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Maximum X coordinate was requested for an empty set.")
+        else: return MAX(1)(self.geom)
     def maxy(self):
-        return MAX(2)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Maximum Y coordinate was requested for an empty set.")
+        else: return MAX(2)(self.geom)
     def maxz(self):
-        return MAX(3)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Maximum Z coordinate was requested for an empty set.")
+        else: return MAX(3)(self.geom)
     def sizex(self):
-        return MAX(1)(self.geom) - MIN(1)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Size calculation was requested for an empty set.")
+        else: return MAX(1)(self.geom) - MIN(1)(self.geom)
     def sizey(self):
-        return MAX(2)(self.geom) - MIN(2)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Size calculation was requested for an empty set.")
+        else: return MAX(2)(self.geom) - MIN(2)(self.geom)
     def sizez(self):
-        return MAX(3)(self.geom) - MIN(3)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Size calculation was requested for an empty set.")
+        else: return MAX(3)(self.geom) - MIN(3)(self.geom)
     def erasex(self, erasexmin, erasexmax):
         minx = self.minx()
         maxx = self.maxx()
