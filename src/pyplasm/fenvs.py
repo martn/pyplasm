@@ -5873,7 +5873,7 @@ def IS3D(tested):
 
 # Is a set an empty set?
 def EMPTYSET(obj):
-  l = len(pyplasm.xge.Plasm.getBatches(something.geom))
+  l = len(Plasm.getBatches(something.geom))
   if l == 0: return True
   else: return False
 
