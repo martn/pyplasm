@@ -5871,37 +5871,27 @@ def IS3D(tested):
         result = False
     return result
 
+# Is a set an empty set?
+def EMPTYSET(obj):
+  l = len(pyplasm.xge.Plasm.getBatches(something.geom))
+  if l == 0: return True
+  else: return False
+
 # Base function. Returns True if object "obj" is subset of object "tested":
 def SUBSET(obj, tested, tol = 1e-8):
     objint = INTERSECTION(tested, obj)
+    if EMPTYSET(objint): return False
+    # Next we can assume that objint is not empty:
     test = DIFF(obj, objint)
-    s1 = abs(test.sizex())
-    s2 = abs(test.sizey())
-    s3 = 1e20
-    # THIS IS AN UGLY HACK BECAUSE PLASM DOES NOT RETURN 
-    # ZERO SIZES FOR EMPTY OBJECTS. NEEDS TO BE FIXED.
-    if test.getdimension() == 3:
-      s3 = abs(test.sizez())
-    if s1 > 1e10 and s2 > 1e10 and s3 > 1e10:
-      return True
-    else:
-      return False
+    if EMPTYSET(objint): return True
+    else: return False
 
 # Base function. Returns True if object "tested" has an empty
 # intersection with object "obj":
 def DISJOINT(tested, obj, tol = 1e-8):
     test = INTERSECTION(tested, obj)
-    s1 = abs(test.sizex())
-    s2 = abs(test.sizey())
-    s3 = 1e20
-    if test.getdimension() == 3:
-      s3 = abs(test.sizez())
-    # THIS IS AN UGLY HACK BECAUSE PLASM DOES NOT RETURN 
-    # ZERO SIZES FOR EMPTY OBJECTS. NEEDS TO BE FIXED.
-    if s1 > 1e10 and s2 > 1e10 and s3 > 1e10:
-      return True
-    else:
-      return False
+    if EMPTYSET(test): return True
+    else: return False
 
 # Returns True if the entire 2D box "box2d" lies in object "tested":
 def HASBOX2D(tested, centerx, centery, sizex, sizey):
