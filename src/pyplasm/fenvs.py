@@ -5944,44 +5944,44 @@ def ISINBOX3D(tested, minx, maxx, miny, maxy, minz, maxz, tol = 1e-8):
 
 # Checks if 2D object "tested" has dimensions sizex, sizey
 # with a given tolerance:
-def SIZETEST2D(tested, sizex, sizey, eps = 0.0):
-    a1 = (tested.sizex() - sizex <= eps)
-    a2 = (tested.sizey() - sizey <= eps)
+def SIZETEST2D(tested, sizex, sizey, eps = 1e-8):
+    a1 = (abs(tested.sizex() - sizex) <= eps)
+    a2 = (abs(tested.sizey() - sizey) <= eps)
     return (a1 and a2)
 
 # Checks if 3D object "tested" has dimensions sizex, sizey, sizez
 # with a given tolerance:
-def SIZETEST3D(tested, sizex, sizey, sizez, eps = 0.0):
-    a1 = (tested.sizex() - sizex <= eps)
-    a2 = (tested.sizey() - sizey <= eps)
-    a3 = (tested.sizez() - sizez <= eps)
+def SIZETEST3D(tested, sizex, sizey, sizez, eps = 1e-8):
+    a1 = (abs(tested.sizex() - sizex) <= eps)
+    a2 = (abs(tested.sizey() - sizey) <= eps)
+    a3 = (abs(tested.sizez() - sizez) <= eps)
     return (a1 and a2 and a3)
 
 # Checks if 2D objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
-def SIZEMATCH2D(tested, ref, eps = 0.0):
-    a1 = (tested.sizex() - ref.sizex() <= eps)
-    a2 = (tested.sizey() - ref.sizey() <= eps)
+def SIZEMATCH2D(tested, ref, eps = 1e-8):
+    a1 = (abs(tested.sizex() - ref.sizex()) <= eps)
+    a2 = (abs(tested.sizey() - ref.sizey()) <= eps)
     return (a1 and a2)
 
 # Checks if 3D objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
-def SIZEMATCH3D(tested, ref, eps = 0.0):
-    a1 = (tested.sizex() - ref.sizex() <= eps)
-    a2 = (tested.sizey() - ref.sizey() <= eps)
-    a3 = (tested.sizez() - ref.sizez() <= eps)
+def SIZEMATCH3D(tested, ref, eps = 1e-8):
+    a1 = (abs(tested.sizex() - ref.sizex()) <= eps)
+    a2 = (abs(tested.sizey() - ref.sizey()) <= eps)
+    a3 = (abs(tested.sizez() - ref.sizez()) <= eps)
     return (a1 and a2 and a3)
 
 # Checks if 2D object "tested" has given minx, miny 
 # coordinates in the x, y directions, with a given tolerance:
-def POSITIONTEST2D(tested, minx, miny, eps = 0.0):
+def POSITIONTEST2D(tested, minx, miny, eps = 1e-8):
     b1 = (abs(tested.minx() - minx) <= eps)
     b2 = (abs(tested.miny() - miny) <= eps)
     return (b1 and b2)
 
 # Checks if 3D object "tested" has given minx, miny, minz 
 # coordinates in the x, y, z directions, with a given tolerance:
-def POSITIONTEST3D(tested, minx, miny, minz, eps = 0.0):
+def POSITIONTEST3D(tested, minx, miny, minz, eps = 1e-8):
     b1 = (abs(tested.minx() - minx) <= eps)
     b2 = (abs(tested.miny() - miny) <= eps)
     b3 = (abs(tested.minz() - minz) <= eps)
@@ -5990,7 +5990,7 @@ def POSITIONTEST3D(tested, minx, miny, minz, eps = 0.0):
 # Checks if 2D objects "tested" and "ref" have the same 
 # minimum coordinates in the x, y directions, 
 # with a given tolerance:
-def POSITIONMATCH2D(tested, ref, eps = 0.0):
+def POSITIONMATCH2D(tested, ref, eps = 1e-8):
     b1 = (abs(tested.minx() - ref.minx()) <= eps)
     b2 = (abs(tested.miny() - ref.miny()) <= eps)
     return (b1 and b2)
@@ -5998,7 +5998,7 @@ def POSITIONMATCH2D(tested, ref, eps = 0.0):
 # Checks if 3D objects "tested" and "ref" have the same 
 # minimum coordinates in the x, y, z directions, 
 # with a given tolerance:
-def POSITIONMATCH3D(tested, ref, eps = 0.0):
+def POSITIONMATCH3D(tested, ref, eps = 1e-8):
     b1 = (abs(tested.minx() - ref.minx()) <= eps)
     b2 = (abs(tested.miny() - ref.miny()) <= eps)
     b3 = (abs(tested.minz() - ref.minz()) <= eps)
