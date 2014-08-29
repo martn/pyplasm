@@ -2666,17 +2666,59 @@ def MID  (List):
     return MID1
 
 def MINX(obj):
-    return obj.minx()
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        minx = obj[0].minx()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].minx() < minx: minx = obj[i].minx()  
+        return minx
+    else: return obj.minx()
 def MINY(obj):
-    return obj.miny() 
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        miny = obj[0].miny()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].miny() < miny: miny = obj[i].miny()  
+        return miny
+    else: return obj.miny()
 def MINZ(obj):
-    return obj.minz() 
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        minz = obj[0].minz()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].minz() < minz: minz = obj[i].minz()  
+        return minz
+    else: return obj.minz()
 def MAXX(obj):
-    return obj.maxx() 
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        maxx = obj[0].maxx()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].maxx() < maxx: maxx = obj[i].maxx()  
+        return maxx
+    else: return obj.maxx()
 def MAXY(obj):
-    return obj.maxy() 
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        maxy = obj[0].maxy()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].maxy() < maxy: maxy = obj[i].maxy()  
+        return maxy
+    else: return obj.maxy()
 def MAXZ(obj):
-    return obj.maxz() 
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        maxz = obj[0].maxz()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].maxz() < maxz: maxz = obj[i].maxz()  
+        return maxz
+    else: return obj.maxz()
 
 if self_test: 
 	assert(MIN(1)(Plasm.cube(2))==0)
