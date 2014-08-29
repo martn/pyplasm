@@ -2698,7 +2698,7 @@ def MAXX(obj):
         maxx = obj[0].maxx()
         n = len(obj)
         for i in range(1, n):
-           if obj[i].maxx() < maxx: maxx = obj[i].maxx()  
+           if obj[i].maxx() > maxx: maxx = obj[i].maxx()  
         return maxx
     else: return obj.maxx()
 def MAXY(obj):
@@ -2707,7 +2707,7 @@ def MAXY(obj):
         maxy = obj[0].maxy()
         n = len(obj)
         for i in range(1, n):
-           if obj[i].maxy() < maxy: maxy = obj[i].maxy()  
+           if obj[i].maxy() > maxy: maxy = obj[i].maxy()  
         return maxy
     else: return obj.maxy()
 def MAXZ(obj):
@@ -2716,7 +2716,7 @@ def MAXZ(obj):
         maxz = obj[0].maxz()
         n = len(obj)
         for i in range(1, n):
-           if obj[i].maxz() < maxz: maxz = obj[i].maxz()  
+           if obj[i].maxz() > maxz: maxz = obj[i].maxz()  
         return maxz
     else: return obj.maxz()
 
