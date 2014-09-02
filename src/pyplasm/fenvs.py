@@ -5928,16 +5928,10 @@ def EMPTYSET(obj):
   if l == 0: return True
   else: return False
 
-# Base function. Returns True if object "obj" is subset of object "tested":
+# Base function. Returns True if object "small" is subset of object "big":
 def SUBSET(small, big):
-    intersection = INTERSECTION(small, big)
-    # If they do not overlap at all, return False:
-    if EMPTYSET(intersection): return False
-    # If "small" is subset of "big", then their intersection is the same 
-    # object as "small", and therefore the following set difference must 
-    # be an empty set:
-    test = DIFF(small, intersection)
-    if EMPTYSET(test): return True
+    difference = DIFF(small, big)
+    if EMPTYSET(difference): return True
     else: return False
 
 # Base function. Returns True if object "tested" has an empty
