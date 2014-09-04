@@ -5955,8 +5955,8 @@ def HASNTBOX2D(tested, centerx, centery, sizex, sizey):
 
 # Returns True if object "tested" lies within a 2D box of given dimensions:
 def ISINBOX2D(tested, minx, maxx, miny, maxy, tol = 1e-8):
-    xok = (tested.minx() >= minx - tol) and (tested.maxx() <= maxx + tol)
-    yok = (tested.miny() >= miny - tol) and (tested.maxy() <= maxy + tol)
+    xok = (MINX(tested) >= minx - tol) and (MAXX(tested) <= maxx + tol)
+    yok = (MINY(tested) >= miny - tol) and (MAXY(tested) <= maxy + tol)
     return xok and yok
 
 # Returns True if entire 3D box "box3d" lies in object "tested":
@@ -5973,9 +5973,9 @@ def HASNTBOX3D(tested, centerx, centery, centerz, sizex, sizey, sizez):
 
 # Returns True if object "tested" lies within a 3D box of given dimensions:
 def ISINBOX3D(tested, minx, maxx, miny, maxy, minz, maxz, tol = 1e-8):
-    xok = (tested.minx() >= minx - tol) and (tested.maxx() <= maxx + tol)
-    yok = (tested.miny() >= miny - tol) and (tested.maxy() <= maxy + tol)
-    zok = (tested.minz() >= minz - tol) and (tested.maxz() <= maxz + tol)
+    xok = (MINX(tested) >= minx - tol) and (MAXX(tested) <= maxx + tol)
+    yok = (MINY(tested) >= miny - tol) and (MAXY(tested) <= maxy + tol)
+    zok = (MINZ(tested) >= minz - tol) and (MAXZ(tested) <= maxz + tol)
     return xok and yok and zok
 
 # Checks if 2D object "tested" has dimensions sizex, sizey
