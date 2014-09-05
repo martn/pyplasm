@@ -1130,6 +1130,9 @@ class BASEOBJ:
             self.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(self.geom)
         self.setcolor(self.color)
     def rotaterad(self, angle_rad, axis = 3, point = [0, 0, 0]):
+        if axis == 'x' or axis == 'X': axis = 1
+        if axis == 'y' or axis == 'Y': axis = 2
+        if axis == 'z' or axis == 'Z': axis = 3
         # this is a bit nasty but it allows to give center point without the axis in 2D:
         centerpoint = point
         if self.dim == 2 and isinstance(axis, list):
@@ -1176,12 +1179,18 @@ class BASEOBJ:
         # return color:
         self.setcolor(self.color)
     def rotate(self, angle_deg, axis = 3, point = [0, 0, 0]):
+        if axis == 'x' or axis == 'X': axis = 1
+        if axis == 'y' or axis == 'Y': axis = 2
+        if axis == 'z' or axis == 'Z': axis = 3
         angle_rad = PI * angle_deg / 180.
         self.rotaterad(angle_rad, axis, point)
         self.setcolor(self.color)
     def getdimension(self):
         return self.dim
     def rotaterel(self, angle_deg, axis = 3):
+        if axis == 'x' or axis == 'X': axis = 1
+        if axis == 'y' or axis == 'Y': axis = 2
+        if axis == 'z' or axis == 'Z': axis = 3
         if axis != 1 and axis != 2 and axis != 3: 
           raise ExceptionWT("The third argument of the command ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
 	#if self.dim == 2 and axis <> 3:
@@ -1301,6 +1310,9 @@ def SIZEZ(obj):
 # ===========================================================
 
 def ERASE(obj, axis, minval, maxval):
+    if axis == 'x' or axis == 'X': axis = 1
+    if axis == 'y' or axis == 'Y': axis = 2
+    if axis == 'z' or axis == 'Z': axis = 3
     if axis != 1 and axis != 2 and axis != 3:
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
     if maxval <= minval:
@@ -1342,6 +1354,9 @@ def ERASE(obj, axis, minval, maxval):
 # ============================================================
 
 def SPLIT(obj, axis, coord):
+    if axis == 'x' or axis == 'X': axis = 1
+    if axis == 'y' or axis == 'Y': axis = 2
+    if axis == 'z' or axis == 'Z': axis = 3
     if axis != 1 and axis != 2 and axis != 3:
         raise ExceptionWT("In SPLIT(obj, axis, coord), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
   
