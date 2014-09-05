@@ -1931,6 +1931,9 @@ if self_test:
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN RADIANS)
 def ROTATERAD(obj, angle_rad, axis = 3, point = [0, 0, 0]):
+    if axis == 'x' or axis == 'X': axis = 1
+    if axis == 'y' or axis == 'Y': axis = 2
+    if axis == 'z' or axis == 'Z': axis = 3
     if not isinstance(obj, list):
         obj.rotaterad(angle_rad, axis, point)
     else:
@@ -1969,6 +1972,9 @@ TOURNERAD = ROTATERAD
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN DEGREES)
 def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
+    if axis == 'x' or axis == 'X': axis = 1
+    if axis == 'y' or axis == 'Y': axis = 2
+    if axis == 'z' or axis == 'Z': axis = 3
     if not isinstance(obj, list):
         obj.rotate(angle_deg, axis, point)
         return COPY(obj)
@@ -2016,6 +2022,9 @@ TOURNE = ROTATE
 
 # English:
 def RR(obj, angle_deg, axis = 3):
+    if axis == 'x' or axis == 'X': axis = 1
+    if axis == 'y' or axis == 'Y': axis = 2
+    if axis == 'z' or axis == 'Z': axis = 3
     if isinstance(obj, list):
         raise ExceptionWT("Command ROTATEREL (rotation about objects own center) can only be applied to a single object!")
     obj.rotaterel(angle_deg, axis)
