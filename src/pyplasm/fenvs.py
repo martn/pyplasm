@@ -6189,3 +6189,8 @@ def REF_DOMAIN(a, b, m, n):
 def UNIT_SQUARE(n, m):
     #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
     return BASEOBJ(SIMPLEXGRID([1.0, 1.0])([m, n]))
+
+# Symbols for axes:
+X = 'X'
+Y = 'Y'
+Z = 'Z'
