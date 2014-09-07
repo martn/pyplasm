@@ -1050,6 +1050,10 @@ class BASEOBJ:
         self.geom = basegeom
         self.dim = PLASM_DIM(basegeom)
         self.material = [1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100]
+
+    def __getattr__(self, name):
+        raise ExceptionWT('Did you want to write "," (comma) instead of "." (period) before "%s" or did you misspeled "%s"?' % (name, name))
+
     def __repr__(self):
         return "Plasm %sD object" % self.dim
     def setmaterial(self, mat):
