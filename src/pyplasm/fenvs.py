@@ -1239,13 +1239,13 @@ class BASEOBJ:
         if EMPTYSET(self): raise ExceptionWT("Maximum Z coordinate was requested for an empty set.")
         else: return MAX(3)(self.geom)
     def sizex(self):
-        if EMPTYSET(self): raise ExceptionWT("Size calculation was requested for an empty set.")
+        if EMPTYSET(self): return 0
         else: return MAX(1)(self.geom) - MIN(1)(self.geom)
     def sizey(self):
-        if EMPTYSET(self): raise ExceptionWT("Size calculation was requested for an empty set.")
+        if EMPTYSET(self): return 0
         else: return MAX(2)(self.geom) - MIN(2)(self.geom)
     def sizez(self):
-        if EMPTYSET(self): raise ExceptionWT("Size calculation was requested for an empty set.")
+        if EMPTYSET(self): return 0
         else: return MAX(3)(self.geom) - MIN(3)(self.geom)
     def erasex(self, erasexmin, erasexmax):
         minx = self.minx()
