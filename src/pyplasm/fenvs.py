@@ -3469,6 +3469,19 @@ CONO = CONE
 # Same in English
 
 # =============================================
+# PYRAMID
+# =============================================
+
+def PYRAMID(r, h, n = 4):
+    if r <= 0: 
+        raise ExceptionWT("Radius r in PYRAMID(r, h, n) must be positive!")
+    if h <= 0: 
+        raise ExceptionWT("Height h in PYRAMID(r, h, n) must be positive!")
+    if n < 3: 
+        raise ExceptionWT("Number of sides n in PYRAMID(r, h, n) must be at least 3!")
+    return BASEOBJ(PLASM_CONE([r, h])(n))
+
+# =============================================
 # TRUNCONE
 # =============================================
 
@@ -4755,11 +4768,11 @@ if self_test:
 # ===================================================
 
 
-def PYRAMID (H):
-	def PYRAMID0(pol):
-		barycenter=MEANPOINT(UKPOL(pol)[0])
-		return PLASM_JOIN([MK(barycenter+[H]),pol])
-	return PYRAMID0
+#def PYRAMID (H):
+#	def PYRAMID0(pol):
+#		barycenter=MEANPOINT(UKPOL(pol)[0])
+#		return PLASM_JOIN([MK(barycenter+[H]),pol])
+#	return PYRAMID0
 
 
 # ===================================================
