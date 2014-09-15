@@ -927,113 +927,113 @@ def VIEWBASE(objects):
 # English:
 def VIEW(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence == 0): raise ExceptionWT("The VIEW(...) command must contain at least one object!")
     VIEWBASE(sequence)
 def V(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence == 0): raise ExceptionWT("The V(...) command must contain at least one object!")
     VIEWBASE(sequence)
 def SHOW(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("The SHOW(...) command must contain at least one object!")
     VIEWBASE(sequence)
 # Czech:
 def UKAZ(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("Příkaz UKAZ(...) musí obsahovat alespoň jeden objekt!")
     VIEWBASE(sequence)
 def ZOBRAZ(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("Příkaz ZOBRAZ(...) musí obsahovat alespoň jeden objekt!")
     VIEWBASE(sequence)
 # Polish:
 def ZOBACZ(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("Poleceń ZOBACZ(...) musi zawierać co najmniej jeden obiekt!")
     VIEWBASE(sequence)
 def POKAZ(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("Poleceń POKAZ(...) musi zawierać co najmniej jeden obiekt!")
     VIEWBASE(sequence)
 # German:
 def ZEIGE(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("Der Befehl ZEIGE(...) muss mindestens ein Objekt enthalten!")
     VIEWBASE(sequence)
 def ANSICHT(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("Der Befehl ANSICHT(...) muss mindestens ein Objekt enthalten!")
     VIEWBASE(sequence)
 # Spanish:
 def MOSTRAR(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("El comando MOSTRAR(...) debe contener al menos un objeto!")
     VIEWBASE(sequence)
 def MUESTRA(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("El comando MUESTRA(...) debe contener al menos un objeto!")
     VIEWBASE(sequence)
 # Italian:
 def MOSTRARE(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("Il comando MOSTRARE(...) deve contenere almeno un oggetto!")
     VIEWBASE(sequence)
 def MOSTRA(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("Il comando MOSTRA(...) deve contenere almeno un oggetto!")
     VIEWBASE(sequence)
 # French:
 def MONTRER(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("La commande MONTRER(...) doit contenir au moins un objet!")
     VIEWBASE(sequence)
 def MONTRE(*args):
     sequence = flatten(*args)
-    for obj in sequence:
-        if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-            raise ExceptionWT("One of the objects that you are trying to display is empty!")
+    #for obj in sequence:
+    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
+    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("La commande MONTRE(...) doit contenir au moins un objet!")
     VIEWBASE(sequence)
 
@@ -1134,6 +1134,9 @@ class BASEOBJ:
             self.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(self.geom)
         self.setcolor(self.color)
     def rotaterad(self, angle_rad, axis = 3, point = [0, 0, 0]):
+        if axis == 'x' or axis == 'X': axis = 1
+        if axis == 'y' or axis == 'Y': axis = 2
+        if axis == 'z' or axis == 'Z': axis = 3
         # this is a bit nasty but it allows to give center point without the axis in 2D:
         centerpoint = point
         if self.dim == 2 and isinstance(axis, list):
@@ -1146,7 +1149,7 @@ class BASEOBJ:
             # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
             #raise ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
         if axis == 1: plane_indexes = [2, 3]
-        elif axis == 2: plane_indexes = [1, 3]
+        elif axis == 2: plane_indexes = [3, 1]
         else: plane_indexes = [1, 2]
         # sanity check for the center point:
         if not isinstance(centerpoint, list):
@@ -1180,12 +1183,18 @@ class BASEOBJ:
         # return color:
         self.setcolor(self.color)
     def rotate(self, angle_deg, axis = 3, point = [0, 0, 0]):
+        if axis == 'x' or axis == 'X': axis = 1
+        if axis == 'y' or axis == 'Y': axis = 2
+        if axis == 'z' or axis == 'Z': axis = 3
         angle_rad = PI * angle_deg / 180.
         self.rotaterad(angle_rad, axis, point)
         self.setcolor(self.color)
     def getdimension(self):
         return self.dim
     def rotaterel(self, angle_deg, axis = 3):
+        if axis == 'x' or axis == 'X': axis = 1
+        if axis == 'y' or axis == 'Y': axis = 2
+        if axis == 'z' or axis == 'Z': axis = 3
         if axis != 1 and axis != 2 and axis != 3: 
           raise ExceptionWT("The third argument of the command ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
 	#if self.dim == 2 and axis <> 3:
@@ -1216,23 +1225,32 @@ class BASEOBJ:
         self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
         self.setcolor(self.color)
     def minx(self):
-        return MIN(1)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Minimum X coordinate was requested for an empty set.")
+        else: return MIN(1)(self.geom)
     def miny(self):
-        return MIN(2)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Minimum Y coordinate was requested for an empty set.")
+        else: return MIN(2)(self.geom)
     def minz(self):
-        return MIN(3)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Minimum Z coordinate was requested for an empty set.")
+        else: return MIN(3)(self.geom)
     def maxx(self):
-        return MAX(1)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Maximum X coordinate was requested for an empty set.")
+        else: return MAX(1)(self.geom)
     def maxy(self):
-        return MAX(2)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Maximum Y coordinate was requested for an empty set.")
+        else: return MAX(2)(self.geom)
     def maxz(self):
-        return MAX(3)(self.geom)
+        if EMPTYSET(self): raise ExceptionWT("Maximum Z coordinate was requested for an empty set.")
+        else: return MAX(3)(self.geom)
     def sizex(self):
-        return MAX(1)(self.geom) - MIN(1)(self.geom)
+        if EMPTYSET(self): return 0
+        else: return MAX(1)(self.geom) - MIN(1)(self.geom)
     def sizey(self):
-        return MAX(2)(self.geom) - MIN(2)(self.geom)
+        if EMPTYSET(self): return 0
+        else: return MAX(2)(self.geom) - MIN(2)(self.geom)
     def sizez(self):
-        return MAX(3)(self.geom) - MIN(3)(self.geom)
+        if EMPTYSET(self): return 0
+        else: return MAX(3)(self.geom) - MIN(3)(self.geom)
     def erasex(self, erasexmin, erasexmax):
         minx = self.minx()
         maxx = self.maxx()
@@ -1296,6 +1314,9 @@ def SIZEZ(obj):
 # ===========================================================
 
 def ERASE(obj, axis, minval, maxval):
+    if axis == 'x' or axis == 'X': axis = 1
+    if axis == 'y' or axis == 'Y': axis = 2
+    if axis == 'z' or axis == 'Z': axis = 3
     if axis != 1 and axis != 2 and axis != 3:
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
     if maxval <= minval:
@@ -1337,6 +1358,9 @@ def ERASE(obj, axis, minval, maxval):
 # ============================================================
 
 def SPLIT(obj, axis, coord):
+    if axis == 'x' or axis == 'X': axis = 1
+    if axis == 'y' or axis == 'Y': axis = 2
+    if axis == 'z' or axis == 'Z': axis = 3
     if axis != 1 and axis != 2 and axis != 3:
         raise ExceptionWT("In SPLIT(obj, axis, coord), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
   
@@ -1926,6 +1950,9 @@ if self_test:
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN RADIANS)
 def ROTATERAD(obj, angle_rad, axis = 3, point = [0, 0, 0]):
+    if axis == 'x' or axis == 'X': axis = 1
+    if axis == 'y' or axis == 'Y': axis = 2
+    if axis == 'z' or axis == 'Z': axis = 3
     if not isinstance(obj, list):
         obj.rotaterad(angle_rad, axis, point)
     else:
@@ -1964,6 +1991,9 @@ TOURNERAD = ROTATERAD
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN DEGREES)
 def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
+    if axis == 'x' or axis == 'X': axis = 1
+    if axis == 'y' or axis == 'Y': axis = 2
+    if axis == 'z' or axis == 'Z': axis = 3
     if not isinstance(obj, list):
         obj.rotate(angle_deg, axis, point)
         return COPY(obj)
@@ -2011,6 +2041,9 @@ TOURNE = ROTATE
 
 # English:
 def RR(obj, angle_deg, axis = 3):
+    if axis == 'x' or axis == 'X': axis = 1
+    if axis == 'y' or axis == 'Y': axis = 2
+    if axis == 'z' or axis == 'Z': axis = 3
     if isinstance(obj, list):
         raise ExceptionWT("Command ROTATEREL (rotation about objects own center) can only be applied to a single object!")
     obj.rotaterel(angle_deg, axis)
@@ -2661,17 +2694,59 @@ def MID  (List):
     return MID1
 
 def MINX(obj):
-    return obj.minx()
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        minx = obj[0].minx()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].minx() < minx: minx = obj[i].minx()  
+        return minx
+    else: return obj.minx()
 def MINY(obj):
-    return obj.miny() 
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        miny = obj[0].miny()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].miny() < miny: miny = obj[i].miny()  
+        return miny
+    else: return obj.miny()
 def MINZ(obj):
-    return obj.minz() 
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        minz = obj[0].minz()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].minz() < minz: minz = obj[i].minz()  
+        return minz
+    else: return obj.minz()
 def MAXX(obj):
-    return obj.maxx() 
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        maxx = obj[0].maxx()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].maxx() > maxx: maxx = obj[i].maxx()  
+        return maxx
+    else: return obj.maxx()
 def MAXY(obj):
-    return obj.maxy() 
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        maxy = obj[0].maxy()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].maxy() > maxy: maxy = obj[i].maxy()  
+        return maxy
+    else: return obj.maxy()
 def MAXZ(obj):
-    return obj.maxz() 
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        maxz = obj[0].maxz()
+        n = len(obj)
+        for i in range(1, n):
+           if obj[i].maxz() > maxz: maxz = obj[i].maxz()  
+        return maxz
+    else: return obj.maxz()
 
 if self_test: 
 	assert(MIN(1)(Plasm.cube(2))==0)
@@ -3396,6 +3471,19 @@ CONO = CONE
 # Same as in Spanish
 # French:
 # Same in English
+
+# =============================================
+# PYRAMID
+# =============================================
+
+def PYRAMID(r, h, n = 4):
+    if r <= 0: 
+        raise ExceptionWT("Radius r in PYRAMID(r, h, n) must be positive!")
+    if h <= 0: 
+        raise ExceptionWT("Height h in PYRAMID(r, h, n) must be positive!")
+    if n < 3: 
+        raise ExceptionWT("Number of sides n in PYRAMID(r, h, n) must be at least 3!")
+    return BASEOBJ(PLASM_CONE([r, h])(n))
 
 # =============================================
 # TRUNCONE
@@ -4684,11 +4772,11 @@ if self_test:
 # ===================================================
 
 
-def PYRAMID (H):
-	def PYRAMID0(pol):
-		barycenter=MEANPOINT(UKPOL(pol)[0])
-		return PLASM_JOIN([MK(barycenter+[H]),pol])
-	return PYRAMID0
+#def PYRAMID (H):
+#	def PYRAMID0(pol):
+#		barycenter=MEANPOINT(UKPOL(pol)[0])
+#		return PLASM_JOIN([MK(barycenter+[H]),pol])
+#	return PYRAMID0
 
 
 # ===================================================
@@ -5459,6 +5547,18 @@ DARKRED     = [100, 0, 0]
 YELLOW  = [255, 255, 0]
 DARKYELLOW  = [180, 180, 0]
 
+STRAWBERRY = [252, 90, 141]
+RASPBERRY = [227, 11, 92]
+BLUEBERRY = [117, 73, 177]
+PEACH = [255, 218, 185]
+BANANA = [252, 236, 174]
+MINT = [160, 255, 170]
+VANILLA = [243, 229, 171]
+LEMON = [255, 250, 205]
+CHOCOLATE = [94, 39, 40]
+CANDY = [237, 139, 209]
+
+
 BRASS =   [255, 250, 83]
 COPPER =  [184, 115, 51]
 BRONZE =  [140, 120, 83]
@@ -5877,37 +5977,24 @@ def IS3D(tested):
         result = False
     return result
 
-# Base function. Returns True if object "obj" is subset of object "tested":
-def SUBSET(obj, tested, tol = 1e-8):
-    objint = INTERSECTION(tested, obj)
-    test = DIFF(obj, objint)
-    s1 = abs(test.sizex())
-    s2 = abs(test.sizey())
-    s3 = 1e20
-    # THIS IS AN UGLY HACK BECAUSE PLASM DOES NOT RETURN 
-    # ZERO SIZES FOR EMPTY OBJECTS. NEEDS TO BE FIXED.
-    if test.getdimension() == 3:
-      s3 = abs(test.sizez())
-    if s1 > 1e10 and s2 > 1e10 and s3 > 1e10:
-      return True
-    else:
-      return False
+# Is a set an empty set?
+def EMPTYSET(obj):
+  l = len(Plasm.getBatches(obj.geom))
+  if l == 0: return True
+  else: return False
+
+# Base function. Returns True if object "small" is subset of object "big":
+def SUBSET(small, big):
+    difference = DIFF(small, big)
+    if EMPTYSET(difference): return True
+    else: return False
 
 # Base function. Returns True if object "tested" has an empty
 # intersection with object "obj":
-def DISJOINT(tested, obj, tol = 1e-8):
-    test = INTERSECTION(tested, obj)
-    s1 = abs(test.sizex())
-    s2 = abs(test.sizey())
-    s3 = 1e20
-    if test.getdimension() == 3:
-      s3 = abs(test.sizez())
-    # THIS IS AN UGLY HACK BECAUSE PLASM DOES NOT RETURN 
-    # ZERO SIZES FOR EMPTY OBJECTS. NEEDS TO BE FIXED.
-    if s1 > 1e10 and s2 > 1e10 and s3 > 1e10:
-      return True
-    else:
-      return False
+def DISJOINT(obj1, obj2, tol = 1e-8):
+    test = INTERSECTION(obj1, obj2)
+    if EMPTYSET(test): return True
+    else: return False
 
 # Returns True if the entire 2D box "box2d" lies in object "tested":
 def HASBOX2D(tested, centerx, centery, sizex, sizey):
@@ -5923,8 +6010,8 @@ def HASNTBOX2D(tested, centerx, centery, sizex, sizey):
 
 # Returns True if object "tested" lies within a 2D box of given dimensions:
 def ISINBOX2D(tested, minx, maxx, miny, maxy, tol = 1e-8):
-    xok = (tested.minx() >= minx - tol) and (tested.maxx() <= maxx + tol)
-    yok = (tested.miny() >= miny - tol) and (tested.maxy() <= maxy + tol)
+    xok = (MINX(tested) >= minx - tol) and (MAXX(tested) <= maxx + tol)
+    yok = (MINY(tested) >= miny - tol) and (MAXY(tested) <= maxy + tol)
     return xok and yok
 
 # Returns True if entire 3D box "box3d" lies in object "tested":
@@ -5941,51 +6028,51 @@ def HASNTBOX3D(tested, centerx, centery, centerz, sizex, sizey, sizez):
 
 # Returns True if object "tested" lies within a 3D box of given dimensions:
 def ISINBOX3D(tested, minx, maxx, miny, maxy, minz, maxz, tol = 1e-8):
-    xok = (tested.minx() >= minx - tol) and (tested.maxx() <= maxx + tol)
-    yok = (tested.miny() >= miny - tol) and (tested.maxy() <= maxy + tol)
-    zok = (tested.minz() >= minz - tol) and (tested.maxz() <= maxz + tol)
+    xok = (MINX(tested) >= minx - tol) and (MAXX(tested) <= maxx + tol)
+    yok = (MINY(tested) >= miny - tol) and (MAXY(tested) <= maxy + tol)
+    zok = (MINZ(tested) >= minz - tol) and (MAXZ(tested) <= maxz + tol)
     return xok and yok and zok
 
 # Checks if 2D object "tested" has dimensions sizex, sizey
 # with a given tolerance:
-def SIZETEST2D(tested, sizex, sizey, eps = 0.0):
-    a1 = (tested.sizex() - sizex <= eps)
-    a2 = (tested.sizey() - sizey <= eps)
+def SIZETEST2D(tested, sizex, sizey, eps = 1e-8):
+    a1 = (abs(tested.sizex() - sizex) <= eps)
+    a2 = (abs(tested.sizey() - sizey) <= eps)
     return (a1 and a2)
 
 # Checks if 3D object "tested" has dimensions sizex, sizey, sizez
 # with a given tolerance:
-def SIZETEST3D(tested, sizex, sizey, sizez, eps = 0.0):
-    a1 = (tested.sizex() - sizex <= eps)
-    a2 = (tested.sizey() - sizey <= eps)
-    a3 = (tested.sizez() - sizez <= eps)
+def SIZETEST3D(tested, sizex, sizey, sizez, eps = 1e-8):
+    a1 = (abs(tested.sizex() - sizex) <= eps)
+    a2 = (abs(tested.sizey() - sizey) <= eps)
+    a3 = (abs(tested.sizez() - sizez) <= eps)
     return (a1 and a2 and a3)
 
 # Checks if 2D objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
-def SIZEMATCH2D(tested, ref, eps = 0.0):
-    a1 = (tested.sizex() - ref.sizex() <= eps)
-    a2 = (tested.sizey() - ref.sizey() <= eps)
+def SIZEMATCH2D(tested, ref, eps = 1e-8):
+    a1 = (abs(tested.sizex() - ref.sizex()) <= eps)
+    a2 = (abs(tested.sizey() - ref.sizey()) <= eps)
     return (a1 and a2)
 
 # Checks if 3D objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
-def SIZEMATCH3D(tested, ref, eps = 0.0):
-    a1 = (tested.sizex() - ref.sizex() <= eps)
-    a2 = (tested.sizey() - ref.sizey() <= eps)
-    a3 = (tested.sizez() - ref.sizez() <= eps)
+def SIZEMATCH3D(tested, ref, eps = 1e-8):
+    a1 = (abs(tested.sizex() - ref.sizex()) <= eps)
+    a2 = (abs(tested.sizey() - ref.sizey()) <= eps)
+    a3 = (abs(tested.sizez() - ref.sizez()) <= eps)
     return (a1 and a2 and a3)
 
 # Checks if 2D object "tested" has given minx, miny 
 # coordinates in the x, y directions, with a given tolerance:
-def POSITIONTEST2D(tested, minx, miny, eps = 0.0):
+def POSITIONTEST2D(tested, minx, miny, eps = 1e-8):
     b1 = (abs(tested.minx() - minx) <= eps)
     b2 = (abs(tested.miny() - miny) <= eps)
     return (b1 and b2)
 
 # Checks if 3D object "tested" has given minx, miny, minz 
 # coordinates in the x, y, z directions, with a given tolerance:
-def POSITIONTEST3D(tested, minx, miny, minz, eps = 0.0):
+def POSITIONTEST3D(tested, minx, miny, minz, eps = 1e-8):
     b1 = (abs(tested.minx() - minx) <= eps)
     b2 = (abs(tested.miny() - miny) <= eps)
     b3 = (abs(tested.minz() - minz) <= eps)
@@ -5994,7 +6081,7 @@ def POSITIONTEST3D(tested, minx, miny, minz, eps = 0.0):
 # Checks if 2D objects "tested" and "ref" have the same 
 # minimum coordinates in the x, y directions, 
 # with a given tolerance:
-def POSITIONMATCH2D(tested, ref, eps = 0.0):
+def POSITIONMATCH2D(tested, ref, eps = 1e-8):
     b1 = (abs(tested.minx() - ref.minx()) <= eps)
     b2 = (abs(tested.miny() - ref.miny()) <= eps)
     return (b1 and b2)
@@ -6002,7 +6089,7 @@ def POSITIONMATCH2D(tested, ref, eps = 0.0):
 # Checks if 3D objects "tested" and "ref" have the same 
 # minimum coordinates in the x, y, z directions, 
 # with a given tolerance:
-def POSITIONMATCH3D(tested, ref, eps = 0.0):
+def POSITIONMATCH3D(tested, ref, eps = 1e-8):
     b1 = (abs(tested.minx() - ref.minx()) <= eps)
     b2 = (abs(tested.miny() - ref.miny()) <= eps)
     b3 = (abs(tested.minz() - ref.minz()) <= eps)
@@ -6148,3 +6235,8 @@ def REF_DOMAIN(a, b, m, n):
 def UNIT_SQUARE(n, m):
     #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
     return BASEOBJ(SIMPLEXGRID([1.0, 1.0])([m, n]))
+
+# Symbols for axes:
+X = 'X'
+Y = 'Y'
+Z = 'Z'

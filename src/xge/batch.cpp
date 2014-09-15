@@ -158,8 +158,8 @@ std::vector<SmartPointer<Batch> > Batch::Optimize(std::vector<SmartPointer<Batch
 	std::vector<SmartPointer<Batch> > ret;
 
 	Clock t1;
-	Log::printf("Optimizing the octree....\n");
-	Log::printf("   Number of input batches %d\n",(int)batches.size());
+	//Log::printf("Optimizing the octree....\n");
+	//Log::printf("   Number of input batches %d\n",(int)batches.size());
 
 	//calculate world box
 	Box3f world_box;
@@ -223,9 +223,9 @@ std::vector<SmartPointer<Batch> > Batch::Optimize(std::vector<SmartPointer<Batch
 		}
 	}
 
-	Log::printf("   total number vertices    %d\n",(int)tot_number_of_vertices);
-	Log::printf("   Number of output batches %d\n",(int)ret.size());
-	Log::printf("   Batch vertex media       %d\n",(int)(tot_number_of_vertices/(float)ret.size()));
+	//Log::printf("   total number vertices    %d\n",(int)tot_number_of_vertices);
+	//Log::printf("   Number of output batches %d\n",(int)ret.size());
+	//Log::printf("   Batch vertex media       %d\n",(int)(tot_number_of_vertices/(float)ret.size()));
 	//Log::printf("...done in %d msec\n",(int)t1.msec());
 	return ret;
 }

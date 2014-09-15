@@ -43,8 +43,8 @@ void Plasm::statistics(bool bReset)
 	int local_ncalls=0;
 
 
-	Log::printf("# of hpcs    %d\n",(int)xge_total_hpc);
-	Log::printf("total memory %d\n",(int)xge_total_memory);
+	//Log::printf("# of hpcs    %d\n",(int)xge_total_hpc);
+	//Log::printf("total memory %d\n",(int)xge_total_memory);
 
 	for (int i=0;i<PLASM___END;i++)
 	{
@@ -54,7 +54,7 @@ void Plasm::statistics(bool bReset)
 			global_msec  +=stats[i].global_msec;
 			local_ncalls +=stats[i].local_ncalls;
 			global_ncalls+=stats[i].global_ncalls;
-			Log::printf("[%32s] %6d/%6d msec %6d/%6d ncalls\n",function_names[i],stats[i].local_msec,stats[i].global_msec,stats[i].local_ncalls,stats[i].global_ncalls);
+			//Log::printf("[%32s] %6d/%6d msec %6d/%6d ncalls\n",function_names[i],stats[i].local_msec,stats[i].global_msec,stats[i].local_ncalls,stats[i].global_ncalls);
 		}
 	
 		if (bReset)
@@ -64,8 +64,8 @@ void Plasm::statistics(bool bReset)
 		}
 	}
 
-	Log::printf("[%32s] \n","---------------------");
-	Log::printf("[%32s] %6d/%6d msec %6d/%6d ncalls\n\n","Total",local_msec,global_msec,local_ncalls,global_ncalls);
+	//Log::printf("[%32s] \n","---------------------");
+	//Log::printf("[%32s] %6d/%6d msec %6d/%6d ncalls\n\n","Total",local_msec,global_msec,local_ncalls,global_ncalls);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -1469,7 +1469,7 @@ bool Plasm::save(SmartPointer<Hpc> node,std::string Filename)
 std::vector<SmartPointer<Batch> > Plasm::getBatches(SmartPointer<Hpc> src,bool bOptimize)
 {
 	Clock t1;
-	Log::printf("Building batches from Hpc....\n");
+	//Log::printf("Building batches from Hpc....\n");
 
 	std::vector<SmartPointer<Batch> > batches;
 
