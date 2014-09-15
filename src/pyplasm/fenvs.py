@@ -1145,7 +1145,7 @@ class BASEOBJ:
             # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
             #raise ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
         if axis == 1: plane_indexes = [2, 3]
-        elif axis == 2: plane_indexes = [1, 3]
+        elif axis == 2: plane_indexes = [3, 1]
         else: plane_indexes = [1, 2]
         # sanity check for the center point:
         if not isinstance(centerpoint, list):
