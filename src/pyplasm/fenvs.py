@@ -1140,7 +1140,7 @@ class BASEOBJ:
             axis = 3
         # check the axis:
         if axis != 1 and axis != 2 and axis != 3: 
-            raise ExceptionWT("The third argument of ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
+            raise ExceptionWT("The third argument of ROTATE must be either X (x-axis), Y (y-axis), or Z (z-axis)!")
 	#if self.dim == 2 and axis <> 3:
             # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
             #raise ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
@@ -1328,9 +1328,9 @@ def ERASE(obj, axis, minval, maxval):
         if axis == 3:
             if obj.dim == 2:
                  raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
-            obj.rotate(-90, 2)
-            obj.erasex(minval, maxval)
             obj.rotate(90, 2)
+            obj.erasex(minval, maxval)
+            obj.rotate(-90, 2)
     else:
         obj = flatten(obj) # flatten the rest as there may be structs
         for oo in obj:
@@ -1343,9 +1343,9 @@ def ERASE(obj, axis, minval, maxval):
             if axis == 3:
                 if oo.dim == 2:
                     raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
-                oo.rotate(-90, 2)
-                oo.erasex(minval, maxval)
                 oo.rotate(90, 2)
+                oo.erasex(minval, maxval)
+                oo.rotate(-90, 2)
     return COPY(obj)
 
 # ============================================================
@@ -1371,10 +1371,10 @@ def SPLIT(obj, axis, coord):
         if axis == 3:
             if obj.dim == 2:
                  raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
-            obj.rotate(-90, 2)
+            obj.rotate(90, 2)
             obj1, obj2 = obj.splitx(coord)
-            obj1.rotate(90, 2)
-            obj2.rotate(90, 2)
+            obj1.rotate(-90, 2)
+            obj2.rotate(-90, 2)
     else:
         obj = flatten(obj) # flatten the rest as there may be structs
         obj1 = []
@@ -1390,10 +1390,10 @@ def SPLIT(obj, axis, coord):
             if axis == 3:
                 if oo.dim == 2:
                     raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
-                oo.rotate(-90, 2)
+                oo.rotate(90, 2)
                 oo1, oo2 = oo.splitx(coord)
-                oo1.rotate(90, 2)
-                oo2.rotate(90, 2)
+                oo1.rotate(-90, 2)
+                oo2.rotate(-90, 2)
             obj1.append(oo1)
             obj2.append(oo2)
     return obj1, obj2
