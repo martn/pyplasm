@@ -1191,31 +1191,6 @@ class BASEOBJ:
         self.setcolor(self.color)
     def getdimension(self):
         return self.dim
-    def rotaterel(self, angle_deg, axis = 3):
-        if axis == 'x' or axis == 'X': axis = 1
-        if axis == 'y' or axis == 'Y': axis = 2
-        if axis == 'z' or axis == 'Z': axis = 3
-        if axis != 1 and axis != 2 and axis != 3: 
-          raise ExceptionWT("The third argument of the command ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
-	#if self.dim == 2 and axis <> 3:
-            # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
-            #raise ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
-        if self.dim != 2 and self.dim != 3:
-           raise ExceptionWT("Error in ROTATE: Object dimension must be either 2 or 3.")
-        if self.dim == 2:
-          x = 0.5 * (self.minx() + self.maxx())
-          y = 0.5 * (self.miny() + self.maxy())
-          self.move(-x, -y)
-          self.rotate(angle_deg, axis)
-          self.move(x, y)
-        else:
-          x = 0.5 * (self.minx() + self.maxx())
-          y = 0.5 * (self.miny() + self.maxy())
-          z = 0.5 * (self.minz() + self.maxz())
-          self.move(-x, -y, -z)
-          self.rotate(angle_deg, axis)
-          self.move(x, y, z)
-        self.setcolor(self.color)
     def scale(self, a, b, c = 1.0):
         if a <= 0 or b <= 0 or c <= 0:
             raise ExceptionWT("When scaling an object, all axial coefficients must be greater than zero!")
@@ -1999,7 +1974,6 @@ def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
         angle_deg = float(angle_deg)
     except ValueError:
         raise ExceptionWT("The second argument of ROTATE must be angle!")
-    obj.rotaterel(angle_deg, axis)
 
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
@@ -2044,23 +2018,6 @@ RUOTA = ROTATE
 # French:
 TOURNER = ROTATE
 TOURNE = ROTATE
-
-# ===================================================================
-# RELATIVE ROTATION - ABOUT THE OBJECT'S OWN CENTER - ONE OBJECT ONLY
-# ===================================================================
-
-# English:
-def RR(obj, angle_deg, axis = 3):
-    if axis == 'x' or axis == 'X': axis = 1
-    if axis == 'y' or axis == 'Y': axis = 2
-    if axis == 'z' or axis == 'Z': axis = 3
-    if isinstance(obj, list):
-        raise ExceptionWT("Command ROTATEREL (rotation about objects own center) can only be applied to a single object!")
-    obj.rotaterel(angle_deg, axis)
-    return COPY(obj)
-ROTATER = RR
-RREL = RR
-ROTATEREL = RR
 
 # ===================================================
 #; Applica uno shearing con vettore shearing-vector-list sulla variabile
