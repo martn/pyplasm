@@ -1050,6 +1050,10 @@ class BASEOBJ:
         self.geom = basegeom
         self.dim = PLASM_DIM(basegeom)
         self.material = [1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100]
+
+    def __getattr__(self, name):
+        raise ExceptionWT('Did you want to write "," (comma) instead of "." (period) before "%s" or did you misspeled "%s"?' % (name, name))
+
     def __repr__(self):
         return "Plasm %sD object" % self.dim
     def setmaterial(self, mat):
@@ -1946,6 +1950,10 @@ if self_test:
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN RADIANS)
 def ROTATERAD(obj, angle_rad, axis = 3, point = [0, 0, 0]):
+    try:
+        angle_rad = float(angle_rad)
+    except ValueError:
+        raise ExceptionWT("The second argument of ROTATERAD must be angle!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
@@ -1987,6 +1995,12 @@ TOURNERAD = ROTATERAD
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN DEGREES)
 def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
+    try:
+        angle_deg = float(angle_deg)
+    except ValueError:
+        raise ExceptionWT("The second argument of ROTATE must be angle!")
+    obj.rotaterel(angle_deg, axis)
+
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
@@ -5435,8 +5449,10 @@ if self_test:
 
 # Change it to procedural style:
 # English:
-def COLOR(obj, col):
+def COLOR(obj, col = None):
   # obj may be a single object or a list of objects
+  if col is None:
+    raise ExceptionWT("The COLOR command takes two arguments: object and the color.")
   if not isinstance(obj, list):
     obj.setcolor(col)
   else:
