@@ -5983,8 +5983,7 @@ def ISINBOX2D(tested, minx, maxx, miny, maxy, tol = 1e-8):
 
 # Returns True if entire 3D box "box3d" lies in object "tested":
 def HASBOX3D(tested, centerx, centery, centerz, sizex, sizey, sizez):
-    box3d = BRICK(sizex, sizey, sizez)
-    MOVE(box3d, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
+    box3d = BOX(centerx - 0.5*sizex, centerx + 0.5*sizex, centery - 0.5*sizey, centery + 0.5*sizey, centerz - 0.5*sizez, centerz + 0.5*sizez)
     return SUBSET(box3d, tested)
 
 # Returns True if no part of the 3D box "box3d" lies in object "tested":
