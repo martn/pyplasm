@@ -5532,6 +5532,8 @@ BRONZE =  [140, 120, 83]
 SILVER =  [230, 232, 250]
 GOLD =    [226, 178, 39]
 
+WOOD = [195, 148, 89]
+
 # Czech:
 SEDA = GRAY
 SEDIVA = GRAY
