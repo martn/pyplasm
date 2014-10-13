@@ -1137,9 +1137,10 @@ class BASEOBJ:
         if axis == 'x' or axis == 'X': axis = 1
         if axis == 'y' or axis == 'Y': axis = 2
         if axis == 'z' or axis == 'Z': axis = 3
-        # this is a bit nasty but it allows to give center point without the axis in 2D:
+        # this is a bit nasty but it allows to skip axis (it will be Z) and 
+        # give just the center point:
         centerpoint = point
-        if self.dim == 2 and isinstance(axis, list):
+        if isinstance(axis, list):
             centerpoint = axis
             axis = 3
         # check the axis:
