@@ -2207,9 +2207,49 @@ def PLASM_INTERSECTION (objs_list):
 
 PLASM_I = PLASM_INTERSECTION
 
-# NEW DEFINITION (ALLOWS OMITTING BRACKETS)
-# English:
-def INTERSECTION(*args):
+# Just two objects, no list. 
+# Result will have the color of the first object:
+def BINARYINTERSECTION(a, b):
+    if isinstance(a, list): 
+        raise ExceptionWT("Lists are not allowed in BINARYINTERSECTION().")
+    if isinstance(b, list): 
+        raise ExceptionWT("Lists are not allowed in BINARYINTERSECTION().")
+    col = a.getcolor()
+    c = PLASM_INTERSECTION([a, b])
+    COLOR(c, col)
+    return c
+
+def INTERSECTION(a, b):
+    if isinstance(a, list): 
+        if a == []: raise ExceptionWT("In your INTERSECTION command, the first object is empty.")
+        a = flatten(a)
+    if isinstance(b, list): 
+        if b == []: raise ExceptionWT("In your INTERSECTION command, the second object is empty.")
+        b = flatten(b)
+    # a is single object, b is single object:
+    if not isinstance(a, list) and not isinstance(b, list):
+        return BINARYINTERSECTION(a, b)
+    # a is single object, b is a list:
+    if not isinstance(a, list) and isinstance(b, list):
+        res = []
+        for y in b:
+            res.append(BINARYINTERSECTION(a, y))
+        return res
+    # a is a list, b is single object:
+    if isinstance(a, list) and not isinstance(b, list):
+        res = []
+        for x in a:
+            res.append(BINARYINTERSECTION(x, b))
+        return res
+    # a is a list, b is a list:
+    if isinstance(a, list) and isinstance(b, list):
+        res = []
+        for x in a:
+            for y in b:
+                res.append(BINARYINTERSECTION(x, y))
+        return res
+
+def INTERSECTIONOLDUNUSED(*args):
     list1 = list(args)
     l = len(list1)
     if l < 2: 
@@ -5949,7 +5989,16 @@ def IS3D(tested):
 
 # Is a set an empty set?
 def EMPTYSET(obj):
-  l = len(Plasm.getBatches(obj.geom))
+  l = 0
+  if isinstance(obj, list):
+    maxlen = 0
+    flatobj = flatten(obj)
+    for x in flatobj:
+      if len(Plasm.getBatches(x.geom)) > maxlen:
+        maxlen = len(Plasm.getBatches(x.geom))
+    l = maxlen
+  else:
+    l = len(Plasm.getBatches(obj.geom))
   if l == 0: return True
   else: return False
 
