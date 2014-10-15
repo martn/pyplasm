@@ -1276,13 +1276,44 @@ class BASEOBJ:
 # ===================
 
 def SIZEX(obj):
-    return obj.sizex()
+    if not isinstance(obj, list):
+        return obj.sizex()
+    else:
+        flatobj = flatten(obj)
+        x = flatobj[0]
+        minx = MIN(1)(x.geom)
+        maxx = MAX(1)(x.geom)
+        for x in flatobj:
+            if minx > MIN(1)(x.geom): minx = MIN(1)(x.geom)
+            if maxx < MAX(1)(x.geom): maxx = MAX(1)(x.geom)
+        return maxx - minx
 
 def SIZEY(obj):
-    return obj.sizey()
+    if not isinstance(obj, list):
+        return obj.sizey()
+    else:
+        flatobj = flatten(obj)
+        x = flatobj[0]
+        miny = MIN(2)(x.geom)
+        maxy = MAX(2)(x.geom)
+        for x in flatobj:
+            if miny > MIN(2)(x.geom): miny = MIN(2)(x.geom)
+            if maxy < MAX(2)(x.geom): maxy = MAX(2)(x.geom)
+        return maxy - miny
 
 def SIZEZ(obj):
-    return obj.sizez()
+    if not isinstance(obj, list):
+        return obj.sizez()
+    else:
+        flatobj = flatten(obj)
+        x = flatobj[0]
+        minz = MIN(3)(x.geom)
+        maxz = MAX(3)(x.geom)
+        for x in flatobj:
+            if minz > MIN(3)(x.geom): minz = MIN(3)(x.geom)
+            if maxz < MAX(3)(x.geom): maxz = MAX(3)(x.geom)
+        return maxz - minz
+
 
 # ===========================================================
 # ERASE(obj, axis, min, max) - ERASE PART OF OBJECT THAT LIES 
