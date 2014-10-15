@@ -2215,7 +2215,7 @@ def BINARYINTERSECTION(a, b):
     if isinstance(b, list): 
         raise ExceptionWT("Lists are not allowed in BINARYINTERSECTION().")
     col = a.getcolor()
-    c = PLASM_INTERSECTION([a, b])
+    c = PLASM_INTERSECTION([a.geom, b.geom])
     COLOR(c, col)
     return c
 
