@@ -1276,44 +1276,13 @@ class BASEOBJ:
 # ===================
 
 def SIZEX(obj):
-    if not isinstance(obj, list):
-        return obj.sizex()
-    else:
-        flatobj = flatten(obj)
-        x = flatobj[0]
-        minx = MIN(1)(x.geom)
-        maxx = MAX(1)(x.geom)
-        for x in flatobj:
-            if minx > MIN(1)(x.geom): minx = MIN(1)(x.geom)
-            if maxx < MAX(1)(x.geom): maxx = MAX(1)(x.geom)
-        return maxx - minx
+    return MAXX(obj) - MINX(obj)
 
 def SIZEY(obj):
-    if not isinstance(obj, list):
-        return obj.sizey()
-    else:
-        flatobj = flatten(obj)
-        x = flatobj[0]
-        miny = MIN(2)(x.geom)
-        maxy = MAX(2)(x.geom)
-        for x in flatobj:
-            if miny > MIN(2)(x.geom): miny = MIN(2)(x.geom)
-            if maxy < MAX(2)(x.geom): maxy = MAX(2)(x.geom)
-        return maxy - miny
+    return MAXY(obj) - MINY(obj)
 
 def SIZEZ(obj):
-    if not isinstance(obj, list):
-        return obj.sizez()
-    else:
-        flatobj = flatten(obj)
-        x = flatobj[0]
-        minz = MIN(3)(x.geom)
-        maxz = MAX(3)(x.geom)
-        for x in flatobj:
-            if minz > MIN(3)(x.geom): minz = MIN(3)(x.geom)
-            if maxz < MAX(3)(x.geom): maxz = MAX(3)(x.geom)
-        return maxz - minz
-
+    return MAXZ(obj) - MINZ(obj)
 
 # ===========================================================
 # ERASE(obj, axis, min, max) - ERASE PART OF OBJECT THAT LIES 
@@ -6085,31 +6054,31 @@ def ISINBOX3D(tested, minx, maxx, miny, maxy, minz, maxz, tol = 1e-8):
 # Checks if 2D object "tested" has dimensions sizex, sizey
 # with a given tolerance:
 def SIZETEST2D(tested, sizex, sizey, eps = 1e-8):
-    a1 = (abs(tested.sizex() - sizex) <= eps)
-    a2 = (abs(tested.sizey() - sizey) <= eps)
+    a1 = (abs(SIZEX(tested) - sizex) <= eps)
+    a2 = (abs(SIZEY(tested) - sizey) <= eps)
     return (a1 and a2)
 
 # Checks if 3D object "tested" has dimensions sizex, sizey, sizez
 # with a given tolerance:
 def SIZETEST3D(tested, sizex, sizey, sizez, eps = 1e-8):
-    a1 = (abs(tested.sizex() - sizex) <= eps)
-    a2 = (abs(tested.sizey() - sizey) <= eps)
-    a3 = (abs(tested.sizez() - sizez) <= eps)
+    a1 = (abs(SIZEX(tested) - sizex) <= eps)
+    a2 = (abs(SIZEY(tested) - sizey) <= eps)
+    a3 = (abs(SIZEZ(tested) - sizez) <= eps)
     return (a1 and a2 and a3)
 
 # Checks if 2D objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
 def SIZEMATCH2D(tested, ref, eps = 1e-8):
-    a1 = (abs(tested.sizex() - ref.sizex()) <= eps)
-    a2 = (abs(tested.sizey() - ref.sizey()) <= eps)
+    a1 = (abs(SIZEX(tested) - SIZEX(ref)) <= eps)
+    a2 = (abs(SIZEY(tested) - SIZEY(ref)) <= eps)
     return (a1 and a2)
 
 # Checks if 3D objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
 def SIZEMATCH3D(tested, ref, eps = 1e-8):
-    a1 = (abs(tested.sizex() - ref.sizex()) <= eps)
-    a2 = (abs(tested.sizey() - ref.sizey()) <= eps)
-    a3 = (abs(tested.sizez() - ref.sizez()) <= eps)
+    a1 = (abs(SIZEX(tested) - SIZEX(ref)) <= eps)
+    a2 = (abs(SIZEY(tested) - SIZEY(ref)) <= eps)
+    a3 = (abs(SIZEZ(tested) - SIZEZ(ref)) <= eps)
     return (a1 and a2 and a3)
 
 # Checks if 2D object "tested" has given minx, miny 
