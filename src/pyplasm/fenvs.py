@@ -2764,7 +2764,21 @@ if self_test:
 	assert(MID(1)(Plasm.cube(2))==0.5)
 	assert(MID([1,3])(Plasm.cube(3))==[0.5,0.5])
 
+# ======
+# GETDIM
+# ======
 
+# Returns -1 if this is a list and dimensions are mixed:
+def GETDIM(obj):
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        dim = obj[0].dim
+        n = len(obj)
+        for i in range(1, n):
+           if dim != obj[i].dim:
+               return -1
+        return dim
+    else: return obj.dim
 
 # ======================================
 # identity matrix
