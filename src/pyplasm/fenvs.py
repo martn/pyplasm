@@ -951,7 +951,7 @@ class BASEOBJ:
         self.material = [1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100]
 
     def __getattr__(self, name):
-        raise ExceptionWT('Did you want to write "," (comma) instead of "." (period) before "%s" or did you misspeled "%s"?' % (name, name))
+        raise ExceptionWT('Did you want to write "," (comma) instead of "." (period) before "%s" or did you misspell "%s"?' % (name, name))
 
     def __repr__(self):
         return "Plasm %sD object" % self.dim
@@ -972,7 +972,7 @@ class BASEOBJ:
         if type(color) is list:
           # Sanity checks:
           if len(color) <> 3 and len(color) <> 4:
-            raise ExceptionWT("Color must be a list of length 3 (R, G, B) or 4 (R, G, B, A)!")
+            raise ExceptionWT("Color must be a list of length 3 [R, G, B] or 4 [R, G, B, A]!")
           if color[0] < 0 or color[0] > 255 or color[1] < 0 or color[1] > 255 or color[2] < 0 or color[2] > 255:
             raise ExceptionWT("RGB values in color definition must lie between 0 and 255!")
           if len(color) == 4:
@@ -1712,12 +1712,16 @@ if self_test:
 # TRANSLATE EITHER ONE OBJECT OR LIST OF OBJECTS
 def TRANSLATE(obj, t1, t2, t3 = 0):
     if not isinstance(obj, list):
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("First argument of the MOVE command must be a 2D or 3D object.")
         obj.move(t1, t2, t3)
         return COPY(obj)
     else:
         obj = flatten(obj)
         newobj = []
         for oo in obj: 
+            if not isinstance(oo, BASEOBJ):
+                raise ExceptionWT("First argument of the MOVE command must be a 2D or 3D object.")
             oo.move(t1, t2, t3)
             newobj.append(COPY(oo))
         return newobj
@@ -1778,10 +1782,14 @@ if self_test:
 # SCALE ONE OBJECT OR A LIST
 def SCALE(obj, a, b, c = 1):
     if not isinstance(obj, list):
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("First argument of the SCALE command must be a 2D or 3D object.")
         obj.scale(a, b, c)
     else:
         obj = flatten(obj)
         for oo in obj: 
+            if not isinstance(oo, BASEOBJ):
+                raise ExceptionWT("First argument of the SCALE command must be a 2D or 3D object.")
             oo.scale(a, b, c)
     return COPY(obj)
 
@@ -1833,10 +1841,14 @@ def ROTATERAD(obj, angle_rad, axis = 3, point = [0, 0, 0]):
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
     if not isinstance(obj, list):
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("First argument of the ROTATE command must be a 2D or 3D object.")
         obj.rotaterad(angle_rad, axis, point)
     else:
         obj = flatten(obj)
         for oo in obj: 
+            if not isinstance(oo, BASEOBJ):
+                raise ExceptionWT("First argument of the ROTATE command must be a 2D or 3D object.")
             oo.rotaterad(angle_rad, axis, point)
     return COPY(obj)
     
@@ -2213,16 +2225,30 @@ def SUBTRACT(a, b):
         if b == []: raise ExceptionWT("Are you trying to subtract an empty list of objects from an object?")
     # a is single object, b is single object:
     if not isinstance(a, list) and not isinstance(b, list):
+        if not isinstance(a, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
+        if not isinstance(b, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         a.subtract(b)
         return COPY(a)
     # a is single object, b is a list:
     if not isinstance(a, list) and isinstance(b, list):
         flatb = flatten(b) # flatten the list as there may be structs
+        for x in flatb:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
+        if not isinstance(a, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         a.subtract(flatb)
         return COPY(a)
     # a is a list, b is single object:
     if isinstance(a, list) and not isinstance(b, list):
+        if not isinstance(b, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         flata = flatten(a) # flatten the list as there may be structs
+        for x in flata:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         newlist = []
         for x in flata:
             x.subtract(b)
@@ -2231,7 +2257,13 @@ def SUBTRACT(a, b):
     # a is a list, b is a list:
     if isinstance(a, list) and isinstance(b, list):
         flata = flatten(a) # flatten the list as there may be structs
+        for x in flata:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         flatb = flatten(b) # flatten the list as there may be structs
+        for x in flatb:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         newlist = []
         for x in flata:
             x.subtract(flatb)
@@ -2268,16 +2300,30 @@ def DIFFERENCE(a, b):
         if b == []: raise ExceptionWT("Are you trying to subtract an empty list of objects from an object?")
     # a is single object, b is single object:
     if not isinstance(a, list) and not isinstance(b, list):
+        if not isinstance(a, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
+        if not isinstance(b, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         out = a.diff(b)
         return out
     # a is single object, b is a list:
     if not isinstance(a, list) and isinstance(b, list):
         flatb = flatten(b) # flatten the list as there may be structs
+        for x in flatb:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
+        if not isinstance(a, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         out = a.diff(flatb)
         return out
     # a is a list, b is single object:
     if isinstance(a, list) and not isinstance(b, list):
         flata = flatten(a) # flatten the list as there may be structs
+        for x in flata:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
+        if not isinstance(b, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         newlist = []
         for x in flata:
             out = x.diff(b)
@@ -2286,7 +2332,13 @@ def DIFFERENCE(a, b):
     # a is a list, b is a list:
     if isinstance(a, list) and isinstance(b, list):
         flata = flatten(a) # flatten the list as there may be structs
+        for x in flata:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         flatb = flatten(b) # flatten the list as there may be structs
+        for x in flatb:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         newlist = []
         for x in flata:
             out = x.diff(flatb)
@@ -3353,6 +3405,42 @@ TORO = TORUS
 # Same as in Spanish
 # French:
 TORE = TORUS
+
+# =============================================
+# ELBOW - SOLID
+# =============================================
+
+def PLASM_SOLIDELBOW (radiusandangle):
+    r1, r2, angle = radiusandangle
+    angle = angle*PI/180
+    def PLASM_ELBOW0 (subdomains):
+        N, M, P = subdomains
+        a=0.5*(r2-r1)
+        c=0.5*(r1+r2)
+        domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(angle)(N), PLASM_INTERVALS(2*PI)(M), PLASM_INTERVALS(1)(P)])
+        fx =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.cos(p[0])
+        fy =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.sin(p[0])
+        fz =   lambda p: p[2]*a*math.sin(p[1])
+        return PLASM_MAP(([fx,fy,fz]))(domain)
+    return PLASM_ELBOW0
+
+# NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+def ELBOW(r1, r2, angle, divisions = [24, 12]):
+    if angle <= 0: 
+        raise ExceptionWT("Angle in ELBOW(r1, r2, angle) must be positive!")
+    if r1 <= 0: 
+        raise ExceptionWT("Inner radius r1 in ELBOW(r1, r2, angle) must be positive!")
+    if r2 <= 0: 
+        raise ExceptionWT("Outer radius r2 in ELBOW(r1, r2, angle) must be positive!")
+    if r2 <= r1: 
+        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in ELBOW(r1, r2, angle)!")
+    divisionslist = divisions
+    if not isinstance(divisions, list): 
+        if divisions/2 <= 0:
+            raise ExceptionWT("Bad division in the ELBOW command!")
+        divisionslist = [divisions, divisions/2]
+    return BASEOBJ(PLASM_SOLIDELBOW([r1, r2, angle])([divisionslist[0], divisionslist[1], 1]))
+
 
 # =============================================
 # CONE
