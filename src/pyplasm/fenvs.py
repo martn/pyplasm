@@ -1283,11 +1283,15 @@ def SPLIT(obj, axis, coord):
 
 def COPY(obj):
     if not isinstance(obj, list):
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("Invalid object found in the COPY command.")
         return copy.copy(obj)
     else:
         obj1 = flatten(obj) # flatten the rest as there may be structs
         newlist = []
         for x in obj1:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object found in the COPY command.")
             newlist.append(copy.copy(x))
         return newlist
 
@@ -5453,10 +5457,15 @@ def COLOR(obj, col = None):
   if col is None:
     raise ExceptionWT("The COLOR command takes two arguments: object and the color.")
   if not isinstance(obj, list):
+    if not isinstance(obj, BASEOBJ):
+        raise ExceptionWT("Invalid object found in the COLOR command.")
     obj.setcolor(col)
   else:
     obj = flatten(obj)
-    for x in obj: x.setcolor(col)
+    for x in obj: 
+        if not isinstance(x, BASEOBJ):
+            raise ExceptionWT("Invalid object found in the COLOR command.")
+        x.setcolor(col)
   return COPY(obj)
 
 C = COLOR
