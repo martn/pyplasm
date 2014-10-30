@@ -1311,8 +1311,6 @@ def SPLIT(obj, axis, coord):
 # COPYING OBJECTS AND LISTS OF OBJECTS (LISTS ARE FLATTENED
 # =========================================================
 
-def copy(*args):
-    raise ExceptionWT("Command copy() is undefined. Try COPY() instead?")
 def COPY(obj):
     if not isinstance(obj, list):
         if not isinstance(obj, BASEOBJ):
@@ -1963,25 +1961,25 @@ def ROTATERAD(obj, angle_rad, axis = 3, point = [0, 0, 0]):
     # give just the center point:
     centerpoint = point
     if isinstance(axis, list):
-        point = axis
+        centerpoint = axis
         axis = 3
     if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != '1' and axis != '2' and axis != '3':
         raise ExceptionWT("Invalid axis in ROTATERAD(obj, angle, axis)!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
-    if not isinstance(point, list):
+    if not isinstance(centerpoint, list):
         raise ExceptionWT("The rotation point in ROTATERAD(obj, angle, axis, point) must be a list (use square brackets)!")
     if not isinstance(obj, list):
         if not isinstance(obj, BASEOBJ):
             raise ExceptionWT("Argument obj in ROTATERAD(obj, angle, axis) must be a 2D or 3D object!")
-        obj.rotaterad(angle_rad, axis, point)
+        obj.rotaterad(angle_rad, axis, centerpoint)
     else:
         obj = flatten(obj)
         for oo in obj: 
             if not isinstance(oo, BASEOBJ):
                 raise ExceptionWT("Argument obj in ROTATERAD(obj, angle, axis) must be a 2D or 3D object!")
-            oo.rotaterad(angle_rad, axis, point)
+            oo.rotaterad(angle_rad, axis, centerpoint)
     return COPY(obj)
     
 RRAD = ROTATERAD
@@ -2022,24 +2020,25 @@ def ROTATE(obj, angle_deg, axis = 3, point = [0, 0, 0]):
     # give just the center point:
     centerpoint = point
     if isinstance(axis, list):
-        point = axis
+        centerpoint = axis
         axis = 3
     if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != '1' and axis != '2' and axis != '3':
+        #print "Axis is:", axis
         raise ExceptionWT("Invalid axis in ROTATE(obj, angle, axis)!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
-    if not isinstance(point, list):
+    if not isinstance(centerpoint, list):
         raise ExceptionWT("The rotation point in ROTATE(obj, angle, axis, point) must be a list (use square brackets)!")
     if not isinstance(obj, list):
-        obj.rotate(angle_deg, axis, point)
+        obj.rotate(angle_deg, axis, centerpoint)
         return COPY(obj)
     else:
         obj = flatten(obj)
         newobj = []
         for oo in obj: 
             # Just a comment to test git:
-            oo.rotate(angle_deg, axis, point)
+            oo.rotate(angle_deg, axis, centerpoint)
             newobj.append(COPY(oo))
         return newobj
 
