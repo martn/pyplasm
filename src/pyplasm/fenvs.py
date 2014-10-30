@@ -34,7 +34,6 @@ print __file__
 
 from pyplasm.xge import *
 
-	
 #===================================================== 
 # Configuration for plasm
 #
@@ -925,6 +924,8 @@ def VIEWBASE(objects):
     nclabinst.visualize(nclabinst.converter(geoms))
 
 # English:
+def show(*args):
+    raise ExceptionWT("Command show() is undefined. Try SHOW() instead?")
 def SHOW(*args):
     sequence = flatten(*args)
     for obj in sequence:
@@ -1174,12 +1175,18 @@ class BASEOBJ:
 # SIZEX, SIZEY, SIZEZ
 # ===================
 
+def sizex(*args):
+    raise ExceptionWT("Command sizex() is undefined. Try SIZEX() instead?")
 def SIZEX(obj):
     return MAXX(obj) - MINX(obj)
 
+def sizey(*args):
+    raise ExceptionWT("Command sizey() is undefined. Try SIZEY() instead?")
 def SIZEY(obj):
     return MAXY(obj) - MINY(obj)
 
+def sizez(*args):
+    raise ExceptionWT("Command sizez() is undefined. Try SIZEZ() instead?")
 def SIZEZ(obj):
     return MAXZ(obj) - MINZ(obj)
 
@@ -1188,6 +1195,8 @@ def SIZEZ(obj):
 # BETWEEN MIN AND MAX in AXIAL DIRECTION "axis"
 # ===========================================================
 
+def erase(*args):
+    raise ExceptionWT("Command erase() is undefined. Try ERASE() instead?")
 def ERASE(obj, axis, minval, maxval):
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
@@ -1232,6 +1241,8 @@ def ERASE(obj, axis, minval, maxval):
 # "axis" INTO TWO PARTS SEPARATED AT COORDINATE "coord"
 # ============================================================
 
+def split(*args):
+    raise ExceptionWT("Command split() is undefined. Try SPLIT() instead?")
 def SPLIT(obj, axis, coord):
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
@@ -1281,6 +1292,8 @@ def SPLIT(obj, axis, coord):
 # COPYING OBJECTS AND LISTS OF OBJECTS (LISTS ARE FLATTENED
 # =========================================================
 
+def copy(*args):
+    raise ExceptionWT("Command copy() is undefined. Try COPY() instead?")
 def COPY(obj):
     if not isinstance(obj, list):
         if not isinstance(obj, BASEOBJ):
@@ -1311,6 +1324,8 @@ COPIE = COPY
 # CUBOID
 # ===================================================
 
+def cuboid(*args):
+    raise ExceptionWT("Command cuboid() is undefined. Try CUBOID() instead?")
 def CUBOID (sizes_list):
     dim = len(sizes_list)
     pol = Plasm.scale(Plasm.cube(dim), Vecf([0.0] + sizes_list))
@@ -1323,6 +1338,8 @@ if self_test:
 # CUBE
 # ===================================================
 
+def cube(*args):
+    raise ExceptionWT("Command cube() is undefined. Try CUBE() instead?")
 def CUBE(size):
     if size <= 0: 
         raise ExceptionWT("CUBE(x) requires a positive value of x!")
@@ -1347,6 +1364,8 @@ CUBO = CUBE
 # SQUARE
 # ===================================================
 
+def square(*args):
+    raise ExceptionWT("Command square() is undefined. Try SQUARE() instead?")
 def SQUARE(size):
     if size <= 0: 
         raise ExceptionWT("SQUARE(x) requires a positive value of x!")
@@ -1370,6 +1389,8 @@ CARRE = SQUARE
 # SQUARE3D
 # ===================================================
 
+def square3d(*args):
+    raise ExceptionWT("Command square3d() is undefined. Try SQUARE3D() instead?")
 def SQUARE3D (a):
     if a <= 0: 
         raise ExceptionWT("SQUARE3D(x) requires a positive value of x!")
@@ -1396,6 +1417,8 @@ CARRE3D = SQUARE3D
 # BRICK, BOX
 # ===================================================
 
+def box(*args):
+    raise ExceptionWT("Command box() is undefined. Try BOX() instead?")
 def BOX(*args):   
     list1 = list(args)
     list1 == flatten(list1)
@@ -1469,6 +1492,8 @@ BOITE = BRICK
 # RECTANGLE
 # ===================================================
 
+def rectangle(*args):
+    raise ExceptionWT("Command rectangle() is undefined. Try RECTANGLE() instead?")
 def RECTANGLE(a, b):
     if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE(x, y) requires positive dimensions x, y!")
     return BASEOBJ(CUBOID([a, b]))
@@ -1492,6 +1517,8 @@ RETTANGOLO = RECTANGLE
 # RECTANGLE3D
 # ===================================================
 
+def rectangle3d(*args):
+    raise ExceptionWT("Command rectangle3d() is undefined. Try RECTANGLE3D() instead?")
 def RECTANGLE3D(a, b):
     if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE3D(x, y) requires positive dimensions x, y!")
     # height is kept the same for add these thin objects,
@@ -1516,6 +1543,8 @@ RETTANGOLO3D = RECTANGLE3D
 # HEXAHEDRON
 # ===================================================
 
+def hexahedron(*args):
+    raise ExceptionWT("Command hexahedron() is undefined. Try HEXAHEDRON() instead?")
 def HEXAHEDRON(size):
     if size <= 0: raise ExceptionWT("HEXAHEDRON(x) requires a positive value of x!")
     c = CUBE(size)
@@ -1548,6 +1577,8 @@ if self_test:
 	assert(Plasm.limits(PLASM_SIMPLEX(3))==Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1)))
 
 # NEW DEFINITION:
+def simplex(*args):
+    raise ExceptionWT("Command simplex() is undefined. Try SIMPLEX() instead?")
 def SIMPLEX (dim):
     return BASEOBJ(Plasm.simplex(dim))
 
@@ -1607,15 +1638,17 @@ def PLASM_CONVEXHULL (points):
     return MKPOL([points, [range(1,len(points)+1)], [[1]]])
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
-def CONVEXHULL(*args):
+def chull(*args):
+    raise ExceptionWT("Command chull() is undefined. Try CHULL() instead?")
+def CHULL(*args):
     list1 = list(args)
     if len(list1) == 1 and isinstance(list1[0], list) and isinstance(list1[0][0], list):    # User supplied a list of points
         list1 = list1[0]
-    if len(list1) <= 2: raise ExceptionWT("CONVEXHULL(...) requires at least three points!")
+    if len(list1) <= 2: raise ExceptionWT("CHULL(...) requires at least three points!")
     return BASEOBJ(PLASM_CONVEXHULL(list1))
 
 # English:
-CHULL = CONVEXHULL
+CONVEXHULL = CHULL
 CONVEX = CHULL
 CH = CHULL
 SPAN = CHULL
@@ -1714,7 +1747,9 @@ if self_test:
 # NEW DEFINITION:
 # English:
 # TRANSLATE EITHER ONE OBJECT OR LIST OF OBJECTS
-def TRANSLATE(obj, t1, t2, t3 = 0):
+def move(*args):
+    raise ExceptionWT("Command move() is undefined. Try MOVE() instead?")
+def MOVE(obj, t1, t2, t3 = 0):
     if not isinstance(obj, list):
         if not isinstance(obj, BASEOBJ):
             raise ExceptionWT("First argument of the MOVE command must be a 2D or 3D object.")
@@ -1730,8 +1765,8 @@ def TRANSLATE(obj, t1, t2, t3 = 0):
             newobj.append(COPY(oo))
         return newobj
 
-T = TRANSLATE
-MOVE = TRANSLATE
+TRANSLATE = MOVE
+T = MOVE
 M = MOVE
 SHIFT = TRANSLATE
 # Czech:
@@ -1784,6 +1819,8 @@ if self_test:
 # NEW DEFINITION:
 # English:
 # SCALE ONE OBJECT OR A LIST
+def scale(*args):
+    raise ExceptionWT("Command scale() is undefined. Try SCALE() instead?")
 def SCALE(obj, a, b, c = 1):
     if not isinstance(obj, list):
         if not isinstance(obj, BASEOBJ):
@@ -1836,6 +1873,8 @@ if self_test:
 # NEW DEFINITION
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN RADIANS)
+def rotaterad(*args):
+    raise ExceptionWT("Command rotaterad() is undefined. Try ROTATERAD() instead?")
 def ROTATERAD(obj, angle_rad, axis = 3, point = [0, 0, 0]):
     try:
         angle_rad = float(angle_rad)
@@ -1885,6 +1924,10 @@ TOURNERAD = ROTATERAD
 
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN DEGREES)
+def rotatedeg(*args):
+    raise ExceptionWT("Command rotatedeg() is undefined. Try ROTATEDEG() instead?")
+def rotate(*args):
+    raise ExceptionWT("Command rotate() is undefined. Try ROTATE() instead?")
 def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
     try:
         angle_deg = float(angle_deg)
@@ -2023,6 +2066,8 @@ if self_test:
 # English:
 # NEW DEFINITION - STRUCT IS JUST A LIST, IT CAN BE EASILY DECOMPOSED
 # BACK INTO INDIVIDUAL OBJECTS WHICH IS VERY MUCH NEEDED
+def struct(*args):
+    raise ExceptionWT("Command struct() is undefined. Try STRUCT() instead?")
 def STRUCT(*args):
     list1 = list(args)
     list1 = flatten(list1) # flatten the rest as there may be structs
@@ -2067,6 +2112,8 @@ def PLASM_UNION(objs_list):
 # WELD = HARD UNION (ORIGINAL, COMPUTATIONALLY EXPENSIVE)
 # ===================================================
 
+def weld(*args):
+    raise ExceptionWT("Command weld() is undefined. Try WELD() instead?")
 def WELD(*args):
     objs = list(args)
     objs = flatten(objs)
@@ -2084,6 +2131,8 @@ def WELD(*args):
 # ===================================================
 
 # NEW DEFINITION - UNION IS JUST STRUCT
+def union(*args):
+    raise ExceptionWT("Command union() is undefined. Try UNION() instead?")
 def UNION(*args):
     list1 = list(args)
     list1 = flatten(list1) # flatten the rest as there may be structs
@@ -2134,6 +2183,8 @@ def BINARYINTERSECTION(a, b):
     COLOR(c, col)
     return c
 
+def intersection(*args):
+    raise ExceptionWT("Command intersection() is undefined. Try INTERSECTION() instead?")
 def INTERSECTION(a, b):
     if isinstance(a, list): 
         if a == []: raise ExceptionWT("In your INTERSECTION command, the first object is empty.")
@@ -2222,6 +2273,8 @@ PLASM_DIFF = PLASM_DIFFERENCE
 
 # SUBTRACT IS ALWAYS BINARY BUT EITHER ITEM CAN BE A LIST.
 # SECOND OBJECT IS SUBTRACTED FROM THE FIRST, AND THE FIRST OBJECT CHANGES:
+def subtract(*args):
+    raise ExceptionWT("Command subtract() is undefined. Try SUBTRACT() instead?")
 def SUBTRACT(a, b):
     if isinstance(a, list): 
         if a == []: raise ExceptionWT("Are you trying to subtract an object from an empty list of objects?")
@@ -2297,6 +2350,10 @@ SOUSTRAIS = SUBTRACT
 
 # DIFF IS ALWAYS BINARY BUT EITHER ITEM CAN BE A LIST.
 # RETURNS DIFFERENCE OF OBJECTS, DOES NOT CHANGE OBJECTS:
+def difference(*args):
+    raise ExceptionWT("Command difference() is undefined. Try DIFFERENCE() instead?")
+def diff(*args):
+    raise ExceptionWT("Command diff() is undefined. Try DIFF() instead?")
 def DIFFERENCE(a, b):
     if isinstance(a, list): 
         if a == []: raise ExceptionWT("Are you trying to subtract an object from an empty list of objects?")
@@ -2376,6 +2433,8 @@ def PLASM_XOR(objs_list):
     return result
 
 # NEW DEFINITION, JUST FOR TWO OBJECTS
+def xor(*args):
+    raise ExceptionWT("Command xor() is undefined. Try XOR() instead?")
 def XOR(a, b):
     L = []
     L.append(DIFF(a, b))    
@@ -2400,6 +2459,8 @@ if self_test:
 	assert(Plasm.limits(PLASM_JOIN([Plasm.cube(2,0,1)])).fuzzyEqual(Boxf(Vecf(1,0,0),Vecf(1,1,1))))
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS FOR TWO OBJECTS)
+def join(*args):
+    raise ExceptionWT("Command join() is undefined. Try JOIN() instead?")
 def JOIN(a, b = None):
     if b != None:
         return PLASM_JOIN([a, b])
@@ -2426,6 +2487,10 @@ if self_test:
 	assert(Plasm.limits(PLASM_POWER([Plasm.cube(2),Plasm.cube(1)])).fuzzyEqual(Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1))))
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+def product(*args):
+    raise ExceptionWT("Command product() is undefined. Try PRODUCT() instead?")
+def power(*args):
+    raise ExceptionWT("Command power() is undefined. Try POWER() instead?")
 def PRODUCT(*args):
     list1 = list(args)
     list1 = flatten(list1)
@@ -2521,6 +2586,8 @@ def PLASM_GRID (*args):
 PLASM_QUOTE = PLASM_GRID
 
 # NEW DEFINITION:
+def grid(*args):
+    raise ExceptionWT("Command grid() is undefined. Try GRID() instead?")
 def GRID(*args):
     sequence = flatten(*args)
     if len(sequence) == 0: 
@@ -2573,6 +2640,8 @@ if self_test:
     assert Plasm.limits(PLASM_INTERVALS(10)(8))==Boxf(Vecf([1,0]),Vecf([1,10]))
 
 # NEW DEFINITION:
+def intervals(*args):
+    raise ExceptionWT("Command intervals() is undefined. Try INTERVALS() instead?")
 def INTERVALS(a, n):
     return PLASM_INTERVALS(a)(n)
 DIVISION = INTERVALS
@@ -2609,6 +2678,8 @@ if self_test:
 	assert(PLASM_SIZE([1,3])(PLASM_SCALE([1, 2, 3])([1, 2, 3])(Plasm.cube(3)))==[1,3])
 
 # NEW_DEFINITION:
+def size(*args):
+    raise ExceptionWT("Command size() is undefined. Try SIZE() instead?")
 def SIZE(pol, List):
     return PLASM_SIZE(List)(pol.geom)
 # Czech:
@@ -2656,6 +2727,8 @@ def MID  (List):
         return [center [i] for i in List] if isinstance(List,list) else center[List]
     return MID1
 
+def minx(*args):
+    raise ExceptionWT("Command minx() is undefined. Try MINX() instead?")
 def MINX(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
@@ -2665,6 +2738,8 @@ def MINX(obj):
            if obj[i].minx() < minx: minx = obj[i].minx()  
         return minx
     else: return obj.minx()
+def miny(*args):
+    raise ExceptionWT("Command miny() is undefined. Try MINY() instead?")
 def MINY(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
@@ -2674,6 +2749,8 @@ def MINY(obj):
            if obj[i].miny() < miny: miny = obj[i].miny()  
         return miny
     else: return obj.miny()
+def minz(*args):
+    raise ExceptionWT("Command minz() is undefined. Try MINZ() instead?")
 def MINZ(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
@@ -2683,6 +2760,8 @@ def MINZ(obj):
            if obj[i].minz() < minz: minz = obj[i].minz()  
         return minz
     else: return obj.minz()
+def maxx(*args):
+    raise ExceptionWT("Command maxx() is undefined. Try MAXX() instead?")
 def MAXX(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
@@ -2692,6 +2771,8 @@ def MAXX(obj):
            if obj[i].maxx() > maxx: maxx = obj[i].maxx()  
         return maxx
     else: return obj.maxx()
+def maxy(*args):
+    raise ExceptionWT("Command maxy() is undefined. Try MAXY() instead?")
 def MAXY(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
@@ -2701,6 +2782,8 @@ def MAXY(obj):
            if obj[i].maxy() > maxy: maxy = obj[i].maxy()  
         return maxy
     else: return obj.maxy()
+def maxz(*args):
+    raise ExceptionWT("Command maxz() is undefined. Try MAXZ() instead?")
 def MAXZ(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
@@ -2757,6 +2840,8 @@ if self_test:
 
 # NEW DEFINITIONS:
 # MOVE THE SECOND OBJECT TO BE CENTERED ON TOP THE FIRST ONE
+def top(*args):
+    raise ExceptionWT("Command top() is undefined. Try TOP() instead?")
 def TOP(obj1, obj2): # obj2 goes on top of obj1
     if isinstance(obj2, list):
         raise ExceptionWT("Second argument of TOP(...) may not be a list!")
@@ -2803,6 +2888,8 @@ def TOP(obj1, obj2): # obj2 goes on top of obj1
         
 
 # MOVE THE SECOND OBJECT TO BE CENTERED BELOW THE FIRST ONE
+def bottom(*args):
+    raise ExceptionWT("Command bottom() is undefined. Try BOTTOM() instead?")
 def BOTTOM(obj1, obj2):
     R(obj1, 180, 1)    
     R(obj2, 180, 1)
@@ -2812,6 +2899,8 @@ def BOTTOM(obj1, obj2):
     return U(obj1, obj2)
 
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE LEFT OF THE FIRST ONE
+def left(*args):
+    raise ExceptionWT("Command left() is undefined. Try LEFT() instead?")
 def LEFT(obj1, obj2):
     R(obj1, -90, 2)    
     R(obj2, -90, 2)
@@ -2821,6 +2910,8 @@ def LEFT(obj1, obj2):
     return U(obj1, obj2)
   
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE RIGHT OF THE FIRST ONE
+def right(*args):
+    raise ExceptionWT("Command right() is undefined. Try RIGHT() instead?")
 def RIGHT(obj1, obj2):
     R(obj1, 90, 2)    
     R(obj2, 90, 2)
@@ -2830,6 +2921,8 @@ def RIGHT(obj1, obj2):
     return U(obj1, obj2)
    
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE FRONT OF THE FIRST ONE
+def front(*args):
+    raise ExceptionWT("Command front() is undefined. Try FRONT() instead?")
 def FRONT(obj1, obj2):
     R(obj1, -90, 1)    
     R(obj2, -90, 1)
@@ -2839,6 +2932,8 @@ def FRONT(obj1, obj2):
     return U(obj1, obj2)
 
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE REAR OF THE FIRST ONE
+def rear(*args):
+    raise ExceptionWT("Command rear() is undefined. Try REAR() instead?")
 def REAR(obj1, obj2):
     R(obj1, 90, 1)    
     R(obj2, 90, 1)
@@ -2936,9 +3031,6 @@ def ORTHOPROJECT (E):
 
 if self_test:
 	assert ORTHOPROJECT([1,0,0])([1,1,0])==[0,1,0]
-
-
-
 
 # ===================================================
 # PLASM_MAP
@@ -3047,6 +3139,8 @@ if self_test:
     assert Plasm.limits(PLASM_RING([0.5,1])([8,8]))==Boxf(Vecf(1,-1,-1),Vecf(1,+1,+1))
 
 # NEW DEFINITION
+def ring(*args):
+    raise ExceptionWT("Command ring() is undefined. Try RING() instead?")
 def RING(r1, r2, division = [64, 1]):
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in RING(r1, r2) must be positive!")
@@ -3058,6 +3152,8 @@ def RING(r1, r2, division = [64, 1]):
     if type(division) == list: 
         obj = BASEOBJ(PLASM_RING([r1, r2])(division))
     else:
+        if int(division) != division:
+            raise ExceptionWT("The optional third argument of RING(r1, r2, n) must be an integer. Try TUBE(r1, r2, h) instead?")
         if division < 3: 
             raise ExceptionWT("Number of edges n in RING(r1, r2, n) must be at least 3!")
         else: obj = BASEOBJ(PLASM_RING([r1, r2])([division, 1]))
@@ -3078,6 +3174,8 @@ def PLASM_TUBE (args):
 
 # NEW DEFINITION
 # English:
+def tube(*args):
+    raise ExceptionWT("Command tube() is undefined. Try TUBE() instead?")
 def TUBE(r1, r2, h, division = 64):
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in TUBE(r1, r2, h) must be positive!")
@@ -3110,6 +3208,8 @@ TUBO = TUBE
 # RING3D IS JUST A SHORT TUBE
 # =============================================
 
+def ring3d(*args):
+    raise ExceptionWT("Command ring3d() is undefined. Try RING3D() instead?")
 def RING3D(r1, r2, division = 64):
     h = 0.001
     return TUBE(r1, r2, h, division)
@@ -3131,6 +3231,8 @@ if self_test:
 
 # NEW DEFINITION
 # English:
+def circle(*args):
+    raise ExceptionWT("Command circle() is undefined. Try CIRCLE() instead?")
 def CIRCLE(r, division = [64, 1]):
     if r <= 0: 
         raise ExceptionWT("Radius r in CIRCLE(r) must be positive!")
@@ -3157,6 +3259,8 @@ CERCHIO = CIRCLE
 CERCLE = CIRCLE
 ROND = CIRCLE
 
+def circle3d(*args):
+    raise ExceptionWT("Command circle3d() is undefined. Try CIRCLE3D() instead?")
 def CIRCLE3D(r, division = [64, 1]):
     if r <= 0: 
         raise ExceptionWT("Radius r in CIRCLE3D(r) must be positive!")
@@ -3199,6 +3303,8 @@ def PLASM_ARC (params):
 
 # NEW DEFINITION
 # English:
+def arc(*args):
+    raise ExceptionWT("Command arc() is undefined. Try ARC() instead?")
 def ARC(r1, r2, angle, division = [64, 1]):
     if r1 < 0: 
         raise ExceptionWT("Radius r1 in ARC(r1, r2, angle) must be nonnegative!")
@@ -3213,6 +3319,8 @@ def ARC(r1, r2, angle, division = [64, 1]):
 # Czech
 # TODO
 
+def arc3d(*args):
+    raise ExceptionWT("Command arc3d() is undefined. Try ARC3D() instead?")
 def ARC3D(r1, r2, angle, division = [64, 1]):
     if r1 < 0: 
         raise ExceptionWT("Radius r1 in ARC3D(r1, r2, angle) must be nonnegative!")
@@ -3246,6 +3354,10 @@ if self_test:
    assert(Plasm.limits(PLASM_CYLINDER([1.0,2.0])(8)).fuzzyEqual(Boxf(Vecf(1,-1,-1,0),Vecf(1,+1,+1,2))))
 
 # NEW DEFINITION
+def cylinder(*args):
+    raise ExceptionWT("Command cylinder() is undefined. Try CYLINDER() instead?")
+def cyl(*args):
+    raise ExceptionWT("Command cyl() is undefined. Try CYL() instead?")
 def CYLINDER(r, h, division = 64):
     if r <= 0: 
         raise ExceptionWT("Radius r in CYLINDER(r, h) must be positive!")
@@ -3302,6 +3414,8 @@ def SPHERE_SURFACE(radius, divisions = [24, 48]):
     return BASEOBJ(PLASM_SPHERE(radius)(divisions))
 
 # English:
+def sphere(*args):
+    raise ExceptionWT("Command sphere() is undefined. Try SPHERE() instead?")
 def SPHERE(radius, divisions = [12, 24]):
     if radius <= 0: 
         raise ExceptionWT("Radius r in SPHERE(r) must be positive!")
@@ -3381,6 +3495,8 @@ if self_test:
 	PLASM_VIEW(SKELETON(1)(PLASM_SOLIDTORUS([1.5,2])([18,24,1])))
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+def torus(*args):
+    raise ExceptionWT("Command torus() is undefined. Try TORUS() instead?")
 def TORUS(r1, r2, divisions = [24, 12]):
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in TORUS(r1, r2) must be positive!")
@@ -3429,6 +3545,8 @@ def PLASM_SOLIDELBOW (radiusandangle):
     return PLASM_ELBOW0
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+def elbow(*args):
+    raise ExceptionWT("Command elbow() is undefined. Try ELBOW() instead?")
 def ELBOW(r1, r2, angle, divisions = [24, 12]):
     if angle <= 0: 
         raise ExceptionWT("Angle in ELBOW(r1, r2, angle) must be positive!")
@@ -3462,6 +3580,8 @@ if self_test:
    assert Plasm.limits(PLASM_CONE([1.0,3.0])(16)).fuzzyEqual(Boxf(Vecf(1,-1,-1,0),Vecf(1,+1,+1,3)))
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+def cone(*args):
+    raise ExceptionWT("Command cone() is undefined. Try CONE() instead?")
 def CONE(r, h, division = 64):
     if r <= 0: 
         raise ExceptionWT("Radius r in CONE(r, h) must be positive!")
@@ -3489,6 +3609,8 @@ CONO = CONE
 # PYRAMID
 # =============================================
 
+def pyramid(*args):
+    raise ExceptionWT("Command pyramid() is undefined. Try PYRAMID() instead?")
 def PYRAMID(r, h, n = 4):
     if r <= 0: 
         raise ExceptionWT("Radius r in PYRAMID(r, h, n) must be positive!")
@@ -3516,6 +3638,10 @@ def PLASM_TRUNCONE (args):
 	return PLASM_TRUNCONE0
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+def tcone(*args):
+    raise ExceptionWT("Command tcone() is undefined. Try TCONE() instead?")
+def truncone(*args):
+    raise ExceptionWT("Command truncone() is undefined. Try TRUNCONE() instead?")
 def TRUNCONE(r1, r2, h, divisions = 64):
     if r1 <= 0: 
         raise ExceptionWT("Bottom radius r1 in TRUNCONE(r1, r2, h) must be positive!")
@@ -3627,6 +3753,8 @@ def build_TETRAHEDRON():
 
 PLASM_TETRAHEDRON = build_TETRAHEDRON()
 
+def tetrahedron(*args):
+    raise ExceptionWT("Command tetrahedron() is undefined. Try TETRAHEDRON() instead?")
 def TETRAHEDRON(a, b, c, d):
     return BASEOBJ(PLASM_CONVEXHULL([a, b, c, d]))
 
@@ -3651,6 +3779,8 @@ TETRAEDRE = TETRAHEDRON
 # TRIANGLE
 # =============================================
 
+def triangle(*args):
+    raise ExceptionWT("Command triangle() is undefined. Try TRIANGLE() instead?")
 def TRIANGLE(a, b, c):
     if not isinstance(a, list): 
         raise ExceptionWT("First argument a in TRIANGLE(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
@@ -3679,6 +3809,8 @@ TRIANGOLO = TRIANGLE
 # French:
 # Same as in English
 
+def triangle3d(*args):
+    raise ExceptionWT("Command triangle3d() is undefined. Try TRIANGLE3D() instead?")
 def TRIANGLE3D(a, b, c):
     if not isinstance(a, list): 
         raise ExceptionWT("First argument a in TRIANGLE3D(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
@@ -4037,7 +4169,6 @@ CYSURFACE = CYLINDRICAL_SURFACE
 # CONICALSURFACE
 # ======================================================
 
-   
 def CONICALSURFACE (args):
 	apex=args[0]
 	alpha_fn   = lambda point: apex
@@ -4212,6 +4343,8 @@ if self_test:
 
 from numpy import tan
 
+def star(*args):
+    raise ExceptionWT("Command star() is undefined. Try STAR() instead?")
 def STAR (r, n):
     if n < 5: raise ExceptionWT("In the STAR(r, n) command, n must be at least 5!")
     if r <= 0: raise ExceptionWT("In the STAR(r, n) command, the radius r must be positive!")
@@ -4265,6 +4398,8 @@ def PLASM_PRISM (height):
 
 # NEW DEFINITION - RETURNS AN INSTANCE OF CLASS "PRODUCT" OR A LIST
 # OF PRODUCTS:
+def prism(*args):
+    raise ExceptionWT("Command prism() is undefined. Try PRISM() instead?")
 def PRISM(basis, h):
     if h <= 0: 
         raise ExceptionWT("Height in PRISM(base, height) must be positive!")
@@ -4911,6 +5046,8 @@ def EXTRUDEONE(shape2d, height, angle_deg, n=1):
     L.append(newlayer)
   return L # I tried to return a union but it took too much time
 
+def extrude(*args):
+    raise ExceptionWT("Command extrude() is undefined. Try EXTRUDE() instead?")
 def EXTRUDE(basis, height, angle_deg, n=1):
     if height <= 0: 
         raise ExceptionWT("Height in EXTRUDE(base, height, angle, n) must be positive!")
@@ -5452,6 +5589,8 @@ if self_test:
 
 # Change it to procedural style:
 # English:
+def color(*args):
+    raise ExceptionWT("Command color() is undefined. Try COLOR() instead?")
 def COLOR(obj, col = None):
   # obj may be a single object or a list of objects
   if col is None:
@@ -6256,10 +6395,14 @@ def SIMPLEXGRID(size):
 
 # NEW COMMAND FOR REFERENCE DOMAIN:
 
+def ref_domain(*args):
+    raise ExceptionWT("Command ref_domain() is undefined. Try REF_DOMAIN() instead?")
 def REF_DOMAIN(a, b, m, n):
     #return POWER(INTERVALS(a, m), INTERVALS(b, n))
     return BASEOBJ(SIMPLEXGRID([a, b])([m, n]))
 
+def unit_square(*args):
+    raise ExceptionWT("Command unit_square() is undefined. Try UNIT_SQUARE() instead?")
 def UNIT_SQUARE(n, m):
     #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
     return BASEOBJ(SIMPLEXGRID([1.0, 1.0])([m, n]))
