@@ -1043,12 +1043,7 @@ class BASEOBJ:
         if axis == 'x' or axis == 'X': axis = 1
         if axis == 'y' or axis == 'Y': axis = 2
         if axis == 'z' or axis == 'Z': axis = 3
-        # this is a bit nasty but it allows to skip axis (it will be Z) and 
-        # give just the center point:
         centerpoint = point
-        if isinstance(axis, list):
-            centerpoint = axis
-            axis = 3
         # check the axis:
         if axis != 1 and axis != 2 and axis != 3: 
             raise ExceptionWT("The third argument of ROTATE must be either X (x-axis), Y (y-axis), or Z (z-axis)!")
@@ -1824,9 +1819,15 @@ if self_test:
 def move(*args):
     raise ExceptionWT("Command move() is undefined. Try MOVE() instead?")
 def MOVE(obj, t1, t2, t3 = 0):
+    if not ISNUMBER(t1):
+        raise ExceptionWT("X-axis translation x in MOVE(obj, x, y) or MOVE(obj, x, y, z) must be a number!")
+    if not ISNUMBER(t2):
+        raise ExceptionWT("Y-axis translation y in MOVE(obj, x, y) or MOVE(obj, x, y, z) must be a number!")
+    if not ISNUMBER(t3):
+        raise ExceptionWT("Z-axis translation z in MOVE(obj, x, y, z) must be a number!")
     if not isinstance(obj, list):
         if not isinstance(obj, BASEOBJ):
-            raise ExceptionWT("First argument of the MOVE command must be a 2D or 3D object.")
+            raise ExceptionWT("First argument of the MOVE command must be a 2D or 3D object!")
         obj.move(t1, t2, t3)
         return COPY(obj)
     else:
@@ -1834,7 +1835,7 @@ def MOVE(obj, t1, t2, t3 = 0):
         newobj = []
         for oo in obj: 
             if not isinstance(oo, BASEOBJ):
-                raise ExceptionWT("First argument of the MOVE command must be a 2D or 3D object.")
+                raise ExceptionWT("First argument of the MOVE command must be a 2D or 3D object!")
             oo.move(t1, t2, t3)
             newobj.append(COPY(oo))
         return newobj
@@ -1896,6 +1897,12 @@ if self_test:
 def scale(*args):
     raise ExceptionWT("Command scale() is undefined. Try SCALE() instead?")
 def SCALE(obj, a, b, c = 1):
+    if not ISNUMBER(a):
+        raise ExceptionWT("X-axis scaling coefficient sx in SCALE(obj, sx, sy) or SCALE(obj, sx, sy, sz) must be a number!")
+    if not ISNUMBER(b):
+        raise ExceptionWT("Y-axis scaling coefficient sy in SCALE(obj, sx, sy) or SCALE(obj, sx, sy, sz) must be a number!")
+    if not ISNUMBER(c):
+        raise ExceptionWT("Z-axis scaling coefficient sz in SCALE(obj, sx, sy, sz) must be a number!")
     if not isinstance(obj, list):
         if not isinstance(obj, BASEOBJ):
             raise ExceptionWT("First argument of the SCALE command must be a 2D or 3D object.")
@@ -1950,22 +1957,30 @@ if self_test:
 def rotaterad(*args):
     raise ExceptionWT("Command rotaterad() is undefined. Try ROTATERAD() instead?")
 def ROTATERAD(obj, angle_rad, axis = 3, point = [0, 0, 0]):
-    try:
-        angle_rad = float(angle_rad)
-    except ValueError:
-        raise ExceptionWT("The second argument of ROTATERAD must be angle!")
+    if not ISNUMBER(angle_rad):
+        raise ExceptionWT("Angle alpha in ROTATERAD(obj, alpha, axis) must be a number!")
+    # this is a bit nasty but it allows to skip axis in 2D (it will be Z) and 
+    # give just the center point:
+    centerpoint = point
+    if isinstance(axis, list):
+        point = axis
+        axis = 3
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != '1' and axis != '2' and axis != '3':
+        raise ExceptionWT("Invalid axis in ROTATERAD(obj, angle, axis)!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
+    if not isinstance(point, list):
+        raise ExceptionWT("The rotation point in ROTATERAD(obj, angle, axis, point) must be a list (use square brackets)!")
     if not isinstance(obj, list):
         if not isinstance(obj, BASEOBJ):
-            raise ExceptionWT("First argument of the ROTATE command must be a 2D or 3D object.")
+            raise ExceptionWT("Argument obj in ROTATERAD(obj, angle, axis) must be a 2D or 3D object!")
         obj.rotaterad(angle_rad, axis, point)
     else:
         obj = flatten(obj)
         for oo in obj: 
             if not isinstance(oo, BASEOBJ):
-                raise ExceptionWT("First argument of the ROTATE command must be a 2D or 3D object.")
+                raise ExceptionWT("Argument obj in ROTATERAD(obj, angle, axis) must be a 2D or 3D object!")
             oo.rotaterad(angle_rad, axis, point)
     return COPY(obj)
     
@@ -1998,19 +2013,24 @@ TOURNERAD = ROTATERAD
 
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN DEGREES)
-def rotatedeg(*args):
-    raise ExceptionWT("Command rotatedeg() is undefined. Try ROTATEDEG() instead?")
 def rotate(*args):
     raise ExceptionWT("Command rotate() is undefined. Try ROTATE() instead?")
-def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
-    try:
-        angle_deg = float(angle_deg)
-    except ValueError:
-        raise ExceptionWT("The second argument of ROTATE must be angle!")
-
+def ROTATE(obj, angle_deg, axis = 3, point = [0, 0, 0]):
+    if not ISNUMBER(angle_deg):
+        raise ExceptionWT("Angle alpha in ROTATE(obj, alpha, axis) must be a number!")
+    # this is a bit nasty but it allows to skip axis in 2D (it will be Z) and 
+    # give just the center point:
+    centerpoint = point
+    if isinstance(axis, list):
+        point = axis
+        axis = 3
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != '1' and axis != '2' and axis != '3':
+        raise ExceptionWT("Invalid axis in ROTATE(obj, angle, axis)!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
+    if not isinstance(point, list):
+        raise ExceptionWT("The rotation point in ROTATE(obj, angle, axis, point) must be a list (use square brackets)!")
     if not isinstance(obj, list):
         obj.rotate(angle_deg, axis, point)
         return COPY(obj)
@@ -2023,7 +2043,7 @@ def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
             newobj.append(COPY(oo))
         return newobj
 
-ROTATE = ROTATEDEG
+ROTATEDEG = ROTATE
 RDEG = ROTATEDEG
 R = ROTATEDEG
 # Czech:
