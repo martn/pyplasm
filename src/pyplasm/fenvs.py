@@ -34,6 +34,12 @@ print __file__
 
 from pyplasm.xge import *
 
+def ISNUMBER(x):
+  if not isinstance(x, int) and not isinstance(x, long) and not isinstance(x, float):
+    return False
+  else:
+    return True
+
 #===================================================== 
 # Configuration for plasm
 #
@@ -1198,15 +1204,23 @@ def SIZEZ(obj):
 def erase(*args):
     raise ExceptionWT("Command erase() is undefined. Try ERASE() instead?")
 def ERASE(obj, axis, minval, maxval):
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != '1' and axis != '2' and axis != '3':
+        raise ExceptionWT("Invalid axis in ERASE(obj, axis, minval, maxval)!")
+    if not ISNUMBER(minval):
+        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be a number!")
+    if not ISNUMBER(maxval):
+        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), maxval must be a number!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
     if axis != 1 and axis != 2 and axis != 3:
-        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
+        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis must be 1 (X-axis), 2 (Y-axis) or 3 (Z-axis)!")
     if maxval <= minval:
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be less than maxval!")
   
     if not isinstance(obj, list):
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("In ERASE(obj, axis, minval, maxval), obj must be a 2D or 3D object!")
         if axis == 1:
             obj.erasex(minval, maxval)
         if axis == 2:
@@ -1222,6 +1236,8 @@ def ERASE(obj, axis, minval, maxval):
     else:
         obj = flatten(obj) # flatten the rest as there may be structs
         for oo in obj:
+            if not isinstance(oo, BASEOBJ):
+                raise ExceptionWT("In ERASE(obj, axis, minval, maxval), obj must be a 2D or 3D object!")
             if axis == 1:
                 oo.erasex(minval, maxval)
             if axis == 2:
@@ -1244,6 +1260,10 @@ def ERASE(obj, axis, minval, maxval):
 def split(*args):
     raise ExceptionWT("Command split() is undefined. Try SPLIT() instead?")
 def SPLIT(obj, axis, coord):
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != '1' and axis != '2' and axis != '3':
+        raise ExceptionWT("Invalid axis in SPLIT(obj, axis, coord)!")
+    if not ISNUMBER(coord):
+        raise ExceptionWT("In SPLIT(obj, axis, coord), coord must be a number!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
@@ -1251,6 +1271,8 @@ def SPLIT(obj, axis, coord):
         raise ExceptionWT("In SPLIT(obj, axis, coord), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
   
     if not isinstance(obj, list):
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("In SPLIT(obj, axis, coord), obj must be a 2D or 3D object!")
         if axis == 1:
             obj1, obj2 = obj.splitx(coord)
         if axis == 2:
@@ -1270,6 +1292,8 @@ def SPLIT(obj, axis, coord):
         obj1 = []
         obj2 = []
         for oo in obj:
+            if not isinstance(oo, BASEOBJ):
+                raise ExceptionWT("In SPLIT(obj, axis, coord), obj must be a 2D or 3D object!")
             if axis == 1:
                 oo1, oo2 = oo.splitx(coord)
             if axis == 2:
@@ -1341,8 +1365,10 @@ if self_test:
 def cube(*args):
     raise ExceptionWT("Command cube() is undefined. Try CUBE() instead?")
 def CUBE(size):
+    if not ISNUMBER(size):
+        raise ExceptionWT("Size s in CUBE(s) must be a number!")
     if size <= 0: 
-        raise ExceptionWT("CUBE(x) requires a positive value of x!")
+        raise ExceptionWT("Size s in CUBE(s) must be positive!")
     return BASEOBJ(CUBOID([size, size, size]))
 # English:
 # Czech:
@@ -1424,26 +1450,48 @@ def BOX(*args):
     list1 == flatten(list1)
     if len(list1) == 1:
         a = list1[0]
-        if a <= 0: raise ExceptionWT("Dimensions of a BOX must be positive!")
+        if not ISNUMBER(a):
+            raise ExceptionWT("Size a in BOX(a) must be a number!")
+        if a <= 0: 
+            raise ExceptionWT("Size a in BOX(a) must be positive!")
         return BASEOBJ(CUBOID([a, a, a])) 
     if len(list1) == 2:
         a = list1[0]
         b = list1[1]
-        if a <= 0 or b <= 0: raise ExceptionWT("Dimensions of a BOX must be positive!")
+        if not ISNUMBER(a):
+            raise ExceptionWT("Size a in BOX(a, b) must be a number!")
+        if not ISNUMBER(b):
+            raise ExceptionWT("Size b in BOX(a, b) must be a number!")
+        if a <= 0 or b <= 0: raise ExceptionWT("Sizes a, b in BOX(a, b) must be positive!")
         return BASEOBJ(CUBOID([a, b])) 
     if len(list1) == 3:
         a = list1[0]
         b = list1[1]
         c = list1[2]
-        if a <= 0 or b <= 0 or c <= 0: raise ExceptionWT("Dimensions of a BOX must be positive!")
+        if not ISNUMBER(a):
+            raise ExceptionWT("Size a in BOX(a, b, c) must be a number!")
+        if not ISNUMBER(b):
+            raise ExceptionWT("Size b in BOX(a, b, c) must be a number!")
+        if not ISNUMBER(c):
+            raise ExceptionWT("Size c in BOX(a, b, c) must be a number!")
+        if a <= 0 or b <= 0 or c <= 0: 
+            raise ExceptionWT("Sizes a, b, c in BOX(a, b, c) must be positive!")
         return BASEOBJ(CUBOID([a, b, c])) 
     if len(list1) == 4:
         xmin = list1[0]
         xmax = list1[1]
         ymin = list1[2]
         ymax = list1[3]
-        if xmin >= xmax: raise ExceptionWT("xmin >= xmax in the BOX command!")
-        if ymin >= ymax: raise ExceptionWT("ymin >= ymax in the BOX command!")
+        if not ISNUMBER(xmin):
+            raise ExceptionWT("Minimum x coordinate xmin in BOX(xmin, xmax, ymin, ymax) must be a number!")
+        if not ISNUMBER(xmax):
+            raise ExceptionWT("Maximum x coordinate xmax in BOX(xmin, xmax, ymin, ymax) must be a number!")
+        if not ISNUMBER(ymin):
+            raise ExceptionWT("Minimum y coordinate ymin in BOX(xmin, xmax, ymin, ymax) must be a number!")
+        if not ISNUMBER(ymax):
+            raise ExceptionWT("Maximum y coordinate ymax in BOX(xmin, xmax, ymin, ymax) must be a number!")
+        if xmin >= xmax: raise ExceptionWT("xmin >= xmax in BOX(xmin, xmax, ymin, ymax)!")
+        if ymin >= ymax: raise ExceptionWT("ymin >= ymax in BOX(xmin, xmax, ymin, ymax)!")
         obj = BASEOBJ(CUBOID([xmax - xmin, ymax - ymin])) 
         MOVE(obj, xmin, ymin)
         return obj
@@ -1454,9 +1502,21 @@ def BOX(*args):
         ymax = list1[3]
         zmin = list1[4]
         zmax = list1[5]
-        if xmin >= xmax: raise ExceptionWT("xmin >= xmax in the BOX command!")
-        if ymin >= ymax: raise ExceptionWT("ymin >= ymax in the BOX command!")
-        if zmin >= zmax: raise ExceptionWT("zmin >= zmax in the BOX command!")
+        if not ISNUMBER(xmin):
+            raise ExceptionWT("Minimum x coordinate xmin in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if not ISNUMBER(xmax):
+            raise ExceptionWT("Maximum x coordinate xmax in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if not ISNUMBER(ymin):
+            raise ExceptionWT("Minimum y coordinate ymin in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if not ISNUMBER(ymax):
+            raise ExceptionWT("Maximum y coordinate ymax in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if not ISNUMBER(zmin):
+            raise ExceptionWT("Minimum z coordinate zmin in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if not ISNUMBER(zmax):
+            raise ExceptionWT("Maximum z coordinate zmax in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if xmin >= xmax: raise ExceptionWT("xmin >= xmax in BOX(xmin, xmax, ymin, ymax, zmin, zmax)!")
+        if ymin >= ymax: raise ExceptionWT("ymin >= ymax in BOX(xmin, xmax, ymin, ymax, zmin, zmax)!")
+        if zmin >= zmax: raise ExceptionWT("zmin >= zmax in BOX(xmin, xmax, ymin, ymax, zmin, zmax)!")
         obj = BASEOBJ(CUBOID([xmax - xmin, ymax - ymin, zmax - zmin])) 
         MOVE(obj, xmin, ymin, zmin)
         return obj
@@ -1495,7 +1555,14 @@ BOITE = BRICK
 def rectangle(*args):
     raise ExceptionWT("Command rectangle() is undefined. Try RECTANGLE() instead?")
 def RECTANGLE(a, b):
-    if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE(x, y) requires positive dimensions x, y!")
+    if not ISNUMBER(a):
+        raise ExceptionWT("Size a in RECTANGLE(a, b) must be a number!")
+    if not ISNUMBER(b):
+        raise ExceptionWT("Size b in RECTANGLE(a, b) must be a number!")
+    if a <= 0: 
+        raise ExceptionWT("Size a in RECTANGLE(a, b) must be positive!")
+    if b <= 0: 
+        raise ExceptionWT("Size b in RECTANGLE(a, b) must be positive!")
     return BASEOBJ(CUBOID([a, b]))
 
 # English:
@@ -1520,7 +1587,14 @@ RETTANGOLO = RECTANGLE
 def rectangle3d(*args):
     raise ExceptionWT("Command rectangle3d() is undefined. Try RECTANGLE3D() instead?")
 def RECTANGLE3D(a, b):
-    if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE3D(x, y) requires positive dimensions x, y!")
+    if not ISNUMBER(a):
+        raise ExceptionWT("Size a in RECTANGLE3D(a, b) must be a number!")
+    if not ISNUMBER(b):
+        raise ExceptionWT("Size b in RECTANGLE3D(a, b) must be a number!")
+    if a <= 0: 
+        raise ExceptionWT("Size a in RECTANGLE3D(a, b) must be positive!")
+    if b <= 0: 
+        raise ExceptionWT("Size b in RECTANGLE3D(a, b) must be positive!")
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
@@ -3359,6 +3433,10 @@ def cylinder(*args):
 def cyl(*args):
     raise ExceptionWT("Command cyl() is undefined. Try CYL() instead?")
 def CYLINDER(r, h, division = 64):
+    if not ISNUMBER(r):
+        raise ExceptionWT("Radius r in CYLINDER(r, h) must be a number!")
+    if not ISNUMBER(h):
+        raise ExceptionWT("Height h in CYLINDER(r, h) must be a number!")
     if r <= 0: 
         raise ExceptionWT("Radius r in CYLINDER(r, h) must be positive!")
     if h <= 0: 
@@ -3417,6 +3495,8 @@ def SPHERE_SURFACE(radius, divisions = [24, 48]):
 def sphere(*args):
     raise ExceptionWT("Command sphere() is undefined. Try SPHERE() instead?")
 def SPHERE(radius, divisions = [12, 24]):
+    if not ISNUMBER(radius):
+        raise ExceptionWT("Radius r in SPHERE(r) must be a number!")
     if radius <= 0: 
         raise ExceptionWT("Radius r in SPHERE(r) must be positive!")
     divisionslist = divisions
@@ -3498,6 +3578,10 @@ if self_test:
 def torus(*args):
     raise ExceptionWT("Command torus() is undefined. Try TORUS() instead?")
 def TORUS(r1, r2, divisions = [24, 12]):
+    if not ISNUMBER(r1):
+        raise ExceptionWT("Inner radius r1 in TORUS(r1, r2) must be a number!")
+    if not ISNUMBER(r2):
+        raise ExceptionWT("Outer radius r2 in TORUS(r1, r2) must be a number!")
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in TORUS(r1, r2) must be positive!")
     if r2 <= 0: 
@@ -3548,14 +3632,20 @@ def PLASM_SOLIDELBOW (radiusandangle):
 def elbow(*args):
     raise ExceptionWT("Command elbow() is undefined. Try ELBOW() instead?")
 def ELBOW(r1, r2, angle, divisions = [24, 12]):
+    if not ISNUMBER(angle):
+        raise ExceptionWT("Angle alpha in ELBOW(r1, r2, alpha) must be a number!")
+    if not ISNUMBER(r1):
+        raise ExceptionWT("Inner radius r1 in ELBOW(r1, r2, alpha) must be a number!")
+    if not ISNUMBER(r2):
+        raise ExceptionWT("Outer radius r2 in ELBOW(r1, r2, alpha) must be a number!")
     if angle <= 0: 
-        raise ExceptionWT("Angle in ELBOW(r1, r2, angle) must be positive!")
+        raise ExceptionWT("Angle alpha in ELBOW(r1, r2, alpha) must be positive!")
     if r1 <= 0: 
-        raise ExceptionWT("Inner radius r1 in ELBOW(r1, r2, angle) must be positive!")
+        raise ExceptionWT("Inner radius r1 in ELBOW(r1, r2, alpha) must be positive!")
     if r2 <= 0: 
-        raise ExceptionWT("Outer radius r2 in ELBOW(r1, r2, angle) must be positive!")
+        raise ExceptionWT("Outer radius r2 in ELBOW(r1, r2, alpha) must be positive!")
     if r2 <= r1: 
-        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in ELBOW(r1, r2, angle)!")
+        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in ELBOW(r1, r2, alpha)!")
     divisionslist = divisions
     if not isinstance(divisions, list): 
         if divisions/2 <= 0:
@@ -3583,6 +3673,10 @@ if self_test:
 def cone(*args):
     raise ExceptionWT("Command cone() is undefined. Try CONE() instead?")
 def CONE(r, h, division = 64):
+    if not ISNUMBER(r):
+        raise ExceptionWT("Radius r in CONE(r, h) must be a number!")
+    if not ISNUMBER(h):
+        raise ExceptionWT("Height h in CONE(r, h) must be a number!")
     if r <= 0: 
         raise ExceptionWT("Radius r in CONE(r, h) must be positive!")
     if h <= 0: 
@@ -3612,6 +3706,12 @@ CONO = CONE
 def pyramid(*args):
     raise ExceptionWT("Command pyramid() is undefined. Try PYRAMID() instead?")
 def PYRAMID(r, h, n = 4):
+    if not ISNUMBER(r):
+        raise ExceptionWT("Radius r in PYRAMID(r, h, n) must be a number!")
+    if not ISNUMBER(h):
+        raise ExceptionWT("Height h in PYRAMID(r, h, n) must be a number!")
+    if not ISNUMBER(n):
+        raise ExceptionWT("Number of sides n in PYRAMID(r, h, n) must be a number!")
     if r <= 0: 
         raise ExceptionWT("Radius r in PYRAMID(r, h, n) must be positive!")
     if h <= 0: 
@@ -3642,20 +3742,28 @@ def tcone(*args):
     raise ExceptionWT("Command tcone() is undefined. Try TCONE() instead?")
 def truncone(*args):
     raise ExceptionWT("Command truncone() is undefined. Try TRUNCONE() instead?")
-def TRUNCONE(r1, r2, h, divisions = 64):
+def TCONE(r1, r2, h, divisions = 64):
+    if not ISNUMBER(r1):
+        raise ExceptionWT("Bottom radius r1 in TCONE(r1, r2, h) must be a number!")
+    if not ISNUMBER(r2):
+        raise ExceptionWT("Top radius r2 in TCONE(r1, r2, h) must be a number!")
+    if not ISNUMBER(h):
+        raise ExceptionWT("Height h in TCONE(r1, r2, h) must be a number!")
+    if not ISNUMBER(h):
+        raise ExceptionWT("Height h in CYLINDER(r, h) must be a number!")
     if r1 <= 0: 
-        raise ExceptionWT("Bottom radius r1 in TRUNCONE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Bottom radius r1 in TCONE(r1, r2, h) must be positive!")
     if r2 <= 0: 
-        raise ExceptionWT("Top radius r2 in TRUNCONE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Top radius r2 in TCONE(r1, r2, h) must be positive!")
     if h <= 0: 
-        raise ExceptionWT("Height h in TRUNCONE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Height h in TCONE(r1, r2, h) must be positive!")
     if divisions < 3: 
-        raise ExceptionWT("Number of sides n in TRUNCONE(r1, r2, h, n) must be at least 3!")
+        raise ExceptionWT("Number of sides n in TCONE(r1, r2, h, n) must be at least 3!")
     # Changing to a solid:
     return BASEOBJ(PLASM_JOIN(PLASM_TRUNCONE([r1, r2, h])(divisions)))
 
 # English:
-TCONE = TRUNCONE
+TRUNCONE = TCONE
 # Czech:
 KOMOLYKUZEL = TRUNCONE
 KKUZEL = TRUNCONE
