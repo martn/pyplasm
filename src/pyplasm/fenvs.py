@@ -1199,7 +1199,7 @@ def SIZEZ(obj):
 def erase(*args):
     raise ExceptionWT("Command erase() is undefined. Try ERASE() instead?")
 def ERASE(obj, axis, minval, maxval):
-    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != '1' and axis != '2' and axis != '3':
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
         raise ExceptionWT("Invalid axis in ERASE(obj, axis, minval, maxval)!")
     if not ISNUMBER(minval):
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be a number!")
@@ -1255,7 +1255,7 @@ def ERASE(obj, axis, minval, maxval):
 def split(*args):
     raise ExceptionWT("Command split() is undefined. Try SPLIT() instead?")
 def SPLIT(obj, axis, coord):
-    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != '1' and axis != '2' and axis != '3':
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
         raise ExceptionWT("Invalid axis in SPLIT(obj, axis, coord)!")
     if not ISNUMBER(coord):
         raise ExceptionWT("In SPLIT(obj, axis, coord), coord must be a number!")
@@ -1963,7 +1963,7 @@ def ROTATERAD(obj, angle_rad, axis = 3, point = [0, 0, 0]):
     if isinstance(axis, list):
         centerpoint = axis
         axis = 3
-    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != '1' and axis != '2' and axis != '3':
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
         raise ExceptionWT("Invalid axis in ROTATERAD(obj, angle, axis)!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
@@ -2022,7 +2022,7 @@ def ROTATE(obj, angle_deg, axis = 3, point = [0, 0, 0]):
     if isinstance(axis, list):
         centerpoint = axis
         axis = 3
-    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != '1' and axis != '2' and axis != '3':
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
         #print "Axis is:", axis
         raise ExceptionWT("Invalid axis in ROTATE(obj, angle, axis)!")
     if axis == 'x' or axis == 'X': axis = 1
