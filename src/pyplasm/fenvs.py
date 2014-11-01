@@ -1102,70 +1102,94 @@ class BASEOBJ:
         self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
         self.setcolor(self.color)
     def minx(self):
-        if EMPTYSET(self): raise ExceptionWT("Minimum X coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MIN(1)(self.geom)
     def miny(self):
-        if EMPTYSET(self): raise ExceptionWT("Minimum Y coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MIN(2)(self.geom)
     def minz(self):
-        if EMPTYSET(self): raise ExceptionWT("Minimum Z coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MIN(3)(self.geom)
     def maxx(self):
-        if EMPTYSET(self): raise ExceptionWT("Maximum X coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MAX(1)(self.geom)
     def maxy(self):
-        if EMPTYSET(self): raise ExceptionWT("Maximum Y coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MAX(2)(self.geom)
     def maxz(self):
-        if EMPTYSET(self): raise ExceptionWT("Maximum Z coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MAX(3)(self.geom)
     def sizex(self):
-        if EMPTYSET(self): return 0
+        if EMPTYSET(self): return None
         else: return MAX(1)(self.geom) - MIN(1)(self.geom)
     def sizey(self):
-        if EMPTYSET(self): return 0
+        if EMPTYSET(self): return None
         else: return MAX(2)(self.geom) - MIN(2)(self.geom)
     def sizez(self):
-        if EMPTYSET(self): return 0
+        if EMPTYSET(self): return None
         else: return MAX(3)(self.geom) - MIN(3)(self.geom)
     def erasex(self, erasexmin, erasexmax):
         minx = self.minx()
+        if minx == None: 
+            return
         maxx = self.maxx()
+        if maxx == None: 
+            return
         miny = self.miny()
+        if miny == None: 
+            return
         maxy = self.maxy()        
+        if maxy == None: 
+            return
         if self.dim == 2:
-            box = BOX(erasexmax - erasexmin, self.maxy() - self.miny() + 2)
-            MOVE(box, erasexmin, self.miny() - 1)
+            box = BOX(erasexmax - erasexmin, maxy - miny + 2)
+            MOVE(box, erasexmin, miny - 1)
     	    self.geom = PLASM_DIFF([self.geom, box.geom])
             self.setcolor(self.color)
         else:
             minz = self.minz()
+            if minz == None: 
+                return
             maxz = self.maxz()
-            box = BOX(erasexmax - erasexmin, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 2)
-            MOVE(box, erasexmin, self.miny() - 1, self.minz() - 1)
+            if maxz == None: 
+                return
+            box = BOX(erasexmax - erasexmin, maxy - miny + 2, maxz - minz + 2)
+            MOVE(box, erasexmin, miny - 1, minz - 1)
     	    self.geom = PLASM_DIFF([self.geom, box.geom])
             self.setcolor(self.color)
     def splitx(self, coord):
         minx = self.minx()
+        if minx == None: 
+            return
         maxx = self.maxx()
+        if maxx == None: 
+            return
         miny = self.miny()
+        if miny == None: 
+            return
         maxy = self.maxy()        
+        if maxy == None: 
+            return
         if self.dim == 2:
-            box1 = BOX(coord - minx, self.maxy() - self.miny() + 2)
-            box2 = BOX(maxx - coord, self.maxy() - self.miny() + 2)
-            MOVE(box1, minx, self.miny() - 1)
-            MOVE(box2, coord, self.miny() - 1)
+            box1 = BOX(coord - minx, maxy - miny + 2)
+            box2 = BOX(maxx - coord, maxy - miny + 2)
+            MOVE(box1, minx, miny - 1)
+            MOVE(box2, coord, miny - 1)
     	    obj1 = BASEOBJ(PLASM_INTERSECTION([self.geom, box1.geom]))
     	    obj2 = BASEOBJ(PLASM_INTERSECTION([self.geom, box2.geom]))
             obj1.setcolor(self.color)
             obj2.setcolor(self.color)
         else:
             minz = self.minz()
+            if minz == None: 
+                return
             maxz = self.maxz()
-            box1 = BOX(coord - minx, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 2)
-            box2 = BOX(maxx - coord, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 2)
-            MOVE(box1, minx, self.miny() - 1, self.minz() - 1)
-            MOVE(box2, coord, self.miny() - 1, self.minz() - 1)
+            if maxz == None: 
+                return
+            box1 = BOX(coord - minx, maxy - miny + 2, maxz - minz + 2)
+            box2 = BOX(maxx - coord, maxy - miny + 2, maxz - minz + 2)
+            MOVE(box1, minx, miny - 1, minz - 1)
+            MOVE(box2, coord, miny - 1, minz - 1)
     	    obj1 = BASEOBJ(PLASM_INTERSECTION([self.geom, box1.geom]))
     	    obj2 = BASEOBJ(PLASM_INTERSECTION([self.geom, box2.geom]))
             obj1.setcolor(self.color)
@@ -1179,17 +1203,20 @@ class BASEOBJ:
 def sizex(*args):
     raise ExceptionWT("Command sizex() is undefined. Try SIZEX() instead?")
 def SIZEX(obj):
-    return MAXX(obj) - MINX(obj)
+    if EMPTYSET(obj): return None
+    else: return MAXX(obj) - MINX(obj)
 
 def sizey(*args):
     raise ExceptionWT("Command sizey() is undefined. Try SIZEY() instead?")
 def SIZEY(obj):
-    return MAXY(obj) - MINY(obj)
+    if EMPTYSET(obj): return None
+    else: return MAXY(obj) - MINY(obj)
 
 def sizez(*args):
     raise ExceptionWT("Command sizez() is undefined. Try SIZEZ() instead?")
 def SIZEZ(obj):
-    return MAXZ(obj) - MINZ(obj)
+    if EMPTYSET(obj): return None
+    else: return MAXZ(obj) - MINZ(obj)
 
 # ===========================================================
 # ERASE(obj, axis, min, max) - ERASE PART OF OBJECT THAT LIES 
@@ -2825,67 +2852,91 @@ def minx(*args):
 def MINX(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         minx = obj[0].minx()
         n = len(obj)
         for i in range(1, n):
            if obj[i].minx() < minx: minx = obj[i].minx()  
         return minx
-    else: return obj.minx()
+    else: 
+      if EMPTYSET(obj): return None
+      else: return obj.minx()
 def miny(*args):
     raise ExceptionWT("Command miny() is undefined. Try MINY() instead?")
 def MINY(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         miny = obj[0].miny()
         n = len(obj)
         for i in range(1, n):
            if obj[i].miny() < miny: miny = obj[i].miny()  
         return miny
-    else: return obj.miny()
+    else: 
+        if EMPTYSET(obj): return None
+        else: return obj.miny()
 def minz(*args):
     raise ExceptionWT("Command minz() is undefined. Try MINZ() instead?")
 def MINZ(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         minz = obj[0].minz()
         n = len(obj)
         for i in range(1, n):
            if obj[i].minz() < minz: minz = obj[i].minz()  
         return minz
-    else: return obj.minz()
+    else: 
+        if EMPTYSET(obj): return None
+        else: return obj.minz()
 def maxx(*args):
     raise ExceptionWT("Command maxx() is undefined. Try MAXX() instead?")
 def MAXX(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         maxx = obj[0].maxx()
         n = len(obj)
         for i in range(1, n):
            if obj[i].maxx() > maxx: maxx = obj[i].maxx()  
         return maxx
-    else: return obj.maxx()
+    else: 
+        if EMPTYSET(obj): return None
+        else: return obj.maxx()
 def maxy(*args):
     raise ExceptionWT("Command maxy() is undefined. Try MAXY() instead?")
 def MAXY(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         maxy = obj[0].maxy()
         n = len(obj)
         for i in range(1, n):
            if obj[i].maxy() > maxy: maxy = obj[i].maxy()  
         return maxy
-    else: return obj.maxy()
+    else: 
+        if EMPTYSET(obj): return None
+        else: return obj.maxy()
 def maxz(*args):
     raise ExceptionWT("Command maxz() is undefined. Try MAXZ() instead?")
 def MAXZ(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         maxz = obj[0].maxz()
         n = len(obj)
         for i in range(1, n):
            if obj[i].maxz() > maxz: maxz = obj[i].maxz()  
         return maxz
-    else: return obj.maxz()
+    else: 
+        if EMPTYSET(obj): return None
+        else: return obj.maxz()
 
 if self_test: 
 	assert(MIN(1)(Plasm.cube(2))==0)
@@ -2978,7 +3029,6 @@ def TOP(obj1, obj2): # obj2 goes on top of obj1
         cy2 = 0.5*(obj2.miny() + obj2.maxy())
         T(obj2, 0, cy1 - cy2, 0)
         return U(obj1, obj2)
-        
 
 # MOVE THE SECOND OBJECT TO BE CENTERED BELOW THE FIRST ONE
 def bottom(*args):
