@@ -3650,7 +3650,7 @@ def PLASM_SOLIDELBOW (radiusandangle):
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
 def elbow(*args):
     raise ExceptionWT("Command elbow() is undefined. Try ELBOW() instead?")
-def ELBOW(r1, r2, angle, divisions = [24, 12]):
+def ELBOW(r1, r2, angle, divisions = [24, 24]):
     if not ISNUMBER(angle):
         raise ExceptionWT("Angle alpha in ELBOW(r1, r2, alpha) must be a number!")
     if not ISNUMBER(r1):
