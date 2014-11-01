@@ -1241,6 +1241,8 @@ def ERASE(obj, axis, minval, maxval):
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be less than maxval!")
   
     if not isinstance(obj, list):
+        if EMPTYSET(obj):
+            raise ExceptionWT("In ERASE(obj, axis, minval, maxval), obj is an empty set!")
         if not isinstance(obj, BASEOBJ):
             raise ExceptionWT("In ERASE(obj, axis, minval, maxval), obj must be a 2D or 3D object!")
         if axis == 1:
@@ -1260,18 +1262,19 @@ def ERASE(obj, axis, minval, maxval):
         for oo in obj:
             if not isinstance(oo, BASEOBJ):
                 raise ExceptionWT("In ERASE(obj, axis, minval, maxval), obj must be a 2D or 3D object!")
-            if axis == 1:
-                oo.erasex(minval, maxval)
-            if axis == 2:
-                oo.rotate(-90, 3)
-                oo.erasex(minval, maxval)
-                oo.rotate(90, 3)
-            if axis == 3:
-                if oo.dim == 2:
-                    raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
-                oo.rotate(90, 2)
-                oo.erasex(minval, maxval)
-                oo.rotate(-90, 2)
+            if not EMPTYSET(oo):
+                if axis == 1:
+                    oo.erasex(minval, maxval)
+                if axis == 2:
+                    oo.rotate(-90, 3)
+                    oo.erasex(minval, maxval)
+                    oo.rotate(90, 3)
+                if axis == 3:
+                    if oo.dim == 2:
+                        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
+                    oo.rotate(90, 2)
+                    oo.erasex(minval, maxval)
+                    oo.rotate(-90, 2)
     return COPY(obj)
 
 # ============================================================
@@ -1293,6 +1296,8 @@ def SPLIT(obj, axis, coord):
         raise ExceptionWT("In SPLIT(obj, axis, coord), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
   
     if not isinstance(obj, list):
+        if EMPTYSET(obj):
+            raise ExceptionWT("In SPLIT(obj, axis, coord), obj is an empty set!")
         if not isinstance(obj, BASEOBJ):
             raise ExceptionWT("In SPLIT(obj, axis, coord), obj must be a 2D or 3D object!")
         if axis == 1:
@@ -1316,22 +1321,23 @@ def SPLIT(obj, axis, coord):
         for oo in obj:
             if not isinstance(oo, BASEOBJ):
                 raise ExceptionWT("In SPLIT(obj, axis, coord), obj must be a 2D or 3D object!")
-            if axis == 1:
-                oo1, oo2 = oo.splitx(coord)
-            if axis == 2:
-                oo.rotate(-90, 3)
-                oo1, oo2 = oo.splitx(coord)
-                oo1.rotate(90, 3)
-                oo2.rotate(90, 3)
-            if axis == 3:
-                if oo.dim == 2:
-                    raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
-                oo.rotate(90, 2)
-                oo1, oo2 = oo.splitx(coord)
-                oo1.rotate(-90, 2)
-                oo2.rotate(-90, 2)
-            obj1.append(oo1)
-            obj2.append(oo2)
+            if not EMPTYSET(oo):
+                if axis == 1:
+                    oo1, oo2 = oo.splitx(coord)
+                if axis == 2:
+                    oo.rotate(-90, 3)
+                    oo1, oo2 = oo.splitx(coord)
+                    oo1.rotate(90, 3)
+                    oo2.rotate(90, 3)
+                if axis == 3:
+                    if oo.dim == 2:
+                        raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
+                    oo.rotate(90, 2)
+                    oo1, oo2 = oo.splitx(coord)
+                    oo1.rotate(-90, 2)
+                    oo2.rotate(-90, 2)
+                obj1.append(oo1)
+                obj2.append(oo2)
     return obj1, obj2
 
 # =========================================================
