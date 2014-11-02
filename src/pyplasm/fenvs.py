@@ -1160,17 +1160,25 @@ class BASEOBJ:
     def splitx(self, coord):
         minx = self.minx()
         if minx == None: 
-            return
+            return None, None
         maxx = self.maxx()
         if maxx == None: 
-            return
+            return None, None
         miny = self.miny()
         if miny == None: 
-            return
+            return None, None
         maxy = self.maxy()        
         if maxy == None: 
-            return
+            return None, None
         if self.dim == 2:
+            # Cutplane goes past object:
+            if coord >= maxx:
+                emptyset = DIFF(SQUARE(1), SQUARE(1))
+                return self, emptyset
+            if coord <= minx:
+                emptyset = DIFF(SQUARE(1), SQUARE(1))
+                return emptyset, self
+            # Object will be split into two new objects:
             box1 = BOX(coord - minx, maxy - miny + 2)
             box2 = BOX(maxx - coord, maxy - miny + 2)
             MOVE(box1, minx, miny - 1)
@@ -1182,10 +1190,18 @@ class BASEOBJ:
         else:
             minz = self.minz()
             if minz == None: 
-                return
+                return None, None
             maxz = self.maxz()
             if maxz == None: 
-                return
+                return None, None
+            # Cutplane goes past object:
+            if coord >= maxx:
+                emptyset = DIFF(CUBE(1), CUBE(1))
+                return self, emptyset
+            if coord <= minx:
+                emptyset = DIFF(CUBE(1), CUBE(1))
+                return emptyset, self
+            # Object will be split into two new objects:
             box1 = BOX(coord - minx, maxy - miny + 2, maxz - minz + 2)
             box2 = BOX(maxx - coord, maxy - miny + 2, maxz - minz + 2)
             MOVE(box1, minx, miny - 1, minz - 1)
@@ -1195,6 +1211,8 @@ class BASEOBJ:
             obj1.setcolor(self.color)
             obj2.setcolor(self.color)
         return obj1, obj2
+
+
 
 # ===================
 # SIZEX, SIZEY, SIZEZ
@@ -1227,7 +1245,7 @@ def erase(*args):
     raise ExceptionWT("Command erase() is undefined. Try ERASE() instead?")
 def ERASE(obj, axis, minval, maxval):
     if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
-        raise ExceptionWT("Invalid axis in ERASE(obj, axis, minval, maxval)!")
+        raise ExceptionWT("Use X, Y or Z as axis in ERASE(obj, axis, minval, maxval)!")
     if not ISNUMBER(minval):
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be a number!")
     if not ISNUMBER(maxval):
@@ -1236,7 +1254,7 @@ def ERASE(obj, axis, minval, maxval):
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
     if axis != 1 and axis != 2 and axis != 3:
-        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis must be 1 (X-axis), 2 (Y-axis) or 3 (Z-axis)!")
+        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis must be X, Y or Z!")
     if maxval <= minval:
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be less than maxval!")
   
@@ -1253,7 +1271,7 @@ def ERASE(obj, axis, minval, maxval):
             obj.rotate(90, 3)
         if axis == 3:
             if obj.dim == 2:
-                 raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
+                 raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = Z may not be used with 2D objects!")
             obj.rotate(90, 2)
             obj.erasex(minval, maxval)
             obj.rotate(-90, 2)
@@ -1271,7 +1289,7 @@ def ERASE(obj, axis, minval, maxval):
                     oo.rotate(90, 3)
                 if axis == 3:
                     if oo.dim == 2:
-                        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
+                        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = Z may not be used with 2D objects!")
                     oo.rotate(90, 2)
                     oo.erasex(minval, maxval)
                     oo.rotate(-90, 2)
@@ -1286,14 +1304,14 @@ def split(*args):
     raise ExceptionWT("Command split() is undefined. Try SPLIT() instead?")
 def SPLIT(obj, axis, coord):
     if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
-        raise ExceptionWT("Invalid axis in SPLIT(obj, axis, coord)!")
+        raise ExceptionWT("Use X, Y or Z as axis in SPLIT(obj, axis, coord)!")
     if not ISNUMBER(coord):
         raise ExceptionWT("In SPLIT(obj, axis, coord), coord must be a number!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
     if axis != 1 and axis != 2 and axis != 3:
-        raise ExceptionWT("In SPLIT(obj, axis, coord), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
+        raise ExceptionWT("In SPLIT(obj, axis, coord), axis must be X, Y or Z!")
   
     if not isinstance(obj, list):
         if EMPTYSET(obj):
@@ -1309,7 +1327,7 @@ def SPLIT(obj, axis, coord):
             obj2.rotate(90, 3)
         if axis == 3:
             if obj.dim == 2:
-                 raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
+                 raise ExceptionWT("In SPLIT(obj, axis, coord), axis = Z may not be used with 2D objects!")
             obj.rotate(90, 2)
             obj1, obj2 = obj.splitx(coord)
             obj1.rotate(-90, 2)
@@ -1331,7 +1349,7 @@ def SPLIT(obj, axis, coord):
                     oo2.rotate(90, 3)
                 if axis == 3:
                     if oo.dim == 2:
-                        raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
+                        raise ExceptionWT("In SPLIT(obj, axis, coord), axis = Z may not be used with 2D objects!")
                     oo.rotate(90, 2)
                     oo1, oo2 = oo.splitx(coord)
                     oo1.rotate(-90, 2)
