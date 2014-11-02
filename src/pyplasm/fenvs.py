@@ -6612,3 +6612,14 @@ def UNIT_SQUARE(n, m):
 X = 'X'
 Y = 'Y'
 Z = 'Z'
+
+def PRINTSIZE(obj):
+    minx = MINX(obj)
+    maxx = MAXX(obj)
+    miny = MINY(obj)
+    maxy = MAXY(obj)
+    minz = MINZ(obj)
+    maxz = MAXZ(obj)
+    print "SIZE:", maxx - minx, maxy - miny, maxz - minz
+    print "BBOX:", minx, maxx, miny, maxy, minz, maxz
+
