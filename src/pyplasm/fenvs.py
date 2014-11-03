@@ -5848,6 +5848,8 @@ def PLASM_COLOR(Cpl):
 GRAY    = [128, 128, 128]
 GREY    = [128, 128, 128]
 
+SAND = [194, 178, 128]
+
 LIGHTGREEN   = [0, 255, 0]
 GREEN   = [0, 180, 0]
 DARKGREEN   = [0, 100, 0]
@@ -6415,6 +6417,26 @@ def SIZETEST3D(tested, sizex, sizey, sizez, eps = 1e-8):
     a2 = (abs(SIZEY(tested) - sizey) <= eps)
     a3 = (abs(SIZEZ(tested) - sizez) <= eps)
     return (a1 and a2 and a3)
+
+# Checks whether the bounding box of the 2D object "tested" is 
+# (minx, maxx) x (miny. maxy):
+def BBTEST2D(tested, minx, maxx, miny, maxy, eps = 1e-8):
+    a1 = (abs(MINX(tested) - minx) <= eps)
+    a2 = (abs(MAXX(tested) - maxx) <= eps)
+    a3 = (abs(MINY(tested) - miny) <= eps)
+    a4 = (abs(MAXY(tested) - maxy) <= eps)
+    return a1 and a2 and a3 and a4
+
+# Checks whether the bounding box of the 3D object "tested" is 
+# (minx, maxx) x (miny. maxy) x (minz. maxz):
+def BBTEST3D(tested, minx, maxx, miny, maxy, minz, maxz, eps = 1e-8):
+    a1 = (abs(MINX(tested) - minx) <= eps)
+    a2 = (abs(MAXX(tested) - maxx) <= eps)
+    a3 = (abs(MINY(tested) - miny) <= eps)
+    a4 = (abs(MAXY(tested) - maxy) <= eps)
+    a5 = (abs(MINZ(tested) - minz) <= eps)
+    a6 = (abs(MAXZ(tested) - maxz) <= eps)
+    return a1 and a2 and a3 and a4 and a5 and a6
 
 # Checks if 2D objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
