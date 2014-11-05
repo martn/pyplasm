@@ -1846,13 +1846,20 @@ if self_test:
 # English:
 # TRANSLATE EITHER ONE OBJECT OR LIST OF OBJECTS
 def TRANSLATE(obj, t1, t2, t3 = 0):
+    if not (ISNUM(t1) and ISNUM(t2) and ISNUM(t3)):
+        raise ExceptionWT("The second third and forth arguments must be a number!")
+
     if not isinstance(obj, list):
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("The first argument must be an object!")
         obj.move(t1, t2, t3)
         return COPY(obj)
     else:
         obj = flatten(obj)
         newobj = []
         for oo in obj: 
+            if not isinstance(obj, BASEOBJ):
+                raise ExceptionWT("The first argument must contain only objects!")
             oo.move(t1, t2, t3)
             newobj.append(COPY(oo))
         return newobj
@@ -5463,10 +5470,15 @@ def COLOR(obj, col = None):
   if col is None:
     raise ExceptionWT("The COLOR command takes two arguments: object and the color.")
   if not isinstance(obj, list):
+    if not isinstance(obj, BASEOBJ):
+        raise ExceptionWT("The first argument of COLOR must be an object!")
     obj.setcolor(col)
   else:
     obj = flatten(obj)
-    for x in obj: x.setcolor(col)
+    for x in obj: 
+        if not isinstance(x, BASEOBJ):
+            raise ExceptionWT("Only objects can be colored!")
+        x.setcolor(col)
   return COPY(obj)
 
 C = COLOR
