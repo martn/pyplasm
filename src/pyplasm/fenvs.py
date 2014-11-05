@@ -1054,6 +1054,11 @@ class BASEOBJ:
     def __getattr__(self, name):
         raise ExceptionWT('Did you want to write "," (comma) instead of "." (period) before "%s" or did you misspeled "%s"?' % (name, name))
 
+    def __coerce__(self, other):
+        if isinstance(other , list):
+            return [self], other
+
+
     def __repr__(self):
         return "Plasm %sD object" % self.dim
     def setmaterial(self, mat):
@@ -1999,7 +2004,6 @@ def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
         angle_deg = float(angle_deg)
     except ValueError:
         raise ExceptionWT("The second argument of ROTATE must be angle!")
-    obj.rotaterel(angle_deg, axis)
 
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
