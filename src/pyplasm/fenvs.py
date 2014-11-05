@@ -6531,28 +6531,26 @@ def BBOX3D(tested):
     MOVE(brick, tested.minx(), tested.miny(), tested.minz())
     return brick
 
-# Returns the frame of a 2D bounding box "bbox". Bars of 
-# the frame will have thickness "eps"
-def BBOXFRAME2D(bbox, eps):
-    x = bbox.sizex()
-    y = bbox.sizey()
-    rect = RECTANGLE(x - 2*eps, y - 2*eps)
-    MOVE(rect, eps, eps)
-    return DIFF(bbox, rect)
+# Returns the frame of a 2D box. Bars of 
+# the frame will have thicknesses
+def FRAME2D(x, y, hx, hy):
+    box = BOX(x, y)
+    rect = BOX(x - 2*hx, y - 2*hy)
+    MOVE(rect, hx, hy)
+    SUBTRACT(box, rect)
+    return box
 
-# Returns the frame of a 3D bounding box "bbox". Bars of 
-# the frame will have thickness "eps"
-def BBOXFRAME3D(bbox, eps):
-    x = bbox.sizex()
-    y = bbox.sizey()
-    z = bbox.sizez()
-    brickx = BOX(x, y - 2*eps, z - 2*eps)
-    T(brickx, 0, eps, eps)
-    bricky = BOX(x - 2*eps, y, z - 2*eps)
-    T(bricky, eps, 0, eps)
-    brickz = BOX(x - 2*eps, y - 2*eps, z)
-    T(brickz, eps, eps, 0)
-    return DIFF(bbox, brickx, bricky, brickz)
+# Returns the frame of a 3D box. Bars of 
+# the frame will have thicknesses hx, hy, hz
+def FRAME3D(x, y, z, hx, hy, hz):
+    box = BOX(x, y, z)
+    brickx = BOX(x, y - 2*hy, z - 2*hz)
+    M(brickx, 0, hy, hz)
+    bricky = BOX(x - 2*hx, y, z - 2*hz)
+    M(bricky, hx, 0, hz)
+    brickz = BOX(x - 2*hx, y - 2*hy, z)
+    M(brickz, hx, hy, 0)
+    return DIFF(box, [brickx, bricky, brickz])
 
 # Alberto's changes to make Cartesian products simplicial:
 def cumsum(iterable):
