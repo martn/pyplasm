@@ -921,6 +921,8 @@ def PLASM_VIEW (obj, Background = True):
 def VIEWBASE(objects):
     geoms = []
     for x in objects:
+        if not isinstance(x, BASEOBJ):
+            raise ExceptionWT("The arguments must be objects!")
         geoms.append(x.geom)
     nclabinst.visualize(nclabinst.converter(geoms))
 
@@ -930,14 +932,14 @@ def VIEW(*args):
     #for obj in sequence:
     #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
     #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence == 0): raise ExceptionWT("The VIEW(...) command must contain at least one object!")
+    if len(sequence) == 0: raise ExceptionWT("The VIEW(...) command must contain at least one object!")
     VIEWBASE(sequence)
 def V(*args):
     sequence = flatten(*args)
     #for obj in sequence:
     #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
     #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence == 0): raise ExceptionWT("The V(...) command must contain at least one object!")
+    if len(sequence) == 0: raise ExceptionWT("The V(...) command must contain at least one object!")
     VIEWBASE(sequence)
 def SHOW(*args):
     sequence = flatten(*args)
@@ -945,6 +947,9 @@ def SHOW(*args):
     #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
     #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("The SHOW(...) command must contain at least one object!")
+    for obj in sequence:
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("The arguments of SHOW(...) must be objects!")
     VIEWBASE(sequence)
 # Czech:
 def UKAZ(*args):
