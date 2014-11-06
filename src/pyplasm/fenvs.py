@@ -1120,13 +1120,13 @@ class BASEOBJ:
         if EMPTYSET(self): return None
         else: return MAX(3)(self.geom)
     def sizex(self):
-        if EMPTYSET(self): return None
+        if EMPTYSET(self): return 0
         else: return MAX(1)(self.geom) - MIN(1)(self.geom)
     def sizey(self):
-        if EMPTYSET(self): return None
+        if EMPTYSET(self): return 0
         else: return MAX(2)(self.geom) - MIN(2)(self.geom)
     def sizez(self):
-        if EMPTYSET(self): return None
+        if EMPTYSET(self): return 0
         else: return MAX(3)(self.geom) - MIN(3)(self.geom)
     def erasex(self, erasexmin, erasexmax):
         minx = self.minx()
@@ -1221,19 +1221,19 @@ class BASEOBJ:
 def sizex(*args):
     raise ExceptionWT("Command sizex() is undefined. Try SIZEX() instead?")
 def SIZEX(obj):
-    if EMPTYSET(obj): return None
+    if EMPTYSET(obj): return 0
     else: return MAXX(obj) - MINX(obj)
 
 def sizey(*args):
     raise ExceptionWT("Command sizey() is undefined. Try SIZEY() instead?")
 def SIZEY(obj):
-    if EMPTYSET(obj): return None
+    if EMPTYSET(obj): return 0
     else: return MAXY(obj) - MINY(obj)
 
 def sizez(*args):
     raise ExceptionWT("Command sizez() is undefined. Try SIZEZ() instead?")
 def SIZEZ(obj):
-    if EMPTYSET(obj): return None
+    if EMPTYSET(obj): return 0
     else: return MAXZ(obj) - MINZ(obj)
 
 # ===========================================================
