@@ -6560,16 +6560,32 @@ def ALIGNOBJECTS3D(tested, ref):
     return MOVE(tested, xminref - xmintested, yminref - ymintested, zminref - zmintested)
 
 # Returns a rectangle which is the bounding box of a 2D object "tested":
-def BBOX2D(tested):
-    rect = RECTANGLE(tested.maxx() - tested.minx(), tested.maxy() - tested.miny())
-    MOVE(rect, tested.minx(), tested.miny())
-    return rect
+def BBOXTEST2D(tested, minx, maxx, miny, maxy, tol = 1e-8):
+    testminx = MINX(tested)    
+    testmaxx = MAXX(tested)    
+    testminy = MINY(tested)    
+    testmaxy = MAXY(tested)    
+    a1 = (abs(testminx - minx) <= tol)
+    a2 = (abs(testmaxx - maxx) <= tol)
+    a3 = (abs(testminy - miny) <= tol)
+    a4 = (abs(testmaxy - maxy) <= tol)
+    return a1 and a2 and a3 and a4
 
 # Returns a brick which is the bounding box of a 3D object "tested":
-def BBOX3D(tested):
-    brick = BOX(tested.maxx() - tested.minx(), tested.maxy() - tested.miny(), tested.maxz() - tested.minz())
-    MOVE(brick, tested.minx(), tested.miny(), tested.minz())
-    return brick
+def BBOXTEST3D(tested, minx, maxx, miny, maxy, minz, maxz, tol = 1e-8):
+    testminx = MINX(tested)    
+    testmaxx = MAXX(tested)    
+    testminy = MINY(tested)    
+    testmaxy = MAXY(tested)    
+    testminz = MINZ(tested)    
+    testmaxz = MAXZ(tested)    
+    a1 = (abs(testminx - minx) <= tol)
+    a2 = (abs(testmaxx - maxx) <= tol)
+    a3 = (abs(testminy - miny) <= tol)
+    a4 = (abs(testmaxy - maxy) <= tol)
+    a5 = (abs(testminz - minz) <= tol)
+    a6 = (abs(testmaxz - maxz) <= tol)
+    return a1 and a2 and a3 and a4 and a5 and a6
 
 # Returns the frame of a 2D box. Bars of 
 # the frame will have thicknesses
