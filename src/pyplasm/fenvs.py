@@ -1221,18 +1221,48 @@ class BASEOBJ:
 def sizex(*args):
     raise ExceptionWT("Command sizex() is undefined. Try SIZEX() instead?")
 def SIZEX(obj):
+    # Sanity test:
+    if isinstance(obj, list):
+      obj = flatten(obj)
+      for oo in obj:
+        if not isinstance(oo, BASEOBJ):
+          raise ExceptionWT("Invalid object obj detected in SIZEX(obj)!")
+    else:
+      if not isinstance(obj, BASEOBJ):
+        raise ExceptionWT("Invalid object obj detected in SIZEX(obj)!")
+    # Size calculation:
     if EMPTYSET(obj): return 0
     else: return MAXX(obj) - MINX(obj)
 
 def sizey(*args):
     raise ExceptionWT("Command sizey() is undefined. Try SIZEY() instead?")
 def SIZEY(obj):
+    # Sanity test:
+    if isinstance(obj, list):
+      obj = flatten(obj)
+      for oo in obj:
+        if not isinstance(oo, BASEOBJ):
+          raise ExceptionWT("Invalid object obj detected in SIZEY(obj)!")
+    else:
+      if not isinstance(obj, BASEOBJ):
+        raise ExceptionWT("Invalid object obj detected in SIZEY(obj)!")
+    # Size calculation:
     if EMPTYSET(obj): return 0
     else: return MAXY(obj) - MINY(obj)
 
 def sizez(*args):
     raise ExceptionWT("Command sizez() is undefined. Try SIZEZ() instead?")
 def SIZEZ(obj):
+    # Sanity test:
+    if isinstance(obj, list):
+      obj = flatten(obj)
+      for oo in obj:
+        if not isinstance(oo, BASEOBJ):
+          raise ExceptionWT("Invalid object obj detected in SIZEZ(obj)!")
+    else:
+      if not isinstance(obj, BASEOBJ):
+        raise ExceptionWT("Invalid object obj detected in SIZEZ(obj)!")
+    # Size calculation:
     if EMPTYSET(obj): return 0
     else: return MAXZ(obj) - MINZ(obj)
 
@@ -5795,10 +5825,10 @@ def color(*args):
 def COLOR(obj, col = None):
   # obj may be a single object or a list of objects
   if col is None:
-    raise ExceptionWT("The COLOR command takes two arguments: object and the color.")
+    raise ExceptionWT("The COLOR command takes two arguments: a 2D or 3D object and a color.")
   if not isinstance(obj, list):
     if not isinstance(obj, BASEOBJ):
-        raise ExceptionWT("Invalid object found in the COLOR command.")
+        raise ExceptionWT("The COLOR command takes two arguments: a 2D or 3D object and a color.")
     obj.setcolor(col)
   else:
     obj = flatten(obj)
@@ -6341,6 +6371,16 @@ def IS3D(tested):
 
 # Is a set an empty set?
 def EMPTYSET(obj):
+  # Sanity test:
+  if isinstance(obj, list):
+    obj = flatten(obj)
+    for oo in obj:
+      if not isinstance(oo, BASEOBJ):
+        raise ExceptionWT("Invalid object obj detected in EMPTYSET(obj)!")
+  else:
+    if not isinstance(obj, BASEOBJ):
+      raise ExceptionWT("Invalid object obj detected in EMPTYSET(obj)!")
+  # Emptyset test:
   l = 0
   if isinstance(obj, list):
     maxlen = 0
