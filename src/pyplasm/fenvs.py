@@ -4219,7 +4219,6 @@ if self_test:
 	plasm_config.pop()
 	PLASM_VIEW(out)
 
-
 def PLASM_BEZIERCURVE (controlpoints):
     return PLASM_BEZIER(S1)(controlpoints)
 
@@ -4229,25 +4228,25 @@ def BEZIER_1(*args):
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S1)(list1)
-
+BEZIER = BEZIER_1
+BEZIERCURVE = BEZIER_1
 BE_1 = BEZIER_1
 
 def BEZIER_2(*args):
     list1 = list(args)
     if len(list1) <= 1:
-        raise ExceptionWT("BEZIER curve expects at least two control points!")
+        raise ExceptionWT("BEZIER surface expects at least two Bezier curves!")
     return PLASM_BEZIER(S2)(list1)
-
+BEZIERSURFACE = BEZIER_2
 BE_2 = BEZIER_2
 
 def BEZIER_3(*args):
     list1 = list(args)
-    if len(list1) <= 1:
-        raise ExceptionWT("BEZIER curve expects at least two control points!")
+    if len(list1) <= 2:
+        raise ExceptionWT("BEZIER volume expects at least three Bezier curves!")
     return PLASM_BEZIER(S3)(list1)
-
+BEZIERVOLUME = BEZIER_3
 BE_3 = BEZIER_3
-
 
 # ======================================================
 # coons patch
@@ -4348,7 +4347,7 @@ PPSURFACE = PROFILE_PROD_SURFACE
 # ROTATIONALSURFACE
 # ======================================================
 
-def ROTATIONALSURFACE (args):
+def PLASM_ROTATIONALSURFACE (args):
 	profile = args
 
 	def map_fn(point):
@@ -4367,8 +4366,14 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW COMMAND:
-def ROTATIONAL_SURFACE(args):
-    return ROTATIONALSURFACE(args)
+def ROTATIONAL_SURFACE_BASE(args):
+    return PLASM_ROTATIONALSURFACE(args)
+
+def ROTATIONAL_SURFACE(beziercurve_xz, nx = 32, na = 64):
+  surf = ROTATIONAL_SURFACE_BASE(beziercurve_xz)
+  ref_domain = REF_DOMAIN(1, 2*PI, nx, na)
+  out = MAP(ref_domain, surf)
+  return out
 ROSURFACE = ROTATIONAL_SURFACE
 ROS = ROTATIONAL_SURFACE
 
