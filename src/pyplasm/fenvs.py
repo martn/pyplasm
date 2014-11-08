@@ -4289,9 +4289,9 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW DEFINITION:
-def COONSPATCH(a, b, c, d, nx = 32, ny = 32):
+def COONSPATCH(u1, u2, v1, v2, nx = 32, ny = 32):
     ref_domain = UNIT_SQUARE(nx, ny)
-    surf = PLASM_COONSPATCH([a, b, c, d])
+    surf = PLASM_COONSPATCH([u1, u2, v1, v2])
     out = MAP(ref_domain, surf)
     return out
 
@@ -4321,8 +4321,9 @@ if self_test:
 
 # NEW DEFINITION
 def RULED_SURFACE(a, b):
-    return PLASM_RULEDSURFACE([a, b])
+    return BASEOBJ(PLASM_RULEDSURFACE([a, b]))
 RUSURFACE = RULED_SURFACE
+RULEDSURFACE = RULED_SURFACE
 RUS = RULED_SURFACE
     
 # ======================================================
