@@ -4293,7 +4293,7 @@ def COONSPATCH(a, b, c, d, nx = 32, ny = 32):
     ref_domain = UNIT_SQUARE(nx, ny)
     surf = PLASM_COONSPATCH([a, b, c, d])
     out = MAP(ref_domain, surf)
-    return obj
+    return out
 
 # ======================================================
 # RULED SURFACE
