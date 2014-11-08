@@ -4369,9 +4369,10 @@ if self_test:
 def ROTATIONAL_SURFACE_BASE(args):
     return PLASM_ROTATIONALSURFACE(args)
 
-def ROTATIONAL_SURFACE(beziercurve_xz, nx = 32, na = 64):
-  surf = ROTATIONAL_SURFACE_BASE(beziercurve_xz)
-  ref_domain = REF_DOMAIN(1, 2*PI, nx, na)
+def ROTATIONAL_SURFACE(curve_xz, angle = 360, nx = 32, na = 64):
+  anglerad = angle / 180.0 * PI
+  surf = ROTATIONAL_SURFACE_BASE(curve_xz)
+  ref_domain = REF_DOMAIN(1, anglerad, nx, na)
   out = MAP(ref_domain, surf)
   return out
 ROTATIONALSURFACE = ROTATIONAL_SURFACE
