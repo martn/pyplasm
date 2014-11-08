@@ -4289,8 +4289,11 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW DEFINITION:
-def COONSPATCH(a, b, c, d):
-    return PLASM_COONSPATCH([a, b, c, d])
+def COONSPATCH(a, b, c, d, nx = 32, ny = 32):
+    ref_domain = UNIT_SQUARE(nx, ny)
+    surf = PLASM_COONSPATCH([a, b, c, d])
+    out = MAP(ref_domain, surf)
+    return obj
 
 # ======================================================
 # RULED SURFACE
