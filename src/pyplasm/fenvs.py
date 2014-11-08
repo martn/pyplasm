@@ -2636,10 +2636,12 @@ if self_test:
 def join(*args):
     raise ExceptionWT("Command join() is undefined. Try JOIN() instead?")
 def JOIN(a, b = None):
+    ageom = a.geom
     if b != None:
-        return BASEOBJ(PLASM_JOIN([a.geom, b.geom]))
+        bgeom = b.geom
+        return BASEOBJ(PLASM_JOIN([ageom, bgeom]))
     else: # single argument must be list
-        return BASEOBJ(PLASM_JOIN(a.geom))
+        return BASEOBJ(PLASM_JOIN(ageom))
 
 
 # ===================================================
