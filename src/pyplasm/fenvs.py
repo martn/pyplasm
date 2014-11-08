@@ -4234,22 +4234,25 @@ def BEZIER_1(*args):
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S1)(list1)
 BEZIER = BEZIER_1
+BEZIERX = BEZIER_1
 BEZIERCURVE = BEZIER_1
 BE_1 = BEZIER_1
 
 def BEZIER_2(*args):
     list1 = list(args)
     if len(list1) <= 1:
-        raise ExceptionWT("BEZIER surface expects at least two Bezier curves!")
+        raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S2)(list1)
+BEZIERY = BEZIER_2
 BEZIERSURFACE = BEZIER_2
 BE_2 = BEZIER_2
 
 def BEZIER_3(*args):
     list1 = list(args)
-    if len(list1) <= 2:
-        raise ExceptionWT("BEZIER volume expects at least three Bezier curves!")
+    if len(list1) <= 1:
+        raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S3)(list1)
+BEZIERZ = BEZIER_3
 BEZIERVOLUME = BEZIER_3
 BE_3 = BEZIER_3
 
