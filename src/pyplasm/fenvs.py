@@ -4228,33 +4228,33 @@ def PLASM_BEZIERCURVE (controlpoints):
     return PLASM_BEZIER(S1)(controlpoints)
 
 # NEW DEFINITIONS:
-def BEZIER_1(*args):
+def BEZIER1(*args):
     list1 = list(args)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S1)(list1)
-BEZIER = BEZIER_1
-BEZIERX = BEZIER_1
-BEZIERCURVE = BEZIER_1
-BE_1 = BEZIER_1
+BEZIER = BEZIER1
+BEZIERX = BEZIER1
+BEZIERCURVE = BEZIER1
+BE1 = BEZIER1
 
-def BEZIER_2(*args):
+def BEZIER2(*args):
     list1 = list(args)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S2)(list1)
-BEZIERY = BEZIER_2
-BEZIERSURFACE = BEZIER_2
-BE_2 = BEZIER_2
+BEZIERY = BEZIER2
+BEZIERSURFACE = BEZIER2
+BE2 = BEZIER2
 
-def BEZIER_3(*args):
+def BEZIER3(*args):
     list1 = list(args)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S3)(list1)
-BEZIERZ = BEZIER_3
-BEZIERVOLUME = BEZIER_3
-BE_3 = BEZIER_3
+BEZIERZ = BEZIER3
+BEZIERVOLUME = BEZIER3
+BE3 = BEZIER3
 
 # ======================================================
 # coons patch
@@ -4290,7 +4290,7 @@ if self_test:
 
 # NEW DEFINITION:
 def COONSPATCH(u1, u2, v1, v2, nx = 32, ny = 32):
-    ref_domain = UNIT_SQUARE(nx, ny)
+    ref_domain = UNITSQUARE(nx, ny)
     surf = PLASM_COONSPATCH([u1, u2, v1, v2])
     out = MAP(ref_domain, surf)
     return out
@@ -4320,11 +4320,10 @@ if self_test:
 	plasm_config.pop()
 
 # NEW DEFINITION
-def RULED_SURFACE(a, b):
+def RULEDSURFACE(a, b):
     return BASEOBJ(PLASM_RULEDSURFACE([a, b]))
-RUSURFACE = RULED_SURFACE
-RULEDSURFACE = RULED_SURFACE
-RUS = RULED_SURFACE
+RUSURFACE = RULEDSURFACE
+RUS = RULEDSURFACE
     
 # ======================================================
 # PROFILE SURFACE
@@ -4350,9 +4349,10 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW DEFINITION
-def PROFILE_PROD_SURFACE(a, b):
+def PROFILEPRODSURFACE(a, b):
     return PROFILEPRODSURFACE([a, b])
-PPSURFACE = PROFILE_PROD_SURFACE
+PPSURFACE = PROFILEPRODSURFACE
+PPS = PROFILEPRODSURFACE
 
     
 # ======================================================
@@ -4378,18 +4378,17 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW COMMAND:
-def ROTATIONAL_SURFACE_BASE(args):
+def ROTATIONALSURFACEBASE(args):
     return PLASM_ROTATIONALSURFACE(args)
 
-def ROTATIONAL_SURFACE(curve_xz, angle = 360, nx = 32, na = 64):
+def ROTATIONALSURFACE(curve_xz, angle = 360, nx = 32, na = 64):
   anglerad = angle / 180.0 * PI
-  surf = ROTATIONAL_SURFACE_BASE(curve_xz)
-  ref_domain = REF_DOMAIN(1, anglerad, nx, na)
+  surf = ROTATIONALSURFACEBASE(curve_xz)
+  ref_domain = REFDOMAIN(1, anglerad, nx, na)
   out = MAP(ref_domain, surf)
   return out
-ROTATIONALSURFACE = ROTATIONAL_SURFACE
-ROSURFACE = ROTATIONAL_SURFACE
-ROS = ROTATIONAL_SURFACE
+ROSURFACE = ROTATIONALSURFACE
+ROS = ROTATIONALSURFACE
 
 # ======================================================
 # CYLINDRICAL SURFACE
@@ -4409,13 +4408,12 @@ if self_test:
 	PLASM_VIEW(PLASM_MAP(fn)(domain))
 
 # NEW COMMAND:
-def CYLINDRICAL_SURFACE(curve, vector, nx = 32, ny = 32):
-    ref_domain = UNIT_SQUARE(nx, ny)
+def CYLINDRICALSURFACE(curve, vector, nx = 32, ny = 32):
+    ref_domain = UNITSQUARE(nx, ny)
     surf = PLASM_CYLINDRICALSURFACE([curve, vector])
     return MAP(ref_domain, surf)
-CYLINDRICALSURFACE = CYLINDRICAL_SURFACE
-CYSURFACE = CYLINDRICAL_SURFACE
-CYS = CYLINDRICAL_SURFACE
+CYSURFACE = CYLINDRICALSURFACE
+CYS = CYLINDRICALSURFACE
 
 
 # ======================================================
@@ -4436,13 +4434,12 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW COMMAND:
-def CONICAL_SURFACE(curve, point, nx = 32, ny = 32):
-    ref_domain = UNIT_SQUARE(nx, ny)
+def CONICALSURFACE(curve, point, nx = 32, ny = 32):
+    ref_domain = UNITSQUARE(nx, ny)
     surf = PLASM_CONICALSURFACE([point, curve])
     return MAP(ref_domain, surf)
-CONICALSURFACE = CONICAL_SURFACE
-COSURFACE = CONICAL_SURFACE
-COS = CONICAL_SURFACE
+COSURFACE = CONICALSURFACE
+COS = CONICALSURFACE
 
 # ======================================================
 # CUBICHERMITE
@@ -4482,20 +4479,20 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW DEFINITION
-def CUBIC_HERMITE_1(*args):
+def CUBICHERMITE1(*args):
     return PLASM_CUBICHERMITE(S1)(list(args))
 
-CH_1 = CUBIC_HERMITE_1
+CH_1 = CUBICHERMITE1
 
-def CUBIC_HERMITE_2(*args):
+def CUBICHERMITE2(*args):
     return PLASM_CUBICHERMITE(S2)(list(args))
 
-CH_2 = CUBIC_HERMITE_2
+CH_2 = CUBICHERMITE2
 
-def CUBIC_HERMITE_3(*args):
+def CUBICHERMITE3(*args):
     return PLASM_CUBICHERMITE(S3)(list(args))
 
-CH_3 = CUBIC_HERMITE_3
+CH_3 = CUBICHERMITE3
 
 def PLASM_HERMITE(args):
     P1 , P2 , T1 , T2 = args
@@ -6707,14 +6704,14 @@ def SIMPLEXGRID(size):
 # NEW COMMAND FOR REFERENCE DOMAIN:
 
 def ref_domain(*args):
-    raise ExceptionWT("Command ref_domain() is undefined. Try REF_DOMAIN() instead?")
-def REF_DOMAIN(a, b, m, n):
+    raise ExceptionWT("Command ref_domain() is undefined. Try REFDOMAIN() instead?")
+def REFDOMAIN(a, b, m, n):
     #return POWER(INTERVALS(a, m), INTERVALS(b, n))
     return BASEOBJ(SIMPLEXGRID([a, b])([m, n]))
 
-def unit_square(*args):
-    raise ExceptionWT("Command unit_square() is undefined. Try UNIT_SQUARE() instead?")
-def UNIT_SQUARE(n, m):
+def unitsquare(*args):
+    raise ExceptionWT("Command unitsquare() is undefined. Try UNITSQUARE() instead?")
+def UNITSQUARE(n, m):
     #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
     return BASEOBJ(SIMPLEXGRID([1.0, 1.0])([m, n]))
 
