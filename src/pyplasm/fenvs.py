@@ -4344,7 +4344,7 @@ PPSURFACE = PROFILE_PROD_SURFACE
 
     
 # ======================================================
-# ROTATIONALSURFACE
+# ROTATIONAL SURFACE
 # ======================================================
 
 def PLASM_ROTATIONALSURFACE (args):
@@ -4374,15 +4374,15 @@ def ROTATIONAL_SURFACE(beziercurve_xz, nx = 32, na = 64):
   ref_domain = REF_DOMAIN(1, 2*PI, nx, na)
   out = MAP(ref_domain, surf)
   return out
+ROTATIONALSURFACE = ROTATIONAL_SURFACE
 ROSURFACE = ROTATIONAL_SURFACE
 ROS = ROTATIONAL_SURFACE
 
-    
 # ======================================================
-# CYLINDRICALSURFACE
+# CYLINDRICAL SURFACE
 # ======================================================
 
-def CYLINDRICALSURFACE (args):
+def PLASM_CYLINDRICALSURFACE (args):
 	alpha_fun   = args[0]
 	beta_fun    = CONS(AA(K)(args[1]))
 	return PLASM_RULEDSURFACE([alpha_fun,beta_fun])
@@ -4392,13 +4392,15 @@ if self_test:
 	Udomain=PLASM_INTERVALS(1)(20)
 	Vdomain=PLASM_INTERVALS(1)(6)
 	domain=Plasm.power(Udomain,Vdomain)
-	fn=CYLINDRICALSURFACE([alpha,[0,0,1]])
+	fn=PLASM_CYLINDRICALSURFACE([alpha,[0,0,1]])
 	PLASM_VIEW(PLASM_MAP(fn)(domain))
 
 # NEW COMMAND:
 def CYLINDRICAL_SURFACE(a, b):
-    return CYLINDRICALSURFACE([a, b])
+    return PLASM_CYLINDRICALSURFACE([a, b])
+CYLINDRICALSURFACE = CYLINDRICAL_SURFACE
 CYSURFACE = CYLINDRICAL_SURFACE
+CYS = CYLINDRICAL_SURFACE
 
 
 # ======================================================
