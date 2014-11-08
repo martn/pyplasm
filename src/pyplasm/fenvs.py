@@ -4409,8 +4409,10 @@ if self_test:
 	PLASM_VIEW(PLASM_MAP(fn)(domain))
 
 # NEW COMMAND:
-def CYLINDRICAL_SURFACE(a, b):
-    return PLASM_CYLINDRICALSURFACE([a, b])
+def CYLINDRICAL_SURFACE(curve, vector, nx = 32, ny = 32):
+    ref_domain = UNIT_SQUARE(nx, ny)
+    surf = PLASM_CYLINDRICALSURFACE([curve, vector])
+    return MAP(ref_domain, surf)
 CYLINDRICALSURFACE = CYLINDRICAL_SURFACE
 CYSURFACE = CYLINDRICAL_SURFACE
 CYS = CYLINDRICAL_SURFACE
@@ -4420,7 +4422,7 @@ CYS = CYLINDRICAL_SURFACE
 # CONICALSURFACE
 # ======================================================
 
-def CONICALSURFACE (args):
+def PLASM_CONICALSURFACE (args):
 	apex=args[0]
 	alpha_fn   = lambda point: apex
 	beta_fn    = lambda point: [ args[1](point)[i]-apex[i] for i in range(len(apex))]
@@ -4430,14 +4432,17 @@ def CONICALSURFACE (args):
 if self_test:
 	domain=Plasm.power(PLASM_INTERVALS(1)(20),PLASM_INTERVALS(1)(6))
 	beta=PLASM_BEZIER(S1)([ [1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0] ])
-	out=PLASM_MAP(CONICALSURFACE([[0,0,1],beta]))(domain)
+	out=PLASM_MAP(PLASM_CONICALSURFACE([[0,0,1],beta]))(domain)
 	PLASM_VIEW(out)
 
 # NEW COMMAND:
-def CONICAL_SURFACE(a, b):
-    return CONICALSURFACE([a, b])
+def CONICAL_SURFACE(curve, point, nx = 32, ny = 32):
+    ref_domain = UNIT_SQUARE(nx, ny)
+    surf = PLASM_CONICALSURFACE([point, curve])
+    return MAP(ref_domain, surf)
+CONICALSURFACE = CONICAL_SURFACE
 COSURFACE = CONICAL_SURFACE
-
+COS = CONICAL_SURFACE
 
 # ======================================================
 # CUBICHERMITE
