@@ -2637,9 +2637,9 @@ def join(*args):
     raise ExceptionWT("Command join() is undefined. Try JOIN() instead?")
 def JOIN(a, b = None):
     if b != None:
-        return PLASM_JOIN([a, b])
+        return BASEOBJ(PLASM_JOIN([a.geom, b.geom]))
     else: # single argument must be list
-        return PLASM_JOIN(a)
+        return BASEOBJ(PLASM_JOIN(a.geom))
 
 
 # ===================================================
@@ -5246,6 +5246,8 @@ if self_test:
 		[[2,2],[1,3],[1,2],[2,2]]]))))
 
 # NEW DEFINITION
+def solidify(*args):
+    raise ExceptionWT("Command solidify() is undefined. Try SOLIDIFY() instead?")
 def SOLIDIFY(surf):
   if not isinstance(surf, BASEOBJ):
     raise ExceptionWT("In SOLIDIFY(surf), surf must be a PLaSM surface.")
