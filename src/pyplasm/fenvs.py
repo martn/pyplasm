@@ -5218,7 +5218,7 @@ def SEGMENT (sx):
 # SOLIDIFY
 # ===================================================
 
-def SOLIDIFY(pol):
+def PLASM_SOLIDIFY(pol):
 	
 	box=Plasm.limits(pol)
 	min=box.p1[1]
@@ -5240,10 +5240,17 @@ def SOLIDIFY(pol):
 
 if self_test:
 
-	PLASM_VIEW(SOLIDIFY(PLASM_STRUCT(AA(POLYLINE)([
+	PLASM_VIEW(PLASM_SOLIDIFY(PLASM_STRUCT(AA(POLYLINE)([
 		[[0,0],[4,2],[2.5,3],[4,5],[2,5],[0,3],[-3,3],[0,0]],
 		[[0,3],[0,1],[2,2],[2,4],[0,3]],
 		[[2,2],[1,3],[1,2],[2,2]]]))))
+
+# NEW DEFINITION
+def SOLIDIFY(surf):
+  if not isinstance(surf, BASEOBJ):
+    raise ExceptionWT("In SOLIDIFY(surf), surf must be a PLaSM surface.")
+  obj = BASEOBJ(PLASM_SOLIDIFY(surf.geom))
+  return obj
 
 # ===================================================
 # PLASM_EXTRUSION - ONE PIECE IN THE VERTICAL DIRECTION
