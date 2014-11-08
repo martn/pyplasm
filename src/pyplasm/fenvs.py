@@ -2638,11 +2638,14 @@ def join(*args):
 def JOIN(a, b = None):
     ageom = a.geom
     if b != None:
+        if not isinstance(a, BASEOBJ) or not isinstance(b, BASEOBJ):
+            raise ExceptionWT("In JOIN(obj1, obj2), both obj1 and obj2 must be PLaSM surfaces.")
         bgeom = b.geom
         return BASEOBJ(PLASM_JOIN([ageom, bgeom]))
     else: # single argument must be list
+        if not isinstance(a, BASEOBJ):
+            raise ExceptionWT("In JOIN(obj), obj must be a PLaSM surface.")
         return BASEOBJ(PLASM_JOIN(ageom))
-
 
 # ===================================================
 # also ** can be used to indicates POWER
