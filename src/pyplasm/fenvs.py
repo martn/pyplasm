@@ -2822,7 +2822,7 @@ if self_test:
 def intervals(*args):
     raise ExceptionWT("Command intervals() is undefined. Try INTERVALS() instead?")
 def INTERVALS(a, n):
-    return PLASM_INTERVALS(a)(n)
+    return BASEOBJ(PLASM_INTERVALS(a)(n))
 DIVISION = INTERVALS
 # Czech:
 DELENI = INTERVALS
@@ -4392,13 +4392,11 @@ ROSU = ROTATIONALSURFACE
 # ROTATIONAL SOLID
 # ======================================================
 
-def PLASM_ROTATIONALSOLID (args):
-	profile = args
-
+def PLASM_ROTATIONALSOLID (profile):
 	def map_fn(point):
-		u,v,w=point
-		f,h,g= profile(point)
-		ret=[f*w*math.cos(v),f*w*math.sin(v),g]
+		u,v,w = point
+		f,h,g = profile(point)
+		ret = [f*w*math.cos(v), f*w*math.sin(v), g]
 		return ret
 	return map_fn
 
