@@ -4395,14 +4395,14 @@ ROSU = ROTATIONALSURFACE
 def PLASM_ROTSOLID (profileanglerad):
     profile, anglerad = profileanglerad
     def PLASM_ROTSOLID0 (divisions):
-        n, m, p = divisions
-        domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(1.0)(n), PLASM_INTERVALS(anglerad)(m), PLASM_INTERVALS(1.0)(p)])
+        n, m, o = divisions
+        domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(1.0)(n), PLASM_INTERVALS(anglerad)(m), PLASM_INTERVALS(1.0)(o)])
 #        fx =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.cos(p[0])
 #        fy =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.sin(p[0])
 #        fz =   lambda p: p[2]*a*math.sin(p[1])
-        fx =   lambda p: profile(p)[0] * p[2] * math.cos(p[1])
-        fy =   lambda p: profile(p)[0] * p[2] * math.sin(p[1])
-        fz =   lambda p: profile(p)[2]
+        fx =   lambda p: g = profile(p), g[0] * p[2] * math.cos(p[1])
+        fy =   lambda p: g = profile(p), g[0] * p[2] * math.sin(p[1])
+        fz =   lambda p: g = profile(p), g[2]
         return PLASM_MAP(([fx,fy,fz]))(domain)
     return PLASM_ROTSOLID0
 
