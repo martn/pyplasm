@@ -3277,8 +3277,8 @@ if self_test:
 	assert(Plasm.limits(PLASM_MAP(ID)(Plasm.cube(2)))==Boxf(Vecf(1,0,0),Vecf(1,1,1)))
 
 # NEW DEFINITION:
-def MAP(ref_domain, args):
-    return BASEOBJ(PLASM_MAP(args)(ref_domain.geom))
+def MAP(refdomain, args):
+    return BASEOBJ(PLASM_MAP(args)(refdomain.geom))
 
 # ===================================================
 # OTHER TESTS
@@ -4290,9 +4290,9 @@ if self_test:
 
 # NEW DEFINITION:
 def COONSPATCH(u1, u2, v1, v2, nx = 32, ny = 32):
-    ref_domain = UNITSQUARE(nx, ny)
+    refdomain = UNITSQUARE(nx, ny)
     surf = PLASM_COONSPATCH([u1, u2, v1, v2])
-    out = MAP(ref_domain, surf)
+    out = MAP(refdomain, surf)
     return out
 
 # ======================================================
@@ -4378,17 +4378,39 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW COMMAND:
-def ROTATIONALSURFACEBASE(args):
-    return PLASM_ROTATIONALSURFACE(args)
-
 def ROTATIONALSURFACE(curve_xz, angle = 360, nx = 32, na = 64):
   anglerad = angle / 180.0 * PI
-  surf = ROTATIONALSURFACEBASE(curve_xz)
-  ref_domain = REFDOMAIN(1, anglerad, nx, na)
-  out = MAP(ref_domain, surf)
+  surf = PLASM_ROTATIONALSURFACE(curve_xz)
+  refdomain = REFDOMAIN(1, anglerad, nx, na)
+  out = MAP(refdomain, surf)
   return out
 ROSURFACE = ROTATIONALSURFACE
 ROS = ROTATIONALSURFACE
+ROSU = ROTATIONALSURFACE
+
+# ======================================================
+# ROTATIONAL SOLID
+# ======================================================
+
+def PLASM_ROTATIONALSOLID (args):
+	profile = args
+
+	def map_fn(point):
+		u,v,w=point
+		f,h,g= profile(point)
+		ret=[f*w*math.cos(v),f*w*math.sin(v),g]
+		return ret
+	return map_fn
+
+# NEW COMMAND:
+def ROTATIONALSOLID(curve_xz, angle = 360, nx = 32, na = 64, nr = 1):
+  anglerad = angle / 180.0 * PI
+  surf3d = PLASM_ROTATIONALSOLID(curve_xz)
+  refdomain3d = REFDOMAIN3D(1.0, anglerad, 1.0, nx, na, nr)
+  out = MAP(refdomain3d, surf3d)
+  return out
+ROSOLID = ROTATIONALSOLID
+ROSO = ROTATIONALSOLID
 
 # ======================================================
 # CYLINDRICAL SURFACE
@@ -4409,9 +4431,9 @@ if self_test:
 
 # NEW COMMAND:
 def CYLINDRICALSURFACE(curve, vector, nx = 32, ny = 32):
-    ref_domain = UNITSQUARE(nx, ny)
+    refdomain = UNITSQUARE(nx, ny)
     surf = PLASM_CYLINDRICALSURFACE([curve, vector])
-    return MAP(ref_domain, surf)
+    return MAP(refdomain, surf)
 CYSURFACE = CYLINDRICALSURFACE
 CYS = CYLINDRICALSURFACE
 
@@ -4435,9 +4457,9 @@ if self_test:
 
 # NEW COMMAND:
 def CONICALSURFACE(curve, point, nx = 32, ny = 32):
-    ref_domain = UNITSQUARE(nx, ny)
+    refdomain = UNITSQUARE(nx, ny)
     surf = PLASM_CONICALSURFACE([point, curve])
-    return MAP(ref_domain, surf)
+    return MAP(refdomain, surf)
 COSURFACE = CONICALSURFACE
 COS = CONICALSURFACE
 
@@ -6703,17 +6725,30 @@ def SIMPLEXGRID(size):
 
 # NEW COMMAND FOR REFERENCE DOMAIN:
 
-def ref_domain(*args):
-    raise ExceptionWT("Command ref_domain() is undefined. Try REFDOMAIN() instead?")
+def refdomain(*args):
+    raise ExceptionWT("Command refdomain() is undefined. Try REFDOMAIN() instead?")
 def REFDOMAIN(a, b, m, n):
     #return POWER(INTERVALS(a, m), INTERVALS(b, n))
     return BASEOBJ(SIMPLEXGRID([a, b])([m, n]))
 
+def refdomain3d(*args):
+    raise ExceptionWT("Command refdomain3d() is undefined. Try REFDOMAIN3D() instead?")
+def REFDOMAIN3D(a, b, c, m, n, o):
+    #return POWER(INTERVALS(a, m), INTERVALS(b, n))
+    return BASEOBJ(SIMPLEXGRID([a, b, c])([m, n, o]))
+
 def unitsquare(*args):
     raise ExceptionWT("Command unitsquare() is undefined. Try UNITSQUARE() instead?")
-def UNITSQUARE(n, m):
+def UNITSQUARE(m, n):
     #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
     return BASEOBJ(SIMPLEXGRID([1.0, 1.0])([m, n]))
+
+def unitcube(*args):
+    raise ExceptionWT("Command unitcube() is undefined. Try UNITCUBE() instead?")
+def UNITCUBE(m, n, o):
+    #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
+    return BASEOBJ(SIMPLEXGRID([1.0, 1.0, 1.0])([m, n, o]))
+
 
 # Symbols for axes:
 X = 'X'
