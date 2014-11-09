@@ -4235,7 +4235,6 @@ def BEZIER1(*args):
     return PLASM_BEZIER(S1)(list1)
 BEZIER = BEZIER1
 BEZIERX = BEZIER1
-BEZIERCURVE = BEZIER1
 BE1 = BEZIER1
 
 def BEZIER2(*args):
@@ -4244,7 +4243,6 @@ def BEZIER2(*args):
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S2)(list1)
 BEZIERY = BEZIER2
-BEZIERSURFACE = BEZIER2
 BE2 = BEZIER2
 
 def BEZIER3(*args):
@@ -4253,7 +4251,6 @@ def BEZIER3(*args):
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S3)(list1)
 BEZIERZ = BEZIER3
-BEZIERVOLUME = BEZIER3
 BE3 = BEZIER3
 
 # ======================================================
@@ -4323,7 +4320,8 @@ if self_test:
 def RULEDSURFACE(a, b):
     return BASEOBJ(PLASM_RULEDSURFACE([a, b]))
 RUSURFACE = RULEDSURFACE
-RUS = RULEDSURFACE
+RUSURF = RULEDSURFACE
+RUSU = RULEDSURFACE
     
 # ======================================================
 # PROFILE SURFACE
@@ -4352,8 +4350,8 @@ if self_test:
 def PROFILEPRODSURFACE(a, b):
     return PROFILEPRODSURFACE([a, b])
 PPSURFACE = PROFILEPRODSURFACE
-PPS = PROFILEPRODSURFACE
-
+PPSURF = PROFILEPRODSURFACE
+PPSU = PROFILEPRODSURFACE
     
 # ======================================================
 # ROTATIONAL SURFACE
@@ -4385,7 +4383,7 @@ def ROTATIONALSURFACE(curve_xz, angle = 360, nx = 32, na = 64):
   out = MAP(refdomain, surf)
   return out
 ROSURFACE = ROTATIONALSURFACE
-ROS = ROTATIONALSURFACE
+ROSURF = ROTATIONALSURFACE
 ROSU = ROTATIONALSURFACE
 
 # ======================================================
@@ -4407,27 +4405,13 @@ def PLASM_ROTSOLID (profileanglerad):
     return PLASM_ROTSOLID0
 
 # NEW COMMAND:
-def ROTSOLID(curve_xz, angle = 360, nx = 32, na = 64, nr = 1):
+def ROTATIONALSOLID(curve_xz, angle = 360, nx = 32, na = 64, nr = 1):
   anglerad = angle / 180.0 * PI
   obj = BASEOBJ(PLASM_ROTSOLID([curve_xz, anglerad])([nx, na, nr]))
   return obj
-
-def PLASM_ROTATIONALSOLID (profile):
-	def map_fn(point):
-		u,v,w = point
-		f,h,g = profile(point)
-		ret = [f*w*math.cos(v), f*w*math.sin(v), g]
-		return ret
-	return map_fn
-
-# NEW COMMAND:
-def ROTATIONALSOLID(curve_xz, angle = 360, nx = 32, na = 64, nr = 1):
-  anglerad = angle / 180.0 * PI
-  surf3d = PLASM_ROTATIONALSOLID(curve_xz)
-  refdomain3d = REFDOMAIN3D(1.0, anglerad, 1.0, nx, na, nr)
-  out = MAP(refdomain3d, surf3d)
-  return out
+ROTSOLID = ROTATIONALSOLID
 ROSOLID = ROTATIONALSOLID
+ROSOL = ROTATIONALSOLID
 ROSO = ROTATIONALSOLID
 
 # ======================================================
@@ -4453,7 +4437,7 @@ def CYLINDRICALSURFACE(curve, vector, nx = 32, ny = 32):
     surf = PLASM_CYLINDRICALSURFACE([curve, vector])
     return MAP(refdomain, surf)
 CYSURFACE = CYLINDRICALSURFACE
-CYS = CYLINDRICALSURFACE
+CYSU = CYLINDRICALSURFACE
 
 
 # ======================================================
@@ -4479,7 +4463,8 @@ def CONICALSURFACE(curve, point, nx = 32, ny = 32):
     surf = PLASM_CONICALSURFACE([point, curve])
     return MAP(refdomain, surf)
 COSURFACE = CONICALSURFACE
-COS = CONICALSURFACE
+COSURF = CONICALSURFACE
+COSU = CONICALSURFACE
 
 # ======================================================
 # CUBICHERMITE
@@ -4522,17 +4507,17 @@ if self_test:
 def CUBICHERMITE1(*args):
     return PLASM_CUBICHERMITE(S1)(list(args))
 
-CH_1 = CUBICHERMITE1
+CH1 = CUBICHERMITE1
 
 def CUBICHERMITE2(*args):
     return PLASM_CUBICHERMITE(S2)(list(args))
 
-CH_2 = CUBICHERMITE2
+CH2 = CUBICHERMITE2
 
 def CUBICHERMITE3(*args):
     return PLASM_CUBICHERMITE(S3)(list(args))
 
-CH_3 = CUBICHERMITE3
+CH3 = CUBICHERMITE3
 
 def PLASM_HERMITE(args):
     P1 , P2 , T1 , T2 = args
