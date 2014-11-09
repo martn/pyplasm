@@ -4409,7 +4409,7 @@ def PLASM_ROTSOLID (profileanglerad):
 # NEW COMMAND:
 def ROTSOLID(curve_xz, angle = 360, nx = 32, na = 64, nr = 1):
   anglerad = angle / 180.0 * PI
-  obj = BASEOBJ(PLASM_ROTSOLID([curve_xz, angle])([nx, na, nr]))
+  obj = BASEOBJ(PLASM_ROTSOLID([curve_xz, anglerad])([nx, na, nr]))
   return obj
 
 def PLASM_ROTATIONALSOLID (profile):
