@@ -4412,7 +4412,6 @@ def ROTATIONALSOLID(curve_xz, angle = 360, nx = 32, na = 64, nr = 1):
 ROTSOLID = ROTATIONALSOLID
 ROSOLID = ROTATIONALSOLID
 ROSOL = ROTATIONALSOLID
-ROSO = ROTATIONALSOLID
 
 # ======================================================
 # CYLINDRICAL SURFACE
