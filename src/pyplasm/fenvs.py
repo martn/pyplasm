@@ -3688,8 +3688,8 @@ def TORUS_SURFACE(r1, r2, divisions = [64, 32]):
 
 def PLASM_SOLIDTORUS (radius):
     r1 , r2 = radius
-    def PLASM_TORUS0 (subdomains):
-        N, M, P = subdomains
+    def PLASM_TORUS0 (divisions):
+        N, M, P = divisions
         a=0.5*(r2-r1)
         c=0.5*(r1+r2)
         domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(2*PI)(N), PLASM_INTERVALS(2*PI)(M), PLASM_INTERVALS(1)(P)])
@@ -3745,8 +3745,8 @@ TORE = TORUS
 def PLASM_SOLIDELBOW (radiusandangle):
     r1, r2, angle = radiusandangle
     angle = angle*PI/180
-    def PLASM_ELBOW0 (subdomains):
-        N, M, P = subdomains
+    def PLASM_ELBOW0 (divisions):
+        N, M, P = divisions
         a=0.5*(r2-r1)
         c=0.5*(r1+r2)
         domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(angle)(N), PLASM_INTERVALS(2*PI)(M), PLASM_INTERVALS(1)(P)])
@@ -4391,6 +4391,26 @@ ROSU = ROTATIONALSURFACE
 # ======================================================
 # ROTATIONAL SOLID
 # ======================================================
+
+def PLASM_ROTSOLID (profileanglerad):
+    profile, anglerad = profileanglerad
+    def PLASM_ROTSOLID0 (divisions):
+        n, m, p = divisions
+        domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(1.0)(n), PLASM_INTERVALS(anglerad)(m), PLASM_INTERVALS(1.0)(p)])
+#        fx =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.cos(p[0])
+#        fy =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.sin(p[0])
+#        fz =   lambda p: p[2]*a*math.sin(p[1])
+        fx =   lambda p: profile(p)[0] * p[2] * math.cos(p[1])
+        fy =   lambda p: profile(p)[0] * p[2] * math.sin(p[1])
+        fz =   lambda p: profile(p)[2]
+        return PLASM_MAP(([fx,fy,fz]))(domain)
+    return PLASM_ROTSOLID0
+
+# NEW COMMAND:
+def ROTSOLID(curve_xz, angle = 360, nx = 32, na = 64, nr = 1):
+  anglerad = angle / 180.0 * PI
+  obj = BASEOBJ(PLASM_ROTSOLID([curve_xz, angle])([nx, na, nr]))
+  return obj
 
 def PLASM_ROTATIONALSOLID (profile):
 	def map_fn(point):
