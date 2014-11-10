@@ -4275,7 +4275,7 @@ def DRAWBEZIER2D(point_list, hcurve=0.01, hpts=0.05, colcurve=[0, 0, 0], colpt =
   # Small circles for points:
   ll = len(point_list)
   for i in range(ll):
-    circle = CIRCLE(hpts)
+    circle = SPHERE(hpts)
     p = point_list[i]
     MOVE(circle, p[0], p[1])
     if i == 0 or i == ll-1:
