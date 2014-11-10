@@ -4271,7 +4271,7 @@ def DRAWBEZIER2D(point_list, hcurve=0.01, hpts=0.05, colcurve=[0, 0, 0], colpt =
   surf = BEZIER2(c1, c2)
   refdomain = UNITSQUARE(nx, ny)
   out = [MAP(refdomain, surf)]
-  COLOR(out, color)
+  COLOR(out, colcurve)
   # Small circles for points:
   ll = len(point_list)
   for i in range(ll):
