@@ -4256,7 +4256,7 @@ BE3 = BEZIER3
 # ======================================================
 # Draw Bezier curves in the XY plane
 # ======================================================
-def DRAWBEZIER2D(point_list, hcurve=0.01, hpts=0.05, colcurve=[0, 0, 0], colpt = [0, 0, 255], nx=32, ny=1):
+def DRAWBEZIER2D(point_list, hcurve=0.02, hpts=0.1, colcurve=[0, 0, 0], colpt = [0, 0, 255], nx=32, ny=1):
   # First set of points:
   pts1 = []
   for p in point_list:
