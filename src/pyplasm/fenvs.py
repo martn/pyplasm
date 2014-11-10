@@ -4376,7 +4376,8 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW COMMAND:
-def ROTATIONALSURFACE(curve_xz, angle = 360, nx = 32, na = 64):
+def ROTATIONALSURFACE(point_list, angle = 360, nx = 32, na = 64):
+  curve_xz = BEZIER1(point_list)
   anglerad = angle / 180.0 * PI
   surf = PLASM_ROTATIONALSURFACE(curve_xz)
   refdomain = REFDOMAIN(1, anglerad, nx, na)
@@ -4405,7 +4406,8 @@ def PLASM_ROTSOLID (profileanglerad):
     return PLASM_ROTSOLID0
 
 # NEW COMMAND:
-def ROTATIONALSOLID(curve_xz, angle = 360, nx = 32, na = 64, nr = 1):
+def ROTATIONALSOLID(point_list, angle = 360, nx = 32, na = 64, nr = 1):
+  curve_xz = BEZIER1(point_list)
   anglerad = angle / 180.0 * PI
   obj = BASEOBJ(PLASM_ROTSOLID([curve_xz, anglerad])([nx, na, nr]))
   return obj
