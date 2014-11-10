@@ -4256,21 +4256,33 @@ BE3 = BEZIER3
 # ======================================================
 # Draw Bezier curves in the XY plane
 # ======================================================
-def DRAWBEZIER2D(point_list, h, color=[0, 0, 0], nx=32, ny=1):
+def DRAWBEZIER2D(point_list, hcurve=0.01, hpts=0.05, colcurve=[0, 0, 0], colpt = [0, 0, 255], nx=32, ny=1):
+  # First set of points:
   pts1 = []
   for p in point_list:
-    pts1.append([p[0]-h, p[1]])
+    pts1.append([p[0]-hcurve, p[1]])
   c1 = PLASM_BEZIER(S1)(pts1)
-  
+  # Second set of points:
   pts2 = []
   for p in point_list:
-    pts2.append([p[0]+h, p[1]])
+    pts2.append([p[0]+hcurve, p[1]])
   c2 = PLASM_BEZIER(S1)(pts2)
-
+  # Thick curve:
   surf = BEZIER2(c1, c2)
   refdomain = UNITSQUARE(nx, ny)
-  out = MAP(refdomain, surf)
+  out = [MAP(refdomain, surf)]
   COLOR(out, color)
+  # Small circles for points:
+  ll = len(point_list)
+  for i in range(ll):
+    circle = CIRCLE(hpts)
+    p = point_list[i]
+    MOVE(circle, p[0], p[1])
+    if i == 0 or i == ll-1:
+      COLOR(circle, colcurve)
+    else:
+      COLOR(circle, colpt)
+    out.append(circle)
   return out
 
 # ======================================================
