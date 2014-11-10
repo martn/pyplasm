@@ -4254,6 +4254,26 @@ BEZIERZ = BEZIER3
 BE3 = BEZIER3
 
 # ======================================================
+# Draw Bezier curves in the XY plane
+# ======================================================
+def DRAWBEZIER2D(point_list, h, color=[0, 0, 0], nx=32, ny=1):
+  pts1 = []
+  for p in point_list:
+    pts1.append([p[0]-h, p[1]])
+  c1 = PLASM_BEZIER(S1)(pts1)
+  
+  pts2 = []
+  for p in point_list:
+    pts2.append([p[0]+h, p[1]])
+  c2 = PLASM_BEZIER(S1)(pts2)
+
+  surf = BEZIER2(c1, c2)
+  refdomain = UNITSQUARE(nx, ny)
+  out = MAP(refdomain, surf)
+  COLOR(out, color)
+  return out
+
+# ======================================================
 # coons patch
 # ======================================================
 
