@@ -34,7 +34,12 @@ print __file__
 
 from pyplasm.xge import *
 
-	
+def ISNUMBER(x):
+  if not isinstance(x, int) and not isinstance(x, long) and not isinstance(x, float):
+    return False
+  else:
+    return True
+
 #===================================================== 
 # Configuration for plasm
 #
@@ -927,22 +932,13 @@ def VIEWBASE(objects):
     nclabinst.visualize(nclabinst.converter(geoms))
 
 # English:
-def VIEW(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("The VIEW(...) command must contain at least one object!")
-    VIEWBASE(sequence)
-def V(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("The V(...) command must contain at least one object!")
-    VIEWBASE(sequence)
+def show(*args):
+    raise ExceptionWT("Command show() is undefined. Try SHOW() instead?")
 def SHOW(*args):
     sequence = flatten(*args)
+    for obj in sequence:
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("Attempt to display an invalid object.")
     #for obj in sequence:
     #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
     #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
@@ -950,96 +946,6 @@ def SHOW(*args):
     for obj in sequence:
         if not isinstance(obj, BASEOBJ):
             raise ExceptionWT("The arguments of SHOW(...) must be objects!")
-    VIEWBASE(sequence)
-# Czech:
-def UKAZ(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("Příkaz UKAZ(...) musí obsahovat alespoň jeden objekt!")
-    VIEWBASE(sequence)
-def ZOBRAZ(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("Příkaz ZOBRAZ(...) musí obsahovat alespoň jeden objekt!")
-    VIEWBASE(sequence)
-# Polish:
-def ZOBACZ(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("Poleceń ZOBACZ(...) musi zawierać co najmniej jeden obiekt!")
-    VIEWBASE(sequence)
-def POKAZ(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("Poleceń POKAZ(...) musi zawierać co najmniej jeden obiekt!")
-    VIEWBASE(sequence)
-# German:
-def ZEIGE(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("Der Befehl ZEIGE(...) muss mindestens ein Objekt enthalten!")
-    VIEWBASE(sequence)
-def ANSICHT(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("Der Befehl ANSICHT(...) muss mindestens ein Objekt enthalten!")
-    VIEWBASE(sequence)
-# Spanish:
-def MOSTRAR(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("El comando MOSTRAR(...) debe contener al menos un objeto!")
-    VIEWBASE(sequence)
-def MUESTRA(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("El comando MUESTRA(...) debe contener al menos un objeto!")
-    VIEWBASE(sequence)
-# Italian:
-def MOSTRARE(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("Il comando MOSTRARE(...) deve contenere almeno un oggetto!")
-    VIEWBASE(sequence)
-def MOSTRA(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("Il comando MOSTRA(...) deve contenere almeno un oggetto!")
-    VIEWBASE(sequence)
-# French:
-def MONTRER(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("La commande MONTRER(...) doit contenir au moins un objet!")
-    VIEWBASE(sequence)
-def MONTRE(*args):
-    sequence = flatten(*args)
-    #for obj in sequence:
-    #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
-    #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
-    if len(sequence) == 0: raise ExceptionWT("La commande MONTRE(...) doit contenir au moins un objet!")
     VIEWBASE(sequence)
 
 # ===================================================
@@ -1057,7 +963,7 @@ class BASEOBJ:
         self.material = [1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100]
 
     def __getattr__(self, name):
-        raise ExceptionWT('Did you want to write "," (comma) instead of "." (period) before "%s" or did you misspeled "%s"?' % (name, name))
+        raise ExceptionWT('Did you want to write "," (comma) instead of "." (period) before "%s" or did you misspell "%s"?' % (name, name))
 
     def __coerce__(self, other):
         if isinstance(other , list):
@@ -1083,7 +989,7 @@ class BASEOBJ:
         if type(color) is list:
           # Sanity checks:
           if len(color) <> 3 and len(color) <> 4:
-            raise ExceptionWT("Color must be a list of length 3 (R, G, B) or 4 (R, G, B, A)!")
+            raise ExceptionWT("Color must be a list of length 3 [R, G, B] or 4 [R, G, B, A]!")
           if color[0] < 0 or color[0] > 255 or color[1] < 0 or color[1] > 255 or color[2] < 0 or color[2] > 255:
             raise ExceptionWT("RGB values in color definition must lie between 0 and 255!")
           if len(color) == 4:
@@ -1147,14 +1053,10 @@ class BASEOBJ:
         if axis == 'x' or axis == 'X': axis = 1
         if axis == 'y' or axis == 'Y': axis = 2
         if axis == 'z' or axis == 'Z': axis = 3
-        # this is a bit nasty but it allows to give center point without the axis in 2D:
         centerpoint = point
-        if self.dim == 2 and isinstance(axis, list):
-            centerpoint = axis
-            axis = 3
         # check the axis:
         if axis != 1 and axis != 2 and axis != 3: 
-            raise ExceptionWT("The third argument of ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
+            raise ExceptionWT("The third argument of ROTATE must be either X (x-axis), Y (y-axis), or Z (z-axis)!")
 	#if self.dim == 2 and axis <> 3:
             # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
             #raise ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
@@ -1201,31 +1103,6 @@ class BASEOBJ:
         self.setcolor(self.color)
     def getdimension(self):
         return self.dim
-    def rotaterel(self, angle_deg, axis = 3):
-        if axis == 'x' or axis == 'X': axis = 1
-        if axis == 'y' or axis == 'Y': axis = 2
-        if axis == 'z' or axis == 'Z': axis = 3
-        if axis != 1 and axis != 2 and axis != 3: 
-          raise ExceptionWT("The third argument of the command ROTATE must be either 1 (x-axis), 2 (y-axis), or 3 (z-axis)!")
-	#if self.dim == 2 and axis <> 3:
-            # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
-            #raise ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
-        if self.dim != 2 and self.dim != 3:
-           raise ExceptionWT("Error in ROTATE: Object dimension must be either 2 or 3.")
-        if self.dim == 2:
-          x = 0.5 * (self.minx() + self.maxx())
-          y = 0.5 * (self.miny() + self.maxy())
-          self.move(-x, -y)
-          self.rotate(angle_deg, axis)
-          self.move(x, y)
-        else:
-          x = 0.5 * (self.minx() + self.maxx())
-          y = 0.5 * (self.miny() + self.maxy())
-          z = 0.5 * (self.minz() + self.maxz())
-          self.move(-x, -y, -z)
-          self.rotate(angle_deg, axis)
-          self.move(x, y, z)
-        self.setcolor(self.color)
     def scale(self, a, b, c = 1.0):
         if a <= 0 or b <= 0 or c <= 0:
             raise ExceptionWT("When scaling an object, all axial coefficients must be greater than zero!")
@@ -1235,22 +1112,22 @@ class BASEOBJ:
         self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
         self.setcolor(self.color)
     def minx(self):
-        if EMPTYSET(self): raise ExceptionWT("Minimum X coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MIN(1)(self.geom)
     def miny(self):
-        if EMPTYSET(self): raise ExceptionWT("Minimum Y coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MIN(2)(self.geom)
     def minz(self):
-        if EMPTYSET(self): raise ExceptionWT("Minimum Z coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MIN(3)(self.geom)
     def maxx(self):
-        if EMPTYSET(self): raise ExceptionWT("Maximum X coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MAX(1)(self.geom)
     def maxy(self):
-        if EMPTYSET(self): raise ExceptionWT("Maximum Y coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MAX(2)(self.geom)
     def maxz(self):
-        if EMPTYSET(self): raise ExceptionWT("Maximum Z coordinate was requested for an empty set.")
+        if EMPTYSET(self): return None
         else: return MAX(3)(self.geom)
     def sizex(self):
         if EMPTYSET(self): return 0
@@ -1263,76 +1140,169 @@ class BASEOBJ:
         else: return MAX(3)(self.geom) - MIN(3)(self.geom)
     def erasex(self, erasexmin, erasexmax):
         minx = self.minx()
+        if minx == None: 
+            return
         maxx = self.maxx()
+        if maxx == None: 
+            return
         miny = self.miny()
+        if miny == None: 
+            return
         maxy = self.maxy()        
+        if maxy == None: 
+            return
         if self.dim == 2:
-            box = BOX(erasexmax - erasexmin, self.maxy() - self.miny() + 2)
-            MOVE(box, erasexmin, self.miny() - 1)
+            box = BOX(erasexmax - erasexmin, maxy - miny + 2)
+            MOVE(box, erasexmin, miny - 1)
     	    self.geom = PLASM_DIFF([self.geom, box.geom])
             self.setcolor(self.color)
         else:
             minz = self.minz()
+            if minz == None: 
+                return
             maxz = self.maxz()
-            box = BOX(erasexmax - erasexmin, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 2)
-            MOVE(box, erasexmin, self.miny() - 1, self.minz() - 1)
+            if maxz == None: 
+                return
+            box = BOX(erasexmax - erasexmin, maxy - miny + 2, maxz - minz + 2)
+            MOVE(box, erasexmin, miny - 1, minz - 1)
     	    self.geom = PLASM_DIFF([self.geom, box.geom])
             self.setcolor(self.color)
     def splitx(self, coord):
         minx = self.minx()
+        if minx == None: 
+            return None, None
         maxx = self.maxx()
+        if maxx == None: 
+            return None, None
         miny = self.miny()
+        if miny == None: 
+            return None, None
         maxy = self.maxy()        
+        if maxy == None: 
+            return None, None
         if self.dim == 2:
-            box1 = BOX(coord - minx, self.maxy() - self.miny() + 2)
-            box2 = BOX(maxx - coord, self.maxy() - self.miny() + 2)
-            MOVE(box1, minx, self.miny() - 1)
-            MOVE(box2, coord, self.miny() - 1)
+            # Cutplane goes past object:
+            if coord >= maxx:
+                emptyset = DIFF(SQUARE(1), SQUARE(1))
+                return self, emptyset
+            if coord <= minx:
+                emptyset = DIFF(SQUARE(1), SQUARE(1))
+                return emptyset, self
+            # Object will be split into two new objects:
+            box1 = BOX(coord - minx, maxy - miny + 2)
+            box2 = BOX(maxx - coord, maxy - miny + 2)
+            MOVE(box1, minx, miny - 1)
+            MOVE(box2, coord, miny - 1)
     	    obj1 = BASEOBJ(PLASM_INTERSECTION([self.geom, box1.geom]))
     	    obj2 = BASEOBJ(PLASM_INTERSECTION([self.geom, box2.geom]))
             obj1.setcolor(self.color)
             obj2.setcolor(self.color)
         else:
             minz = self.minz()
+            if minz == None: 
+                return None, None
             maxz = self.maxz()
-            box1 = BOX(coord - minx, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 2)
-            box2 = BOX(maxx - coord, self.maxy() - self.miny() + 2, self.maxz() - self.minz() + 2)
-            MOVE(box1, minx, self.miny() - 1, self.minz() - 1)
-            MOVE(box2, coord, self.miny() - 1, self.minz() - 1)
+            if maxz == None: 
+                return None, None
+            # Cutplane goes past object:
+            if coord >= maxx:
+                emptyset = DIFF(CUBE(1), CUBE(1))
+                return self, emptyset
+            if coord <= minx:
+                emptyset = DIFF(CUBE(1), CUBE(1))
+                return emptyset, self
+            # Object will be split into two new objects:
+            box1 = BOX(coord - minx, maxy - miny + 2, maxz - minz + 2)
+            box2 = BOX(maxx - coord, maxy - miny + 2, maxz - minz + 2)
+            MOVE(box1, minx, miny - 1, minz - 1)
+            MOVE(box2, coord, miny - 1, minz - 1)
     	    obj1 = BASEOBJ(PLASM_INTERSECTION([self.geom, box1.geom]))
     	    obj2 = BASEOBJ(PLASM_INTERSECTION([self.geom, box2.geom]))
             obj1.setcolor(self.color)
             obj2.setcolor(self.color)
         return obj1, obj2
 
+
+
 # ===================
 # SIZEX, SIZEY, SIZEZ
 # ===================
 
+def sizex(*args):
+    raise ExceptionWT("Command sizex() is undefined. Try SIZEX() instead?")
 def SIZEX(obj):
-    return obj.sizex()
+    # Sanity test:
+    if isinstance(obj, list):
+      obj = flatten(obj)
+      for oo in obj:
+        if not isinstance(oo, BASEOBJ):
+          raise ExceptionWT("Invalid object obj detected in SIZEX(obj)!")
+    else:
+      if not isinstance(obj, BASEOBJ):
+        raise ExceptionWT("Invalid object obj detected in SIZEX(obj)!")
+    # Size calculation:
+    if EMPTYSET(obj): return 0
+    else: return MAXX(obj) - MINX(obj)
 
+def sizey(*args):
+    raise ExceptionWT("Command sizey() is undefined. Try SIZEY() instead?")
 def SIZEY(obj):
-    return obj.sizey()
+    # Sanity test:
+    if isinstance(obj, list):
+      obj = flatten(obj)
+      for oo in obj:
+        if not isinstance(oo, BASEOBJ):
+          raise ExceptionWT("Invalid object obj detected in SIZEY(obj)!")
+    else:
+      if not isinstance(obj, BASEOBJ):
+        raise ExceptionWT("Invalid object obj detected in SIZEY(obj)!")
+    # Size calculation:
+    if EMPTYSET(obj): return 0
+    else: return MAXY(obj) - MINY(obj)
 
+def sizez(*args):
+    raise ExceptionWT("Command sizez() is undefined. Try SIZEZ() instead?")
 def SIZEZ(obj):
-    return obj.sizez()
+    # Sanity test:
+    if isinstance(obj, list):
+      obj = flatten(obj)
+      for oo in obj:
+        if not isinstance(oo, BASEOBJ):
+          raise ExceptionWT("Invalid object obj detected in SIZEZ(obj)!")
+    else:
+      if not isinstance(obj, BASEOBJ):
+        raise ExceptionWT("Invalid object obj detected in SIZEZ(obj)!")
+    # Size calculation:
+    if EMPTYSET(obj): return 0
+    else: return MAXZ(obj) - MINZ(obj)
 
 # ===========================================================
 # ERASE(obj, axis, min, max) - ERASE PART OF OBJECT THAT LIES 
 # BETWEEN MIN AND MAX in AXIAL DIRECTION "axis"
 # ===========================================================
 
+def erase(*args):
+    raise ExceptionWT("Command erase() is undefined. Try ERASE() instead?")
 def ERASE(obj, axis, minval, maxval):
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
+        raise ExceptionWT("Use X, Y or Z as axis in ERASE(obj, axis, minval, maxval)!")
+    if not ISNUMBER(minval):
+        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be a number!")
+    if not ISNUMBER(maxval):
+        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), maxval must be a number!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
     if axis != 1 and axis != 2 and axis != 3:
-        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
+        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis must be X, Y or Z!")
     if maxval <= minval:
         raise ExceptionWT("In ERASE(obj, axis, minval, maxval), minval must be less than maxval!")
   
     if not isinstance(obj, list):
+        if EMPTYSET(obj):
+            raise ExceptionWT("In ERASE(obj, axis, minval, maxval), obj is an empty set!")
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("In ERASE(obj, axis, minval, maxval), obj must be a 2D or 3D object!")
         if axis == 1:
             obj.erasex(minval, maxval)
         if axis == 2:
@@ -1341,25 +1311,28 @@ def ERASE(obj, axis, minval, maxval):
             obj.rotate(90, 3)
         if axis == 3:
             if obj.dim == 2:
-                 raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
-            obj.rotate(-90, 2)
-            obj.erasex(minval, maxval)
+                 raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = Z may not be used with 2D objects!")
             obj.rotate(90, 2)
+            obj.erasex(minval, maxval)
+            obj.rotate(-90, 2)
     else:
         obj = flatten(obj) # flatten the rest as there may be structs
         for oo in obj:
-            if axis == 1:
-                oo.erasex(minval, maxval)
-            if axis == 2:
-                oo.rotate(-90, 3)
-                oo.erasex(minval, maxval)
-                oo.rotate(90, 3)
-            if axis == 3:
-                if oo.dim == 2:
-                    raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = 3 may not be used with 2D objects!")
-                oo.rotate(-90, 2)
-                oo.erasex(minval, maxval)
-                oo.rotate(90, 2)
+            if not isinstance(oo, BASEOBJ):
+                raise ExceptionWT("In ERASE(obj, axis, minval, maxval), obj must be a 2D or 3D object!")
+            if not EMPTYSET(oo):
+                if axis == 1:
+                    oo.erasex(minval, maxval)
+                if axis == 2:
+                    oo.rotate(-90, 3)
+                    oo.erasex(minval, maxval)
+                    oo.rotate(90, 3)
+                if axis == 3:
+                    if oo.dim == 2:
+                        raise ExceptionWT("In ERASE(obj, axis, minval, maxval), axis = Z may not be used with 2D objects!")
+                    oo.rotate(90, 2)
+                    oo.erasex(minval, maxval)
+                    oo.rotate(-90, 2)
     return COPY(obj)
 
 # ============================================================
@@ -1367,14 +1340,24 @@ def ERASE(obj, axis, minval, maxval):
 # "axis" INTO TWO PARTS SEPARATED AT COORDINATE "coord"
 # ============================================================
 
+def split(*args):
+    raise ExceptionWT("Command split() is undefined. Try SPLIT() instead?")
 def SPLIT(obj, axis, coord):
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
+        raise ExceptionWT("Use X, Y or Z as axis in SPLIT(obj, axis, coord)!")
+    if not ISNUMBER(coord):
+        raise ExceptionWT("In SPLIT(obj, axis, coord), coord must be a number!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
     if axis != 1 and axis != 2 and axis != 3:
-        raise ExceptionWT("In SPLIT(obj, axis, coord), axis must be 1 (x-axis), 2 (y-axis) or 3 (z-axis)!")
+        raise ExceptionWT("In SPLIT(obj, axis, coord), axis must be X, Y or Z!")
   
     if not isinstance(obj, list):
+        if EMPTYSET(obj):
+            raise ExceptionWT("In SPLIT(obj, axis, coord), obj is an empty set!")
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("In SPLIT(obj, axis, coord), obj must be a 2D or 3D object!")
         if axis == 1:
             obj1, obj2 = obj.splitx(coord)
         if axis == 2:
@@ -1384,32 +1367,35 @@ def SPLIT(obj, axis, coord):
             obj2.rotate(90, 3)
         if axis == 3:
             if obj.dim == 2:
-                 raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
-            obj.rotate(-90, 2)
+                 raise ExceptionWT("In SPLIT(obj, axis, coord), axis = Z may not be used with 2D objects!")
+            obj.rotate(90, 2)
             obj1, obj2 = obj.splitx(coord)
-            obj1.rotate(90, 2)
-            obj2.rotate(90, 2)
+            obj1.rotate(-90, 2)
+            obj2.rotate(-90, 2)
     else:
         obj = flatten(obj) # flatten the rest as there may be structs
         obj1 = []
         obj2 = []
         for oo in obj:
-            if axis == 1:
-                oo1, oo2 = oo.splitx(coord)
-            if axis == 2:
-                oo.rotate(-90, 3)
-                oo1, oo2 = oo.splitx(coord)
-                oo1.rotate(90, 3)
-                oo2.rotate(90, 3)
-            if axis == 3:
-                if oo.dim == 2:
-                    raise ExceptionWT("In SPLIT(obj, axis, coord), axis = 3 may not be used with 2D objects!")
-                oo.rotate(-90, 2)
-                oo1, oo2 = oo.splitx(coord)
-                oo1.rotate(90, 2)
-                oo2.rotate(90, 2)
-            obj1.append(oo1)
-            obj2.append(oo2)
+            if not isinstance(oo, BASEOBJ):
+                raise ExceptionWT("In SPLIT(obj, axis, coord), obj must be a 2D or 3D object!")
+            if not EMPTYSET(oo):
+                if axis == 1:
+                    oo1, oo2 = oo.splitx(coord)
+                if axis == 2:
+                    oo.rotate(-90, 3)
+                    oo1, oo2 = oo.splitx(coord)
+                    oo1.rotate(90, 3)
+                    oo2.rotate(90, 3)
+                if axis == 3:
+                    if oo.dim == 2:
+                        raise ExceptionWT("In SPLIT(obj, axis, coord), axis = Z may not be used with 2D objects!")
+                    oo.rotate(90, 2)
+                    oo1, oo2 = oo.splitx(coord)
+                    oo1.rotate(-90, 2)
+                    oo2.rotate(-90, 2)
+                obj1.append(oo1)
+                obj2.append(oo2)
     return obj1, obj2
 
 # =========================================================
@@ -1418,11 +1404,15 @@ def SPLIT(obj, axis, coord):
 
 def COPY(obj):
     if not isinstance(obj, list):
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("Invalid object found in the COPY command.")
         return copy.copy(obj)
     else:
         obj1 = flatten(obj) # flatten the rest as there may be structs
         newlist = []
         for x in obj1:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object found in the COPY command.")
             newlist.append(copy.copy(x))
         return newlist
 
@@ -1442,6 +1432,8 @@ COPIE = COPY
 # CUBOID
 # ===================================================
 
+def cuboid(*args):
+    raise ExceptionWT("Command cuboid() is undefined. Try CUBOID() instead?")
 def CUBOID (sizes_list):
     dim = len(sizes_list)
     pol = Plasm.scale(Plasm.cube(dim), Vecf([0.0] + sizes_list))
@@ -1454,9 +1446,13 @@ if self_test:
 # CUBE
 # ===================================================
 
+def cube(*args):
+    raise ExceptionWT("Command cube() is undefined. Try CUBE() instead?")
 def CUBE(size):
+    if not ISNUMBER(size):
+        raise ExceptionWT("Size s in CUBE(s) must be a number!")
     if size <= 0: 
-        raise ExceptionWT("CUBE(x) requires a positive value of x!")
+        raise ExceptionWT("Size s in CUBE(s) must be positive!")
     return BASEOBJ(CUBOID([size, size, size]))
 # English:
 # Czech:
@@ -1478,6 +1474,8 @@ CUBO = CUBE
 # SQUARE
 # ===================================================
 
+def square(*args):
+    raise ExceptionWT("Command square() is undefined. Try SQUARE() instead?")
 def SQUARE(size):
     if size <= 0: 
         raise ExceptionWT("SQUARE(x) requires a positive value of x!")
@@ -1501,6 +1499,8 @@ CARRE = SQUARE
 # SQUARE3D
 # ===================================================
 
+def square3d(*args):
+    raise ExceptionWT("Command square3d() is undefined. Try SQUARE3D() instead?")
 def SQUARE3D (a):
     if a <= 0: 
         raise ExceptionWT("SQUARE3D(x) requires a positive value of x!")
@@ -1527,31 +1527,55 @@ CARRE3D = SQUARE3D
 # BRICK, BOX
 # ===================================================
 
+def box(*args):
+    raise ExceptionWT("Command box() is undefined. Try BOX() instead?")
 def BOX(*args):   
     list1 = list(args)
     list1 == flatten(list1)
     if len(list1) == 1:
         a = list1[0]
-        if a <= 0: raise ExceptionWT("Dimensions of a BOX must be positive!")
-        return BASEOBJ(CUBOID([a, a])) 
+        if not ISNUMBER(a):
+            raise ExceptionWT("Size a in BOX(a) must be a number!")
+        if a <= 0: 
+            raise ExceptionWT("Size a in BOX(a) must be positive!")
+        return BASEOBJ(CUBOID([a, a, a])) 
     if len(list1) == 2:
         a = list1[0]
         b = list1[1]
-        if a <= 0 or b <= 0: raise ExceptionWT("Dimensions of a BOX must be positive!")
+        if not ISNUMBER(a):
+            raise ExceptionWT("Size a in BOX(a, b) must be a number!")
+        if not ISNUMBER(b):
+            raise ExceptionWT("Size b in BOX(a, b) must be a number!")
+        if a <= 0 or b <= 0: raise ExceptionWT("Sizes a, b in BOX(a, b) must be positive!")
         return BASEOBJ(CUBOID([a, b])) 
     if len(list1) == 3:
         a = list1[0]
         b = list1[1]
         c = list1[2]
-        if a <= 0 or b <= 0 or c <= 0: raise ExceptionWT("Dimensions of a BOX must be positive!")
+        if not ISNUMBER(a):
+            raise ExceptionWT("Size a in BOX(a, b, c) must be a number!")
+        if not ISNUMBER(b):
+            raise ExceptionWT("Size b in BOX(a, b, c) must be a number!")
+        if not ISNUMBER(c):
+            raise ExceptionWT("Size c in BOX(a, b, c) must be a number!")
+        if a <= 0 or b <= 0 or c <= 0: 
+            raise ExceptionWT("Sizes a, b, c in BOX(a, b, c) must be positive!")
         return BASEOBJ(CUBOID([a, b, c])) 
     if len(list1) == 4:
         xmin = list1[0]
         xmax = list1[1]
         ymin = list1[2]
         ymax = list1[3]
-        if xmin >= xmax: raise ExceptionWT("xmin >= xmax in the BOX command!")
-        if ymin >= ymax: raise ExceptionWT("ymin >= ymax in the BOX command!")
+        if not ISNUMBER(xmin):
+            raise ExceptionWT("Minimum x coordinate xmin in BOX(xmin, xmax, ymin, ymax) must be a number!")
+        if not ISNUMBER(xmax):
+            raise ExceptionWT("Maximum x coordinate xmax in BOX(xmin, xmax, ymin, ymax) must be a number!")
+        if not ISNUMBER(ymin):
+            raise ExceptionWT("Minimum y coordinate ymin in BOX(xmin, xmax, ymin, ymax) must be a number!")
+        if not ISNUMBER(ymax):
+            raise ExceptionWT("Maximum y coordinate ymax in BOX(xmin, xmax, ymin, ymax) must be a number!")
+        if xmin >= xmax: raise ExceptionWT("xmin >= xmax in BOX(xmin, xmax, ymin, ymax)!")
+        if ymin >= ymax: raise ExceptionWT("ymin >= ymax in BOX(xmin, xmax, ymin, ymax)!")
         obj = BASEOBJ(CUBOID([xmax - xmin, ymax - ymin])) 
         MOVE(obj, xmin, ymin)
         return obj
@@ -1562,9 +1586,21 @@ def BOX(*args):
         ymax = list1[3]
         zmin = list1[4]
         zmax = list1[5]
-        if xmin >= xmax: raise ExceptionWT("xmin >= xmax in the BOX command!")
-        if ymin >= ymax: raise ExceptionWT("ymin >= ymax in the BOX command!")
-        if zmin >= zmax: raise ExceptionWT("zmin >= zmax in the BOX command!")
+        if not ISNUMBER(xmin):
+            raise ExceptionWT("Minimum x coordinate xmin in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if not ISNUMBER(xmax):
+            raise ExceptionWT("Maximum x coordinate xmax in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if not ISNUMBER(ymin):
+            raise ExceptionWT("Minimum y coordinate ymin in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if not ISNUMBER(ymax):
+            raise ExceptionWT("Maximum y coordinate ymax in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if not ISNUMBER(zmin):
+            raise ExceptionWT("Minimum z coordinate zmin in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if not ISNUMBER(zmax):
+            raise ExceptionWT("Maximum z coordinate zmax in BOX(xmin, xmax, ymin, ymax, zmin, zmax) must be a number!")
+        if xmin >= xmax: raise ExceptionWT("xmin >= xmax in BOX(xmin, xmax, ymin, ymax, zmin, zmax)!")
+        if ymin >= ymax: raise ExceptionWT("ymin >= ymax in BOX(xmin, xmax, ymin, ymax, zmin, zmax)!")
+        if zmin >= zmax: raise ExceptionWT("zmin >= zmax in BOX(xmin, xmax, ymin, ymax, zmin, zmax)!")
         obj = BASEOBJ(CUBOID([xmax - xmin, ymax - ymin, zmax - zmin])) 
         MOVE(obj, xmin, ymin, zmin)
         return obj
@@ -1600,8 +1636,17 @@ BOITE = BRICK
 # RECTANGLE
 # ===================================================
 
+def rectangle(*args):
+    raise ExceptionWT("Command rectangle() is undefined. Try RECTANGLE() instead?")
 def RECTANGLE(a, b):
-    if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE(x, y) requires positive dimensions x, y!")
+    if not ISNUMBER(a):
+        raise ExceptionWT("Size a in RECTANGLE(a, b) must be a number!")
+    if not ISNUMBER(b):
+        raise ExceptionWT("Size b in RECTANGLE(a, b) must be a number!")
+    if a <= 0: 
+        raise ExceptionWT("Size a in RECTANGLE(a, b) must be positive!")
+    if b <= 0: 
+        raise ExceptionWT("Size b in RECTANGLE(a, b) must be positive!")
     return BASEOBJ(CUBOID([a, b]))
 
 # English:
@@ -1623,8 +1668,17 @@ RETTANGOLO = RECTANGLE
 # RECTANGLE3D
 # ===================================================
 
+def rectangle3d(*args):
+    raise ExceptionWT("Command rectangle3d() is undefined. Try RECTANGLE3D() instead?")
 def RECTANGLE3D(a, b):
-    if a <= 0 or b <= 0: raise ExceptionWT("RECTANGLE3D(x, y) requires positive dimensions x, y!")
+    if not ISNUMBER(a):
+        raise ExceptionWT("Size a in RECTANGLE3D(a, b) must be a number!")
+    if not ISNUMBER(b):
+        raise ExceptionWT("Size b in RECTANGLE3D(a, b) must be a number!")
+    if a <= 0: 
+        raise ExceptionWT("Size a in RECTANGLE3D(a, b) must be positive!")
+    if b <= 0: 
+        raise ExceptionWT("Size b in RECTANGLE3D(a, b) must be positive!")
     # height is kept the same for add these thin objects,
     # so that logical operations with them work:
     h = 0.001
@@ -1647,6 +1701,8 @@ RETTANGOLO3D = RECTANGLE3D
 # HEXAHEDRON
 # ===================================================
 
+def hexahedron(*args):
+    raise ExceptionWT("Command hexahedron() is undefined. Try HEXAHEDRON() instead?")
 def HEXAHEDRON(size):
     if size <= 0: raise ExceptionWT("HEXAHEDRON(x) requires a positive value of x!")
     c = CUBE(size)
@@ -1679,6 +1735,8 @@ if self_test:
 	assert(Plasm.limits(PLASM_SIMPLEX(3))==Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1)))
 
 # NEW DEFINITION:
+def simplex(*args):
+    raise ExceptionWT("Command simplex() is undefined. Try SIMPLEX() instead?")
 def SIMPLEX (dim):
     return BASEOBJ(Plasm.simplex(dim))
 
@@ -1738,15 +1796,17 @@ def PLASM_CONVEXHULL (points):
     return MKPOL([points, [range(1,len(points)+1)], [[1]]])
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
-def CONVEXHULL(*args):
+def chull(*args):
+    raise ExceptionWT("Command chull() is undefined. Try CHULL() instead?")
+def CHULL(*args):
     list1 = list(args)
     if len(list1) == 1 and isinstance(list1[0], list) and isinstance(list1[0][0], list):    # User supplied a list of points
         list1 = list1[0]
-    if len(list1) <= 2: raise ExceptionWT("CONVEXHULL(...) requires at least three points!")
+    if len(list1) <= 2: raise ExceptionWT("CHULL(...) requires at least three points!")
     return BASEOBJ(PLASM_CONVEXHULL(list1))
 
 # English:
-CHULL = CONVEXHULL
+CONVEXHULL = CHULL
 CONVEX = CHULL
 CH = CHULL
 SPAN = CHULL
@@ -1845,27 +1905,32 @@ if self_test:
 # NEW DEFINITION:
 # English:
 # TRANSLATE EITHER ONE OBJECT OR LIST OF OBJECTS
-def TRANSLATE(obj, t1, t2, t3 = 0):
-    if not (ISNUM(t1) and ISNUM(t2) and ISNUM(t3)):
-        raise ExceptionWT("The second third and forth arguments must be a number!")
-
+def move(*args):
+    raise ExceptionWT("Command move() is undefined. Try MOVE() instead?")
+def MOVE(obj, t1, t2, t3 = 0):
+    if not ISNUMBER(t1):
+        raise ExceptionWT("In MOVE(obj, x, y) or MOVE(obj, x, y, z), x must be a number!")
+    if not ISNUMBER(t2):
+        raise ExceptionWT("In MOVE(obj, x, y) or MOVE(obj, x, y, z), y must be a number!")
+    if not ISNUMBER(t3):
+        raise ExceptionWT("In MOVE(obj, x, y, z), z must be a number!")
     if not isinstance(obj, list):
         if not isinstance(obj, BASEOBJ):
-            raise ExceptionWT("The first argument must be an object!")
+            raise ExceptionWT("In MOVE(obj, x, y) or MOVE(obj, x, y, z), obj must be a 2D or 3D object!")
         obj.move(t1, t2, t3)
         return COPY(obj)
     else:
         obj = flatten(obj)
         newobj = []
         for oo in obj: 
-            if not isinstance(obj, BASEOBJ):
-                raise ExceptionWT("The first argument must contain only objects!")
+            if not isinstance(oo, BASEOBJ):
+                raise ExceptionWT("In MOVE(obj, x, y) or MOVE(obj, x, y, z), obj must be a 2D or 3D object!")
             oo.move(t1, t2, t3)
             newobj.append(COPY(oo))
         return newobj
 
-T = TRANSLATE
-MOVE = TRANSLATE
+TRANSLATE = MOVE
+T = MOVE
 M = MOVE
 SHIFT = TRANSLATE
 # Czech:
@@ -1918,12 +1983,24 @@ if self_test:
 # NEW DEFINITION:
 # English:
 # SCALE ONE OBJECT OR A LIST
+def scale(*args):
+    raise ExceptionWT("Command scale() is undefined. Try SCALE() instead?")
 def SCALE(obj, a, b, c = 1):
+    if not ISNUMBER(a):
+        raise ExceptionWT("In SCALE(obj, sx, sy) or SCALE(obj, sx, sy, sz), sx must be a number!")
+    if not ISNUMBER(b):
+        raise ExceptionWT("In SCALE(obj, sx, sy) or SCALE(obj, sx, sy, sz), sy must be a number!")
+    if not ISNUMBER(c):
+        raise ExceptionWT("In SCALE(obj, sx, sy, sz), sz must be a number!")
     if not isinstance(obj, list):
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("In SCALE(obj, sx, sy) or SCALE(obj, sx, sy, sz), obj must be a 2D or 3D object!")
         obj.scale(a, b, c)
     else:
         obj = flatten(obj)
         for oo in obj: 
+            if not isinstance(oo, BASEOBJ):
+                raise ExceptionWT("In SCALE(obj, sx, sy) or SCALE(obj, sx, sy, sz), obj must be a 2D or 3D object!")
             oo.scale(a, b, c)
     return COPY(obj)
 
@@ -1966,20 +2043,34 @@ if self_test:
 # NEW DEFINITION
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN RADIANS)
+def rotaterad(*args):
+    raise ExceptionWT("Command rotaterad() is undefined. Try ROTATERAD() instead?")
 def ROTATERAD(obj, angle_rad, axis = 3, point = [0, 0, 0]):
-    try:
-        angle_rad = float(angle_rad)
-    except ValueError:
-        raise ExceptionWT("The second argument of ROTATERAD must be angle!")
+    if not ISNUMBER(angle_rad):
+        raise ExceptionWT("Angle alpha in ROTATERAD(obj, alpha, axis) must be a number!")
+    # this is a bit nasty but it allows to skip axis in 2D (it will be Z) and 
+    # give just the center point:
+    centerpoint = point
+    if isinstance(axis, list):
+        centerpoint = axis
+        axis = 3
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
+        raise ExceptionWT("In ROTATERAD(obj, angle, axis), axis must be X, Y or Z!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
+    if not isinstance(centerpoint, list):
+        raise ExceptionWT("In ROTATERAD(obj, angle, axis, point), point must be a list (use square brackets)!")
     if not isinstance(obj, list):
-        obj.rotaterad(angle_rad, axis, point)
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("In ROTATERAD(obj, angle, axis), obj must be a 2D or 3D object!")
+        obj.rotaterad(angle_rad, axis, centerpoint)
     else:
         obj = flatten(obj)
         for oo in obj: 
-            oo.rotaterad(angle_rad, axis, point)
+            if not isinstance(oo, BASEOBJ):
+                raise ExceptionWT("In ROTATERAD(obj, angle, axis), obj must be a 2D or 3D object!")
+            oo.rotaterad(angle_rad, axis, centerpoint)
     return COPY(obj)
     
 RRAD = ROTATERAD
@@ -2011,28 +2102,38 @@ TOURNERAD = ROTATERAD
 
 # English:
 # ROTATE ONE OR MORE OBJECTS (ANGLE IN DEGREES)
-def ROTATEDEG(obj, angle_deg, axis = 3, point = [0, 0, 0]):
-    try:
-        angle_deg = float(angle_deg)
-    except ValueError:
-        raise ExceptionWT("The second argument of ROTATE must be angle!")
-
+def rotate(*args):
+    raise ExceptionWT("Command rotate() is undefined. Try ROTATE() instead?")
+def ROTATE(obj, angle_deg, axis = 3, point = [0, 0, 0]):
+    if not ISNUMBER(angle_deg):
+        raise ExceptionWT("In ROTATE(obj, alpha, axis), angle alpha must be a number!")
+    # this is a bit nasty but it allows to skip axis in 2D (it will be Z) and 
+    # give just the center point:
+    centerpoint = point
+    if isinstance(axis, list):
+        centerpoint = axis
+        axis = 3
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
+        #print "Axis is:", axis
+        raise ExceptionWT("In ROTATE(obj, angle, axis), axis must be X, Y or Z!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
     if axis == 'z' or axis == 'Z': axis = 3
+    if not isinstance(centerpoint, list):
+        raise ExceptionWT("In ROTATE(obj, angle, axis, point), point must be a list (use square brackets)!")
     if not isinstance(obj, list):
-        obj.rotate(angle_deg, axis, point)
+        obj.rotate(angle_deg, axis, centerpoint)
         return COPY(obj)
     else:
         obj = flatten(obj)
         newobj = []
         for oo in obj: 
             # Just a comment to test git:
-            oo.rotate(angle_deg, axis, point)
+            oo.rotate(angle_deg, axis, centerpoint)
             newobj.append(COPY(oo))
         return newobj
 
-ROTATE = ROTATEDEG
+ROTATEDEG = ROTATE
 RDEG = ROTATEDEG
 R = ROTATEDEG
 # Czech:
@@ -2060,23 +2161,6 @@ RUOTA = ROTATE
 # French:
 TOURNER = ROTATE
 TOURNE = ROTATE
-
-# ===================================================================
-# RELATIVE ROTATION - ABOUT THE OBJECT'S OWN CENTER - ONE OBJECT ONLY
-# ===================================================================
-
-# English:
-def RR(obj, angle_deg, axis = 3):
-    if axis == 'x' or axis == 'X': axis = 1
-    if axis == 'y' or axis == 'Y': axis = 2
-    if axis == 'z' or axis == 'Z': axis = 3
-    if isinstance(obj, list):
-        raise ExceptionWT("Command ROTATEREL (rotation about objects own center) can only be applied to a single object!")
-    obj.rotaterel(angle_deg, axis)
-    return COPY(obj)
-ROTATER = RR
-RREL = RR
-ROTATEREL = RR
 
 # ===================================================
 #; Applica uno shearing con vettore shearing-vector-list sulla variabile
@@ -2166,6 +2250,8 @@ if self_test:
 # English:
 # NEW DEFINITION - STRUCT IS JUST A LIST, IT CAN BE EASILY DECOMPOSED
 # BACK INTO INDIVIDUAL OBJECTS WHICH IS VERY MUCH NEEDED
+def struct(*args):
+    raise ExceptionWT("Command struct() is undefined. Try STRUCT() instead?")
 def STRUCT(*args):
     list1 = list(args)
     list1 = flatten(list1) # flatten the rest as there may be structs
@@ -2210,6 +2296,8 @@ def PLASM_UNION(objs_list):
 # WELD = HARD UNION (ORIGINAL, COMPUTATIONALLY EXPENSIVE)
 # ===================================================
 
+def weld(*args):
+    raise ExceptionWT("Command weld() is undefined. Try WELD() instead?")
 def WELD(*args):
     objs = list(args)
     objs = flatten(objs)
@@ -2227,6 +2315,8 @@ def WELD(*args):
 # ===================================================
 
 # NEW DEFINITION - UNION IS JUST STRUCT
+def union(*args):
+    raise ExceptionWT("Command union() is undefined. Try UNION() instead?")
 def UNION(*args):
     list1 = list(args)
     list1 = flatten(list1) # flatten the rest as there may be structs
@@ -2265,9 +2355,51 @@ def PLASM_INTERSECTION (objs_list):
 
 PLASM_I = PLASM_INTERSECTION
 
-# NEW DEFINITION (ALLOWS OMITTING BRACKETS)
-# English:
-def INTERSECTION(*args):
+# Just two objects, no list. 
+# Result will have the color of the first object:
+def BINARYINTERSECTION(a, b):
+    if isinstance(a, list): 
+        raise ExceptionWT("Lists are not allowed in BINARYINTERSECTION().")
+    if isinstance(b, list): 
+        raise ExceptionWT("Lists are not allowed in BINARYINTERSECTION().")
+    col = a.getcolor()
+    c = BASEOBJ(PLASM_INTERSECTION([a.geom, b.geom]))
+    COLOR(c, col)
+    return c
+
+def intersection(*args):
+    raise ExceptionWT("Command intersection() is undefined. Try INTERSECTION() instead?")
+def INTERSECTION(a, b):
+    if isinstance(a, list): 
+        if a == []: raise ExceptionWT("In your INTERSECTION command, the first object is empty.")
+        a = flatten(a)
+    if isinstance(b, list): 
+        if b == []: raise ExceptionWT("In your INTERSECTION command, the second object is empty.")
+        b = flatten(b)
+    # a is single object, b is single object:
+    if not isinstance(a, list) and not isinstance(b, list):
+        return BINARYINTERSECTION(a, b)
+    # a is single object, b is a list:
+    if not isinstance(a, list) and isinstance(b, list):
+        res = []
+        for y in b:
+            res.append(BINARYINTERSECTION(a, y))
+        return res
+    # a is a list, b is single object:
+    if isinstance(a, list) and not isinstance(b, list):
+        res = []
+        for x in a:
+            res.append(BINARYINTERSECTION(x, b))
+        return res
+    # a is a list, b is a list:
+    if isinstance(a, list) and isinstance(b, list):
+        res = []
+        for x in a:
+            for y in b:
+                res.append(BINARYINTERSECTION(x, y))
+        return res
+
+def INTERSECTIONOLDUNUSED(*args):
     list1 = list(args)
     l = len(list1)
     if l < 2: 
@@ -2325,6 +2457,8 @@ PLASM_DIFF = PLASM_DIFFERENCE
 
 # SUBTRACT IS ALWAYS BINARY BUT EITHER ITEM CAN BE A LIST.
 # SECOND OBJECT IS SUBTRACTED FROM THE FIRST, AND THE FIRST OBJECT CHANGES:
+def subtract(*args):
+    raise ExceptionWT("Command subtract() is undefined. Try SUBTRACT() instead?")
 def SUBTRACT(a, b):
     if isinstance(a, list): 
         if a == []: raise ExceptionWT("Are you trying to subtract an object from an empty list of objects?")
@@ -2332,16 +2466,30 @@ def SUBTRACT(a, b):
         if b == []: raise ExceptionWT("Are you trying to subtract an empty list of objects from an object?")
     # a is single object, b is single object:
     if not isinstance(a, list) and not isinstance(b, list):
+        if not isinstance(a, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
+        if not isinstance(b, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         a.subtract(b)
         return COPY(a)
     # a is single object, b is a list:
     if not isinstance(a, list) and isinstance(b, list):
         flatb = flatten(b) # flatten the list as there may be structs
+        for x in flatb:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
+        if not isinstance(a, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         a.subtract(flatb)
         return COPY(a)
     # a is a list, b is single object:
     if isinstance(a, list) and not isinstance(b, list):
+        if not isinstance(b, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         flata = flatten(a) # flatten the list as there may be structs
+        for x in flata:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         newlist = []
         for x in flata:
             x.subtract(b)
@@ -2350,7 +2498,13 @@ def SUBTRACT(a, b):
     # a is a list, b is a list:
     if isinstance(a, list) and isinstance(b, list):
         flata = flatten(a) # flatten the list as there may be structs
+        for x in flata:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         flatb = flatten(b) # flatten the list as there may be structs
+        for x in flatb:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         newlist = []
         for x in flata:
             x.subtract(flatb)
@@ -2380,6 +2534,10 @@ SOUSTRAIS = SUBTRACT
 
 # DIFF IS ALWAYS BINARY BUT EITHER ITEM CAN BE A LIST.
 # RETURNS DIFFERENCE OF OBJECTS, DOES NOT CHANGE OBJECTS:
+def difference(*args):
+    raise ExceptionWT("Command difference() is undefined. Try DIFFERENCE() instead?")
+def diff(*args):
+    raise ExceptionWT("Command diff() is undefined. Try DIFF() instead?")
 def DIFFERENCE(a, b):
     if isinstance(a, list): 
         if a == []: raise ExceptionWT("Are you trying to subtract an object from an empty list of objects?")
@@ -2387,16 +2545,30 @@ def DIFFERENCE(a, b):
         if b == []: raise ExceptionWT("Are you trying to subtract an empty list of objects from an object?")
     # a is single object, b is single object:
     if not isinstance(a, list) and not isinstance(b, list):
+        if not isinstance(a, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
+        if not isinstance(b, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         out = a.diff(b)
         return out
     # a is single object, b is a list:
     if not isinstance(a, list) and isinstance(b, list):
         flatb = flatten(b) # flatten the list as there may be structs
+        for x in flatb:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
+        if not isinstance(a, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         out = a.diff(flatb)
         return out
     # a is a list, b is single object:
     if isinstance(a, list) and not isinstance(b, list):
         flata = flatten(a) # flatten the list as there may be structs
+        for x in flata:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
+        if not isinstance(b, BASEOBJ):
+            raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         newlist = []
         for x in flata:
             out = x.diff(b)
@@ -2405,7 +2577,13 @@ def DIFFERENCE(a, b):
     # a is a list, b is a list:
     if isinstance(a, list) and isinstance(b, list):
         flata = flatten(a) # flatten the list as there may be structs
+        for x in flata:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         flatb = flatten(b) # flatten the list as there may be structs
+        for x in flatb:
+            if not isinstance(x, BASEOBJ):
+                raise ExceptionWT("Invalid object detected in the SUBTRACT command.")
         newlist = []
         for x in flata:
             out = x.diff(flatb)
@@ -2439,6 +2617,8 @@ def PLASM_XOR(objs_list):
     return result
 
 # NEW DEFINITION, JUST FOR TWO OBJECTS
+def xor(*args):
+    raise ExceptionWT("Command xor() is undefined. Try XOR() instead?")
 def XOR(a, b):
     L = []
     L.append(DIFF(a, b))    
@@ -2463,12 +2643,19 @@ if self_test:
 	assert(Plasm.limits(PLASM_JOIN([Plasm.cube(2,0,1)])).fuzzyEqual(Boxf(Vecf(1,0,0),Vecf(1,1,1))))
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS FOR TWO OBJECTS)
+def join(*args):
+    raise ExceptionWT("Command join() is undefined. Try JOIN() instead?")
 def JOIN(a, b = None):
+    ageom = a.geom
     if b != None:
-        return PLASM_JOIN([a, b])
+        if not isinstance(a, BASEOBJ) or not isinstance(b, BASEOBJ):
+            raise ExceptionWT("In JOIN(obj1, obj2), both obj1 and obj2 must be PLaSM surfaces.")
+        bgeom = b.geom
+        return BASEOBJ(PLASM_JOIN([ageom, bgeom]))
     else: # single argument must be list
-        return PLASM_JOIN(a)
-
+        if not isinstance(a, BASEOBJ):
+            raise ExceptionWT("In JOIN(obj), obj must be a PLaSM surface.")
+        return BASEOBJ(PLASM_JOIN(ageom))
 
 # ===================================================
 # also ** can be used to indicates POWER
@@ -2489,6 +2676,10 @@ if self_test:
 	assert(Plasm.limits(PLASM_POWER([Plasm.cube(2),Plasm.cube(1)])).fuzzyEqual(Boxf(Vecf(1,0,0,0),Vecf(1,1,1,1))))
 
 # NEW DEFINITION (ALLOWS OMITTING BRACKETS)
+def product(*args):
+    raise ExceptionWT("Command product() is undefined. Try PRODUCT() instead?")
+def power(*args):
+    raise ExceptionWT("Command power() is undefined. Try POWER() instead?")
 def PRODUCT(*args):
     list1 = list(args)
     list1 = flatten(list1)
@@ -2584,6 +2775,8 @@ def PLASM_GRID (*args):
 PLASM_QUOTE = PLASM_GRID
 
 # NEW DEFINITION:
+def grid(*args):
+    raise ExceptionWT("Command grid() is undefined. Try GRID() instead?")
 def GRID(*args):
     sequence = flatten(*args)
     if len(sequence) == 0: 
@@ -2636,8 +2829,10 @@ if self_test:
     assert Plasm.limits(PLASM_INTERVALS(10)(8))==Boxf(Vecf([1,0]),Vecf([1,10]))
 
 # NEW DEFINITION:
+def intervals(*args):
+    raise ExceptionWT("Command intervals() is undefined. Try INTERVALS() instead?")
 def INTERVALS(a, n):
-    return PLASM_INTERVALS(a)(n)
+    return BASEOBJ(PLASM_INTERVALS(a)(n))
 DIVISION = INTERVALS
 # Czech:
 DELENI = INTERVALS
@@ -2672,6 +2867,8 @@ if self_test:
 	assert(PLASM_SIZE([1,3])(PLASM_SCALE([1, 2, 3])([1, 2, 3])(Plasm.cube(3)))==[1,3])
 
 # NEW_DEFINITION:
+def size(*args):
+    raise ExceptionWT("Command size() is undefined. Try SIZE() instead?")
 def SIZE(pol, List):
     return PLASM_SIZE(List)(pol.geom)
 # Czech:
@@ -2719,60 +2916,96 @@ def MID  (List):
         return [center [i] for i in List] if isinstance(List,list) else center[List]
     return MID1
 
+def minx(*args):
+    raise ExceptionWT("Command minx() is undefined. Try MINX() instead?")
 def MINX(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         minx = obj[0].minx()
         n = len(obj)
         for i in range(1, n):
            if obj[i].minx() < minx: minx = obj[i].minx()  
         return minx
-    else: return obj.minx()
+    else: 
+      if EMPTYSET(obj): return None
+      else: return obj.minx()
+def miny(*args):
+    raise ExceptionWT("Command miny() is undefined. Try MINY() instead?")
 def MINY(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         miny = obj[0].miny()
         n = len(obj)
         for i in range(1, n):
            if obj[i].miny() < miny: miny = obj[i].miny()  
         return miny
-    else: return obj.miny()
+    else: 
+        if EMPTYSET(obj): return None
+        else: return obj.miny()
+def minz(*args):
+    raise ExceptionWT("Command minz() is undefined. Try MINZ() instead?")
 def MINZ(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         minz = obj[0].minz()
         n = len(obj)
         for i in range(1, n):
            if obj[i].minz() < minz: minz = obj[i].minz()  
         return minz
-    else: return obj.minz()
+    else: 
+        if EMPTYSET(obj): return None
+        else: return obj.minz()
+def maxx(*args):
+    raise ExceptionWT("Command maxx() is undefined. Try MAXX() instead?")
 def MAXX(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         maxx = obj[0].maxx()
         n = len(obj)
         for i in range(1, n):
            if obj[i].maxx() > maxx: maxx = obj[i].maxx()  
         return maxx
-    else: return obj.maxx()
+    else: 
+        if EMPTYSET(obj): return None
+        else: return obj.maxx()
+def maxy(*args):
+    raise ExceptionWT("Command maxy() is undefined. Try MAXY() instead?")
 def MAXY(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         maxy = obj[0].maxy()
         n = len(obj)
         for i in range(1, n):
            if obj[i].maxy() > maxy: maxy = obj[i].maxy()  
         return maxy
-    else: return obj.maxy()
+    else: 
+        if EMPTYSET(obj): return None
+        else: return obj.maxy()
+def maxz(*args):
+    raise ExceptionWT("Command maxz() is undefined. Try MAXZ() instead?")
 def MAXZ(obj):
     if isinstance(obj, list):
         obj = flatten(obj)
+        for oo in obj:
+            if EMPTYSET(oo): return None
         maxz = obj[0].maxz()
         n = len(obj)
         for i in range(1, n):
            if obj[i].maxz() > maxz: maxz = obj[i].maxz()  
         return maxz
-    else: return obj.maxz()
+    else: 
+        if EMPTYSET(obj): return None
+        else: return obj.maxz()
 
 if self_test: 
 	assert(MIN(1)(Plasm.cube(2))==0)
@@ -2782,7 +3015,21 @@ if self_test:
 	assert(MID(1)(Plasm.cube(2))==0.5)
 	assert(MID([1,3])(Plasm.cube(3))==[0.5,0.5])
 
+# ======
+# GETDIM
+# ======
 
+# Returns -1 if this is a list and dimensions are mixed:
+def GETDIM(obj):
+    if isinstance(obj, list):
+        obj = flatten(obj)
+        dim = obj[0].dim
+        n = len(obj)
+        for i in range(1, n):
+           if dim != obj[i].dim:
+               return -1
+        return dim
+    else: return obj.dim
 
 # ======================================
 # identity matrix
@@ -2806,6 +3053,8 @@ if self_test:
 
 # NEW DEFINITIONS:
 # MOVE THE SECOND OBJECT TO BE CENTERED ON TOP THE FIRST ONE
+def top(*args):
+    raise ExceptionWT("Command top() is undefined. Try TOP() instead?")
 def TOP(obj1, obj2): # obj2 goes on top of obj1
     if isinstance(obj2, list):
         raise ExceptionWT("Second argument of TOP(...) may not be a list!")
@@ -2849,9 +3098,10 @@ def TOP(obj1, obj2): # obj2 goes on top of obj1
         cy2 = 0.5*(obj2.miny() + obj2.maxy())
         T(obj2, 0, cy1 - cy2, 0)
         return U(obj1, obj2)
-        
 
 # MOVE THE SECOND OBJECT TO BE CENTERED BELOW THE FIRST ONE
+def bottom(*args):
+    raise ExceptionWT("Command bottom() is undefined. Try BOTTOM() instead?")
 def BOTTOM(obj1, obj2):
     R(obj1, 180, 1)    
     R(obj2, 180, 1)
@@ -2861,6 +3111,8 @@ def BOTTOM(obj1, obj2):
     return U(obj1, obj2)
 
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE LEFT OF THE FIRST ONE
+def left(*args):
+    raise ExceptionWT("Command left() is undefined. Try LEFT() instead?")
 def LEFT(obj1, obj2):
     R(obj1, -90, 2)    
     R(obj2, -90, 2)
@@ -2870,6 +3122,8 @@ def LEFT(obj1, obj2):
     return U(obj1, obj2)
   
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE RIGHT OF THE FIRST ONE
+def right(*args):
+    raise ExceptionWT("Command right() is undefined. Try RIGHT() instead?")
 def RIGHT(obj1, obj2):
     R(obj1, 90, 2)    
     R(obj2, 90, 2)
@@ -2879,6 +3133,8 @@ def RIGHT(obj1, obj2):
     return U(obj1, obj2)
    
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE FRONT OF THE FIRST ONE
+def front(*args):
+    raise ExceptionWT("Command front() is undefined. Try FRONT() instead?")
 def FRONT(obj1, obj2):
     R(obj1, -90, 1)    
     R(obj2, -90, 1)
@@ -2888,6 +3144,8 @@ def FRONT(obj1, obj2):
     return U(obj1, obj2)
 
 # MOVE THE SECOND OBJECT TO BE CENTERED ON THE REAR OF THE FIRST ONE
+def rear(*args):
+    raise ExceptionWT("Command rear() is undefined. Try REAR() instead?")
 def REAR(obj1, obj2):
     R(obj1, 90, 1)    
     R(obj2, 90, 1)
@@ -2986,9 +3244,6 @@ def ORTHOPROJECT (E):
 if self_test:
 	assert ORTHOPROJECT([1,0,0])([1,1,0])==[0,1,0]
 
-
-
-
 # ===================================================
 # PLASM_MAP
 # ===================================================
@@ -3032,8 +3287,8 @@ if self_test:
 	assert(Plasm.limits(PLASM_MAP(ID)(Plasm.cube(2)))==Boxf(Vecf(1,0,0),Vecf(1,1,1)))
 
 # NEW DEFINITION:
-def MAP(ref_domain, args):
-    return BASEOBJ(PLASM_MAP(args)(ref_domain.geom))
+def MAP(refdomain, args):
+    return BASEOBJ(PLASM_MAP(args)(refdomain.geom))
 
 # ===================================================
 # OTHER TESTS
@@ -3096,6 +3351,8 @@ if self_test:
     assert Plasm.limits(PLASM_RING([0.5,1])([8,8]))==Boxf(Vecf(1,-1,-1),Vecf(1,+1,+1))
 
 # NEW DEFINITION
+def ring(*args):
+    raise ExceptionWT("Command ring() is undefined. Try RING() instead?")
 def RING(r1, r2, division = [64, 1]):
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in RING(r1, r2) must be positive!")
@@ -3107,6 +3364,8 @@ def RING(r1, r2, division = [64, 1]):
     if type(division) == list: 
         obj = BASEOBJ(PLASM_RING([r1, r2])(division))
     else:
+        if int(division) != division:
+            raise ExceptionWT("The optional third argument of RING(r1, r2, n) must be an integer. Try TUBE(r1, r2, h) instead?")
         if division < 3: 
             raise ExceptionWT("Number of edges n in RING(r1, r2, n) must be at least 3!")
         else: obj = BASEOBJ(PLASM_RING([r1, r2])([division, 1]))
@@ -3127,6 +3386,8 @@ def PLASM_TUBE (args):
 
 # NEW DEFINITION
 # English:
+def tube(*args):
+    raise ExceptionWT("Command tube() is undefined. Try TUBE() instead?")
 def TUBE(r1, r2, h, division = 64):
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in TUBE(r1, r2, h) must be positive!")
@@ -3159,6 +3420,8 @@ TUBO = TUBE
 # RING3D IS JUST A SHORT TUBE
 # =============================================
 
+def ring3d(*args):
+    raise ExceptionWT("Command ring3d() is undefined. Try RING3D() instead?")
 def RING3D(r1, r2, division = 64):
     h = 0.001
     return TUBE(r1, r2, h, division)
@@ -3180,6 +3443,8 @@ if self_test:
 
 # NEW DEFINITION
 # English:
+def circle(*args):
+    raise ExceptionWT("Command circle() is undefined. Try CIRCLE() instead?")
 def CIRCLE(r, division = [64, 1]):
     if r <= 0: 
         raise ExceptionWT("Radius r in CIRCLE(r) must be positive!")
@@ -3206,6 +3471,8 @@ CERCHIO = CIRCLE
 CERCLE = CIRCLE
 ROND = CIRCLE
 
+def circle3d(*args):
+    raise ExceptionWT("Command circle3d() is undefined. Try CIRCLE3D() instead?")
 def CIRCLE3D(r, division = [64, 1]):
     if r <= 0: 
         raise ExceptionWT("Radius r in CIRCLE3D(r) must be positive!")
@@ -3248,6 +3515,8 @@ def PLASM_ARC (params):
 
 # NEW DEFINITION
 # English:
+def arc(*args):
+    raise ExceptionWT("Command arc() is undefined. Try ARC() instead?")
 def ARC(r1, r2, angle, division = [64, 1]):
     if r1 < 0: 
         raise ExceptionWT("Radius r1 in ARC(r1, r2, angle) must be nonnegative!")
@@ -3262,6 +3531,8 @@ def ARC(r1, r2, angle, division = [64, 1]):
 # Czech
 # TODO
 
+def arc3d(*args):
+    raise ExceptionWT("Command arc3d() is undefined. Try ARC3D() instead?")
 def ARC3D(r1, r2, angle, division = [64, 1]):
     if r1 < 0: 
         raise ExceptionWT("Radius r1 in ARC3D(r1, r2, angle) must be nonnegative!")
@@ -3295,7 +3566,15 @@ if self_test:
    assert(Plasm.limits(PLASM_CYLINDER([1.0,2.0])(8)).fuzzyEqual(Boxf(Vecf(1,-1,-1,0),Vecf(1,+1,+1,2))))
 
 # NEW DEFINITION
+def cylinder(*args):
+    raise ExceptionWT("Command cylinder() is undefined. Try CYLINDER() instead?")
+def cyl(*args):
+    raise ExceptionWT("Command cyl() is undefined. Try CYL() instead?")
 def CYLINDER(r, h, division = 64):
+    if not ISNUMBER(r):
+        raise ExceptionWT("Radius r in CYLINDER(r, h) must be a number!")
+    if not ISNUMBER(h):
+        raise ExceptionWT("Height h in CYLINDER(r, h) must be a number!")
     if r <= 0: 
         raise ExceptionWT("Radius r in CYLINDER(r, h) must be positive!")
     if h <= 0: 
@@ -3351,7 +3630,11 @@ def SPHERE_SURFACE(radius, divisions = [24, 48]):
     return BASEOBJ(PLASM_SPHERE(radius)(divisions))
 
 # English:
+def sphere(*args):
+    raise ExceptionWT("Command sphere() is undefined. Try SPHERE() instead?")
 def SPHERE(radius, divisions = [12, 24]):
+    if not ISNUMBER(radius):
+        raise ExceptionWT("Radius r in SPHERE(r) must be a number!")
     if radius <= 0: 
         raise ExceptionWT("Radius r in SPHERE(r) must be positive!")
     divisionslist = divisions
@@ -3415,8 +3698,8 @@ def TORUS_SURFACE(r1, r2, divisions = [64, 32]):
 
 def PLASM_SOLIDTORUS (radius):
     r1 , r2 = radius
-    def PLASM_TORUS0 (subdomains):
-        N, M, P = subdomains
+    def PLASM_TORUS0 (divisions):
+        N, M, P = divisions
         a=0.5*(r2-r1)
         c=0.5*(r1+r2)
         domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(2*PI)(N), PLASM_INTERVALS(2*PI)(M), PLASM_INTERVALS(1)(P)])
@@ -3430,7 +3713,13 @@ if self_test:
 	PLASM_VIEW(SKELETON(1)(PLASM_SOLIDTORUS([1.5,2])([18,24,1])))
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+def torus(*args):
+    raise ExceptionWT("Command torus() is undefined. Try TORUS() instead?")
 def TORUS(r1, r2, divisions = [24, 12]):
+    if not ISNUMBER(r1):
+        raise ExceptionWT("Inner radius r1 in TORUS(r1, r2) must be a number!")
+    if not ISNUMBER(r2):
+        raise ExceptionWT("Outer radius r2 in TORUS(r1, r2) must be a number!")
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in TORUS(r1, r2) must be positive!")
     if r2 <= 0: 
@@ -3460,6 +3749,50 @@ TORO = TORUS
 TORE = TORUS
 
 # =============================================
+# ELBOW - SOLID
+# =============================================
+
+def PLASM_SOLIDELBOW (radiusandangle):
+    r1, r2, angle = radiusandangle
+    angle = angle*PI/180
+    def PLASM_ELBOW0 (divisions):
+        N, M, P = divisions
+        a=0.5*(r2-r1)
+        c=0.5*(r1+r2)
+        domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(angle)(N), PLASM_INTERVALS(2*PI)(M), PLASM_INTERVALS(1)(P)])
+        fx =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.cos(p[0])
+        fy =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.sin(p[0])
+        fz =   lambda p: p[2]*a*math.sin(p[1])
+        return PLASM_MAP(([fx,fy,fz]))(domain)
+    return PLASM_ELBOW0
+
+# NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+def elbow(*args):
+    raise ExceptionWT("Command elbow() is undefined. Try ELBOW() instead?")
+def ELBOW(r1, r2, angle, divisions = [24, 24]):
+    if not ISNUMBER(angle):
+        raise ExceptionWT("Angle alpha in ELBOW(r1, r2, alpha) must be a number!")
+    if not ISNUMBER(r1):
+        raise ExceptionWT("Inner radius r1 in ELBOW(r1, r2, alpha) must be a number!")
+    if not ISNUMBER(r2):
+        raise ExceptionWT("Outer radius r2 in ELBOW(r1, r2, alpha) must be a number!")
+    if angle <= 0: 
+        raise ExceptionWT("Angle alpha in ELBOW(r1, r2, alpha) must be positive!")
+    if r1 <= 0: 
+        raise ExceptionWT("Inner radius r1 in ELBOW(r1, r2, alpha) must be positive!")
+    if r2 <= 0: 
+        raise ExceptionWT("Outer radius r2 in ELBOW(r1, r2, alpha) must be positive!")
+    if r2 <= r1: 
+        raise ExceptionWT("Inner radius r1 must be smaller than outer radius r2 in ELBOW(r1, r2, alpha)!")
+    divisionslist = divisions
+    if not isinstance(divisions, list): 
+        if divisions/2 <= 0:
+            raise ExceptionWT("Bad division in the ELBOW command!")
+        divisionslist = [divisions, divisions/2]
+    return BASEOBJ(PLASM_SOLIDELBOW([r1, r2, angle])([divisionslist[0], divisionslist[1], 1]))
+
+
+# =============================================
 # CONE
 # =============================================
 
@@ -3475,7 +3808,13 @@ if self_test:
    assert Plasm.limits(PLASM_CONE([1.0,3.0])(16)).fuzzyEqual(Boxf(Vecf(1,-1,-1,0),Vecf(1,+1,+1,3)))
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+def cone(*args):
+    raise ExceptionWT("Command cone() is undefined. Try CONE() instead?")
 def CONE(r, h, division = 64):
+    if not ISNUMBER(r):
+        raise ExceptionWT("Radius r in CONE(r, h) must be a number!")
+    if not ISNUMBER(h):
+        raise ExceptionWT("Height h in CONE(r, h) must be a number!")
     if r <= 0: 
         raise ExceptionWT("Radius r in CONE(r, h) must be positive!")
     if h <= 0: 
@@ -3502,7 +3841,15 @@ CONO = CONE
 # PYRAMID
 # =============================================
 
+def pyramid(*args):
+    raise ExceptionWT("Command pyramid() is undefined. Try PYRAMID() instead?")
 def PYRAMID(r, h, n = 4):
+    if not ISNUMBER(r):
+        raise ExceptionWT("Radius r in PYRAMID(r, h, n) must be a number!")
+    if not ISNUMBER(h):
+        raise ExceptionWT("Height h in PYRAMID(r, h, n) must be a number!")
+    if not ISNUMBER(n):
+        raise ExceptionWT("Number of sides n in PYRAMID(r, h, n) must be a number!")
     if r <= 0: 
         raise ExceptionWT("Radius r in PYRAMID(r, h, n) must be positive!")
     if h <= 0: 
@@ -3529,20 +3876,32 @@ def PLASM_TRUNCONE (args):
 	return PLASM_TRUNCONE0
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
-def TRUNCONE(r1, r2, h, divisions = 64):
+def tcone(*args):
+    raise ExceptionWT("Command tcone() is undefined. Try TCONE() instead?")
+def truncone(*args):
+    raise ExceptionWT("Command truncone() is undefined. Try TRUNCONE() instead?")
+def TCONE(r1, r2, h, divisions = 64):
+    if not ISNUMBER(r1):
+        raise ExceptionWT("Bottom radius r1 in TCONE(r1, r2, h) must be a number!")
+    if not ISNUMBER(r2):
+        raise ExceptionWT("Top radius r2 in TCONE(r1, r2, h) must be a number!")
+    if not ISNUMBER(h):
+        raise ExceptionWT("Height h in TCONE(r1, r2, h) must be a number!")
+    if not ISNUMBER(h):
+        raise ExceptionWT("Height h in CYLINDER(r, h) must be a number!")
     if r1 <= 0: 
-        raise ExceptionWT("Bottom radius r1 in TRUNCONE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Bottom radius r1 in TCONE(r1, r2, h) must be positive!")
     if r2 <= 0: 
-        raise ExceptionWT("Top radius r2 in TRUNCONE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Top radius r2 in TCONE(r1, r2, h) must be positive!")
     if h <= 0: 
-        raise ExceptionWT("Height h in TRUNCONE(r1, r2, h) must be positive!")
+        raise ExceptionWT("Height h in TCONE(r1, r2, h) must be positive!")
     if divisions < 3: 
-        raise ExceptionWT("Number of sides n in TRUNCONE(r1, r2, h, n) must be at least 3!")
+        raise ExceptionWT("Number of sides n in TCONE(r1, r2, h, n) must be at least 3!")
     # Changing to a solid:
     return BASEOBJ(PLASM_JOIN(PLASM_TRUNCONE([r1, r2, h])(divisions)))
 
 # English:
-TCONE = TRUNCONE
+TRUNCONE = TCONE
 # Czech:
 KOMOLYKUZEL = TRUNCONE
 KKUZEL = TRUNCONE
@@ -3640,6 +3999,8 @@ def build_TETRAHEDRON():
 
 PLASM_TETRAHEDRON = build_TETRAHEDRON()
 
+def tetrahedron(*args):
+    raise ExceptionWT("Command tetrahedron() is undefined. Try TETRAHEDRON() instead?")
 def TETRAHEDRON(a, b, c, d):
     return BASEOBJ(PLASM_CONVEXHULL([a, b, c, d]))
 
@@ -3664,6 +4025,8 @@ TETRAEDRE = TETRAHEDRON
 # TRIANGLE
 # =============================================
 
+def triangle(*args):
+    raise ExceptionWT("Command triangle() is undefined. Try TRIANGLE() instead?")
 def TRIANGLE(a, b, c):
     if not isinstance(a, list): 
         raise ExceptionWT("First argument a in TRIANGLE(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
@@ -3692,6 +4055,8 @@ TRIANGOLO = TRIANGLE
 # French:
 # Same as in English
 
+def triangle3d(*args):
+    raise ExceptionWT("Command triangle3d() is undefined. Try TRIANGLE3D() instead?")
 def TRIANGLE3D(a, b, c):
     if not isinstance(a, list): 
         raise ExceptionWT("First argument a in TRIANGLE3D(a, b, c) must either be a 2D point [x, y] or a 3D point [x, y, z]!")
@@ -3869,35 +4234,66 @@ if self_test:
 	plasm_config.pop()
 	PLASM_VIEW(out)
 
-
 def PLASM_BEZIERCURVE (controlpoints):
     return PLASM_BEZIER(S1)(controlpoints)
 
 # NEW DEFINITIONS:
-def BEZIER_1(*args):
+def BEZIER1(*args):
     list1 = list(args)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S1)(list1)
+BEZIER = BEZIER1
+BEZIERX = BEZIER1
+BE1 = BEZIER1
 
-BE_1 = BEZIER_1
-
-def BEZIER_2(*args):
+def BEZIER2(*args):
     list1 = list(args)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S2)(list1)
+BEZIERY = BEZIER2
+BE2 = BEZIER2
 
-BE_2 = BEZIER_2
-
-def BEZIER_3(*args):
+def BEZIER3(*args):
     list1 = list(args)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S3)(list1)
+BEZIERZ = BEZIER3
+BE3 = BEZIER3
 
-BE_3 = BEZIER_3
-
+# ======================================================
+# Draw Bezier curves in the XY plane
+# ======================================================
+def DRAWBEZIER2D(point_list, hcurve=0.02, hpts=0.1, colcurve=[0, 0, 0], colpt = [0, 0, 255], nx=32, ny=1):
+  # First set of points:
+  pts1 = []
+  for p in point_list:
+    pts1.append([p[0]-hcurve, p[1]])
+  c1 = PLASM_BEZIER(S1)(pts1)
+  # Second set of points:
+  pts2 = []
+  for p in point_list:
+    pts2.append([p[0]+hcurve, p[1]])
+  c2 = PLASM_BEZIER(S1)(pts2)
+  # Thick curve:
+  surf = BEZIER2(c1, c2)
+  refdomain = UNITSQUARE(nx, ny)
+  out = [MAP(refdomain, surf)]
+  COLOR(out, colcurve)
+  # Small circles for points:
+  ll = len(point_list)
+  for i in range(ll):
+    circle = SPHERE(hpts)
+    p = point_list[i]
+    MOVE(circle, p[0], p[1])
+    if i == 0 or i == ll-1:
+      COLOR(circle, colcurve)
+    else:
+      COLOR(circle, colpt)
+    out.append(circle)
+  return out
 
 # ======================================================
 # coons patch
@@ -3932,8 +4328,11 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW DEFINITION:
-def COONSPATCH(a, b, c, d):
-    return PLASM_COONSPATCH([a, b, c, d])
+def COONSPATCH(u1, u2, v1, v2, nx = 32, ny = 32):
+    refdomain = UNITSQUARE(nx, ny)
+    surf = PLASM_COONSPATCH([u1, u2, v1, v2])
+    out = MAP(refdomain, surf)
+    return out
 
 # ======================================================
 # RULED SURFACE
@@ -3960,10 +4359,11 @@ if self_test:
 	plasm_config.pop()
 
 # NEW DEFINITION
-def RULED_SURFACE(a, b):
-    return PLASM_RULEDSURFACE([a, b])
-RUSURFACE = RULED_SURFACE
-RUS = RULED_SURFACE
+def RULEDSURFACE(a, b):
+    return BASEOBJ(PLASM_RULEDSURFACE([a, b]))
+RUSURFACE = RULEDSURFACE
+RUSURF = RULEDSURFACE
+RUSU = RULEDSURFACE
     
 # ======================================================
 # PROFILE SURFACE
@@ -3989,16 +4389,17 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW DEFINITION
-def PROFILE_PROD_SURFACE(a, b):
+def PROFILEPRODSURFACE(a, b):
     return PROFILEPRODSURFACE([a, b])
-PPSURFACE = PROFILE_PROD_SURFACE
-
+PPSURFACE = PROFILEPRODSURFACE
+PPSURF = PROFILEPRODSURFACE
+PPSU = PROFILEPRODSURFACE
     
 # ======================================================
-# ROTATIONALSURFACE
+# ROTATIONAL SURFACE
 # ======================================================
 
-def ROTATIONALSURFACE (args):
+def PLASM_ROTATIONALSURFACE (args):
 	profile = args
 
 	def map_fn(point):
@@ -4017,17 +4418,82 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW COMMAND:
-def ROTATIONAL_SURFACE(args):
-    return ROTATIONALSURFACE(args)
-ROSURFACE = ROTATIONAL_SURFACE
-ROS = ROTATIONAL_SURFACE
+def ROTATIONALSURFACE(point_list, angle = 360, nx = 32, na = 64):
+  # Sanitize point list. They need to be 2D points. Zero needs
+  # to be added as the middle coordinate.
+  if not isinstance(point_list, list):
+    raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+  if len(point_list) < 2: 
+    raise ExceptionWT("Rotational surface requires at least two points!")  
+  newpoints = []
+  for pt in point_list:
+    if not isinstance(pt, list):
+      raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+    if len(pt) != 2:
+      raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+    newpoints.append([pt[0], 0, pt[1]])
+  # Create the Bezier curve in the XZ plane:
+  curve_xz = PLASM_BEZIER(S1)(newpoints)
+  anglerad = angle / 180.0 * PI
+  surf = PLASM_ROTATIONALSURFACE(curve_xz)
+  refdomain = REFDOMAIN(1, anglerad, nx, na)
+  out = MAP(refdomain, surf)
+  # Rotate object back:
+  ROTATE(out, -90, X)
+  return out
+ROSURFACE = ROTATIONALSURFACE
+ROSURF = ROTATIONALSURFACE
+ROSU = ROTATIONALSURFACE
 
-    
 # ======================================================
-# CYLINDRICALSURFACE
+# ROTATIONAL SOLID
 # ======================================================
 
-def CYLINDRICALSURFACE (args):
+def PLASM_ROTSOLID (profileanglerad):
+    profile, anglerad = profileanglerad
+    def PLASM_ROTSOLID0 (divisions):
+        n, m, o = divisions
+        domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(1.0)(n), PLASM_INTERVALS(anglerad)(m), PLASM_INTERVALS(1.0)(o)])
+#        fx =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.cos(p[0])
+#        fy =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.sin(p[0])
+#        fz =   lambda p: p[2]*a*math.sin(p[1])
+        fx =   lambda p: (profile(p))[0] * p[2] * math.cos(p[1])
+        fy =   lambda p: (profile(p))[0] * p[2] * math.sin(p[1])
+        fz =   lambda p: (profile(p))[2]
+        return PLASM_MAP(([fx,fy,fz]))(domain)
+    return PLASM_ROTSOLID0
+
+# NEW COMMAND:
+def ROTATIONALSOLID(point_list, angle = 360, nx = 32, na = 64, nr = 1):
+  # Sanitize point list. They need to be 2D points. Zero needs
+  # to be added as the middle coordinate.
+  if not isinstance(point_list, list):
+    raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+  if len(point_list) < 2: 
+    raise ExceptionWT("Rotational surface requires at least two points!")  
+  newpoints = []
+  for pt in point_list:
+    if not isinstance(pt, list):
+      raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+    if len(pt) != 2:
+      raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+    newpoints.append([pt[0], 0, pt[1]])
+  # Create the Bezier curve in the XZ plane:
+  curve_xz = PLASM_BEZIER(S1)(newpoints)
+  anglerad = angle / 180.0 * PI
+  out = BASEOBJ(PLASM_ROTSOLID([curve_xz, anglerad])([nx, na, nr]))
+  # Rotate object back:
+  ROTATE(out, -90, X)
+  return out
+ROTSOLID = ROTATIONALSOLID
+ROSOLID = ROTATIONALSOLID
+ROSOL = ROTATIONALSOLID
+
+# ======================================================
+# CYLINDRICAL SURFACE
+# ======================================================
+
+def PLASM_CYLINDRICALSURFACE (args):
 	alpha_fun   = args[0]
 	beta_fun    = CONS(AA(K)(args[1]))
 	return PLASM_RULEDSURFACE([alpha_fun,beta_fun])
@@ -4037,21 +4503,23 @@ if self_test:
 	Udomain=PLASM_INTERVALS(1)(20)
 	Vdomain=PLASM_INTERVALS(1)(6)
 	domain=Plasm.power(Udomain,Vdomain)
-	fn=CYLINDRICALSURFACE([alpha,[0,0,1]])
+	fn=PLASM_CYLINDRICALSURFACE([alpha,[0,0,1]])
 	PLASM_VIEW(PLASM_MAP(fn)(domain))
 
 # NEW COMMAND:
-def CYLINDRICAL_SURFACE(a, b):
-    return CYLINDRICALSURFACE([a, b])
-CYSURFACE = CYLINDRICAL_SURFACE
+def CYLINDRICALSURFACE(curve, vector, nx = 32, ny = 32):
+    refdomain = UNITSQUARE(nx, ny)
+    surf = PLASM_CYLINDRICALSURFACE([curve, vector])
+    return MAP(refdomain, surf)
+CYSURFACE = CYLINDRICALSURFACE
+CYSU = CYLINDRICALSURFACE
 
 
 # ======================================================
 # CONICALSURFACE
 # ======================================================
 
-   
-def CONICALSURFACE (args):
+def PLASM_CONICALSURFACE (args):
 	apex=args[0]
 	alpha_fn   = lambda point: apex
 	beta_fn    = lambda point: [ args[1](point)[i]-apex[i] for i in range(len(apex))]
@@ -4061,14 +4529,17 @@ def CONICALSURFACE (args):
 if self_test:
 	domain=Plasm.power(PLASM_INTERVALS(1)(20),PLASM_INTERVALS(1)(6))
 	beta=PLASM_BEZIER(S1)([ [1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0] ])
-	out=PLASM_MAP(CONICALSURFACE([[0,0,1],beta]))(domain)
+	out=PLASM_MAP(PLASM_CONICALSURFACE([[0,0,1],beta]))(domain)
 	PLASM_VIEW(out)
 
 # NEW COMMAND:
-def CONICAL_SURFACE(a, b):
-    return CONICALSURFACE([a, b])
-COSURFACE = CONICAL_SURFACE
-
+def CONICALSURFACE(curve, point, nx = 32, ny = 32):
+    refdomain = UNITSQUARE(nx, ny)
+    surf = PLASM_CONICALSURFACE([point, curve])
+    return MAP(refdomain, surf)
+COSURFACE = CONICALSURFACE
+COSURF = CONICALSURFACE
+COSU = CONICALSURFACE
 
 # ======================================================
 # CUBICHERMITE
@@ -4108,20 +4579,20 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW DEFINITION
-def CUBIC_HERMITE_1(*args):
+def CUBICHERMITE1(*args):
     return PLASM_CUBICHERMITE(S1)(list(args))
 
-CH_1 = CUBIC_HERMITE_1
+CH1 = CUBICHERMITE1
 
-def CUBIC_HERMITE_2(*args):
+def CUBICHERMITE2(*args):
     return PLASM_CUBICHERMITE(S2)(list(args))
 
-CH_2 = CUBIC_HERMITE_2
+CH2 = CUBICHERMITE2
 
-def CUBIC_HERMITE_3(*args):
+def CUBICHERMITE3(*args):
     return PLASM_CUBICHERMITE(S3)(list(args))
 
-CH_3 = CUBIC_HERMITE_3
+CH3 = CUBICHERMITE3
 
 def PLASM_HERMITE(args):
     P1 , P2 , T1 , T2 = args
@@ -4225,6 +4696,8 @@ if self_test:
 
 from numpy import tan
 
+def star(*args):
+    raise ExceptionWT("Command star() is undefined. Try STAR() instead?")
 def STAR (r, n):
     if n < 5: raise ExceptionWT("In the STAR(r, n) command, n must be at least 5!")
     if r <= 0: raise ExceptionWT("In the STAR(r, n) command, the radius r must be positive!")
@@ -4278,6 +4751,8 @@ def PLASM_PRISM (height):
 
 # NEW DEFINITION - RETURNS AN INSTANCE OF CLASS "PRODUCT" OR A LIST
 # OF PRODUCTS:
+def prism(*args):
+    raise ExceptionWT("Command prism() is undefined. Try PRISM() instead?")
 def PRISM(basis, h):
     if h <= 0: 
         raise ExceptionWT("Height in PRISM(base, height) must be positive!")
@@ -4857,7 +5332,7 @@ def SEGMENT (sx):
 # SOLIDIFY
 # ===================================================
 
-def SOLIDIFY(pol):
+def PLASM_SOLIDIFY(pol):
 	
 	box=Plasm.limits(pol)
 	min=box.p1[1]
@@ -4879,10 +5354,19 @@ def SOLIDIFY(pol):
 
 if self_test:
 
-	PLASM_VIEW(SOLIDIFY(PLASM_STRUCT(AA(POLYLINE)([
+	PLASM_VIEW(PLASM_SOLIDIFY(PLASM_STRUCT(AA(POLYLINE)([
 		[[0,0],[4,2],[2.5,3],[4,5],[2,5],[0,3],[-3,3],[0,0]],
 		[[0,3],[0,1],[2,2],[2,4],[0,3]],
 		[[2,2],[1,3],[1,2],[2,2]]]))))
+
+# NEW DEFINITION
+def solidify(*args):
+    raise ExceptionWT("Command solidify() is undefined. Try SOLIDIFY() instead?")
+def SOLIDIFY(surf):
+  if not isinstance(surf, BASEOBJ):
+    raise ExceptionWT("In SOLIDIFY(surf), surf must be a PLaSM surface.")
+  obj = BASEOBJ(PLASM_SOLIDIFY(surf.geom))
+  return obj
 
 # ===================================================
 # PLASM_EXTRUSION - ONE PIECE IN THE VERTICAL DIRECTION
@@ -4924,6 +5408,8 @@ def EXTRUDEONE(shape2d, height, angle_deg, n=1):
     L.append(newlayer)
   return L # I tried to return a union but it took too much time
 
+def extrude(*args):
+    raise ExceptionWT("Command extrude() is undefined. Try EXTRUDE() instead?")
 def EXTRUDE(basis, height, angle_deg, n=1):
     if height <= 0: 
         raise ExceptionWT("Height in EXTRUDE(base, height, angle, n) must be positive!")
@@ -5465,10 +5951,12 @@ if self_test:
 
 # Change it to procedural style:
 # English:
+def color(*args):
+    raise ExceptionWT("Command color() is undefined. Try COLOR() instead?")
 def COLOR(obj, col = None):
   # obj may be a single object or a list of objects
   if col is None:
-    raise ExceptionWT("The COLOR command takes two arguments: object and the color.")
+    raise ExceptionWT("The COLOR command takes two arguments: a 2D or 3D object and a color.")
   if not isinstance(obj, list):
     if not isinstance(obj, BASEOBJ):
         raise ExceptionWT("The first argument of COLOR must be an object!")
@@ -5477,7 +5965,7 @@ def COLOR(obj, col = None):
     obj = flatten(obj)
     for x in obj: 
         if not isinstance(x, BASEOBJ):
-            raise ExceptionWT("Only objects can be colored!")
+            raise ExceptionWT("Invalid object found in the COLOR command.")
         x.setcolor(col)
   return COPY(obj)
 
@@ -5520,6 +6008,8 @@ def PLASM_COLOR(Cpl):
 # English:
 GRAY    = [128, 128, 128]
 GREY    = [128, 128, 128]
+
+SAND = [194, 178, 128]
 
 LIGHTGREEN   = [0, 255, 0]
 GREEN   = [0, 180, 0]
@@ -5590,11 +6080,13 @@ CHOCOLATE = [94, 39, 40]
 CANDY = [237, 139, 209]
 
 
-BRASS =   [255, 250, 83]
+BRASS =   [181, 166, 66]
 COPPER =  [184, 115, 51]
 BRONZE =  [140, 120, 83]
 SILVER =  [230, 232, 250]
 GOLD =    [226, 178, 39]
+
+WOOD = [195, 148, 89]
 
 # Czech:
 SEDA = GRAY
@@ -6010,7 +6502,26 @@ def IS3D(tested):
 
 # Is a set an empty set?
 def EMPTYSET(obj):
-  l = len(Plasm.getBatches(obj.geom))
+  # Sanity test:
+  if isinstance(obj, list):
+    obj = flatten(obj)
+    for oo in obj:
+      if not isinstance(oo, BASEOBJ):
+        raise ExceptionWT("Invalid object obj detected in EMPTYSET(obj)!")
+  else:
+    if not isinstance(obj, BASEOBJ):
+      raise ExceptionWT("Invalid object obj detected in EMPTYSET(obj)!")
+  # Emptyset test:
+  l = 0
+  if isinstance(obj, list):
+    maxlen = 0
+    flatobj = flatten(obj)
+    for x in flatobj:
+      if len(Plasm.getBatches(x.geom)) > maxlen:
+        maxlen = len(Plasm.getBatches(x.geom))
+    l = maxlen
+  else:
+    l = len(Plasm.getBatches(obj.geom))
   if l == 0: return True
   else: return False
 
@@ -6047,8 +6558,7 @@ def ISINBOX2D(tested, minx, maxx, miny, maxy, tol = 1e-8):
 
 # Returns True if entire 3D box "box3d" lies in object "tested":
 def HASBOX3D(tested, centerx, centery, centerz, sizex, sizey, sizez):
-    box3d = BRICK(sizex, sizey, sizez)
-    MOVE(box3d, centerx - 0.5*sizex, centery - 0.5*sizey, centerz - 0.5*sizez)
+    box3d = BOX(centerx - 0.5*sizex, centerx + 0.5*sizex, centery - 0.5*sizey, centery + 0.5*sizey, centerz - 0.5*sizez, centerz + 0.5*sizez)
     return SUBSET(box3d, tested)
 
 # Returns True if no part of the 3D box "box3d" lies in object "tested":
@@ -6067,31 +6577,51 @@ def ISINBOX3D(tested, minx, maxx, miny, maxy, minz, maxz, tol = 1e-8):
 # Checks if 2D object "tested" has dimensions sizex, sizey
 # with a given tolerance:
 def SIZETEST2D(tested, sizex, sizey, eps = 1e-8):
-    a1 = (abs(tested.sizex() - sizex) <= eps)
-    a2 = (abs(tested.sizey() - sizey) <= eps)
+    a1 = (abs(SIZEX(tested) - sizex) <= eps)
+    a2 = (abs(SIZEY(tested) - sizey) <= eps)
     return (a1 and a2)
 
 # Checks if 3D object "tested" has dimensions sizex, sizey, sizez
 # with a given tolerance:
 def SIZETEST3D(tested, sizex, sizey, sizez, eps = 1e-8):
-    a1 = (abs(tested.sizex() - sizex) <= eps)
-    a2 = (abs(tested.sizey() - sizey) <= eps)
-    a3 = (abs(tested.sizez() - sizez) <= eps)
+    a1 = (abs(SIZEX(tested) - sizex) <= eps)
+    a2 = (abs(SIZEY(tested) - sizey) <= eps)
+    a3 = (abs(SIZEZ(tested) - sizez) <= eps)
     return (a1 and a2 and a3)
+
+# Checks whether the bounding box of the 2D object "tested" is 
+# (minx, maxx) x (miny. maxy):
+def BBTEST2D(tested, minx, maxx, miny, maxy, eps = 1e-8):
+    a1 = (abs(MINX(tested) - minx) <= eps)
+    a2 = (abs(MAXX(tested) - maxx) <= eps)
+    a3 = (abs(MINY(tested) - miny) <= eps)
+    a4 = (abs(MAXY(tested) - maxy) <= eps)
+    return a1 and a2 and a3 and a4
+
+# Checks whether the bounding box of the 3D object "tested" is 
+# (minx, maxx) x (miny. maxy) x (minz. maxz):
+def BBTEST3D(tested, minx, maxx, miny, maxy, minz, maxz, eps = 1e-8):
+    a1 = (abs(MINX(tested) - minx) <= eps)
+    a2 = (abs(MAXX(tested) - maxx) <= eps)
+    a3 = (abs(MINY(tested) - miny) <= eps)
+    a4 = (abs(MAXY(tested) - maxy) <= eps)
+    a5 = (abs(MINZ(tested) - minz) <= eps)
+    a6 = (abs(MAXZ(tested) - maxz) <= eps)
+    return a1 and a2 and a3 and a4 and a5 and a6
 
 # Checks if 2D objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
 def SIZEMATCH2D(tested, ref, eps = 1e-8):
-    a1 = (abs(tested.sizex() - ref.sizex()) <= eps)
-    a2 = (abs(tested.sizey() - ref.sizey()) <= eps)
+    a1 = (abs(SIZEX(tested) - SIZEX(ref)) <= eps)
+    a2 = (abs(SIZEY(tested) - SIZEY(ref)) <= eps)
     return (a1 and a2)
 
 # Checks if 3D objects "tested" and "ref" have the same dimensions, 
 # with a given tolerance:
 def SIZEMATCH3D(tested, ref, eps = 1e-8):
-    a1 = (abs(tested.sizex() - ref.sizex()) <= eps)
-    a2 = (abs(tested.sizey() - ref.sizey()) <= eps)
-    a3 = (abs(tested.sizez() - ref.sizez()) <= eps)
+    a1 = (abs(SIZEX(tested) - SIZEX(ref)) <= eps)
+    a2 = (abs(SIZEY(tested) - SIZEY(ref)) <= eps)
+    a3 = (abs(SIZEZ(tested) - SIZEZ(ref)) <= eps)
     return (a1 and a2 and a3)
 
 # Checks if 2D object "tested" has given minx, miny 
@@ -6161,39 +6691,53 @@ def ALIGNOBJECTS3D(tested, ref):
     return MOVE(tested, xminref - xmintested, yminref - ymintested, zminref - zmintested)
 
 # Returns a rectangle which is the bounding box of a 2D object "tested":
-def BBOX2D(tested):
-    rect = RECTANGLE(tested.maxx() - tested.minx(), tested.maxy() - tested.miny())
-    MOVE(rect, tested.minx(), tested.miny())
-    return rect
+def BBOXTEST2D(tested, minx, maxx, miny, maxy, tol = 1e-8):
+    testminx = MINX(tested)    
+    testmaxx = MAXX(tested)    
+    testminy = MINY(tested)    
+    testmaxy = MAXY(tested)    
+    a1 = (abs(testminx - minx) <= tol)
+    a2 = (abs(testmaxx - maxx) <= tol)
+    a3 = (abs(testminy - miny) <= tol)
+    a4 = (abs(testmaxy - maxy) <= tol)
+    return a1 and a2 and a3 and a4
 
 # Returns a brick which is the bounding box of a 3D object "tested":
-def BBOX3D(tested):
-    brick = BOX(tested.maxx() - tested.minx(), tested.maxy() - tested.miny(), tested.maxz() - tested.minz())
-    MOVE(brick, tested.minx(), tested.miny(), tested.minz())
-    return brick
+def BBOXTEST3D(tested, minx, maxx, miny, maxy, minz, maxz, tol = 1e-8):
+    testminx = MINX(tested)    
+    testmaxx = MAXX(tested)    
+    testminy = MINY(tested)    
+    testmaxy = MAXY(tested)    
+    testminz = MINZ(tested)    
+    testmaxz = MAXZ(tested)    
+    a1 = (abs(testminx - minx) <= tol)
+    a2 = (abs(testmaxx - maxx) <= tol)
+    a3 = (abs(testminy - miny) <= tol)
+    a4 = (abs(testmaxy - maxy) <= tol)
+    a5 = (abs(testminz - minz) <= tol)
+    a6 = (abs(testmaxz - maxz) <= tol)
+    return a1 and a2 and a3 and a4 and a5 and a6
 
-# Returns the frame of a 2D bounding box "bbox". Bars of 
-# the frame will have thickness "eps"
-def BBOXFRAME2D(bbox, eps):
-    x = bbox.sizex()
-    y = bbox.sizey()
-    rect = RECTANGLE(x - 2*eps, y - 2*eps)
-    MOVE(rect, eps, eps)
-    return DIFF(bbox, rect)
+# Returns the frame of a 2D box. Bars of 
+# the frame will have thicknesses
+def FRAME2D(x, y, hx, hy):
+    box = BOX(x, y)
+    rect = BOX(x - 2*hx, y - 2*hy)
+    MOVE(rect, hx, hy)
+    SUBTRACT(box, rect)
+    return box
 
-# Returns the frame of a 3D bounding box "bbox". Bars of 
-# the frame will have thickness "eps"
-def BBOXFRAME3D(bbox, eps):
-    x = bbox.sizex()
-    y = bbox.sizey()
-    z = bbox.sizez()
-    brickx = BOX(x, y - 2*eps, z - 2*eps)
-    T(brickx, 0, eps, eps)
-    bricky = BOX(x - 2*eps, y, z - 2*eps)
-    T(bricky, eps, 0, eps)
-    brickz = BOX(x - 2*eps, y - 2*eps, z)
-    T(brickz, eps, eps, 0)
-    return DIFF(bbox, brickx, bricky, brickz)
+# Returns the frame of a 3D box. Bars of 
+# the frame will have thicknesses hx, hy, hz
+def FRAME3D(x, y, z, hx, hy, hz):
+    box = BOX(x, y, z)
+    brickx = BOX(x, y - 2*hy, z - 2*hz)
+    M(brickx, 0, hy, hz)
+    bricky = BOX(x - 2*hx, y, z - 2*hz)
+    M(bricky, hx, 0, hz)
+    brickz = BOX(x - 2*hx, y - 2*hy, z)
+    M(brickz, hx, hy, 0)
+    return DIFF(box, [brickx, bricky, brickz])
 
 # Alberto's changes to make Cartesian products simplicial:
 def cumsum(iterable):
@@ -6259,15 +6803,43 @@ def SIMPLEXGRID(size):
 
 # NEW COMMAND FOR REFERENCE DOMAIN:
 
-def REF_DOMAIN(a, b, m, n):
+def refdomain(*args):
+    raise ExceptionWT("Command refdomain() is undefined. Try REFDOMAIN() instead?")
+def REFDOMAIN(a, b, m, n):
     #return POWER(INTERVALS(a, m), INTERVALS(b, n))
     return BASEOBJ(SIMPLEXGRID([a, b])([m, n]))
 
-def UNIT_SQUARE(n, m):
+def refdomain3d(*args):
+    raise ExceptionWT("Command refdomain3d() is undefined. Try REFDOMAIN3D() instead?")
+def REFDOMAIN3D(a, b, c, m, n, o):
+    #return POWER(INTERVALS(a, m), INTERVALS(b, n))
+    return BASEOBJ(SIMPLEXGRID([a, b, c])([m, n, o]))
+
+def unitsquare(*args):
+    raise ExceptionWT("Command unitsquare() is undefined. Try UNITSQUARE() instead?")
+def UNITSQUARE(m, n):
     #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
     return BASEOBJ(SIMPLEXGRID([1.0, 1.0])([m, n]))
+
+def unitcube(*args):
+    raise ExceptionWT("Command unitcube() is undefined. Try UNITCUBE() instead?")
+def UNITCUBE(m, n, o):
+    #return POWER(INTERVALS(1.0, n), INTERVALS(1.0, m))
+    return BASEOBJ(SIMPLEXGRID([1.0, 1.0, 1.0])([m, n, o]))
+
 
 # Symbols for axes:
 X = 'X'
 Y = 'Y'
 Z = 'Z'
+
+def PRINTSIZE(obj):
+    minx = MINX(obj)
+    maxx = MAXX(obj)
+    miny = MINY(obj)
+    maxy = MAXY(obj)
+    minz = MINZ(obj)
+    maxz = MAXZ(obj)
+    print "SIZE:", maxx - minx, maxy - miny, maxz - minz
+    print "BBOX:", minx, maxx, miny, maxy, minz, maxz
+
