@@ -4230,7 +4230,6 @@ def PLASM_BEZIERCURVE (controlpoints):
 # NEW DEFINITIONS:
 def BEZIER1(*args):
     list1 = list(args)
-    list1 = flatten(list1)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S1)(list1)
@@ -4240,7 +4239,6 @@ BE1 = BEZIER1
 
 def BEZIER2(*args):
     list1 = list(args)
-    list1 = flatten(list1)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S2)(list1)
@@ -4249,7 +4247,6 @@ BE2 = BEZIER2
 
 def BEZIER3(*args):
     list1 = list(args)
-    list1 = flatten(list1)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S3)(list1)
@@ -4380,11 +4377,27 @@ if self_test:
 
 # NEW COMMAND:
 def ROTATIONALSURFACE(point_list, angle = 360, nx = 32, na = 64):
-  curve_xz = PLASM_BEZIER(S1)(point_list)
+  # Sanitize point list. They need to be 2D points. Zero needs
+  # to be added as the middle coordinate.
+  if not isinstance(point_list, list):
+    raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+  if len(point_list) < 2: 
+    raise ExceptionWT("Rotational surface requires at least two points!")  
+  newpoints = []
+  for pt in point_list:
+    if not isinstance(pt, list):
+      raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+    if len(pt) != 2:
+      raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+    newpoints.append([pt[0], 0, pt[1]])
+  # Create the Bezier curve in the XZ plane:
+  curve_xz = PLASM_BEZIER(S1)(newpoints)
   anglerad = angle / 180.0 * PI
   surf = PLASM_ROTATIONALSURFACE(curve_xz)
   refdomain = REFDOMAIN(1, anglerad, nx, na)
   out = MAP(refdomain, surf)
+  # Rotate object back:
+  ROTATE(out, -90, X)
   return out
 ROSURFACE = ROTATIONALSURFACE
 ROSURF = ROTATIONALSURFACE
