@@ -4230,6 +4230,7 @@ def PLASM_BEZIERCURVE (controlpoints):
 # NEW DEFINITIONS:
 def BEZIER1(*args):
     list1 = list(args)
+    list1 = flatten(list1)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S1)(list1)
@@ -4239,6 +4240,7 @@ BE1 = BEZIER1
 
 def BEZIER2(*args):
     list1 = list(args)
+    list1 = flatten(list1)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S2)(list1)
@@ -4247,6 +4249,7 @@ BE2 = BEZIER2
 
 def BEZIER3(*args):
     list1 = list(args)
+    list1 = flatten(list1)
     if len(list1) <= 1:
         raise ExceptionWT("BEZIER curve expects at least two control points!")
     return PLASM_BEZIER(S3)(list1)
