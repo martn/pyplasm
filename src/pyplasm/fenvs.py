@@ -4423,10 +4423,26 @@ def PLASM_ROTSOLID (profileanglerad):
 
 # NEW COMMAND:
 def ROTATIONALSOLID(point_list, angle = 360, nx = 32, na = 64, nr = 1):
-  curve_xz = PLASM_BEZIER(S1)(point_list)
+  # Sanitize point list. They need to be 2D points. Zero needs
+  # to be added as the middle coordinate.
+  if not isinstance(point_list, list):
+    raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+  if len(point_list) < 2: 
+    raise ExceptionWT("Rotational surface requires at least two points!")  
+  newpoints = []
+  for pt in point_list:
+    if not isinstance(pt, list):
+      raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+    if len(pt) != 2:
+      raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
+    newpoints.append([pt[0], 0, pt[1]])
+  # Create the Bezier curve in the XZ plane:
+  curve_xz = PLASM_BEZIER(S1)(newpoints)
   anglerad = angle / 180.0 * PI
-  obj = BASEOBJ(PLASM_ROTSOLID([curve_xz, anglerad])([nx, na, nr]))
-  return obj
+  out = BASEOBJ(PLASM_ROTSOLID([curve_xz, anglerad])([nx, na, nr]))
+  # Rotate object back:
+  ROTATE(out, -90, X)
+  return out
 ROTSOLID = ROTATIONALSOLID
 ROSOLID = ROTATIONALSOLID
 ROSOL = ROTATIONALSOLID
