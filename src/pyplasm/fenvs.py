@@ -4439,28 +4439,30 @@ ROSU = ROTATIONALSURFACE
 # ROTATIONAL SOLID
 # ======================================================
 
-def PLASM_ROTSOLID (profileanglerad):
-    profile, anglerad = profileanglerad
+def PLASM_ROTSOLID (profileangleminr):
+    profile, angle, minr = profileangleminr
     def PLASM_ROTSOLID0 (divisions):
         n, m, o = divisions
-        domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(1.0)(n), PLASM_INTERVALS(anglerad)(m), PLASM_INTERVALS(1.0)(o)])
-#        fx =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.cos(p[0])
-#        fy =   lambda p: (c + p[2]*a*math.cos(p[1])) * math.sin(p[0])
-#        fz =   lambda p: p[2]*a*math.sin(p[1])
-        fx =   lambda p: (profile(p))[0] * p[2] * math.cos(p[1])
-        fy =   lambda p: (profile(p))[0] * p[2] * math.sin(p[1])
+        domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(1.0)(n), PLASM_INTERVALS(angle)(m), PLASM_INTERVALS(1.0)(o)])
+        fx =   lambda p: minr * math.cos(p[1]) + ((profile(p))[0] - minr) * p[2] * math.cos(p[1])
+        fy =   lambda p: minr * math.sin(p[1]) + ((profile(p))[0] - minr) * p[2] * math.sin(p[1])
         fz =   lambda p: (profile(p))[2]
         return PLASM_MAP(([fx,fy,fz]))(domain)
     return PLASM_ROTSOLID0
 
 # NEW COMMAND:
-def ROTATIONALSOLID(point_list, angle = 360, nx = 32, na = 64, nr = 1):
+def ROTATIONALSOLID(point_list, angle = 360, minr = 0, nx = 32, na = 64, nr = 1):
   # Sanitize point list. They need to be 2D points. Zero needs
   # to be added as the middle coordinate.
   if not isinstance(point_list, list):
     raise ExceptionWT("First argument of rotational surface must be a list of 2D points in the XY plane!")  
   if len(point_list) < 2: 
     raise ExceptionWT("Rotational surface requires at least two points!")  
+  # Additional sanity tests:
+  if angle <= 0:
+    raise ExceptionWT("Rotational surface requires a positive angle!")  
+  if minr < 0:
+    raise ExceptionWT("Rotational surface requires a positive minimum radius!")  
   newpoints = []
   for pt in point_list:
     if not isinstance(pt, list):
@@ -4471,7 +4473,7 @@ def ROTATIONALSOLID(point_list, angle = 360, nx = 32, na = 64, nr = 1):
   # Create the Bezier curve in the XZ plane:
   curve_xz = PLASM_BEZIER(S1)(newpoints)
   anglerad = angle / 180.0 * PI
-  out = BASEOBJ(PLASM_ROTSOLID([curve_xz, anglerad])([nx, na, nr]))
+  out = BASEOBJ(PLASM_ROTSOLID([curve_xz, anglerad, minr])([nx, na, nr]))
   # Rotate object back:
   ROTATE(out, -90, X)
   return out
