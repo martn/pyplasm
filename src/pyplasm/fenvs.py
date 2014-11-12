@@ -926,6 +926,8 @@ def PLASM_VIEW (obj, Background = True):
 def VIEWBASE(objects):
     geoms = []
     for x in objects:
+        if not isinstance(x, BASEOBJ):
+            raise ExceptionWT("The arguments must be objects!")
         geoms.append(x.geom)
     nclabinst.visualize(nclabinst.converter(geoms))
 
@@ -941,6 +943,9 @@ def SHOW(*args):
     #    if SIZEX(obj) == 0 and SIZEY(obj) == 0 and SIZEZ(obj) == 0:
     #        raise ExceptionWT("One of the objects that you are trying to display is empty!")
     if len(sequence) == 0: raise ExceptionWT("The SHOW(...) command must contain at least one object!")
+    for obj in sequence:
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT("The arguments of SHOW(...) must be objects!")
     VIEWBASE(sequence)
 
 # ===================================================
@@ -958,7 +963,14 @@ class BASEOBJ:
         self.material = [1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100]
 
     def __getattr__(self, name):
+        if name[0:2] == '__' and name[-2:]: #special attributes are probably not searched by normal user
+            raise AttributeError
         raise ExceptionWT('Did you want to write "," (comma) instead of "." (period) before "%s" or did you misspell "%s"?' % (name, name))
+
+    def __coerce__(self, other):
+        if isinstance(other , list):
+            return [self], other
+
 
     def __repr__(self):
         return "Plasm %sD object" % self.dim
@@ -5951,7 +5963,7 @@ def COLOR(obj, col = None):
     raise ExceptionWT("The COLOR command takes two arguments: a 2D or 3D object and a color.")
   if not isinstance(obj, list):
     if not isinstance(obj, BASEOBJ):
-        raise ExceptionWT("The COLOR command takes two arguments: a 2D or 3D object and a color.")
+        raise ExceptionWT("The first argument of COLOR must be an object!")
     obj.setcolor(col)
   else:
     obj = flatten(obj)
