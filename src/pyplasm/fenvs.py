@@ -963,6 +963,8 @@ class BASEOBJ:
         self.material = [1,0,0,1,  0,1,0,1,  0,0,1,0, 0,0,0,1, 100]
 
     def __getattr__(self, name):
+        if name[0:2] == '__' and name[-2:]: #special attributes are probably not searched by normal user
+            raise AttributeError
         raise ExceptionWT('Did you want to write "," (comma) instead of "." (period) before "%s" or did you misspell "%s"?' % (name, name))
 
     def __coerce__(self, other):
