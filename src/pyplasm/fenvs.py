@@ -4420,7 +4420,7 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW COMMAND:
-def ROTATIONALSURFACE(point_list, angle = 360, nx = 32, na = 48):
+def ROTATIONALSURFACE(point_list, angle = 360, nx = 32, na = 32):
   # Sanitize point list. They need to be 2D points. Zero needs
   # to be added as the middle coordinate.
   if not isinstance(point_list, list):
@@ -4463,7 +4463,7 @@ def PLASM_ROTSOLID (profileangleminr):
     return PLASM_ROTSOLID0
 
 # NEW COMMAND:
-def ROTATIONALSOLID(point_list, angle = 360, minr = 0, nx = 32, na = 48, nr = 1):
+def ROTATIONALSOLID(point_list, angle = 360, minr = 0, nx = 32, na = 32, nr = 1):
   # Sanitize point list. They need to be 2D points. Zero needs
   # to be added as the middle coordinate.
   if not isinstance(point_list, list):
@@ -4492,6 +4492,51 @@ def ROTATIONALSOLID(point_list, angle = 360, minr = 0, nx = 32, na = 48, nr = 1)
 ROTSOLID = ROTATIONALSOLID
 ROSOLID = ROTATIONALSOLID
 ROSOL = ROTATIONALSOLID
+
+# ======================================================
+# ROTATIONAL SHELL
+# ======================================================
+
+def PLASM_ROTSHELL (profileanglethickness):
+    profile, angle, thickness = profileanglethickness
+    def PLASM_ROTSHELL0 (divisions):
+        n, m, o = divisions
+        domain = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(1.0)(n), PLASM_INTERVALS(angle)(m), PLASM_INTERVALS(1.0)(o)])
+        fx =   lambda p: (profile(p))[0] * math.cos(p[1]) + thickness * p[2] * math.cos(p[1])
+        fy =   lambda p: (profile(p))[0] * math.sin(p[1]) + thickness * p[2] * math.sin(p[1])
+        fz =   lambda p: (profile(p))[2]
+        return PLASM_MAP(([fx,fy,fz]))(domain)
+    return PLASM_ROTSHELL0
+
+# NEW COMMAND:
+def ROTATIONALSHELL(point_list, thickness, angle = 360, nx = 32, na = 32, nr = 1):
+  # Sanitize point list. They need to be 2D points. Zero needs
+  # to be added as the middle coordinate.
+  if not isinstance(point_list, list):
+    raise ExceptionWT("First argument of rotational shell must be a list of 2D points in the XY plane!")  
+  if len(point_list) < 2: 
+    raise ExceptionWT("Rotational shell requires at least two points!")  
+  # Additional sanity tests:
+  if angle <= 0:
+    raise ExceptionWT("Rotational shell requires a positive angle!")  
+  if minr < 0:
+    raise ExceptionWT("Rotational shell requires a positive minimum radius!")  
+  newpoints = []
+  for pt in point_list:
+    if not isinstance(pt, list):
+      raise ExceptionWT("First argument of rotational shell must be a list of 2D points in the XY plane!")  
+    if len(pt) != 2:
+      raise ExceptionWT("First argument of rotational shell must be a list of 2D points in the XY plane!")  
+    newpoints.append([pt[0], 0, pt[1]])
+  # Create the Bezier curve in the XZ plane:
+  curve_xz = PLASM_BEZIER(S1)(newpoints)
+  anglerad = angle / 180.0 * PI
+  out = BASEOBJ(PLASM_ROTSHELL([curve_xz, anglerad, thickness])([nx, na, nr]))
+  # Rotate object back:
+  ROTATE(out, -90, X)
+  return out
+ROTSHELL = ROTATIONALSHELL
+ROSHELL = ROTATIONALSHELL
 
 # ======================================================
 # CYLINDRICAL SURFACE
