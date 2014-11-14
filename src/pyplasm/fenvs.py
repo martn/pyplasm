@@ -3355,7 +3355,7 @@ if self_test:
 # NEW DEFINITION
 def ring(*args):
     raise ExceptionWT("Command ring() is undefined. Try RING() instead?")
-def RING(r1, r2, division = [64, 1]):
+def RING(r1, r2, division = [48, 1]):
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in RING(r1, r2) must be positive!")
     if r2 <= 0: 
@@ -3390,7 +3390,7 @@ def PLASM_TUBE (args):
 # English:
 def tube(*args):
     raise ExceptionWT("Command tube() is undefined. Try TUBE() instead?")
-def TUBE(r1, r2, h, division = 64):
+def TUBE(r1, r2, h, division = 48):
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in TUBE(r1, r2, h) must be positive!")
     if r2 <= 0: 
@@ -3424,7 +3424,7 @@ TUBO = TUBE
 
 def ring3d(*args):
     raise ExceptionWT("Command ring3d() is undefined. Try RING3D() instead?")
-def RING3D(r1, r2, division = 64):
+def RING3D(r1, r2, division = 48):
     h = 0.001
     return TUBE(r1, r2, h, division)
 
@@ -3447,7 +3447,7 @@ if self_test:
 # English:
 def circle(*args):
     raise ExceptionWT("Command circle() is undefined. Try CIRCLE() instead?")
-def CIRCLE(r, division = [64, 1]):
+def CIRCLE(r, division = [48, 1]):
     if r <= 0: 
         raise ExceptionWT("Radius r in CIRCLE(r) must be positive!")
     if type(division) == list: 
@@ -3475,7 +3475,7 @@ ROND = CIRCLE
 
 def circle3d(*args):
     raise ExceptionWT("Command circle3d() is undefined. Try CIRCLE3D() instead?")
-def CIRCLE3D(r, division = [64, 1]):
+def CIRCLE3D(r, division = [48, 1]):
     if r <= 0: 
         raise ExceptionWT("Radius r in CIRCLE3D(r) must be positive!")
     # height is kept the same for add these thin objects,
@@ -3519,7 +3519,7 @@ def PLASM_ARC (params):
 # English:
 def arc(*args):
     raise ExceptionWT("Command arc() is undefined. Try ARC() instead?")
-def ARC(r1, r2, angle, division = [64, 1]):
+def ARC(r1, r2, angle, division = [48, 1]):
     if r1 < 0: 
         raise ExceptionWT("Radius r1 in ARC(r1, r2, angle) must be nonnegative!")
     if r2 <= r1: 
@@ -3535,7 +3535,7 @@ def ARC(r1, r2, angle, division = [64, 1]):
 
 def arc3d(*args):
     raise ExceptionWT("Command arc3d() is undefined. Try ARC3D() instead?")
-def ARC3D(r1, r2, angle, division = [64, 1]):
+def ARC3D(r1, r2, angle, division = [48, 1]):
     if r1 < 0: 
         raise ExceptionWT("Radius r1 in ARC3D(r1, r2, angle) must be nonnegative!")
     if r2 <= r1: 
@@ -3572,7 +3572,7 @@ def cylinder(*args):
     raise ExceptionWT("Command cylinder() is undefined. Try CYLINDER() instead?")
 def cyl(*args):
     raise ExceptionWT("Command cyl() is undefined. Try CYL() instead?")
-def CYLINDER(r, h, division = 64):
+def CYLINDER(r, h, division = 48):
     if not ISNUMBER(r):
         raise ExceptionWT("Radius r in CYLINDER(r, h) must be a number!")
     if not ISNUMBER(h):
@@ -3634,7 +3634,7 @@ def SPHERE_SURFACE(radius, divisions = [24, 48]):
 # English:
 def sphere(*args):
     raise ExceptionWT("Command sphere() is undefined. Try SPHERE() instead?")
-def SPHERE(radius, divisions = [12, 24]):
+def SPHERE(radius, divisions = [16, 32]):
     if not ISNUMBER(radius):
         raise ExceptionWT("Radius r in SPHERE(r) must be a number!")
     if radius <= 0: 
@@ -3685,7 +3685,7 @@ if self_test:
    plasm_config.pop()
 
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
-def TORUS_SURFACE(r1, r2, divisions = [64, 32]):
+def TORUS_SURFACE(r1, r2, divisions = [32, 16]):
     if r1 <= 0: 
         raise ExceptionWT("Inner radius r1 in TORUS_SURFACE(r1, r2) must be positive!")
     if r2 <= 0: 
@@ -3717,7 +3717,7 @@ if self_test:
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
 def torus(*args):
     raise ExceptionWT("Command torus() is undefined. Try TORUS() instead?")
-def TORUS(r1, r2, divisions = [24, 12]):
+def TORUS(r1, r2, divisions = [32, 16]):
     if not ISNUMBER(r1):
         raise ExceptionWT("Inner radius r1 in TORUS(r1, r2) must be a number!")
     if not ISNUMBER(r2):
@@ -3812,7 +3812,7 @@ if self_test:
 # NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
 def cone(*args):
     raise ExceptionWT("Command cone() is undefined. Try CONE() instead?")
-def CONE(r, h, division = 64):
+def CONE(r, h, division = 48):
     if not ISNUMBER(r):
         raise ExceptionWT("Radius r in CONE(r, h) must be a number!")
     if not ISNUMBER(h):
@@ -3882,7 +3882,7 @@ def tcone(*args):
     raise ExceptionWT("Command tcone() is undefined. Try TCONE() instead?")
 def truncone(*args):
     raise ExceptionWT("Command truncone() is undefined. Try TRUNCONE() instead?")
-def TCONE(r1, r2, h, divisions = 64):
+def TCONE(r1, r2, h, divisions = 48):
     if not ISNUMBER(r1):
         raise ExceptionWT("Bottom radius r1 in TCONE(r1, r2, h) must be a number!")
     if not ISNUMBER(r2):
@@ -4420,7 +4420,7 @@ if self_test:
 	PLASM_VIEW(out)
 
 # NEW COMMAND:
-def ROTATIONALSURFACE(point_list, angle = 360, nx = 32, na = 64):
+def ROTATIONALSURFACE(point_list, angle = 360, nx = 32, na = 48):
   # Sanitize point list. They need to be 2D points. Zero needs
   # to be added as the middle coordinate.
   if not isinstance(point_list, list):
@@ -4463,7 +4463,7 @@ def PLASM_ROTSOLID (profileangleminr):
     return PLASM_ROTSOLID0
 
 # NEW COMMAND:
-def ROTATIONALSOLID(point_list, angle = 360, minr = 0, nx = 32, na = 64, nr = 1):
+def ROTATIONALSOLID(point_list, angle = 360, minr = 0, nx = 32, na = 48, nr = 1):
   # Sanitize point list. They need to be 2D points. Zero needs
   # to be added as the middle coordinate.
   if not isinstance(point_list, list):
