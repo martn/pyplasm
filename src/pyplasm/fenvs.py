@@ -4519,8 +4519,8 @@ def ROTATIONALSHELL(point_list, thickness, angle = 360, nx = 32, na = 32, nr = 1
   # Additional sanity tests:
   if angle <= 0:
     raise ExceptionWT("Rotational shell requires a positive angle!")  
-  if minr < 0:
-    raise ExceptionWT("Rotational shell requires a positive minimum radius!")  
+  if thickness < 0:
+    raise ExceptionWT("Rotational shell requires a positive thickness!")  
   newpoints = []
   for pt in point_list:
     if not isinstance(pt, list):
