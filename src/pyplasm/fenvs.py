@@ -6892,6 +6892,7 @@ def PRINTSIZE(obj):
     print "SIZE:", maxx - minx, maxy - miny, maxz - minz
     print "BBOX:", minx, maxx, miny, maxy, minz, maxz
 
+# Returns extrema, rounded to 3 digits:
 def EXTREMA(obj):
     minx = MINX(obj)
     maxx = MAXX(obj)
@@ -6899,6 +6900,13 @@ def EXTREMA(obj):
     maxy = MAXY(obj)
     minz = MINZ(obj)
     maxz = MAXZ(obj)
+    # Rounding:
+    minx = (int)(1000 * minx + 0.5) / 1000.0
+    maxx = (int)(1000 * maxx + 0.5) / 1000.0
+    miny = (int)(1000 * miny + 0.5) / 1000.0
+    maxy = (int)(1000 * maxy + 0.5) / 1000.0
+    minz = (int)(1000 * minz + 0.5) / 1000.0
+    maxz = (int)(1000 * maxz + 0.5) / 1000.0
     print "Minimum X:", minx
     print "Maximum X:", maxx
     print "Minimum Y:", miny
