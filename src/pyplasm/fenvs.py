@@ -6892,3 +6892,17 @@ def PRINTSIZE(obj):
     print "SIZE:", maxx - minx, maxy - miny, maxz - minz
     print "BBOX:", minx, maxx, miny, maxy, minz, maxz
 
+def EXTREMA(obj):
+    minx = MINX(obj)
+    maxx = MAXX(obj)
+    miny = MINY(obj)
+    maxy = MAXY(obj)
+    minz = MINZ(obj)
+    maxz = MAXZ(obj)
+    print "Minimum X:", minx
+    print "Maximum X:", maxx
+    print "Minimum Y:", miny
+    print "Maximum Y:", maxy
+    print "Minimum Z:", minz
+    print "Maximum Z:", maxz
+
