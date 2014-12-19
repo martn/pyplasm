@@ -6894,23 +6894,31 @@ def PRINTSIZE(obj):
 
 # Returns extrema, rounded to 3 digits:
 def EXTREMA(obj):
+    ddd = GETDIM(obj)
+    if ddd == -1:
+      raise ExceptionWT("EXTREMA() can be used for 3D objects only.")
     minx = MINX(obj)
     maxx = MAXX(obj)
     miny = MINY(obj)
     maxy = MAXY(obj)
-    minz = MINZ(obj)
-    maxz = MAXZ(obj)
+    minz = 0
+    maxz = 0
+    if ddd == 3:
+      minz = MINZ(obj)
+      maxz = MAXZ(obj)
     # Rounding:
     minx = (int)(1000 * minx + 0.5) / 1000.0
     maxx = (int)(1000 * maxx + 0.5) / 1000.0
     miny = (int)(1000 * miny + 0.5) / 1000.0
     maxy = (int)(1000 * maxy + 0.5) / 1000.0
-    minz = (int)(1000 * minz + 0.5) / 1000.0
-    maxz = (int)(1000 * maxz + 0.5) / 1000.0
+    if ddd == 3:
+      minz = (int)(1000 * minz + 0.5) / 1000.0
+      maxz = (int)(1000 * maxz + 0.5) / 1000.0
     print "Minimum X:", minx
     print "Maximum X:", maxx
     print "Minimum Y:", miny
     print "Maximum Y:", maxy
-    print "Minimum Z:", minz
-    print "Maximum Z:", maxz
+    if ddd == 3:
+      print "Minimum Z:", minz
+      print "Maximum Z:", maxz
 
