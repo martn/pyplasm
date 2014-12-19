@@ -6914,11 +6914,8 @@ def EXTREMA(obj):
     if ddd == 3:
       minz = (int)(1000 * minz + 0.5) / 1000.0
       maxz = (int)(1000 * maxz + 0.5) / 1000.0
-    print "Minimum X:", minx
-    print "Maximum X:", maxx
-    print "Minimum Y:", miny
-    print "Maximum Y:", maxy
+    print "X:", minx, maxx
+    print "Y:", miny, maxy
     if ddd == 3:
-      print "Minimum Z:", minz
-      print "Maximum Z:", maxz
+      print "Z:", minz, maxz
 
