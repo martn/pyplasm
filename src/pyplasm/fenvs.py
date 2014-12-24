@@ -2326,6 +2326,7 @@ def UNION(*args):
     return list1
 
 # English:
+GLUE = UNION
 U = UNION
 SUM = UNION
 # Czech:
@@ -6080,6 +6081,7 @@ OLIVE = [128,128,0]
 TEAL = [0,128,128]
 NAVY = [0,0,128]
 NAVYBLUE = [0,0,128]
+SKYBLUE = [136, 204, 255]
 CRIMSON = [220,20,60]
 CORAL = [255,127,80]
 SALMON = [250,128,114]
@@ -6918,4 +6920,7 @@ def EXTREMA(obj):
     print "Y:", miny, maxy
     if ddd == 3:
       print "Z:", minz, maxz
+
+EXTREMS = EXTREMA
+EXTREMES = EXTREMA
 
