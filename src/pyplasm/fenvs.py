@@ -7002,8 +7002,8 @@ def TANGRAM7():
 
 ####    POINT    ####
 
-def POINT(args):
-  L = flatten(list(args))
+def POINT(*args):
+  L = flatten(*args)
   d = len(L)
   if d != 2 and d != 3:
     raise ExceptionWT("2D points are created as POINT(x, y), 3D points as POINT(x, y, z)!")
