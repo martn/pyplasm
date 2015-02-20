@@ -1404,6 +1404,7 @@ def SPLIT(obj, axis, coord):
 # COPYING OBJECTS AND LISTS OF OBJECTS (LISTS ARE FLATTENED
 # =========================================================
 
+# DO NOT DEFINE copy() !!!
 def COPY(obj):
     if not isinstance(obj, list):
         if not isinstance(obj, BASEOBJ):
@@ -6998,3 +6999,42 @@ def TANGRAM7():
   tangram7 = PRISM(tangram7, 0.01)
   COLOR(tangram7, ORANGE)
   return tangram7
+
+####    POINT    ####
+
+def POINT(args):
+  L = flatten(list(args))
+  d = len(L)
+  if d != 2 and d != 3:
+    raise ExceptionWT("2D points are created as POINT(x, y), 3D points as POINT(x, y, z)!")
+  # return the list:
+  return L
+
+####    TEST VALIDITY OF OBJECTS    ####
+
+def VALIDATE(obj, name, dim):
+  if isinstance(obj, int):
+    return False, "'" + name + "' is a number while it should be a " + str(n) + "D object."
+  if isinstance(obj, float):
+    return False, "'" + name + "' is a number while it should be a " + str(n) + "D object."
+  if isinstance(obj, str):
+    return False, "'" + name + "' is a text string while it should be a " + str(n) + "D object."
+  if isinstance(obj, bool):
+    return False, "'" + name + "' is a True/False value while it should be a " + str(n) + "D object."
+
+  if isinstance(obj, tuple):
+    return False, "Please use the UNION() function to glue objects together."
+
+  if not isinstance(obj, BASEOBJ) and not isinstance(obj, list):
+    return False, "Object '" + name + "' is invalid."
+
+  if isinstance(obj, list):
+    newobj = flatten(obj)
+    for ooo in newobj:
+      if not isinstance(ooo, BASEOBJ):
+        return False, "'" + name + "' is not a valid " + str(n) + "D object."
+
+  return True, None
+
+  
+
