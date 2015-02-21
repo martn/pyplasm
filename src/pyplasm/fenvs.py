@@ -7023,12 +7023,19 @@ def VALIDATE(obj, name, dim):
     return False, "'" + name + "' is a True/False value while it should be a " + str(dim) + "D object."
 
   if isinstance(obj, tuple):
-    return False, "Please use the UNION() function to glue objects together."
+    m = len(obj)
+    if m == 0:
+      return False, "It looks like your object '" + name + "' is empty."
+    else:
+      return False, "Please use the UNION() function to glue objects together."
 
   if not isinstance(obj, BASEOBJ) and not isinstance(obj, list):
     return False, "Object '" + name + "' is invalid."
 
   if isinstance(obj, list):
+    m = len(obj)
+    if m == 0:
+      return False, "It looks like your object '" + name + "' is empty."
     newobj = flatten(obj)
     for ooo in newobj:
       if not isinstance(ooo, BASEOBJ):
