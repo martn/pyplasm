@@ -7014,13 +7014,13 @@ def POINT(*args):
 
 def VALIDATE(obj, name, dim):
   if isinstance(obj, int):
-    return False, "'" + name + "' is a number while it should be a " + str(n) + "D object."
+    return False, "'" + name + "' is a number while it should be a " + str(dim) + "D object."
   if isinstance(obj, float):
-    return False, "'" + name + "' is a number while it should be a " + str(n) + "D object."
+    return False, "'" + name + "' is a number while it should be a " + str(dim) + "D object."
   if isinstance(obj, str):
-    return False, "'" + name + "' is a text string while it should be a " + str(n) + "D object."
+    return False, "'" + name + "' is a text string while it should be a " + str(dim) + "D object."
   if isinstance(obj, bool):
-    return False, "'" + name + "' is a True/False value while it should be a " + str(n) + "D object."
+    return False, "'" + name + "' is a True/False value while it should be a " + str(dim) + "D object."
 
   if isinstance(obj, tuple):
     return False, "Please use the UNION() function to glue objects together."
@@ -7032,7 +7032,7 @@ def VALIDATE(obj, name, dim):
     newobj = flatten(obj)
     for ooo in newobj:
       if not isinstance(ooo, BASEOBJ):
-        return False, "'" + name + "' is not a valid " + str(n) + "D object."
+        return False, "'" + name + "' is not a valid " + str(dim) + "D object."
 
   return True, None
 
