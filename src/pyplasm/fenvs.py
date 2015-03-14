@@ -6,8 +6,8 @@ from scipy import reshape
 import copy
 
 # This is needed to access NCLab's object "nclabinst":
-from nclab.engines.python import NCLab
-nclabinst = NCLab.instance()
+from nclab.tools.lab import Lab
+nclabinst = Lab.instance()
 
 # Import exceptions without traceback:
 from nclab.tools import ExceptionWT
