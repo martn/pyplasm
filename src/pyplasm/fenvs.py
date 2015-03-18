@@ -5498,9 +5498,10 @@ def EXTRUDE(basis, height, angle_deg, n=1):
         if basis.dim <> 2: 
             raise ExceptionWT("The base object in EXTRUDE(base, height, angle, n) must be 2-dimensional!")
         color = basis.getcolor()
-        obj = EXTRUDEONE(basis, height, angle_deg, n)
-        obj.setcolor(color)
-        return obj
+        oo3d = EXTRUDEONE(basis, height, angle_deg, n)
+        for a in oo3d:
+          a.setcolor(color)
+        return oo3d
     else:
         basis = flatten(basis)
         for obj in basis:
