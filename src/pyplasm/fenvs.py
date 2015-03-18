@@ -3663,6 +3663,40 @@ SFERA = SPHERE
 # Same as English
 
 # =============================================
+# SHELL (OF A SPHERE)
+# =============================================
+
+def PLASM_SHELL (radius1, radius2):
+    def PLASM_SHELL0 (subds):
+        N, M = subds
+        domain = Plasm.translate( Plasm.power(PLASM_INTERVALS(PI)(N) , PLASM_INTERVALS(2*PI)(M)), Vecf(0, -PI/2,0 ) )
+        fx  = lambda p: radius1 + (radius2 - radius1) * math.cos(p[0])  * math.sin  (p[1])
+        fy  = lambda p: radius1 + (radius2 - radius1) * math.cos(p[0]) * math.cos (p[1])
+        fz  = lambda p: radius1 + (radius2 - radius1) * math.sin(p[0]) 
+        ret =  PLASM_MAP([fx, fy, fz])(domain)
+        return ret
+    return PLASM_SHELL0
+
+def shell(*args):
+    raise ExceptionWT("Command shell() is undefined. Try SHELL() instead?")
+def SHELL(radius1, radius2, divisions = [16, 32]):
+    if not ISNUMBER(radius1):
+        raise ExceptionWT("Radius r1 in SHELL(r1, r2) must be a number!")
+    if not ISNUMBER(radius2):
+        raise ExceptionWT("Radius r2 in SHELL(r1, r2) must be a number!")
+    if radius1 <= 0: 
+        raise ExceptionWT("Radius r1 in SHELL(r1, r2) must be positive!")
+    if radius2 <= 0: 
+        raise ExceptionWT("Radius r2 in SHELL(r1, r2) must be positive!")
+    divisionslist = divisions
+    if not isinstance(divisions, list): 
+        if divisions <= 4:
+            raise ExceptionWT("Bad division in the SHELL command!")
+        divisionslist = [divisions/2, divisions]
+    # Making it s solid:
+    return BASEOBJ(PLASM_SHELL(radius1, radius2)(divisionslist))
+
+# =============================================
 # TORUS - SURFACE
 # =============================================
 
