@@ -3671,9 +3671,11 @@ def PLASM_SHELL (r1, r2):
         N, M = subds
         P = 1
         dom3d = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(PI)(N), PLASM_INTERVALS(2*PI)(M), PLASM_INTERVALS(r2-r1)(P)])
-        domain = Plasm.translate(dom3d, Vecf(0, -PI/2, r1))
-        fx  = lambda p: p[2] * math.cos(p[0]) * math.sin (p[1])
-        fy  = lambda p: p[2] * math.cos(p[0]) * math.cos (p[1])
+        dom3d = BASEOBJ(dom3d)
+        MOVE(dom3d, 0, 0, r1)
+        domain = dom3d.geom
+        fx  = lambda p: p[2] * math.cos(p[0]) * math.cos (p[1])
+        fy  = lambda p: p[2] * math.cos(p[0]) * math.sin (p[1])
         fz  = lambda p: p[2] * math.sin(p[0]) 
         ret = PLASM_MAP(([fx,fy,fz]))(domain)
         return ret
