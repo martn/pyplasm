@@ -3666,14 +3666,16 @@ SFERA = SPHERE
 # SHELL (OF A SPHERE)
 # =============================================
 
-def PLASM_SHELL (radius1, radius2):
+def PLASM_SHELL (r1, r2):
     def PLASM_SHELL0 (subds):
-        N, M = subds
-        domain = Plasm.translate( Plasm.power(PLASM_INTERVALS(PI)(N) , PLASM_INTERVALS(2*PI)(M)), Vecf(0, -PI/2,0 ) )
-        fx  = lambda p: radius1 + (radius2 - radius1) * math.cos(p[0])  * math.sin  (p[1])
-        fy  = lambda p: radius1 + (radius2 - radius1) * math.cos(p[0]) * math.cos (p[1])
-        fz  = lambda p: radius1 + (radius2 - radius1) * math.sin(p[0]) 
-        ret =  PLASM_MAP([fx, fy, fz])(domain)
+        N, M = subd
+        P = 1
+        dom3d = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(PI)(N), PLASM_INTERVALS(2*PI)(M), PLASM_INTERVALS(r2-r1)(P)])
+        domain = Plasm.translate(dom3d, Vecf(0, -PI/2, r1))
+        fx  = lambda p: radius * math.cos(p[0])  * math.sin  (p[1])
+        fy  = lambda p: radius * math.cos(p[0]) * math.cos (p[1])
+        fz  = lambda p: radius * math.sin(p[0]) 
+        ret=  PLASM_MAP([fx, fy, fz])(domain)
         return ret
     return PLASM_SHELL0
 
