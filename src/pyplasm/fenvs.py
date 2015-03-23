@@ -3672,7 +3672,7 @@ def PLASM_SHELL (r1, r2):
         P = 1
         dom3d = PLASM_INSR(PLASM_PROD)([PLASM_INTERVALS(PI)(N), PLASM_INTERVALS(2*PI)(M), PLASM_INTERVALS(r2-r1)(P)])
         dom3d = BASEOBJ(dom3d)
-        MOVE(dom3d, 0, -PI/2, r1)
+        MOVE(dom3d, -PI/2, 0, r1)
         domain = dom3d.geom
         fx  = lambda p: p[2] * math.cos(p[0]) * math.sin (p[1])
         fy  = lambda p: p[2] * math.cos(p[0]) * math.cos (p[1])
