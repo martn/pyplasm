@@ -3606,63 +3606,6 @@ CIL = CYLINDER
 CYLINDRE = CYL
 
 # =============================================
-# SPHERE
-# =============================================
-
-def PLASM_SPHERE (radius):
-    def PLASM_SPHERE0 (subds):
-        N, M = subds
-        domain = Plasm.translate( Plasm.power(PLASM_INTERVALS(PI)(N) , PLASM_INTERVALS(2*PI)(M)), Vecf(0, -PI/2,0 ) )
-        fx  = lambda p: radius * math.cos(p[0])  * math.sin  (p[1])
-        fy  = lambda p: radius * math.cos(p[0]) * math.cos (p[1])
-        fz  = lambda p: radius * math.sin(p[0]) 
-        ret=  PLASM_MAP([fx, fy, fz])(domain)
-        return ret
-    return PLASM_SPHERE0
-
-if self_test:
-	assert Plasm.limits(PLASM_SPHERE(1)([8,8])).fuzzyEqual(Boxf(Vecf(1,-1,-1,-1),Vecf(1,+1,+1,+1)))
-	plasm_config.push(1e-4)
-	PLASM_VIEW(PLASM_SPHERE(1)([16,16]))
-	plasm_config.pop()
-
-# NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
-def SPHERE_SURFACE(radius, divisions = [24, 48]):
-    if radius <= 0: 
-        raise ExceptionWT("Radius r in SPHERE_SURFACE(r) must be positive!")
-    # This is a surface:
-    return BASEOBJ(PLASM_SPHERE(radius)(divisions))
-
-# English:
-def sphere(*args):
-    raise ExceptionWT("Command sphere() is undefined. Try SPHERE() instead?")
-def SPHERE(radius, divisions = [16, 32]):
-    if not ISNUMBER(radius):
-        raise ExceptionWT("Radius r in SPHERE(r) must be a number!")
-    if radius <= 0: 
-        raise ExceptionWT("Radius r in SPHERE(r) must be positive!")
-    divisionslist = divisions
-    if not isinstance(divisions, list): 
-        if divisions <= 4:
-            raise ExceptionWT("Bad division in the SPHERE command!")
-        divisionslist = [divisions/2, divisions]
-    # Making it s solid:
-    return BASEOBJ(PLASM_JOIN(PLASM_SPHERE(radius)(divisionslist)))
-# Czech:
-KOULE = SPHERE
-# Polish:
-KULA = SPHERE
-SFERA = SPHERE
-# German:
-KUGEL = SPHERE
-# Spanish:
-ESFERA = SPHERE
-# Italian:
-SFERA = SPHERE
-# French:
-# Same as English
-
-# =============================================
 # SHELL (OF A SPHERE)
 # =============================================
 
@@ -3699,6 +3642,64 @@ def SHELL(radius1, radius2, divisions = [16, 32]):
         divisionslist = [divisions/2, divisions]
     # Making it s solid:
     return BASEOBJ(PLASM_SHELL(radius1, radius2)(divisionslist))
+
+# =============================================
+# SPHERE - will be SHELL of inner radius 0
+# =============================================
+
+def PLASM_SPHERE (radius):
+    def PLASM_SPHERE0 (subds):
+        N, M = subds
+        domain = Plasm.translate( Plasm.power(PLASM_INTERVALS(PI)(N) , PLASM_INTERVALS(2*PI)(M)), Vecf(0, -PI/2,0 ) )
+        fx  = lambda p: radius * math.cos(p[0])  * math.sin  (p[1])
+        fy  = lambda p: radius * math.cos(p[0]) * math.cos (p[1])
+        fz  = lambda p: radius * math.sin(p[0]) 
+        ret=  PLASM_MAP([fx, fy, fz])(domain)
+        return ret
+    return PLASM_SPHERE0
+
+if self_test:
+	assert Plasm.limits(PLASM_SPHERE(1)([8, 8])).fuzzyEqual(Boxf(Vecf(1,-1,-1,-1),Vecf(1,+1,+1,+1)))
+	plasm_config.push(1e-4)
+	PLASM_VIEW(PLASM_SPHERE(1)([16, 16]))
+	plasm_config.pop()
+
+# NEW DEFINITION WITH NON-MANDATORY DIVISIONS:
+def SPHERE_SURFACE(radius, divisions = [16, 32]):
+    if radius <= 0: 
+        raise ExceptionWT("Radius r in SPHERE_SURFACE(r) must be positive!")
+    # This is a surface:
+    return BASEOBJ(PLASM_SPHERE(radius)(divisions))
+
+# English:
+def sphere(*args):
+    raise ExceptionWT("Command sphere() is undefined. Try SPHERE() instead?")
+def SPHERE(radius, divisions = [16, 32]):
+    if not ISNUMBER(radius):
+        raise ExceptionWT("Radius r in SPHERE(r) must be a number!")
+    if radius <= 0: 
+        raise ExceptionWT("Radius r in SPHERE(r) must be positive!")
+    divisionslist = divisions
+    if not isinstance(divisions, list): 
+        if divisions <= 4:
+            raise ExceptionWT("Bad division in the SPHERE command!")
+        divisionslist = [divisions/2, divisions]
+    # Returning the sphere:
+    return SHELL(0, radius, divisionslist)
+
+# Czech:
+KOULE = SPHERE
+# Polish:
+KULA = SPHERE
+SFERA = SPHERE
+# German:
+KUGEL = SPHERE
+# Spanish:
+ESFERA = SPHERE
+# Italian:
+SFERA = SPHERE
+# French:
+# Same as English
 
 # =============================================
 # TORUS - SURFACE
