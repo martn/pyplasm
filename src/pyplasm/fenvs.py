@@ -3685,7 +3685,7 @@ def SPHERE(radius, divisions = [16, 32]):
             raise ExceptionWT("Bad division in the SPHERE command!")
         divisionslist = [divisions/2, divisions]
     # Returning the sphere:
-    return BASEOBJ(JOIN(PLASM_SPHERE(radius)(divisions)))
+    return BASEOBJ(PLASM_JOIN(PLASM_SPHERE(radius)(divisions)))
 
 # Czech:
 KOULE = SPHERE
