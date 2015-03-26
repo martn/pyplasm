@@ -18,7 +18,7 @@ from nclab.tools import ExceptionWT
 # This is needed to measure time:
 import time
 start = time.clock()
-print "Evaluating fenvs.py.."
+print("Evaluating fenvs.py..")
 
 #default values (see PlasmConfig)
 DEFAULT_TOLERANCE=1e-6
@@ -30,7 +30,7 @@ import sys,types,math
 # set this to True if you want to do a self test
 self_test=False
 
-print __file__
+print(__file__)
 
 from pyplasm.xge import *
 
@@ -989,14 +989,14 @@ class BASEOBJ:
     def setcolor(self, color = STEEL):
         # Check if the color is a list:
         if type(color) is list:
-          # Sanity checks:
-          if len(color) <> 3 and len(color) <> 4:
-            raise ExceptionWT("Color must be a list of length 3 [R, G, B] or 4 [R, G, B, A]!")
-          if color[0] < 0 or color[0] > 255 or color[1] < 0 or color[1] > 255 or color[2] < 0 or color[2] > 255:
-            raise ExceptionWT("RGB values in color definition must lie between 0 and 255!")
-          if len(color) == 4:
-            if color[3] < 0 or color[3] > 1:
-              raise ExceptionWT("Opacity value in color definition must be between 0 and 1!")
+            # Sanity checks:
+            if len(color) != 3 and len(color) != 4:
+                raise ExceptionWT("Color must be a list of length 3 [R, G, B] or 4 [R, G, B, A]!")
+            if color[0] < 0 or color[0] > 255 or color[1] < 0 or color[1] > 255 or color[2] < 0 or color[2] > 255:
+                raise ExceptionWT("RGB values in color definition must lie between 0 and 255!")
+            if len(color) == 4:
+                if color[3] < 0 or color[3] > 1:
+                    raise ExceptionWT("Opacity value in color definition must be between 0 and 1!")
         else: 
             raise ExceptionWT("Color must be a list, either [R, G, B] or [R, G, B, A]!")
         self.color = color
@@ -1047,7 +1047,7 @@ class BASEOBJ:
             self.geom = PLASM_TRANSLATE([1, 2])([t1, t2])(self.geom)
         else:
             # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
-            #if self.dim <> 3:
+            #if self.dim != 3:
             #    raise ExceptionWT("2D objects may be moved in the xy-plane only, not in 3D!")
             self.geom = PLASM_TRANSLATE([1, 2, 3])([t1, t2, t3])(self.geom)
         self.setcolor(self.color)
@@ -1059,7 +1059,7 @@ class BASEOBJ:
         # check the axis:
         if axis != 1 and axis != 2 and axis != 3: 
             raise ExceptionWT("The third argument of ROTATE must be either X (x-axis), Y (y-axis), or Z (z-axis)!")
-	#if self.dim == 2 and axis <> 3:
+	#if self.dim == 2 and axis != 3:
             # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
             #raise ExceptionWT("2D objects may be rotated in the xy-plane only, not in 3D!")
         if axis == 1: plane_indexes = [2, 3]
@@ -1108,7 +1108,7 @@ class BASEOBJ:
     def scale(self, a, b, c = 1.0):
         if a <= 0 or b <= 0 or c <= 0:
             raise ExceptionWT("When scaling an object, all axial coefficients must be greater than zero!")
-	#if self.dim == 2 and c <> 1.0:
+	#if self.dim == 2 and c != 1.0:
             # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
             #raise ExceptionWT("2D objects may be scaled in the xy-plane only, not in 3D!")
         self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
@@ -1753,7 +1753,7 @@ def PRINTPOL (obj):
     return obj
 
 def PRINT(obj):
-    print obj
+    print(obj)
     return obj
 
 
@@ -2117,7 +2117,7 @@ def ROTATE(obj, angle_deg, axis = 3, point = [0, 0, 0]):
         centerpoint = axis
         axis = 3
     if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
-        #print "Axis is:", axis
+        #print("Axis is:", axis)
         raise ExceptionWT("In ROTATE(obj, angle, axis), axis must be X, Y or Z!")
     if axis == 'x' or axis == 'X': axis = 1
     if axis == 'y' or axis == 'Y': axis = 2
@@ -4877,7 +4877,7 @@ def PRISM(basis, h):
         raise ExceptionWT("Height in PRISM(base, height) must be positive!")
     # Check that the basis is two-dimensional:
     if not isinstance(basis, list):
-        if basis.dim <> 2: 
+        if basis.dim != 2: 
             raise ExceptionWT("The base object in PRISM(base, height) must be 2-dimensional!")
         color = basis.getcolor()
         obj = PRODUCT(basis, GRID(h))  # PRODUCT returns a class instance!
@@ -4886,7 +4886,7 @@ def PRISM(basis, h):
     else:
         basis = flatten(basis)
         for obj in basis:
-            if obj.dim <> 2: 
+            if obj.dim != 2: 
                 raise ExceptionWT("The base object in PRISM(base, height) must be 2-dimensional!") 
         obj = []
         for oo in basis:
@@ -5443,7 +5443,7 @@ def SEGMENT (sx):
 		P0=A
 		P1=[A[i]+(B[i]-A[i])*sx for i in range(N)]
 
-		print P0,P1
+		print(P0, P1)
 		return POLYLINE([P0,P1])
 	return SEGMENT0
 
@@ -5508,7 +5508,7 @@ def PLASM_EXTRUSION (angle):
 # ===================================================
 
 def EXTRUDEONE(shape2d, height, angle_deg, n=1):
-  if shape2d.dim <> 2:
+  if shape2d.dim != 2:
       raise ExceptionWT("Base object in EXTRUDE(...) must be 2-dimensional!")
   if height <= 0:
       raise ExceptionWT("Extrusion height in EXTRUDE(...) must be positive!")
@@ -5534,7 +5534,7 @@ def EXTRUDE(basis, height, angle_deg, n=1):
         raise ExceptionWT("Height in EXTRUDE(base, height, angle, n) must be positive!")
     # Check that the basis is two-dimensional:
     if not isinstance(basis, list):
-        if basis.dim <> 2: 
+        if basis.dim != 2: 
             raise ExceptionWT("The base object in EXTRUDE(base, height, angle, n) must be 2-dimensional!")
         color = basis.getcolor()
         oo3d = EXTRUDEONE(basis, height, angle_deg, n)
@@ -5544,7 +5544,7 @@ def EXTRUDE(basis, height, angle_deg, n=1):
     else:
         basis = flatten(basis)
         for obj in basis:
-            if obj.dim <> 2: 
+            if obj.dim != 2: 
                 raise ExceptionWT("The base object in EXTRUDE(base, height, angle, n) must be 2-dimensional!") 
         obj = []
         for oo in basis:
@@ -6367,8 +6367,8 @@ def PLASM_GETCOLOR(obj):
       return col
    else:
       if len(col) < 3:
-          print "Warning: There is some problem with the color of an object."
-          print "Expected [R, G, B] but list length is", len(col0)
+          print("Warning: There is some problem with the color of an object.")
+          print("Expected [R, G, B] but list length is", len(col0))
           return
    col[0] = int(255*float(col[0]) + 0.5)
    col[1] = int(255*float(col[1]) + 0.5)
@@ -6590,7 +6590,7 @@ def BOUNDARY(hpc,dim):
 				
 	return [vertex_db,faces_db]
 
-#print "...fenvs.py imported in",(time.clock() - start),"seconds"
+#print("...fenvs.py imported in",(time.clock() - start),"seconds")
 
 
 #===================================================================================
@@ -6605,7 +6605,7 @@ def IS2D(tested):
     result = True
     flat = flatten(tested)
     for obj in flat:
-      if obj.dim <> 2:
+      if obj.dim != 2:
         result = False
     return result
 
@@ -6617,7 +6617,7 @@ def IS3D(tested):
     result = True
     flat = flatten(tested)
     for obj in flat:
-      if obj.dim <> 3:
+      if obj.dim != 3:
         result = False
     return result
 
@@ -6961,8 +6961,8 @@ def PRINTSIZE(obj):
     maxy = MAXY(obj)
     minz = MINZ(obj)
     maxz = MAXZ(obj)
-    print "SIZE:", maxx - minx, maxy - miny, maxz - minz
-    print "BBOX:", minx, maxx, miny, maxy, minz, maxz
+    print("SIZE:", maxx - minx, maxy - miny, maxz - minz)
+    print("BBOX:", minx, maxx, miny, maxy, minz, maxz)
 
 # Returns extrema, rounded to 3 digits:
 def EXTREMA(obj):
@@ -6986,10 +6986,10 @@ def EXTREMA(obj):
     if ddd == 3:
       minz = (int)(1000 * minz + 0.5) / 1000.0
       maxz = (int)(1000 * maxz + 0.5) / 1000.0
-    print "X:", minx, maxx
-    print "Y:", miny, maxy
+    print("X:", minx, maxx)
+    print("Y:", miny, maxy)
     if ddd == 3:
-      print "Z:", minz, maxz
+      print("Z:", minz, maxz)
 
 EXTREMS = EXTREMA
 EXTREMES = EXTREMA
