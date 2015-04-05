@@ -1299,9 +1299,13 @@ class BASEOBJ:
         return self.dim
 
     def scale(self, a, b, c=1.0):
-        if a <= 0 or b <= 0 or c <= 0:
+        #if a < 0 or b < 0 or c < 0:
+        # THIS WAS IN THE WAY WHEN I DEFINED FLIP()
+        #    raise ExceptionWT(
+        #        "When scaling an object, all axial coefficients must be greater than zero!")
+        if a == 0 or b == 0 or c == 0:
             raise ExceptionWT(
-                "When scaling an object, all axial coefficients must be greater than zero!")
+                "When scaling an object, all coefficients must be nonzero!")
         # if self.dim == 2 and c != 1.0:
             # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
             #raise ExceptionWT("2D objects may be scaled in the xy-plane only, not in 3D!")
