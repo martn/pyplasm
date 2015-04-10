@@ -1736,11 +1736,11 @@ def CUBE(size, r=0):
         raise ExceptionWT("Size s in CUBE(s, r=0) must be positive!")
     if not ISNUMBER(r):
         raise ExceptionWT("Radius r in CUBE(s, r=0) must be a number!")
-    if r <= 0:
+    if r < -1e-10:
         raise ExceptionWT("Radius r in CUBE(s, r=0) must be positive!")
     if r > 0.5 * size:
         raise ExceptionWT("Radius r in CUBE(s, r=0) must be less than or equal to s/2!")
-    if r == 0:
+    if abs(r) < 1e-10:
         return BASEOBJ(CUBOID([size, size, size]))
     else:
         o1 = PRISM(SQUARE(size, r), size - 2*r)
@@ -1998,12 +1998,12 @@ def RECTANGLE(a, b, r = 0):
         raise ExceptionWT("Size b in RECTANGLE(a, b, r=0) must be positive!")
     if not ISNUMBER(r):
         raise ExceptionWT("Radius r in RECTANGLE(a, b, r=0) must be a number!")
-    if r <= 0:
+    if r < -1e-10:
         raise ExceptionWT("Radius r in RECTANGLE(a, b, r=0) must be positive!")
     m = min(a, b)
     if r > 0.5 * m:
         raise ExceptionWT("Radius r in RECTANGLE(a, b, r=0) too large!")
-    if r == 0:
+    if abs(r) < 1e-10:
         return BOX(a, b)
     else:
         if r < a-r: 
