@@ -1984,15 +1984,21 @@ def BRICK(a, b, c, r = 0):
         return BOX(a, b, c)
     else:
         if r < a-r: 
-            o1 = BOX(r, a-r, 0, b, 0, c)
+            o1 = PRISM(RECTANGLE(c, b, r), a - 2*r)
+            MOVE(o1, -c, 0, 0)
+            ROTATE(o1, 90, Y)
+            MOVE(o1, r, 0, 0)
         else: 
             o1 = []
         if r < b-r: 
-            o2 = BOX(0, a, r, b-r, 0, c)
+            o2 = PRISM(RECTANGLE(a, c, r), b - 2*r)
+            ROTATE(o2, -90, X)
+            MOVE(o2, 0, r, 0)
         else: 
             o2 = []
         if r < c-r: 
-            o3 = BOX(0, a, 0, b, r, c-r)
+            o3 = PRISM(RECTANGLE(a, b, r), c - 2*r)
+            MOVE(o3, 0, 0, r)
         else: 
             o3 = []
         return WELD(o1, o2, o3)    
