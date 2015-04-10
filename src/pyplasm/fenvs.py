@@ -1729,12 +1729,28 @@ def cube(*args):
     raise ExceptionWT("Command cube() is undefined. Try CUBE() instead?")
 
 
-def CUBE(size):
+def CUBE(size, r=0):
     if not ISNUMBER(size):
-        raise ExceptionWT("Size s in CUBE(s) must be a number!")
+        raise ExceptionWT("Size s in CUBE(s, r=0) must be a number!")
     if size <= 0:
-        raise ExceptionWT("Size s in CUBE(s) must be positive!")
-    return BASEOBJ(CUBOID([size, size, size]))
+        raise ExceptionWT("Size s in CUBE(s, r=0) must be positive!")
+    if not ISNUMBER(r):
+        raise ExceptionWT("Radius r in CUBE(s, r=0) must be a number!")
+    if r <= 0:
+        raise ExceptionWT("Radius r in CUBE(s, r=0) must be positive!")
+    if r > 0.5 * size:
+        raise ExceptionWT("Radius r in CUBE(s, r=0) must be less than or equal to s/2!")
+    if r == 0:
+        return BASEOBJ(CUBOID([size, size, size]))
+    else:
+        o1 = PRISM(SQUARE(s, r), s - 2*r)
+        MOVE(o1, 0, 0, r)
+        o2 = COPY(o1)
+        ROTATE(o2, 90, X, [0.5*s, 0.5*s, 0.5*s])
+        o3 = COPY(o1)
+        ROTATE(o3, 90, Y, [0.5*s, 0.5*s, 0.5*s])
+        return WELD(o1, o2, o3)
+
 # English:
 # Czech:
 KRYCHLE = CUBE
