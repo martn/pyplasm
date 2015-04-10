@@ -1760,10 +1760,8 @@ def square(*args):
     raise ExceptionWT("Command square() is undefined. Try SQUARE() instead?")
 
 
-def SQUARE(size):
-    if size <= 0:
-        raise ExceptionWT("SQUARE(x) requires a positive value of x!")
-    return BASEOBJ(CUBOID([size, size]))
+def SQUARE(size, r=0):
+    return RECTANGLE(size, size, r)
 
 # English:
 # Czech::
@@ -1953,16 +1951,45 @@ def rectangle(*args):
         "Command rectangle() is undefined. Try RECTANGLE() instead?")
 
 
-def RECTANGLE(a, b):
+def RECTANGLE(a, b, r = 0):
     if not ISNUMBER(a):
-        raise ExceptionWT("Size a in RECTANGLE(a, b) must be a number!")
+        raise ExceptionWT("Size a in RECTANGLE(a, b, r=0) must be a number!")
     if not ISNUMBER(b):
-        raise ExceptionWT("Size b in RECTANGLE(a, b) must be a number!")
+        raise ExceptionWT("Size b in RECTANGLE(a, b, r=0) must be a number!")
     if a <= 0:
-        raise ExceptionWT("Size a in RECTANGLE(a, b) must be positive!")
+        raise ExceptionWT("Size a in RECTANGLE(a, b, r=0) must be positive!")
     if b <= 0:
-        raise ExceptionWT("Size b in RECTANGLE(a, b) must be positive!")
-    return BASEOBJ(CUBOID([a, b]))
+        raise ExceptionWT("Size b in RECTANGLE(a, b, r=0) must be positive!")
+    if not ISNUMBER(r):
+        raise ExceptionWT("Radius r in RECTANGLE(a, b, r=0) must be a number!")
+    if r <= 0:
+        raise ExceptionWT("Radius r in RECTANGLE(a, b, r=0) must be positive!")
+    m = min(a, b)
+    if r > 0.5 * m:
+        raise ExceptionWT("Radius r in RECTANGLE(a, b, r=0) too large!")
+    if r == 0:
+        return BOX(a, b)
+    else:
+        if r < a-r: 
+            o1 = BOX(r, a-r, 0, b)
+        else: 
+            o1 = []
+        if r < b-r: 
+            o2 = BOX(0, a, r, b-r)
+        else: 
+            o2 = []
+        arc1 = ARC(0, r, 90, 16)
+        arc2 = COPY(arc1)
+        ROTATE(arc2, 90)
+        arc3 = COPY(arc2)
+        ROTATE(arc3, 90)
+        arc4 = COPY(arc3)
+        ROTATE(arc4, 90)
+        MOVE(arc1, a-r, b-r)
+        MOVE(arc2, r, b-r)
+        MOVE(arc3, r, r)
+        MOVE(arc4, a-r, r)
+        return WELD(o1, o2, arc1, arc2, arc3, arc4)    
 
 # English:
 RECT = RECTANGLE
