@@ -1743,12 +1743,12 @@ def CUBE(size, r=0):
     if r == 0:
         return BASEOBJ(CUBOID([size, size, size]))
     else:
-        o1 = PRISM(SQUARE(s, r), s - 2*r)
+        o1 = PRISM(SQUARE(size, r), size - 2*r)
         MOVE(o1, 0, 0, r)
         o2 = COPY(o1)
-        ROTATE(o2, 90, X, [0.5*s, 0.5*s, 0.5*s])
+        ROTATE(o2, 90, X, [0.5*size, 0.5*size, 0.5*size])
         o3 = COPY(o1)
-        ROTATE(o3, 90, Y, [0.5*s, 0.5*s, 0.5*s])
+        ROTATE(o3, 90, Y, [0.5*size, 0.5*size, 0.5*size])
         return WELD(o1, o2, o3)
 
 # English:
