@@ -1992,6 +1992,7 @@ def BRICK(a, b, c, r = 0):
             o1 = []
         if r < b-r: 
             o2 = PRISM(RECTANGLE(a, c, r), b - 2*r)
+            MOVE(o2, 0, -c, 0)
             ROTATE(o2, -90, X)
             MOVE(o2, 0, r, 0)
         else: 
