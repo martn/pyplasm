@@ -1743,33 +1743,7 @@ def CUBE(size, r=0):
     if abs(r) < 1e-10:
         return BASEOBJ(CUBOID([size, size, size]))
     else:
-        o1 = PRISM(SQUARE(size, r), size - 2*r)
-        MOVE(o1, 0, 0, r)
-        o2 = COPY(o1)
-        ROTATE(o2, 90, X, [0.5*size, 0.5*size, 0.5*size])
-        o3 = COPY(o1)
-        ROTATE(o3, 90, Y, [0.5*size, 0.5*size, 0.5*size])
-        c1 = SPHERE(r)
-        ERASE(c1, Z, -2*r, 0)
-        ERASE(c1, Y, -2*r, 0)
-        ERASE(c1, X, -2*r, 0)
-        MOVE(c1, size-r, size-r, size-r)
-        c2 = COPY(c1)
-        ROTATE(c2, 90, Z, [0.5*size, 0.5*size, 0.5*size])
-        c3 = COPY(c2)
-        ROTATE(c3, 90, Z, [0.5*size, 0.5*size, 0.5*size])
-        c4 = COPY(c3)
-        ROTATE(c4, 90, Z, [0.5*size, 0.5*size, 0.5*size])
-        c5 = COPY(c1)
-        ROTATE(c5, 90, Y, [0.5*size, 0.5*size, 0.5*size])
-        c6 = COPY(c5)
-        ROTATE(c6, 90, Z, [0.5*size, 0.5*size, 0.5*size])
-        c7 = COPY(c6)
-        ROTATE(c7, 90, Z, [0.5*size, 0.5*size, 0.5*size])
-        c8 = COPY(c7)
-        ROTATE(c8, 90, Z, [0.5*size, 0.5*size, 0.5*size])
-        
-        return WELD(o1, o2, o3, c1, c2, c3, c4, c5, c6, c7, c8)
+        return BRICK(size, size, size, r)
 
 # English:
 # Czech:
