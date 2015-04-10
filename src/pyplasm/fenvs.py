@@ -2405,14 +2405,37 @@ def flip(*args):
         "Command flip() is undefined. Try FLIP() instead?")
 
 def FLIP(obj, axis, coord):
-    d = obj.dim
-    if not d in [2, 3]:
+    if axis != 'x' and axis != 'y' and axis != 'z' and axis != 'X' and axis != 'Y' and axis != 'Z' and axis != 1 and axis != 2 and axis != 3:
         raise ExceptionWT(
-            "In FLIP(): The object must be a 2D or a 3D object?")
-    if d == 2:
-        FLIP2D(obj, axis, coord)
+            "In FLIP(obj, axis, coord), axis must be X, Y or Z!")
+    if axis == 'x' or axis == 'X':
+        axis = 1
+    if axis == 'y' or axis == 'Y':
+        axis = 2
+    if axis == 'z' or axis == 'Z':
+        axis = 3
+    if not ISNUMBER(coord):
+        raise ExceptionWT(
+            "In FLIP(obj, axis, coord), coord must be a number!")
+    if not isinstance(obj, list):
+        if not isinstance(obj, BASEOBJ):
+            raise ExceptionWT(
+                "In FLIP(obj, axis, coord), obj must be a 2D or 3D object!")
+        if obj.dim == 2:
+            FLIP2D(obj, axis, coord)
+        else:
+            FLIP3D(obj, axis, coord)
     else:
-        FLIP3D(obj, axis, coord)
+        obj = flatten(obj)
+        for oo in obj:
+            if not isinstance(oo, BASEOBJ):
+                raise ExceptionWT(
+                    "In FLIP(obj, axis, coord), obj must be a 2D or 3D object!")
+            if oo.dim == 2:
+                FLIP2D(oo, axis, coord)
+            else:
+                FLIP3D(oo, axis, coord)
+    return COPY(obj)
 
 def FLIP2D(obj, axis, coord):
     if not axis in [X, Y] and not axis in [1, 2]:
@@ -4451,7 +4474,7 @@ def SPHERE(radius, divisions=[16, 32]):
             raise ExceptionWT("Bad division in the SPHERE command!")
         divisionslist = [divisions / 2, divisions]
     # Returning the sphere:
-    return BASEOBJ(PLASM_JOIN(PLASM_SPHERE(radius)(divisions)))
+    return BASEOBJ(PLASM_JOIN(PLASM_SPHERE(radius)(divisionslist)))
 
 # Czech:
 KOULE = SPHERE
