@@ -2002,7 +2002,21 @@ def BRICK(a, b, c, r = 0):
             MOVE(o3, 0, 0, r)
         else: 
             o3 = []
-        return WELD(o1, o2, o3)    
+        c1 = SPHERE(r)
+        ERASE(c1, Z, -2*r, 0)
+        ERASE(c1, Y, -2*r, 0)
+        ERASE(c1, X, -2*r, 0)
+        c2 = COPY(c1)
+        MOVE(c1, a-r, b-r, c-r)
+        ROTATE(c2, 90, Z)
+        c3 = COPY(c2)
+        MOVE(c2, r, b-r, c-r)
+        ROTATE(c3, 90, Z)
+        c4 = COPY(c3)
+        MOVE(c3, r, r, c-r)
+        ROTATE(c4, 90, Z)
+        MOVE(c4, a-r, r, c-r)
+        return WELD(o1, o2, o3, c1, c2, c3, c4)    
 
 # English:
 # Czech::
