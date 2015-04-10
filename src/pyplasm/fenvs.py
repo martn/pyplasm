@@ -2026,12 +2026,11 @@ def BRICK(a, b, c, r = 0):
         ROTATE(c6, 90, Z)
         c7 = COPY(c6)
         MOVE(c6, r, b-r, r)
-        ROTATE(c6, 90, Z)
+        ROTATE(c7, 90, Z)
         c8 = COPY(c7)
         MOVE(c7, r, r, r)
-        ROTATE(c7, 90, Z)
-        MOVE(c7, a-r, r, r)
-        ROTATE(c8, 90, Y)
+        ROTATE(c8, 90, Z)
+        MOVE(c8, a-r, r, r)
         return WELD(o1, o2, o3, c1, c2, c3, c4, c5, c6, c7, c8)    
 
 # English:
