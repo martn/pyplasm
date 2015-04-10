@@ -2003,6 +2003,7 @@ def BRICK(a, b, c, r = 0):
         else: 
             o3 = []
         c1 = SPHERE(r)
+        c5 = COPY(c1)
         ERASE(c1, Z, -2*r, 0)
         ERASE(c1, Y, -2*r, 0)
         ERASE(c1, X, -2*r, 0)
@@ -2016,7 +2017,22 @@ def BRICK(a, b, c, r = 0):
         MOVE(c3, r, r, c-r)
         ROTATE(c4, 90, Z)
         MOVE(c4, a-r, r, c-r)
-        return WELD(o1, o2, o3, c1, c2, c3, c4)    
+        ROTATE(c5, 90, Y)
+        ERASE(c5, Z, 0, 2*r)
+        ERASE(c5, Y, -2*r, 0)
+        ERASE(c5, X, -2*r, 0)
+        c6 = COPY(c5)
+        MOVE(c5, a-r, b-r, r)
+        ROTATE(c6, 90, Z)
+        c7 = COPY(c6)
+        MOVE(c6, r, b-r, r)
+        ROTATE(c6, 90, Z)
+        c8 = COPY(c7)
+        MOVE(c7, r, r, r)
+        ROTATE(c47, 90, Z)
+        MOVE(c7, a-r, r, r)
+        ROTATE(c8, 90, Y)
+        return WELD(o1, o2, o3, c1, c2, c3, c4, c5, c6, c7, c8)    
 
 # English:
 # Czech::
@@ -2080,7 +2096,7 @@ def RECTANGLE(a, b, r = 0):
             o2 = BOX(0, a, r, b-r)
         else: 
             o2 = []
-        arc1 = ARC(0, r, 90, 16)
+        arc1 = ARC(0, r, 90, 8)
         arc2 = COPY(arc1)
         ROTATE(arc2, 90)
         arc3 = COPY(arc2)
