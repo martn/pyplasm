@@ -1951,8 +1951,53 @@ def BOX(*args):
         return obj
     raise ExceptionWT("The BOX command accepts 1, 2, 3, 4 or 6 parameters!")
 
+# ===================================================
+# BRICK
+# ===================================================
+
+def brick(*args):
+    raise ExceptionWT(
+        "Command brick() is undefined. Try BRICK() instead?")
+
+
+def BRICK(a, b, c, r = 0):
+    if not ISNUMBER(a):
+        raise ExceptionWT("Size a in BRICK(a, b, c, r=0) must be a number!")
+    if not ISNUMBER(b):
+        raise ExceptionWT("Size b in BRICK(a, b, c, r=0) must be a number!")
+    if not ISNUMBER(c):
+        raise ExceptionWT("Size c in BRICK(a, b, c, r=0) must be a number!")
+    if a <= 0:
+        raise ExceptionWT("Size a in BRICK(a, b, c, r=0) must be positive!")
+    if b <= 0:
+        raise ExceptionWT("Size b in BRICK(a, b, c, r=0) must be positive!")
+    if c <= 0:
+        raise ExceptionWT("Size c in BRICK(a, b, c, r=0) must be positive!")
+    if not ISNUMBER(r):
+        raise ExceptionWT("Radius r in BRICK(a, b, c, r=0) must be a number!")
+    if r < -1e-10:
+        raise ExceptionWT("Radius r in BRICK(a, b, c, r=0) must be positive!")
+    m = min(a, b, c)
+    if r > 0.5 * m:
+        raise ExceptionWT("Radius r in BRICK(a, b, c, r=0) too large!")
+    if abs(r) < 1e-10:
+        return BOX(a, b, c)
+    else:
+        if r < a-r: 
+            o1 = BOX(r, a-r, 0, b, 0, c)
+        else: 
+            o1 = []
+        if r < b-r: 
+            o2 = BOX(0, a, r, b-r, 0, c)
+        else: 
+            o2 = []
+        if r < c-r: 
+            o3 = BOX(0, a, 0, b, r, c-r)
+        else: 
+            o3 = []
+        return WELD(o1, o2, o3)    
+
 # English:
-BRICK = BOX
 # Czech::
 KVADR = BRICK
 CIHLA = BRICK
