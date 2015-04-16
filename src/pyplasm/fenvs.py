@@ -5600,23 +5600,23 @@ def ROTATIONALSOLID(point_list, angle=360, minr=0, nx=32, na=32, nr=1):
     # to be added as the middle coordinate.
     if not isinstance(point_list, list):
         raise ExceptionWT(
-            "First argument of rotational surface must be a list of 2D points in the XY plane!")
+            "First argument of rotational solid must be a list of 2D points in the XY plane!")
     if len(point_list) < 2:
-        raise ExceptionWT("Rotational surface requires at least two points!")
+        raise ExceptionWT("Rotational solid requires at least two points!")
     # Additional sanity tests:
     if angle <= 0:
-        raise ExceptionWT("Rotational surface requires a positive angle!")
+        raise ExceptionWT("Rotational solid requires a positive angle!")
     if minr < 0:
         raise ExceptionWT(
-            "Rotational surface requires a positive minimum radius!")
+            "Rotational solid requires a positive minimum radius!")
     newpoints = []
     for pt in point_list:
         if not isinstance(pt, list):
             raise ExceptionWT(
-                "First argument of rotational surface must be a list of 2D points in the XY plane!")
+                "First argument of rotational solid must be a list of 2D points in the XY plane!")
         if len(pt) != 2:
             raise ExceptionWT(
-                "First argument of rotational surface must be a list of 2D points in the XY plane!")
+                "First argument of rotational solid must be a list of 2D points in the XY plane!")
         newpoints.append([pt[0], 0, pt[1]])
     # Create the Bezier curve in the XZ plane:
     curve_xz = PLASM_BEZIER(S1)(newpoints)
