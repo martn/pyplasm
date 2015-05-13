@@ -2144,10 +2144,10 @@ def hexahedron(*args):
         "Command hexahedron() is undefined. Try HEXAHEDRON() instead?")
 
 
-def HEXAHEDRON(size):
+def HEXAHEDRON(size, r = 0):
     if size <= 0:
         raise ExceptionWT("HEXAHEDRON(x) requires a positive value of x!")
-    c = CUBE(size)
+    c = CUBE(size, r)
     T(c, -0.5 * size, -0.5 * size, -0.5 * size)
     return c
 
