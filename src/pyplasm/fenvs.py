@@ -6,10 +6,11 @@ from numpy import reshape
 import copy
 
 # This is needed to access NCLab's object "nclabinst":
-from nclab.engines.python import NCLab
+from nclab.tools.lab import Lab
+nclabinst = Lab.instance()
+
 import collections
 from functools import reduce
-nclabinst = NCLab.instance()
 
 # Import exceptions without traceback:
 from nclab.tools import ExceptionWT
