@@ -4781,7 +4781,9 @@ def ELBOW(r1, r2, angle, divisions=[24, 24]):
 def PLASM_REVOLVE(basisandangleandelevanddiv):
     basis, angle, elevation, division = basisandangleandelevanddiv
     angle = angle * PI / 180
-
+    # Division is 48 per 2*PI. Calculate total division:
+    division = round(angle / 2.0 / PI * division)
+    # Ref. domain:
     domain = PRISM(basis, angle, division)
     geom = domain.geom
     fx = lambda p: math.cos(p[2]) * p[0]
