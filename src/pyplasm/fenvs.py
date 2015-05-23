@@ -4793,7 +4793,7 @@ def revolve(*args):
     raise ExceptionWT("Command revolve() is undefined. Try REVOLVE() instead?")
 
 
-def REVOLVE(basis, angle, division):
+def REVOLVE(basis, angle, division = 48):
     if basis.dim != 2:
         raise ExceptionWT("The base object in REVOLVE(base, angle) must be 2-dimensional!")
     if not ISNUMBER(angle):
