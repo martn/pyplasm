@@ -5988,16 +5988,19 @@ def prism(*args):
     raise ExceptionWT("Command prism() is undefined. Try PRISM() instead?")
 
 
-def PRISM(basis, h):
+def PRISM(basis, h, n=1):
     if h <= 0:
         raise ExceptionWT("Height in PRISM(base, height) must be positive!")
+    # Grid list (points in the Z direction)
+    h0 = float(h) / n
+    gridlist = [h0 for i in range(n)]
     # Check that the basis is two-dimensional:
     if not isinstance(basis, list):
         if basis.dim != 2:
             raise ExceptionWT(
                 "The base object in PRISM(base, height) must be 2-dimensional!")
         color = basis.getcolor()
-        obj = PRODUCT(basis, GRID(h))  # PRODUCT returns a class instance!
+        obj = PRODUCT(basis, GRID(*gridlist))  # PRODUCT returns a class instance!
         obj.setcolor(color)
         return obj
     else:
@@ -6009,7 +6012,7 @@ def PRISM(basis, h):
         obj = []
         for oo in basis:
             color = oo.getcolor()
-            oo3d = PRODUCT(oo, GRID(h))  # PRODUCT returns a class instance!
+            oo3d = PRODUCT(oo, GRID(*gridlist))  # PRODUCT returns a class instance!
             oo3d.setcolor(color)
             obj.append(oo3d)
         return obj
