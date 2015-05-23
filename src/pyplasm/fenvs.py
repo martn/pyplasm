@@ -4782,7 +4782,7 @@ def PLASM_REVOLVE(basisandangleandelevanddiv):
     basis, angle, elevation, division = basisandangleandelevanddiv
     angle = angle * PI / 180
     # Division is 48 per 2*PI. Calculate total division:
-    division = round(angle / 2.0 / PI * division)
+    division = (int)(round(angle / 2.0 / PI * division) + 0.1)
     # Ref. domain:
     domain = PRISM(basis, angle, division)
     geom = domain.geom
@@ -4795,16 +4795,28 @@ def revolve(*args):
     raise ExceptionWT("Command revolve() is undefined. Try REVOLVE() instead?")
 
 
-def REVOLVE(basis, angle, elevation = 0, division = 48):
+def REVOLVE(basis, angle, division = 48):
     if basis.dim != 2:
-        raise ExceptionWT("The base object in REVOLVE(base, angle, elevation = 0, division = 48) must be 2-dimensional!")
+        raise ExceptionWT("The base object in REVOLVE(base, angle, division = 48) must be 2-dimensional!")
     if not ISNUMBER(angle):
         raise ExceptionWT(
-            "Angle alpha in REVOLVE(base, angle, elevation = 0, division = 48) must be a number!")
+            "Angle alpha in REVOLVE(base, angle, division = 48) must be a number!")
     if angle <= 0:
         raise ExceptionWT(
-            "Angle alpha in REVOLVE(base, angle, elevation = 0, division = 48) must be positive!")
+            "Angle alpha in REVOLVE(base, angle, division = 48) must be positive!")
+    return BASEOBJ(PLASM_REVOLVE([basis, angle, 0, division]))
+
+def SPIRAL(basis, angle, elevation, division = 48):
+    if basis.dim != 2:
+        raise ExceptionWT("The base object in SPIRAL(base, angle, elevation, division = 48) must be 2-dimensional!")
+    if not ISNUMBER(angle):
+        raise ExceptionWT(
+            "Angle alpha in SPIRAL(base, angle, elevation, division = 48) must be a number!")
+    if angle <= 0:
+        raise ExceptionWT(
+            "Angle alpha in SPIRAL(base, angle, elevation, division = 48) must be positive!")
     return BASEOBJ(PLASM_REVOLVE([basis, angle, elevation, division]))
+
 
 # =============================================
 # CONE
