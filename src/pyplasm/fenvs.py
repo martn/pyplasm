@@ -4775,6 +4775,25 @@ def ELBOW(r1, r2, angle, divisions=[24, 24]):
 
 
 # =============================================
+# REVOLVE
+# =============================================
+
+def PLASM_REVOLVE(basisandangleanddiv):
+    basis, angle, division = basisandangleanddiv
+    angle = angle * PI / 180
+
+    def PLASM_REVOLVE0(division):
+        domain = PRISM(basis, angle, division)
+        geom = domain.geom
+        fx = lambda p: math.cos(p[2]) * p[0]
+        fy = lambda p: p[1]
+        fz = lambda p: math.sin(p[2]) * p[0]
+        return PLASM_MAP(([fx, fy, fz]))(geom)
+
+    return PLASM_REVOLVE0
+
+
+# =============================================
 # CONE
 # =============================================
 
