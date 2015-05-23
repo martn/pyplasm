@@ -4778,14 +4778,14 @@ def ELBOW(r1, r2, angle, divisions=[24, 24]):
 # REVOLVE
 # =============================================
 
-def PLASM_REVOLVE(basisandangleanddiv):
-    basis, angle, division = basisandangleanddiv
+def PLASM_REVOLVE(basisandangleandelevanddiv):
+    basis, angle, elevation, division = basisandangleandelevanddiv
     angle = angle * PI / 180
 
     domain = PRISM(basis, angle, division)
     geom = domain.geom
     fx = lambda p: math.cos(p[2]) * p[0]
-    fy = lambda p: p[1]
+    fy = lambda p: p[1] + p[2] * elevation / 2.0 / PI
     fz = lambda p: math.sin(p[2]) * p[0]
     return PLASM_MAP(([fx, fy, fz]))(geom)
 
@@ -4793,16 +4793,16 @@ def revolve(*args):
     raise ExceptionWT("Command revolve() is undefined. Try REVOLVE() instead?")
 
 
-def REVOLVE(basis, angle, division = 48):
+def REVOLVE(basis, angle, elevation = 0, division = 48):
     if basis.dim != 2:
-        raise ExceptionWT("The base object in REVOLVE(base, angle) must be 2-dimensional!")
+        raise ExceptionWT("The base object in REVOLVE(base, angle, elevation = 0, division = 48) must be 2-dimensional!")
     if not ISNUMBER(angle):
         raise ExceptionWT(
-            "Angle alpha in REVOLVE(base, angle) must be a number!")
+            "Angle alpha in REVOLVE(base, angle, elevation = 0, division = 48) must be a number!")
     if angle <= 0:
         raise ExceptionWT(
-            "Angle alpha in REVOLVE(base, angle) must be positive!")
-    return BASEOBJ(PLASM_REVOLVE([basis, angle, division]))
+            "Angle alpha in REVOLVE(base, angle, elevation = 0, division = 48) must be positive!")
+    return BASEOBJ(PLASM_REVOLVE([basis, angle, elevation, division]))
 
 # =============================================
 # CONE
