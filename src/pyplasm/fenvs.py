@@ -8460,3 +8460,167 @@ def VALIDATE(obj, name, dim):
                 return False, "'" + name + "' is not a valid " + str(dim) + "D object."
 
     return True, None
+
+
+######  NCLAB TURTLE - UTILITIES  ######
+
+# Rectangle given via start point, distance, 
+# angle, thickness and color):
+def NCLabTurtleRectangle(l):
+    r = RECTANGLE(l.dist, l.thickness)
+    MOVE(r, 0, -0.5*l.thickness)
+    ROTATE(r, l.angle)
+    COLOR(r, l.color)
+    MOVE(r, l.x, l.y)
+    return r
+
+# Dots to set area size:
+def NCLabTurtleCanvas(turtle):
+    r = turtle.canvassize
+    r /= 2
+    dot1 = CIRCLE(0.1, 4)
+    MOVE(dot1, r, 0)
+    dot2 = COPY(dot1)
+    ROTATE(dot2, 90)
+    dot3 = COPY(dot2)
+    ROTATE(dot3, 90)
+    dot4 = COPY(dot3)
+    ROTATE(dot4, 90)
+    return [dot1, dot2, dot3, dot4]
+
+# Return trace as list of PLaSM objects:
+def NCLabTurtleTrace(turtle):
+    out = []
+    for l in turtle.lines:
+        cir = CIRCLE(0.5*l.thickness, 8)
+        MOVE(cir, l.x, l.y) 
+        COLOR(cir, l.color)
+        out.append(cir)
+        r = NCLabTurtleRectangle(l)
+        out.append(r)
+    # Last circle:
+    l = turtle.lines[-1]
+    cir = CIRCLE(0.5*l.thickness, 8)
+    MOVE(cir, l.x + l.dist * cos(l.angle*pi/180), 
+         l.y + l.dist * sin(l.angle*pi/180)) 
+    COLOR(cir, l.color)
+    out.append(cir)
+    return out
+
+# Shape of the turtle:
+def NCLabTurtleImage(turtle):
+    t1 = CIRCLE(5, 10)
+    COLOR(t1, turtle.color)
+    t2 = RING(5, 5.5, 10)
+    COLOR(t2, BLACK)
+    t = UNION(t1, t2)
+    SCALE(t, 0.75, 1)
+    t3 = CIRCLE(1.5, 8)
+    MOVE(t3, 0, 6.25)
+    COLOR(t3, BLACK)
+    t.append(t3)
+    t4a = QUAD([1, 5], [4, 5], [6, 3], [3, 3])
+    COLOR(t4a, BLACK)
+    t.append(t4a)
+    t4b = TRIANGLE([4, 3], [6, 3], [6, 1])
+    COLOR(t4b, BLACK)
+    t.append(t4b)
+    t5a = QUAD([-1, 5], [-4, 5], [-6, 3], [-3, 3])
+    COLOR(t5a, BLACK)
+    t.append(t5a)
+    t5b = TRIANGLE([-4, 3], [-6, 3], [-6, 1])
+    COLOR(t5b, BLACK)
+    t.append(t5b)
+    t6 = QUAD([2, -4], [3.25, -3], [4, -5], [3, -6])
+    COLOR(t6, BLACK)
+    t.append(t6)
+    t7 = QUAD([-2, -4], [-3.25, -3], [-4, -5], [-3, -6])
+    COLOR(t7, BLACK)
+    t.append(t7)
+    ROTATE(t, -90)
+    ROTATE(t, turtle.angle)
+    MOVE(t, turtle.posx, turtle.posy)
+    return t
+
+# Goes through the turtle trace and looks 
+# for a pair of adjacent segments with the 
+# same angle, thickness and color. If found, 
+# returns index of the first. If not found, 
+# returns -1:
+def NCLabTurtleFindPair(turtle):
+    n = len(turtle.lines)
+    if n == 1:
+        return -1
+    for i in range(n-1):
+        f1 = turtle.lines[i].angle == turtle.lines[i+1].angle
+        f2 = turtle.lines[i].color == turtle.lines[i+1].color
+        f3 = turtle.lines[i].thickness == turtle.lines[i+1].thickness
+        if f1 and f2 and f3:
+            return i
+    return -1
+  
+# Merges adjacent segments that lie
+# on the same line, and have the same 
+# thickness and color:
+def NCLabTurtleCleanTrace(turtle):
+    index = NCLabFindPair(turtle)
+    while index != -1:
+        turtle.lines[index].dist += turtle.lines[index+1].dist
+        del turtle.lines[index+1]
+        index = NCLabFindPair(turtle)
+
+def NCLabTurtleShow(turtle):
+    image = NCLabTurtleImage(turtle)
+    canvas = NCLabTurtleCanvas(turtle)
+    trace = NCLabTurtleTrace(turtle)
+    SHOW(image, canvas, trace)    
+
+######  NCLAB TURTLE - CLASSES  ######
+
+# Class Line:
+class NCLabTurtleLine:
+    def __init__(self, x, y, d, a, t, c):
+        self.x = x
+        self.y = y
+        self.dist = d
+        self.angle = a
+        self.thickness = t
+        self.color = c
+  
+# Class Turtle:
+class NCLabTurtle:
+    def __init__(self, px=0, py=0):
+        self.posx = px
+        self.posy = py
+        self.angle = 0
+        self.color = [0, 0, 255]
+        self.draw = True
+        self.thickness = 1
+        self.canvassize = 100
+        self.lines = []
+    def setcolor(self, r, g, b):
+        self.color = [r, g, b]
+    def setthickness(self, t):
+        self.thickness = t
+    def penup(self):
+        self.draw = False
+    def pendown(self):
+        self.draw = True
+    def forward(self, dist):
+        if self.draw == True:
+            newline = NCLabTurtleLine(self.posx, 
+              self.posy, dist, self.angle, 
+              self.thickness, self.color)
+            self.lines.append(newline)
+        self.posx += dist * cos(self.angle*pi/180)
+        self.posy += dist * sin(self.angle*pi/180)
+    def left(self, da):
+        self.angle += da
+    def right(self, da):
+        self.angle -= da
+    def backward(self, dist):
+        self.left(180)
+        self.forward(dist)
+        self.left(180)
+    def show(self):
+        NCLabTurtleShow(self)
