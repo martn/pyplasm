@@ -8501,12 +8501,13 @@ def NCLabTurtleTrace(turtle):
         r = NCLabTurtleRectangle(l)
         out.append(r)
     # Last circle:
-    l = turtle.lines[-1]
-    cir = CIRCLE(0.5*l.thickness, 8)
-    MOVE(cir, l.x + l.dist * cos(l.angle*pi/180), 
-         l.y + l.dist * sin(l.angle*pi/180)) 
-    COLOR(cir, l.color)
-    out.append(cir)
+    if len(turtle.lines) > 0:
+        l = turtle.lines[-1]
+        cir = CIRCLE(0.5*l.thickness, 8)
+        MOVE(cir, l.x + l.dist * cos(l.angle*pi/180), 
+             l.y + l.dist * sin(l.angle*pi/180)) 
+        COLOR(cir, l.color)
+        out.append(cir)
     return out
 
 # Shape of the turtle:
