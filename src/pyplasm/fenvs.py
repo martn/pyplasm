@@ -8464,6 +8464,8 @@ def VALIDATE(obj, name, dim):
 
 ######  NCLAB TURTLE - UTILITIES  ######
 
+from numpy import cos, sin, pi
+
 # Rectangle given via start point, distance, 
 # angle, thickness and color):
 def NCLabTurtleRectangle(l):
