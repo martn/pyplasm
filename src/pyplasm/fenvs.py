@@ -8703,7 +8703,7 @@ class NCLabTurtle:
         self.draw = False
     def pendown(self):
         self.draw = True
-    def forward(self, dist):
+    def go(self, dist):
         newx = self.posx + dist * cos(self.angle * pi / 180)
         newy = self.posy + dist * sin(self.angle * pi / 180)
         if self.draw == True:
@@ -8715,11 +8715,11 @@ class NCLabTurtle:
         self.angle += da
     def right(self, da):
         self.angle -= da
-    def backward(self, dist):
+    def back(self, dist):
         draw = self.draw
         self.left(180)
         self.penup()        # do not draw while backing
-        self.forward(dist)
+        self.go(dist)
         self.right(180)
         if draw == True:
             self.pendown()
