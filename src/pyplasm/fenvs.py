@@ -4797,25 +4797,68 @@ def revolve(*args):
 
 def REVOLVE(basis, angle, division = 48):
     if basis.dim != 2:
-        raise ExceptionWT("The base object in REVOLVE(base, angle, division = 48) must be 2-dimensional!")
+        raise ExceptionWT("The base object in REVOLVE(base, angle, division) must be 2-dimensional!")
     if not ISNUMBER(angle):
         raise ExceptionWT(
-            "Angle alpha in REVOLVE(base, angle, division = 48) must be a number!")
+            "Angle alpha in REVOLVE(base, angle, division) must be a number!")
     if angle <= 0:
         raise ExceptionWT(
-            "Angle alpha in REVOLVE(base, angle, division = 48) must be positive!")
-    return BASEOBJ(PLASM_REVOLVE([basis, angle, 0, division]))
+            "Angle alpha in REVOLVE(base, angle, division) must be positive!")
+    if not isinstance(basis, list):
+        if basis.dim != 2:
+            raise ExceptionWT(
+                "The base object in REVOLVE(base, angle, division) must be 2-dimensional!")
+        color = basis.getcolor()
+        elevation = 0
+        obj = BASEOBJ(PLASM_REVOLVE([basis, angle, elevation, division]))
+        obj.setcolor(color)
+        return obj
+    else:
+        basis = flatten(basis)
+        for obj in basis:
+            if obj.dim != 2:
+                raise ExceptionWT(
+                    "The base object in REVOLVE(base, angle, division) must be 2-dimensional!")
+        obj = []
+        for oo in basis:
+            color = oo.getcolor()
+            elevation = 0
+            oo3d = BASEOBJ(PLASM_REVOLVE([oo, angle, elevation, division]))
+            oo3d.setcolor(color)
+            obj.append(oo3d)
+        return obj
 
 def SPIRAL(basis, angle, elevation, division = 48):
     if basis.dim != 2:
-        raise ExceptionWT("The base object in SPIRAL(base, angle, elevation, division = 48) must be 2-dimensional!")
+        raise ExceptionWT("The base object in SPIRAL(base, angle, elevation, division) must be 2-dimensional!")
     if not ISNUMBER(angle):
         raise ExceptionWT(
-            "Angle alpha in SPIRAL(base, angle, elevation, division = 48) must be a number!")
+            "Angle alpha in SPIRAL(base, angle, elevation, division) must be a number!")
     if angle <= 0:
         raise ExceptionWT(
-            "Angle alpha in SPIRAL(base, angle, elevation, division = 48) must be positive!")
-    return BASEOBJ(PLASM_REVOLVE([basis, angle, elevation, division]))
+            "Angle alpha in SPIRAL(base, angle, elevation, division) must be positive!")
+    if not isinstance(basis, list):
+        if basis.dim != 2:
+            raise ExceptionWT(
+                "The base object in SPIRAL(base, angle, elevation, division) must be 2-dimensional!")
+        color = basis.getcolor()
+        obj = BASEOBJ(PLASM_REVOLVE([basis, angle, elevation, division]))
+        obj.setcolor(color)
+        return obj
+    else:
+        basis = flatten(basis)
+        for obj in basis:
+            if obj.dim != 2:
+                raise ExceptionWT(
+                    "The base object in SPIRAL(base, angle, elevation, division) must be 2-dimensional!")
+        obj = []
+        for oo in basis:
+            color = oo.getcolor()
+            oo3d = BASEOBJ(PLASM_REVOLVE([oo, angle, elevation, division]))
+            oo3d.setcolor(color)
+            obj.append(oo3d)
+        return obj
+
 
 
 # =============================================
