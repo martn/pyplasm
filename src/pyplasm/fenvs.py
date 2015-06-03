@@ -8676,6 +8676,16 @@ class NCLabTurtle:
         self.angle = arctan2(dy, dx) * 180 / pi
         self.posx = newx
         self.posy = newy
+    def getx(self):
+        return self.posx
+    def gety(self):
+        return self.posy
+    def getangle(self):
+        return self.angle
+    def getcolor(self):
+        return self.color
+    def getwidth(self):
+        return self.width
     def show(self):
         NCLabTurtleShow(self)
 
