@@ -8464,16 +8464,22 @@ def VALIDATE(obj, name, dim):
 
 ######  NCLAB TURTLE - UTILITIES  ######
 
-from numpy import cos, sin, pi
+######  NCLAB TURTLE - UTILITIES  ######
+
+from numpy import cos, sin, pi, sqrt, arctan2
 
 # Rectangle given via start point, distance, 
-# angle, thickness and color):
+# angle, width and color):
 def NCLabTurtleRectangle(l):
-    r = RECTANGLE(l.dist, l.thickness)
-    MOVE(r, 0, -0.5*l.thickness)
-    ROTATE(r, l.angle)
+    dx = l.endx - l.startx
+    dy = l.endy - l.starty
+    dist = sqrt(dx*dx + dy*dy)
+    angle = arctan2(dy, dx) * 180 / pi
+    r = RECTANGLE(dist, l.width)
+    MOVE(r, 0, -0.5*l.width)
+    ROTATE(r, angle)
     COLOR(r, l.color)
-    MOVE(r, l.x, l.y)
+    MOVE(r, l.startx, l.starty)
     return r
 
 # Dots to set area size:
@@ -8493,21 +8499,38 @@ def NCLabTurtleCanvas(turtle):
 # Return trace as list of PLaSM objects:
 def NCLabTurtleTrace(turtle):
     out = []
-    for l in turtle.lines:
-        cir = CIRCLE(0.5*l.thickness, 8)
-        MOVE(cir, l.x, l.y) 
+    n = len(turtle.lines)
+    # List of lines is empty - just return:
+    if n == 0:
+        return out
+    # There is at leats one line segment:
+    for i in range(n):
+        l = turtle.lines[i]
+        # Add circle to start point:
+        cir = CIRCLE(0.5*l.width, 8)
+        MOVE(cir, l.startx, l.starty) 
         COLOR(cir, l.color)
         out.append(cir)
+        # Rectangle corresponding to the line:
         r = NCLabTurtleRectangle(l)
         out.append(r)
-    # Last circle:
-    if len(turtle.lines) > 0:
-        l = turtle.lines[-1]
-        cir = CIRCLE(0.5*l.thickness, 8)
-        MOVE(cir, l.x + l.dist * cos(l.angle*pi/180), 
-             l.y + l.dist * sin(l.angle*pi/180)) 
-        COLOR(cir, l.color)
-        out.append(cir)
+        # If this is the last line, add 
+        # circle at end point and return: 
+        if i == n-1:
+            cir = CIRCLE(0.5*l.width, 8)
+            MOVE(cir, l.endx, l.endy) 
+            COLOR(cir, l.color)
+            out.append(cir)
+            return out
+        # Next line is not connected (we know 
+        # this is not the last line):
+        dx = turtle.lines[i+1].startx - l.endx
+        dy = turtle.lines[i+1].starty - l.endy
+        if abs(dx) > 0.000001 or abs(dy) > 0.000001:
+            cir = CIRCLE(0.5*l.width, 8)
+            MOVE(cir, l.endx, l.endy) 
+            COLOR(cir, l.color)
+            out.append(cir)
     return out
 
 # Shape of the turtle:
@@ -8547,28 +8570,45 @@ def NCLabTurtleImage(turtle):
 
 # Goes through the turtle trace and looks 
 # for a pair of adjacent segments with the 
-# same angle, thickness and color. If found, 
+# same angle, width and color. If found, 
 # returns index of the first. If not found, 
 # returns -1:
 def NCLabTurtleFindPair(turtle):
     n = len(turtle.lines)
-    if n == 1:
+    if n <= 1:
         return -1
     for i in range(n-1):
-        f1 = turtle.lines[i].angle == turtle.lines[i+1].angle
-        f2 = turtle.lines[i].color == turtle.lines[i+1].color
-        f3 = turtle.lines[i].thickness == turtle.lines[i+1].thickness
-        if f1 and f2 and f3:
+        l1 = turtle.lines[i]
+        l2 = turtle.lines[i+1]
+        # End point is start point of next:
+        f1 = abs(l2.startx - l1.endx) < 0.000001
+        f2 = abs(l2.starty - l1.endy) < 0.000001
+        # Angle:
+        dx1 = l1.endx - l1.startx
+        dy1 = l1.endy - l1.starty
+        angle1 = arctan2(dy1, dx1)
+        dx2 = l2.endx - l2.startx
+        dy2 = l2.endy - l2.starty
+        angle2 = arctan2(dy2, dx2)
+        f3 = angle1 == angle2
+        # Color:
+        f4 = l1.color == l2.color
+        # Width:
+        f5 = l1.width == l2.width
+        if f1 and f2 and f3 and f4 and f5:
             return i
     return -1
   
 # Merges adjacent segments that lie
 # on the same line, and have the same 
-# thickness and color:
+# width and color:
 def NCLabTurtleCleanTrace(turtle):
     index = NCLabFindPair(turtle)
     while index != -1:
-        turtle.lines[index].dist += turtle.lines[index+1].dist
+        l1 = turtle.lines[index]
+        l2 = turtle.lines[index+1]
+        l1.endx = l2.endx
+        l1.endy = l2.endy
         del turtle.lines[index+1]
         index = NCLabFindPair(turtle)
 
@@ -8582,12 +8622,12 @@ def NCLabTurtleShow(turtle):
 
 # Class Line:
 class NCLabTurtleLine:
-    def __init__(self, x, y, d, a, t, c):
-        self.x = x
-        self.y = y
-        self.dist = d
-        self.angle = a
-        self.thickness = t
+    def __init__(self, sx, sy, ex, ey, w, c):
+        self.startx = sx
+        self.starty = sy
+        self.endx = ex
+        self.endy = ey
+        self.width = w
         self.color = c
   
 # Class Turtle:
@@ -8598,25 +8638,27 @@ class NCLabTurtle:
         self.angle = 0
         self.color = [0, 0, 255]
         self.draw = True
-        self.thickness = 1
+        self.width = 1
         self.canvassize = 100
         self.lines = []
     def setcolor(self, r, g, b):
         self.color = [r, g, b]
-    def setthickness(self, t):
-        self.thickness = t
+    def setwidth(self, w):
+        self.width = w
+    def setangle(self, a):
+        self.angle = a
     def penup(self):
         self.draw = False
     def pendown(self):
         self.draw = True
     def forward(self, dist):
+        newx = self.posx + dist * cos(self.angle * pi / 180)
+        newy = self.posy + dist * sin(self.angle * pi / 180)
         if self.draw == True:
-            newline = NCLabTurtleLine(self.posx, 
-              self.posy, dist, self.angle, 
-              self.thickness, self.color)
+            newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.width, self.color)
             self.lines.append(newline)
-        self.posx += dist * cos(self.angle*pi/180)
-        self.posy += dist * sin(self.angle*pi/180)
+        self.posx = newx
+        self.posy = newy
     def left(self, da):
         self.angle += da
     def right(self, da):
@@ -8624,6 +8666,16 @@ class NCLabTurtle:
     def backward(self, dist):
         self.left(180)
         self.forward(dist)
-        self.left(180)
+        self.right(180)
+    def goto(self, newx, newy):
+        if self.draw == True:
+            newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.width, self.color)
+            self.lines.append(newline)
+        dx = newx - self.posx
+        dy = newy - self.posy
+        self.angle = arctan2(dy, dx) * 180 / pi
+        self.posx = newx
+        self.posy = newy
     def show(self):
         NCLabTurtleShow(self)
+
