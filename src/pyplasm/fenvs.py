@@ -8716,9 +8716,13 @@ class NCLabTurtle:
     def right(self, da):
         self.angle -= da
     def backward(self, dist):
+        draw = self.draw
         self.left(180)
+        self.penup()        # do not draw while backing
         self.forward(dist)
         self.right(180)
+        if draw == True:
+            self.pendown()
     def goto(self, newx, newy):
         if self.draw == True:
             newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.width, self.color)
