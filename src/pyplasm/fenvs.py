@@ -8740,4 +8740,16 @@ class NCLabTurtle:
         return self.width
     def show(self):
         NCLabTurtleShow(self)
+    def extrude(self, height):
+        base = NCLabTurtleTrace(self)
+        p = PRISM(base, height)
+        SHOW(p)
+    def revolve(self, angle, div=48):
+        base = NCLabTurtleTrace(self)
+        p = REVOLVE(base, angle, div)
+        SHOW(p)
+    def spiral(self, angle, elevation, div=48):
+        base = NCLabTurtleTrace(self)
+        p = SPIRAL(base, angle, elevation, div)
+        SHOW(p)
 
