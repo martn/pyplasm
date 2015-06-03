@@ -8464,8 +8464,6 @@ def VALIDATE(obj, name, dim):
 
 ######  NCLAB TURTLE - UTILITIES  ######
 
-######  NCLAB TURTLE - UTILITIES  ######
-
 from numpy import cos, sin, pi, sqrt, arctan2
 
 # Rectangle given via start point, distance, 
@@ -8592,9 +8590,13 @@ def NCLabTurtleFindPair(turtle):
         angle2 = arctan2(dy2, dx2)
         f3 = angle1 == angle2
         # Color:
-        f4 = l1.color == l2.color
+        f4 = True
+        for i in range(3):
+          if l1.color[i] != l2.color[i]:
+            f4 = False
+            break
         # Width:
-        f5 = l1.width == l2.width
+        f5 = (l1.width - l2.width) < 0.000001
         if f1 and f2 and f3 and f4 and f5:
             return i
     return -1
@@ -8641,9 +8643,20 @@ class NCLabTurtle:
         self.width = 1
         self.canvassize = 100
         self.lines = []
-    def setcolor(self, r, g, b):
-        self.color = [r, g, b]
+    def setcolor(self, col):
+        if not isinstance(col, list):
+            raise ExceptionWT("Attempt to set invalid color. Have you forgotten square brackets?")
+        if len(col) != 3:
+            raise ExceptionWT("Attempt to set invalid color. Have you used three integers between 0 and 255?")
+        for i in range(3):
+            if col[i] < 0 or col[i] > 255:
+                raise ExceptionWT("Attempt to set invalid color. Have you used three integers between 0 and 255?")
+        self.color = col
     def setwidth(self, w):
+        if w < 0.1:
+            raise ExceptionWT("Line width must be between 0.1 and 10.0.")
+        if w > 10.0:
+            raise ExceptionWT("Line width must be between 0.1 and 10.0.")
         self.width = w
     def setangle(self, a):
         self.angle = a
