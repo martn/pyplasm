@@ -4796,14 +4796,12 @@ def revolve(*args):
 
 
 def REVOLVE(basis, angle, division = 48):
-    if basis.dim != 2:
-        raise ExceptionWT("The base object in REVOLVE(base, angle, division) must be 2-dimensional!")
     if not ISNUMBER(angle):
         raise ExceptionWT(
-            "Angle alpha in REVOLVE(base, angle, division) must be a number!")
+            "Angle in REVOLVE(base, angle, division) must be a number!")
     if angle <= 0:
         raise ExceptionWT(
-            "Angle alpha in REVOLVE(base, angle, division) must be positive!")
+            "Angle in REVOLVE(base, angle, division) must be positive!")
     if not isinstance(basis, list):
         if basis.dim != 2:
             raise ExceptionWT(
@@ -4829,14 +4827,12 @@ def REVOLVE(basis, angle, division = 48):
         return obj
 
 def SPIRAL(basis, angle, elevation, division = 48):
-    if basis.dim != 2:
-        raise ExceptionWT("The base object in SPIRAL(base, angle, elevation, division) must be 2-dimensional!")
     if not ISNUMBER(angle):
         raise ExceptionWT(
-            "Angle alpha in SPIRAL(base, angle, elevation, division) must be a number!")
+            "Angle in SPIRAL(base, angle, elevation, division) must be a number!")
     if angle <= 0:
         raise ExceptionWT(
-            "Angle alpha in SPIRAL(base, angle, elevation, division) must be positive!")
+            "Angle in SPIRAL(base, angle, elevation, division) must be positive!")
     if not isinstance(basis, list):
         if basis.dim != 2:
             raise ExceptionWT(
