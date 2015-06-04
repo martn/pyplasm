@@ -8682,6 +8682,12 @@ class NCLabTurtle:
         self.width = 1
         self.canvassize = 100
         self.lines = []
+    def setx(self, x):
+        self.x = x
+    def sety(self, y):
+        self.y = y
+    def setangle(self, a):
+        self.angle = a
     def setcolor(self, col):
         if not isinstance(col, list):
             raise ExceptionWT("Attempt to set invalid color. Have you forgotten square brackets?")
@@ -8697,12 +8703,12 @@ class NCLabTurtle:
         if w > 10.0:
             raise ExceptionWT("Line width must be between 0.1 and 10.0.")
         self.width = w
-    def setangle(self, a):
-        self.angle = a
     def penup(self):
         self.draw = False
     def pendown(self):
         self.draw = True
+    def isdown(self):
+        return self.draw
     def go(self, dist):
         newx = self.posx + dist * cos(self.angle * pi / 180)
         newy = self.posy + dist * sin(self.angle * pi / 180)
@@ -8711,6 +8717,10 @@ class NCLabTurtle:
             self.lines.append(newline)
         self.posx = newx
         self.posy = newy
+    def forward(self, dist):
+        self.go(dist)
+    def fd(self, dist):
+        self.go(dist)
     def left(self, da):
         self.angle += da
     def right(self, da):
@@ -8723,6 +8733,10 @@ class NCLabTurtle:
         self.right(180)
         if draw == True:
             self.pendown()
+    def backward(self, dist):
+        back(dist)
+    def bk(self, dist):
+        back(dist)
     def goto(self, newx, newy):
         if self.draw == True:
             newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.width, self.color)
@@ -8732,6 +8746,9 @@ class NCLabTurtle:
         self.angle = arctan2(dy, dx) * 180 / pi
         self.posx = newx
         self.posy = newy
+    def home(self):
+        self.goto(0, 0)
+        self.setangle(0)
     def getx(self):
         return self.posx
     def gety(self):
