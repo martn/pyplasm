@@ -1299,7 +1299,7 @@ class BASEOBJ:
     def getdimension(self):
         return self.dim
 
-    def scale(self, a, b, c=1.0):
+    def scale(self, a, b, c=1):
         #if a < 0 or b < 0 or c < 0:
         # THIS WAS IN THE WAY WHEN I DEFINED FLIP()
         #    raise ExceptionWT(
@@ -1310,7 +1310,11 @@ class BASEOBJ:
         # if self.dim == 2 and c != 1.0:
             # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
             #raise ExceptionWT("2D objects may be scaled in the xy-plane only, not in 3D!")
-        self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
+        if self.dim == 3:
+            self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
+        else:
+            # NOT SURE IF THIS WILL WORK FOR 2D CURVED SURFACES:
+            self.geom = PLASM_SCALE([1, 2])([a, b])(self.geom)
         self.setcolor(self.color)
 
     def minx(self):
@@ -8577,12 +8581,15 @@ def NCLabTurtleTrace(turtle, layer=0, dots=True):
 
 # Shape of the turtle:
 def NCLabTurtleImage(turtle):
+    t = []
     t1 = CIRCLE(5, 10)
     COLOR(t1, turtle.color)
+    SCALE(t1, 0.75, 1)
+    t.append(t1)
     t2 = RING(5, 5.5, 10)
     COLOR(t2, BLACK)
-    t = UNION(t1, t2)
-    SCALE(t, 0.75, 1)
+    SCALE(t2, 0.75, 1)
+    t.append(t2)
     t3 = CIRCLE(1.5, 8)
     MOVE(t3, 0, 6.25)
     COLOR(t3, BLACK)
@@ -8609,6 +8616,7 @@ def NCLabTurtleImage(turtle):
     ROTATE(t, turtle.angle)
     MOVE(t, turtle.posx, turtle.posy)
     return t
+
 
 # Goes through the turtle trace and looks 
 # for a pair of adjacent segments with the 
