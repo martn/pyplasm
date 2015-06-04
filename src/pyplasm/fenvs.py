@@ -8658,13 +8658,11 @@ def NCLabTurtleCleanTrace(turtle):
         del turtle.lines[index+1]
         index = NCLabFindPair(turtle)
 
-def NCLabTurtleShow(turtle):
+def NCLabTurtleShow(turtle, layer=0, dots=True):
     image = NCLabTurtleImage(turtle)
     canvas = NCLabTurtleCanvas(turtle)
-    layer = 0
-    dots = True
     trace = NCLabTurtleTrace(turtle, layer, dots)
-    if self.visible == True:
+    if turtle.visible == True:
         SHOW(image, canvas, trace)
     else:
         SHOW(canvas, trace)
