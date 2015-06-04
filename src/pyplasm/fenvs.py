@@ -8507,17 +8507,17 @@ from numpy import cos, sin, pi, sqrt, arctan2
 
 # Rectangle given via start point, distance, 
 # angle, width and color):
-def NCLabTurtleRectangle(l):
+def NCLabTurtleRectangle(l, layer):
     dx = l.endx - l.startx
     dy = l.endy - l.starty
     dist = sqrt(dx*dx + dy*dy)
     angle = arctan2(dy, dx) * 180 / pi
-    r = RECTANGLE(dist, l.width)
-    MOVE(r, 0, -0.5*l.width)
-    ROTATE(r, angle)
-    COLOR(r, l.color)
-    MOVE(r, l.startx, l.starty)
-    return r
+    rect = RECTANGLE(dist + 2*layer, l.width + 2*layer)
+    MOVE(rect, -layer, -0.5*l.width - layer)
+    ROTATE(rect, angle)
+    COLOR(rect, l.color)
+    MOVE(rect, l.startx, l.starty)
+    return rect
 
 # Dots to set area size:
 def NCLabTurtleCanvas(turtle):
@@ -8534,7 +8534,7 @@ def NCLabTurtleCanvas(turtle):
     return [dot1, dot2, dot3, dot4]
 
 # Return trace as list of PLaSM objects:
-def NCLabTurtleTrace(turtle):
+def NCLabTurtleTrace(turtle, layer=0, dots=True):
     out = []
     n = len(turtle.lines)
     # List of lines is empty - just return:
@@ -8543,31 +8543,36 @@ def NCLabTurtleTrace(turtle):
     # There is at leats one line segment:
     for i in range(n):
         l = turtle.lines[i]
-        # Add circle to start point:
-        cir = CIRCLE(0.5*l.width, 8)
-        MOVE(cir, l.startx, l.starty) 
-        COLOR(cir, l.color)
-        out.append(cir)
-        # Rectangle corresponding to the line:
-        r = NCLabTurtleRectangle(l)
-        out.append(r)
-        # If this is the last line, add 
-        # circle at end point and return: 
-        if i == n-1:
-            cir = CIRCLE(0.5*l.width, 8)
-            MOVE(cir, l.endx, l.endy) 
+        # Add rectangle corresponding to the line:
+        rect = NCLabTurtleRectangle(l, layer)
+        out.append(rect)
+        # If dots == True, add circles:
+        if dots == True:
+            # Add circle to start point:
+            radius = 0.5*l.width + layer
+            cir = CIRCLE(radius, 8)
+            MOVE(cir, l.startx, l.starty) 
             COLOR(cir, l.color)
             out.append(cir)
-            return out
-        # Next line is not connected (we know 
-        # this is not the last line):
-        dx = turtle.lines[i+1].startx - l.endx
-        dy = turtle.lines[i+1].starty - l.endy
-        if abs(dx) > 0.000001 or abs(dy) > 0.000001:
-            cir = CIRCLE(0.5*l.width, 8)
-            MOVE(cir, l.endx, l.endy) 
-            COLOR(cir, l.color)
-            out.append(cir)
+            # If this is the last line, add 
+            # circle at end point and return:
+            if i == n-1:
+                radius = 0.5*l.width + layer
+                cir = CIRCLE(radius, 8)
+                MOVE(cir, l.endx, l.endy) 
+                COLOR(cir, l.color)
+                out.append(cir)
+                return out
+            # Add circle if next line is not connected 
+            # (we know this is not the last line):
+            dx = turtle.lines[i+1].startx - l.endx
+            dy = turtle.lines[i+1].starty - l.endy
+            if abs(dx) > 0.000001 or abs(dy) > 0.000001:
+                radius = 0.5*l.width + layer
+                cir = CIRCLE(radius, 8)
+                MOVE(cir, l.endx, l.endy) 
+                COLOR(cir, l.color)
+                out.append(cir)
     return out
 
 # Shape of the turtle:
@@ -8656,8 +8661,13 @@ def NCLabTurtleCleanTrace(turtle):
 def NCLabTurtleShow(turtle):
     image = NCLabTurtleImage(turtle)
     canvas = NCLabTurtleCanvas(turtle)
-    trace = NCLabTurtleTrace(turtle)
-    SHOW(image, canvas, trace)    
+    layer = 0
+    dots = True
+    trace = NCLabTurtleTrace(turtle, layer, dots)
+    if self.visible == True:
+        SHOW(image, canvas, trace)
+    else:
+        SHOW(canvas, trace)
 
 ######  NCLAB TURTLE - CLASSES  ######
 
@@ -8682,6 +8692,7 @@ class NCLabTurtle:
         self.width = 1
         self.canvassize = 100
         self.lines = []
+        self.visible = True
     def setx(self, x):
         self.x = x
     def sety(self, y):
@@ -8723,8 +8734,12 @@ class NCLabTurtle:
         self.go(dist)
     def left(self, da):
         self.angle += da
+    def lt(self, da):
+        self.left(da)
     def right(self, da):
         self.angle -= da
+    def rt(self, da):
+        self.rt(da)
     def back(self, dist):
         draw = self.draw
         self.left(180)
@@ -8734,9 +8749,9 @@ class NCLabTurtle:
         if draw == True:
             self.pendown()
     def backward(self, dist):
-        back(dist)
+        self.back(dist)
     def bk(self, dist):
-        back(dist)
+        self.back(dist)
     def goto(self, newx, newy):
         if self.draw == True:
             newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.width, self.color)
@@ -8746,6 +8761,10 @@ class NCLabTurtle:
         self.angle = arctan2(dy, dx) * 180 / pi
         self.posx = newx
         self.posy = newy
+    def setpos(self, newx, newy):
+        self.goto(newx, newy)
+    def setposition(self, newx, newy):
+        self.goto(newx, newy)
     def home(self):
         self.goto(0, 0)
         self.setangle(0)
@@ -8761,16 +8780,26 @@ class NCLabTurtle:
         return self.width
     def show(self):
         NCLabTurtleShow(self)
+    def showturtle(self):
+        self.visible = True
+    def hideturtle(self):
+        self.visible = False
     def extrude(self, height):
-        base = NCLabTurtleTrace(self)
+        layer = 0
+        dots = True
+        base = NCLabTurtleTrace(self, layer, dots)
         p = PRISM(base, height)
         SHOW(p)
     def revolve(self, angle, div=48):
-        base = NCLabTurtleTrace(self)
+        layer = 0
+        dots = True
+        base = NCLabTurtleTrace(self, layer, dots)
         p = REVOLVE(base, angle, div)
         SHOW(p)
     def spiral(self, angle, elevation, div=48):
-        base = NCLabTurtleTrace(self)
+        layer = 0
+        dots = True
+        base = NCLabTurtleTrace(self, layer, dots)
         p = SPIRAL(base, angle, elevation, div)
         SHOW(p)
 
