@@ -8776,8 +8776,8 @@ class NCLabTurtle:
         return self.color
     def getwidth(self):
         return self.width
-    def show(self):
-        NCLabTurtleShow(self)
+    def show(self, layer=0, dots=True):
+        NCLabTurtleShow(self, layer, dots)
     def showturtle(self):
         self.visible = True
     def hideturtle(self):
