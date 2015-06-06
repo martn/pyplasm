@@ -8674,7 +8674,7 @@ def NCLabTurtleShow(turtle, layer=0, dots=True):
     image = PRISM(image, 0.002)
     canvas = PRISM(canvas, 0.001)
     trace = PRISM(trace, 0.001)
-    if turtle.visible == True:
+    if turtle.isvisible == True:
         SHOW(image, canvas, trace)
     else:
         SHOW(canvas, trace)
@@ -8702,7 +8702,7 @@ class NCLabTurtle:
         self.linewidth = 1
         self.canvassize = 100
         self.lines = []
-        self.visible = True
+        self.isvisible = True
     def angle(self, a):
         self.turtleangle = a
     def color(self, col):
@@ -8798,10 +8798,14 @@ class NCLabTurtle:
         return self.linewidth
     def show(self, layer=0, dots=True):
         NCLabTurtleShow(self, layer, dots)
-    def showturtle(self):
-        self.visible = True
-    def hideturtle(self):
-        self.visible = False
+    def visible(self):
+        self.isvisible = True
+    def reveal(self):
+        self.isvisible = True
+    def invisible(self):
+        self.isvisible = False
+    def hide(self):
+        self.isvisible = False
     def extrude(self, height):
         layer = 0
         dots = True
