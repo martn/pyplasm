@@ -8722,7 +8722,15 @@ class NCLabTurtle:
         self.width = w
     def penup(self):
         self.draw = False
+    def up(self):
+        self.draw = False
+    def pu(self):
+        self.draw = False
     def pendown(self):
+        self.draw = True
+    def down(self):
+        self.draw = True
+    def pd(self):
         self.draw = True
     def isdown(self):
         return self.draw
