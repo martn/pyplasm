@@ -8613,7 +8613,7 @@ def NCLabTurtleImage(turtle):
     COLOR(t7, BLACK)
     t.append(t7)
     ROTATE(t, -90)
-    ROTATE(t, turtle.angle)
+    ROTATE(t, turtle.turtleangle)
     MOVE(t, turtle.posx, turtle.posy)
     return t
 
@@ -8696,15 +8696,15 @@ class NCLabTurtle:
     def __init__(self, px=0, py=0):
         self.posx = px
         self.posy = py
-        self.angle = 0
+        self.turtleangle = 0
         self.linecolor = [0, 0, 255]
         self.draw = True
         self.linewidth = 1
         self.canvassize = 100
         self.lines = []
         self.visible = True
-    def setangle(self, a):
-        self.angle = a
+    def angle(self, a):
+        self.turtleangle = a
     def color(self, col):
         if not isinstance(col, list):
             raise ExceptionWT("Attempt to set invalid color. Have you forgotten square brackets?")
@@ -8735,8 +8735,8 @@ class NCLabTurtle:
     def isdown(self):
         return self.draw
     def go(self, dist):
-        newx = self.posx + dist * cos(self.angle * pi / 180)
-        newy = self.posy + dist * sin(self.angle * pi / 180)
+        newx = self.posx + dist * cos(self.turtleangle * pi / 180)
+        newy = self.posy + dist * sin(self.turtleangle * pi / 180)
         if self.draw == True:
             newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.linewidth, self.linecolor)
             self.lines.append(newline)
@@ -8747,11 +8747,11 @@ class NCLabTurtle:
     def fd(self, dist):
         self.go(dist)
     def left(self, da):
-        self.angle += da
+        self.turtleangle += da
     def lt(self, da):
         self.left(da)
     def right(self, da):
-        self.angle -= da
+        self.turtleangle -= da
     def rt(self, da):
         self.rt(da)
     def back(self, dist):
@@ -8772,7 +8772,7 @@ class NCLabTurtle:
             self.lines.append(newline)
         dx = newx - self.posx
         dy = newy - self.posy
-        self.angle = arctan2(dy, dx) * 180 / pi
+        self.turtleangle = arctan2(dy, dx) * 180 / pi
         self.posx = newx
         self.posy = newy
     def setpos(self, newx, newy):
@@ -8785,13 +8785,13 @@ class NCLabTurtle:
         self.goto(self.posx, newy)
     def home(self):
         self.goto(0, 0)
-        self.setangle(0)
+        self.angle(0)
     def getx(self):
         return self.posx
     def gety(self):
         return self.posy
     def getangle(self):
-        return self.angle
+        return self.turtleangle
     def getcolor(self):
         return self.linecolor
     def getwidth(self):
