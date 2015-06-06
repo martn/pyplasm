@@ -8703,10 +8703,6 @@ class NCLabTurtle:
         self.canvassize = 100
         self.lines = []
         self.visible = True
-    def setx(self, x):
-        self.x = x
-    def sety(self, y):
-        self.y = y
     def setangle(self, a):
         self.angle = a
     def setcolor(self, col):
@@ -8775,6 +8771,10 @@ class NCLabTurtle:
         self.goto(newx, newy)
     def setposition(self, newx, newy):
         self.goto(newx, newy)
+    def setx(self, newx):
+        self.goto(newx, self.posy)
+    def sety(self, newy):
+        self.goto(self.posx, newy)
     def home(self):
         self.goto(0, 0)
         self.setangle(0)
