@@ -8516,10 +8516,10 @@ def NCLabTurtleRectangle(l, layer):
     dy = l.endy - l.starty
     dist = sqrt(dx*dx + dy*dy)
     angle = arctan2(dy, dx) * 180 / pi
-    rect = RECTANGLE(dist + 2*layer, l.width + 2*layer)
-    MOVE(rect, -layer, -0.5*l.width - layer)
+    rect = RECTANGLE(dist + 2*layer, l.linewidth + 2*layer)
+    MOVE(rect, -layer, -0.5*l.linewidth - layer)
     ROTATE(rect, angle)
-    COLOR(rect, l.color)
+    COLOR(rect, l.linecolor)
     MOVE(rect, l.startx, l.starty)
     return rect
 
@@ -8553,18 +8553,18 @@ def NCLabTurtleTrace(turtle, layer=0, dots=True):
         # If dots == True, add circles:
         if dots == True:
             # Add circle to start point:
-            radius = 0.5*l.width + layer
+            radius = 0.5*l.linewidth + layer
             cir = CIRCLE(radius, 8)
             MOVE(cir, l.startx, l.starty) 
-            COLOR(cir, l.color)
+            COLOR(cir, l.linecolor)
             out.append(cir)
             # If this is the last line, add 
             # circle at end point and return:
             if i == n-1:
-                radius = 0.5*l.width + layer
+                radius = 0.5*l.linewidth + layer
                 cir = CIRCLE(radius, 8)
                 MOVE(cir, l.endx, l.endy) 
-                COLOR(cir, l.color)
+                COLOR(cir, l.linecolor)
                 out.append(cir)
                 return out
             # Add circle if next line is not connected 
@@ -8572,10 +8572,10 @@ def NCLabTurtleTrace(turtle, layer=0, dots=True):
             dx = turtle.lines[i+1].startx - l.endx
             dy = turtle.lines[i+1].starty - l.endy
             if abs(dx) > 0.000001 or abs(dy) > 0.000001:
-                radius = 0.5*l.width + layer
+                radius = 0.5*l.linewidth + layer
                 cir = CIRCLE(radius, 8)
                 MOVE(cir, l.endx, l.endy) 
-                COLOR(cir, l.color)
+                COLOR(cir, l.linecolor)
                 out.append(cir)
     return out
 
@@ -8583,7 +8583,7 @@ def NCLabTurtleTrace(turtle, layer=0, dots=True):
 def NCLabTurtleImage(turtle):
     t = []
     t1 = CIRCLE(5, 10)
-    COLOR(t1, turtle.color)
+    COLOR(t1, turtle.linecolor)
     SCALE(t1, 0.75, 1)
     t.append(t1)
     t2 = RING(5, 5.5, 10)
@@ -8644,11 +8644,11 @@ def NCLabTurtleFindPair(turtle):
         # Color:
         f4 = True
         for i in range(3):
-          if l1.color[i] != l2.color[i]:
+          if l1.linecolor[i] != l2.linecolor[i]:
             f4 = False
             break
         # Width:
-        f5 = (l1.width - l2.width) < 0.000001
+        f5 = (l1.linewidth - l2.linewidth) < 0.000001
         if f1 and f2 and f3 and f4 and f5:
             return i
     return -1
@@ -8688,8 +8688,8 @@ class NCLabTurtleLine:
         self.starty = sy
         self.endx = ex
         self.endy = ey
-        self.width = w
-        self.color = c
+        self.linewidth = w
+        self.linecolor = c
   
 # Class Turtle:
 class NCLabTurtle:
@@ -8697,15 +8697,15 @@ class NCLabTurtle:
         self.posx = px
         self.posy = py
         self.angle = 0
-        self.color = [0, 0, 255]
+        self.linecolor = [0, 0, 255]
         self.draw = True
-        self.width = 1
+        self.linewidth = 1
         self.canvassize = 100
         self.lines = []
         self.visible = True
     def setangle(self, a):
         self.angle = a
-    def setcolor(self, col):
+    def color(self, col):
         if not isinstance(col, list):
             raise ExceptionWT("Attempt to set invalid color. Have you forgotten square brackets?")
         if len(col) != 3:
@@ -8713,13 +8713,13 @@ class NCLabTurtle:
         for i in range(3):
             if col[i] < 0 or col[i] > 255:
                 raise ExceptionWT("Attempt to set invalid color. Have you used three integers between 0 and 255?")
-        self.color = col
-    def setwidth(self, w):
+        self.linecolor = col
+    def width(self, w):
         if w < 0.1:
             raise ExceptionWT("Line width must be between 0.1 and 10.0.")
         if w > 10.0:
             raise ExceptionWT("Line width must be between 0.1 and 10.0.")
-        self.width = w
+        self.linewidth = w
     def penup(self):
         self.draw = False
     def up(self):
@@ -8738,7 +8738,7 @@ class NCLabTurtle:
         newx = self.posx + dist * cos(self.angle * pi / 180)
         newy = self.posy + dist * sin(self.angle * pi / 180)
         if self.draw == True:
-            newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.width, self.color)
+            newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.linewidth, self.linecolor)
             self.lines.append(newline)
         self.posx = newx
         self.posy = newy
@@ -8768,7 +8768,7 @@ class NCLabTurtle:
         self.back(dist)
     def goto(self, newx, newy):
         if self.draw == True:
-            newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.width, self.color)
+            newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.linewidth, self.linecolor)
             self.lines.append(newline)
         dx = newx - self.posx
         dy = newy - self.posy
@@ -8793,9 +8793,9 @@ class NCLabTurtle:
     def getangle(self):
         return self.angle
     def getcolor(self):
-        return self.color
+        return self.linecolor
     def getwidth(self):
-        return self.width
+        return self.linewidth
     def show(self, layer=0, dots=True):
         NCLabTurtleShow(self, layer, dots)
     def showturtle(self):
