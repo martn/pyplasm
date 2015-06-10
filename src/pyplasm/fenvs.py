@@ -1299,7 +1299,7 @@ class BASEOBJ:
     def getdimension(self):
         return self.dim
 
-    def scale(self, a, b, c=1.0):
+    def scale(self, a, b, c=1):
         #if a < 0 or b < 0 or c < 0:
         # THIS WAS IN THE WAY WHEN I DEFINED FLIP()
         #    raise ExceptionWT(
@@ -1310,7 +1310,11 @@ class BASEOBJ:
         # if self.dim == 2 and c != 1.0:
             # THIS CONDITION WAS IN THE WAY WHEN I MOVED CURVED SURFACES IN 3D:
             #raise ExceptionWT("2D objects may be scaled in the xy-plane only, not in 3D!")
-        self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
+        if self.dim == 3:
+            self.geom = PLASM_SCALE([1, 2, 3])([a, b, c])(self.geom)
+        else:
+            # NOT SURE IF THIS WILL WORK FOR 2D CURVED SURFACES:
+            self.geom = PLASM_SCALE([1, 2])([a, b])(self.geom)
         self.setcolor(self.color)
 
     def minx(self):
@@ -4775,6 +4779,89 @@ def ELBOW(r1, r2, angle, divisions=[24, 24]):
 
 
 # =============================================
+# REVOLVE
+# =============================================
+
+def PLASM_REVOLVE(basisandangleandelevanddiv):
+    basis, angle, elevation, division = basisandangleandelevanddiv
+    angle = angle * PI / 180
+    # Division is 48 per 2*PI. Calculate total division:
+    division = (int)(round(angle / 2.0 / PI * division) + 0.1)
+    # Ref. domain:
+    domain = PRISM(basis, angle, division)
+    geom = domain.geom
+    fx = lambda p: math.cos(p[2]) * p[0]
+    fy = lambda p: p[1] + p[2] * elevation / 2.0 / PI
+    fz = lambda p: math.sin(p[2]) * p[0]
+    return PLASM_MAP(([fx, fy, fz]))(geom)
+
+def revolve(*args):
+    raise ExceptionWT("Command revolve() is undefined. Try REVOLVE() instead?")
+
+
+def REVOLVE(basis, angle, division = 48):
+    if not ISNUMBER(angle):
+        raise ExceptionWT(
+            "Angle in REVOLVE(base, angle, division) must be a number!")
+    if angle <= 0:
+        raise ExceptionWT(
+            "Angle in REVOLVE(base, angle, division) must be positive!")
+    if not isinstance(basis, list):
+        if basis.dim != 2:
+            raise ExceptionWT(
+                "The base object in REVOLVE(base, angle, division) must be 2-dimensional!")
+        color = basis.getcolor()
+        elevation = 0
+        obj = BASEOBJ(PLASM_REVOLVE([basis, angle, elevation, division]))
+        obj.setcolor(color)
+        return obj
+    else:
+        basis = flatten(basis)
+        for obj in basis:
+            if obj.dim != 2:
+                raise ExceptionWT(
+                    "The base object in REVOLVE(base, angle, division) must be 2-dimensional!")
+        obj = []
+        for oo in basis:
+            color = oo.getcolor()
+            elevation = 0
+            oo3d = BASEOBJ(PLASM_REVOLVE([oo, angle, elevation, division]))
+            oo3d.setcolor(color)
+            obj.append(oo3d)
+        return obj
+
+def SPIRAL(basis, angle, elevation, division = 48):
+    if not ISNUMBER(angle):
+        raise ExceptionWT(
+            "Angle in SPIRAL(base, angle, elevation, division) must be a number!")
+    if angle <= 0:
+        raise ExceptionWT(
+            "Angle in SPIRAL(base, angle, elevation, division) must be positive!")
+    if not isinstance(basis, list):
+        if basis.dim != 2:
+            raise ExceptionWT(
+                "The base object in SPIRAL(base, angle, elevation, division) must be 2-dimensional!")
+        color = basis.getcolor()
+        obj = BASEOBJ(PLASM_REVOLVE([basis, angle, elevation, division]))
+        obj.setcolor(color)
+        return obj
+    else:
+        basis = flatten(basis)
+        for obj in basis:
+            if obj.dim != 2:
+                raise ExceptionWT(
+                    "The base object in SPIRAL(base, angle, elevation, division) must be 2-dimensional!")
+        obj = []
+        for oo in basis:
+            color = oo.getcolor()
+            oo3d = BASEOBJ(PLASM_REVOLVE([oo, angle, elevation, division]))
+            oo3d.setcolor(color)
+            obj.append(oo3d)
+        return obj
+
+
+
+# =============================================
 # CONE
 # =============================================
 
@@ -5988,16 +6075,19 @@ def prism(*args):
     raise ExceptionWT("Command prism() is undefined. Try PRISM() instead?")
 
 
-def PRISM(basis, h):
+def PRISM(basis, h, n=1):
     if h <= 0:
         raise ExceptionWT("Height in PRISM(base, height) must be positive!")
+    # Grid list (points in the Z direction)
+    h0 = float(h) / n
+    gridlist = [h0 for i in range(n)]
     # Check that the basis is two-dimensional:
     if not isinstance(basis, list):
         if basis.dim != 2:
             raise ExceptionWT(
                 "The base object in PRISM(base, height) must be 2-dimensional!")
         color = basis.getcolor()
-        obj = PRODUCT(basis, GRID(h))  # PRODUCT returns a class instance!
+        obj = PRODUCT(basis, GRID(*gridlist))  # PRODUCT returns a class instance!
         obj.setcolor(color)
         return obj
     else:
@@ -6009,7 +6099,7 @@ def PRISM(basis, h):
         obj = []
         for oo in basis:
             color = oo.getcolor()
-            oo3d = PRODUCT(oo, GRID(h))  # PRODUCT returns a class instance!
+            oo3d = PRODUCT(oo, GRID(*gridlist))  # PRODUCT returns a class instance!
             oo3d.setcolor(color)
             obj.append(oo3d)
         return obj
@@ -8413,3 +8503,325 @@ def VALIDATE(obj, name, dim):
                 return False, "'" + name + "' is not a valid " + str(dim) + "D object."
 
     return True, None
+
+
+######  NCLAB TURTLE - UTILITIES  ######
+
+from numpy import cos, sin, pi, sqrt, arctan2
+
+# Rectangle given via start point, distance, 
+# angle, width and color):
+def NCLabTurtleRectangle(l, layer):
+    dx = l.endx - l.startx
+    dy = l.endy - l.starty
+    dist = sqrt(dx*dx + dy*dy)
+    angle = arctan2(dy, dx) * 180 / pi
+    rect = RECTANGLE(dist + 2*layer, l.linewidth + 2*layer)
+    MOVE(rect, -layer, -0.5*l.linewidth - layer)
+    ROTATE(rect, angle)
+    COLOR(rect, l.linecolor)
+    MOVE(rect, l.startx, l.starty)
+    return rect
+
+# Dots to set area size:
+def NCLabTurtleCanvas(turtle):
+    r = turtle.canvassize
+    r /= 2
+    dot1 = CIRCLE(0.1, 4)
+    MOVE(dot1, r, 0)
+    dot2 = COPY(dot1)
+    ROTATE(dot2, 90)
+    dot3 = COPY(dot2)
+    ROTATE(dot3, 90)
+    dot4 = COPY(dot3)
+    ROTATE(dot4, 90)
+    return [dot1, dot2, dot3, dot4]
+
+# Return trace as list of PLaSM objects:
+def NCLabTurtleTrace(turtle, layer=0, dots=True):
+    out = []
+    n = len(turtle.lines)
+    # List of lines is empty - just return:
+    if n == 0:
+        return out
+    # There is at leats one line segment:
+    for i in range(n):
+        l = turtle.lines[i]
+        # Add rectangle corresponding to the line:
+        rect = NCLabTurtleRectangle(l, layer)
+        out.append(rect)
+        # If dots == True, add circles:
+        if dots == True:
+            # Add circle to start point:
+            radius = 0.5*l.linewidth + layer
+            cir = CIRCLE(radius, 8)
+            MOVE(cir, l.startx, l.starty) 
+            COLOR(cir, l.linecolor)
+            out.append(cir)
+            # If this is the last line, add 
+            # circle at end point and return:
+            if i == n-1:
+                radius = 0.5*l.linewidth + layer
+                cir = CIRCLE(radius, 8)
+                MOVE(cir, l.endx, l.endy) 
+                COLOR(cir, l.linecolor)
+                out.append(cir)
+                return out
+            # Add circle if next line is not connected 
+            # (we know this is not the last line):
+            dx = turtle.lines[i+1].startx - l.endx
+            dy = turtle.lines[i+1].starty - l.endy
+            if abs(dx) > 0.000001 or abs(dy) > 0.000001:
+                radius = 0.5*l.linewidth + layer
+                cir = CIRCLE(radius, 8)
+                MOVE(cir, l.endx, l.endy) 
+                COLOR(cir, l.linecolor)
+                out.append(cir)
+    return out
+
+# Shape of the turtle:
+def NCLabTurtleImage(turtle):
+    t = []
+    t1 = CIRCLE(5, 10)
+    COLOR(t1, turtle.linecolor)
+    SCALE(t1, 0.75, 1)
+    t.append(t1)
+    t2 = RING(5, 5.5, 10)
+    COLOR(t2, BLACK)
+    SCALE(t2, 0.75, 1)
+    t.append(t2)
+    t3 = CIRCLE(1.5, 8)
+    MOVE(t3, 0, 6.25)
+    COLOR(t3, BLACK)
+    t.append(t3)
+    t4a = QUAD([1, 5], [4, 5], [6, 3], [3, 3])
+    COLOR(t4a, BLACK)
+    t.append(t4a)
+    t4b = TRIANGLE([4, 3], [6, 3], [6, 1])
+    COLOR(t4b, BLACK)
+    t.append(t4b)
+    t5a = QUAD([-1, 5], [-4, 5], [-6, 3], [-3, 3])
+    COLOR(t5a, BLACK)
+    t.append(t5a)
+    t5b = TRIANGLE([-4, 3], [-6, 3], [-6, 1])
+    COLOR(t5b, BLACK)
+    t.append(t5b)
+    t6 = QUAD([2, -4], [3.25, -3], [4, -5], [3, -6])
+    COLOR(t6, BLACK)
+    t.append(t6)
+    t7 = QUAD([-2, -4], [-3.25, -3], [-4, -5], [-3, -6])
+    COLOR(t7, BLACK)
+    t.append(t7)
+    ROTATE(t, -90)
+    ROTATE(t, turtle.turtleangle)
+    MOVE(t, turtle.posx, turtle.posy)
+    return t
+
+
+# Goes through the turtle trace and looks 
+# for a pair of adjacent segments with the 
+# same angle, width and color. If found, 
+# returns index of the first. If not found, 
+# returns -1:
+def NCLabTurtleFindPair(turtle):
+    n = len(turtle.lines)
+    if n <= 1:
+        return -1
+    for i in range(n-1):
+        l1 = turtle.lines[i]
+        l2 = turtle.lines[i+1]
+        # End point is start point of next:
+        f1 = abs(l2.startx - l1.endx) < 0.000001
+        f2 = abs(l2.starty - l1.endy) < 0.000001
+        # Angle:
+        dx1 = l1.endx - l1.startx
+        dy1 = l1.endy - l1.starty
+        angle1 = arctan2(dy1, dx1)
+        dx2 = l2.endx - l2.startx
+        dy2 = l2.endy - l2.starty
+        angle2 = arctan2(dy2, dx2)
+        f3 = angle1 == angle2
+        # Color:
+        f4 = True
+        for i in range(3):
+          if l1.linecolor[i] != l2.linecolor[i]:
+            f4 = False
+            break
+        # Width:
+        f5 = (l1.linewidth - l2.linewidth) < 0.000001
+        if f1 and f2 and f3 and f4 and f5:
+            return i
+    return -1
+  
+# Merges adjacent segments that lie
+# on the same line, and have the same 
+# width and color:
+def NCLabTurtleCleanTrace(turtle):
+    index = NCLabFindPair(turtle)
+    while index != -1:
+        l1 = turtle.lines[index]
+        l2 = turtle.lines[index+1]
+        l1.endx = l2.endx
+        l1.endy = l2.endy
+        del turtle.lines[index+1]
+        index = NCLabFindPair(turtle)
+
+def NCLabTurtleShow(turtle, layer=0, dots=True):
+    image = NCLabTurtleImage(turtle)
+    canvas = NCLabTurtleCanvas(turtle)
+    trace = NCLabTurtleTrace(turtle, layer, dots)
+    # Make the trace 3D:
+    image = PRISM(image, 0.002)
+    canvas = PRISM(canvas, 0.001)
+    trace = PRISM(trace, 0.001)
+    if turtle.isvisible == True:
+        SHOW(image, canvas, trace)
+    else:
+        SHOW(canvas, trace)
+
+######  NCLAB TURTLE - CLASSES  ######
+
+# Class Line:
+class NCLabTurtleLine:
+    def __init__(self, sx, sy, ex, ey, w, c):
+        self.startx = sx
+        self.starty = sy
+        self.endx = ex
+        self.endy = ey
+        self.linewidth = w
+        self.linecolor = c
+  
+# Class Turtle:
+class NCLabTurtle:
+    def __init__(self, px=0, py=0):
+        self.posx = px
+        self.posy = py
+        self.turtleangle = 0
+        self.linecolor = [0, 0, 255]
+        self.draw = True
+        self.linewidth = 1
+        self.canvassize = 100
+        self.lines = []
+        self.isvisible = True
+    def angle(self, a):
+        self.turtleangle = a
+    def color(self, col):
+        if not isinstance(col, list):
+            raise ExceptionWT("Attempt to set invalid color. Have you forgotten square brackets?")
+        if len(col) != 3:
+            raise ExceptionWT("Attempt to set invalid color. Have you used three integers between 0 and 255?")
+        for i in range(3):
+            if col[i] < 0 or col[i] > 255:
+                raise ExceptionWT("Attempt to set invalid color. Have you used three integers between 0 and 255?")
+        self.linecolor = col
+    def width(self, w):
+        if w < 0.1:
+            raise ExceptionWT("Line width must be between 0.1 and 10.0.")
+        if w > 10.0:
+            raise ExceptionWT("Line width must be between 0.1 and 10.0.")
+        self.linewidth = w
+    def penup(self):
+        self.draw = False
+    def up(self):
+        self.draw = False
+    def pu(self):
+        self.draw = False
+    def pendown(self):
+        self.draw = True
+    def down(self):
+        self.draw = True
+    def pd(self):
+        self.draw = True
+    def isdown(self):
+        return self.draw
+    def go(self, dist):
+        newx = self.posx + dist * cos(self.turtleangle * pi / 180)
+        newy = self.posy + dist * sin(self.turtleangle * pi / 180)
+        if self.draw == True:
+            newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.linewidth, self.linecolor)
+            self.lines.append(newline)
+        self.posx = newx
+        self.posy = newy
+    def forward(self, dist):
+        self.go(dist)
+    def fd(self, dist):
+        self.go(dist)
+    def left(self, da):
+        self.turtleangle += da
+    def lt(self, da):
+        self.left(da)
+    def right(self, da):
+        self.turtleangle -= da
+    def rt(self, da):
+        self.rt(da)
+    def back(self, dist):
+        draw = self.draw
+        self.left(180)
+        self.penup()        # do not draw while backing
+        self.go(dist)
+        self.right(180)
+        if draw == True:
+            self.pendown()
+    def backward(self, dist):
+        self.back(dist)
+    def bk(self, dist):
+        self.back(dist)
+    def goto(self, newx, newy):
+        if self.draw == True:
+            newline = NCLabTurtleLine(self.posx, self.posy, newx, newy, self.linewidth, self.linecolor)
+            self.lines.append(newline)
+        dx = newx - self.posx
+        dy = newy - self.posy
+        self.turtleangle = arctan2(dy, dx) * 180 / pi
+        self.posx = newx
+        self.posy = newy
+    def setpos(self, newx, newy):
+        self.goto(newx, newy)
+    def setposition(self, newx, newy):
+        self.goto(newx, newy)
+    def setx(self, newx):
+        self.goto(newx, self.posy)
+    def sety(self, newy):
+        self.goto(self.posx, newy)
+    def home(self):
+        self.goto(0, 0)
+        self.angle(0)
+    def getx(self):
+        return self.posx
+    def gety(self):
+        return self.posy
+    def getangle(self):
+        return self.turtleangle
+    def getcolor(self):
+        return self.linecolor
+    def getwidth(self):
+        return self.linewidth
+    def show(self, layer=0, dots=True):
+        NCLabTurtleShow(self, layer, dots)
+    def visible(self):
+        self.isvisible = True
+    def reveal(self):
+        self.isvisible = True
+    def invisible(self):
+        self.isvisible = False
+    def hide(self):
+        self.isvisible = False
+    def extrude(self, height):
+        layer = 0
+        dots = True
+        base = NCLabTurtleTrace(self, layer, dots)
+        p = PRISM(base, height)
+        SHOW(p)
+    def revolve(self, angle, div=48):
+        layer = 0
+        dots = True
+        base = NCLabTurtleTrace(self, layer, dots)
+        p = REVOLVE(base, angle, div)
+        SHOW(p)
+    def spiral(self, angle, elevation, div=48):
+        layer = 0
+        dots = True
+        base = NCLabTurtleTrace(self, layer, dots)
+        p = SPIRAL(base, angle, elevation, div)
+        SHOW(p)
+
