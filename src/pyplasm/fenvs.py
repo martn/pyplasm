@@ -8824,4 +8824,6 @@ class NCLabTurtle:
         base = NCLabTurtleTrace(self, layer, dots)
         p = SPIRAL(base, angle, elevation, div)
         SHOW(p)
+    def erase(self):
+        del self.lines[:]
 
