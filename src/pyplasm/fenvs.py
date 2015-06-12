@@ -8826,4 +8826,15 @@ class NCLabTurtle:
         SHOW(p)
     def erase(self):
         del self.lines[:]
+    def reset(self):
+        del self.lines[:]
+        self.posx = 0
+        self.posy = 0
+        self.turtleangle = 0
+        self.linecolor = [0, 0, 255]
+        self.draw = True
+        self.linewidth = 1
+        self.canvassize = 100
+        self.isvisible = True
+        
 
