@@ -8811,19 +8811,22 @@ class NCLabTurtle:
         dots = True
         base = NCLabTurtleTrace(self, layer, dots)
         p = PRISM(base, height)
-        SHOW(p)
+        if not EMPTYSET(p):
+            SHOW(p)
     def revolve(self, angle, div=48):
         layer = 0
         dots = True
         base = NCLabTurtleTrace(self, layer, dots)
         p = REVOLVE(base, angle, div)
-        SHOW(p)
+        if not EMPTYSET(p):
+            SHOW(p)
     def spiral(self, angle, elevation, div=48):
         layer = 0
         dots = True
         base = NCLabTurtleTrace(self, layer, dots)
         p = SPIRAL(base, angle, elevation, div)
-        SHOW(p)
+        if not EMPTYSET(p):
+            SHOW(p)
     def erase(self):
         del self.lines[:]
     def reset(self):
