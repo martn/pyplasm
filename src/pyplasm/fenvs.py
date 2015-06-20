@@ -8806,6 +8806,11 @@ class NCLabTurtle:
         self.isvisible = False
     def hide(self):
         self.isvisible = False
+    def line(self, x1, y1, x2, y2):
+        self.up()
+        self.goto(x1, y1)
+        self.down()
+        self.goto(x2, y2)
     def extrude(self, height):
         layer = 0
         dots = True
