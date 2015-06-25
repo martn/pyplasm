@@ -8667,13 +8667,15 @@ def NCLabTurtleCleanTrace(turtle):
         index = NCLabFindPair(turtle)
 
 def NCLabTurtleShow(turtle, layer=0, dots=True):
+    h_image = 0.0008
+    h_trace = 0.0005
     image = NCLabTurtleImage(turtle)
     canvas = NCLabTurtleCanvas(turtle)
     trace = NCLabTurtleTrace(turtle, layer, dots)
     # Make the trace 3D:
-    image = PRISM(image, 0.002)
-    canvas = PRISM(canvas, 0.001)
-    trace = PRISM(trace, 0.001)
+    image = PRISM(image, h_image)
+    canvas = PRISM(canvas, h_trace)
+    trace = PRISM(trace, h_trace)
     if turtle.isvisible == True:
         SHOW(image, canvas, trace)
     else:
@@ -8806,22 +8808,43 @@ class NCLabTurtle:
         self.isvisible = False
     def hide(self):
         self.isvisible = False
+    def line(self, x1, y1, x2, y2):
+        self.up()
+        self.goto(x1, y1)
+        self.down()
+        self.goto(x2, y2)
     def extrude(self, height):
         layer = 0
         dots = True
         base = NCLabTurtleTrace(self, layer, dots)
         p = PRISM(base, height)
-        SHOW(p)
+        if not EMPTYSET(p):
+            SHOW(p)
     def revolve(self, angle, div=48):
         layer = 0
         dots = True
         base = NCLabTurtleTrace(self, layer, dots)
         p = REVOLVE(base, angle, div)
-        SHOW(p)
+        if not EMPTYSET(p):
+            SHOW(p)
     def spiral(self, angle, elevation, div=48):
         layer = 0
         dots = True
         base = NCLabTurtleTrace(self, layer, dots)
         p = SPIRAL(base, angle, elevation, div)
-        SHOW(p)
+        if not EMPTYSET(p):
+            SHOW(p)
+    def erase(self):
+        del self.lines[:]
+    def reset(self):
+        del self.lines[:]
+        self.posx = 0
+        self.posy = 0
+        self.turtleangle = 0
+        self.linecolor = [0, 0, 255]
+        self.draw = True
+        self.linewidth = 1
+        self.canvassize = 100
+        self.isvisible = True
+        
 
