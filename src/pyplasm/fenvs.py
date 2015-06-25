@@ -8667,13 +8667,15 @@ def NCLabTurtleCleanTrace(turtle):
         index = NCLabFindPair(turtle)
 
 def NCLabTurtleShow(turtle, layer=0, dots=True):
+    h_image = 0.0008
+    h_trace = 0.0005
     image = NCLabTurtleImage(turtle)
     canvas = NCLabTurtleCanvas(turtle)
     trace = NCLabTurtleTrace(turtle, layer, dots)
     # Make the trace 3D:
-    image = PRISM(image, 0.002)
-    canvas = PRISM(canvas, 0.001)
-    trace = PRISM(trace, 0.001)
+    image = PRISM(image, h_image)
+    canvas = PRISM(canvas, h_trace)
+    trace = PRISM(trace, h_trace)
     if turtle.isvisible == True:
         SHOW(image, canvas, trace)
     else:
