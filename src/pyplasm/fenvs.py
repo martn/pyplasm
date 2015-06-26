@@ -30,10 +30,6 @@ DEFAULT_TOLERANCE = 1e-6
 DEFAULT_MAX_NUM_SPLIT = 10
 DEFAULT_USE_OCTREE_PLANES = True
 
-import sys
-import types
-import math
-
 # set this to True if you want to do a self test
 self_test = False
 
