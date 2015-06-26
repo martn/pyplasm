@@ -21,7 +21,6 @@ from nclab.tools import ExceptionWT
 # This is needed to measure time:
 import time
 start = time.clock()
-print("Evaluating fenvs.py..")
 
 # default values (see PlasmConfig)
 DEFAULT_TOLERANCE = 1e-6
@@ -35,7 +34,6 @@ import math
 # set this to True if you want to do a self test
 self_test = False
 
-print(__file__)
 
 from pyplasm.xge import *
 
