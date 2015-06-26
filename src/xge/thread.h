@@ -3,10 +3,9 @@
 
 #include <xge/xge.h>
 
-
-
-#ifndef WIN32
+#if !PYPLASM_WINDOWS
 #include <pthread.h>
+#include <unistd.h>
 #endif
 
 /*
@@ -54,7 +53,7 @@ protected:
 
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
-class XGE_API Thread
+class Thread
 {
 protected:
 
@@ -71,7 +70,7 @@ protected:
 	  bool          running;
 
 	  //handle of the thread running
-#ifdef WIN32
+#if PYPLASM_WINDOWS
 	  void*         winhandle;
 #else
 	  pthread_t     thread;
@@ -95,7 +94,7 @@ protected:
 	//abort
 	bool bAbortThread;
 
-	#ifdef WIN32
+  #if PYPLASM_WINDOWS
 	static unsigned long __stdcall startfun(void far * data);
 	#else
 	static void* startfun(void* data);
@@ -119,7 +118,7 @@ public:
 	virtual void Abort();
 
 	//run all the threads
-	virtual void Run();
+	virtual void run();
 
 	//wait for all process to end
 	virtual void Wait();

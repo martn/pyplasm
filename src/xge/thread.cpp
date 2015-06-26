@@ -30,7 +30,7 @@ Thread::~Thread()
 		//if a thread is running then close it
 		if (workers[i].running)
 		{
-			#ifdef WIN32
+			#if PYPLASM_WINDOWS
 			CloseHandle(workers[i].winhandle);
 			#else
 			pthread_cancel(workers[i].thread);
@@ -51,7 +51,7 @@ int Thread::getNumberOfWorkers() const
 
 //------------------------------------------------------------------------
 //------------------------------------------------------------------------
-#ifdef WIN32
+#if PYPLASM_WINDOWS
 unsigned long __stdcall Thread::startfun(void far * data)
 #else
 void* Thread::startfun(void * data)
@@ -71,7 +71,7 @@ void* Thread::startfun(void * data)
 	--(worker->driver->nrunning);
 
 	//finished with this one
-	#ifdef WIN32
+	#if PYPLASM_WINDOWS
 	CloseHandle(worker->winhandle);
 	#else
 	pthread_exit(NULL);
@@ -82,7 +82,7 @@ void* Thread::startfun(void * data)
 
 //------------------------------------------------------------------------
 //------------------------------------------------------------------------
-void Thread::Run()
+void Thread::run()
 {
 	bAbortThread=false;
 	nrunning=nworkers;
@@ -96,7 +96,7 @@ void Thread::Run()
 		}
 		else
 		{
-			#ifdef WIN32
+			#if PYPLASM_WINDOWS
 			workers[i].winhandle=CreateThread( NULL, 0, startfun, &workers[i] , 0, NULL); 
 			#else
 			pthread_create( &workers[i].thread, NULL, startfun, (void*) &workers[i]);
@@ -129,7 +129,7 @@ void Thread::Wait(int nworker)
 {
 	if (workers[nworker].running)
 	{
-		#ifdef WIN32
+		#if PYPLASM_WINDOWS
 		WaitForSingleObject(workers[nworker].winhandle, 0xFFFFFFFF);
 		#else	
 		void* status;
@@ -153,7 +153,7 @@ void Thread::Wait()
 //------------------------------------------------------------------------
 void Thread::Sleep(unsigned int msec)
 {
-	#ifdef WIN32
+	#if PYPLASM_WINDOWS
 	::Sleep(msec);
 	#else
 	usleep(((unsigned long)msec)*1000);

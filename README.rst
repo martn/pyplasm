@@ -4,120 +4,149 @@ PLASM (Programming LAnguage for Solid Modeling)
 Plasm is a design language for geometric and solid parametric design,
 developed by the CAD Group at the Universities 'La Sapienza' and 'Roma Tre' in Italy.
 
-Plasm is available both as a desktop application and in NCLab (http://nclab.com).
-
-Linux compilation (Ubuntu/Debian .deb)
---------------------------------------
 
 Get Plasm::
 
     git clone git://github.com/femhub/pyplasm.git
 
-Install FreeImage developer library::
 
-    sudo apt-get install libfreeimage3 libfreeimage-dev
+--------------------------------------
+Linux compilation
+--------------------------------------
 
-Install Freetype2 developer library::
+Install prerequisites::
 
-    sudo apt-get install libfreetype6 libfreetype6-dev
+	PREREQUISITES=\
+		libfreetype6 libfreetype6-dev libasound2 libasound2-dev alsa-base alsa-utils \
+		python python-dev python-setuptools libxinerama-dev libxrender-dev libxcomposite-dev \
+		libxcursor-dev swig libglu1-mesa-dev libfreeimage3 libglew1.10 libpng12-0 \
+		libpng12-dev libjpeg-dev libxxf86vm1 libxxf86vm-dev libxi6 libxi-dev \
+		libxrandr-dev mesa-common-dev mesa-utils-extra libgl1-mesa-dev libglapi-mesa \
+		python-numpy python-scipy
 
-Install ALSA developer library::
+	sudo apt-get install $PREREQUISITES # OpenSuse: "sudo zypper install $PREREQUISITES"
 
-    sudo apt-get install libasound2 libasound2-dev
+Install some extra python packages::
 
-Install Glew developer library (libglew1.6 for new 'oneiric' release)::
+	sudo easy_install PyOpenGL PyOpenGL-accelerate 
 
-    # For older Ubuntu install libglew1.5 instead of this.
-    sudo apt-get install libglew1.6 libglew1.6-dev
+Check that your python is 2.7
+	
+	python --version
 
-Install python2.7 (the version number is important)::
+Generate makefiles and make binaries::
 
-    sudo apt-get install python2.7 python2.7-dev
+	cd /home/$USERNAME/pyplasm
+	mkdir build
+	cd build
+	cmake ../ 
+	make
+	sudo make install # if you get an error try the following "touch install_manifest.txt" and "chmod a+rw ./*"
+	cd ..
 
-If you get errors about Juce library (juce_amalgamated.cpp)::
 
-    sudo apt-get install libxinerama-dev
-    sudo apt-get install libxrender-dev
-    sudo apt-get install libxcomposite-dev
-    sudo apt-get install libxcursor-dev
-    sudo apt-get install freeglut3-dev
+-----------------------------------------------------------
+MacOsX compilation 
+-----------------------------------------------------------
+1. Install XCode tools from AppStore (optionally install also Xcode command line tools)
+2. Install brew from http://mxcl.github.com/homebrew/
+3. Install cmake with ``brew install cmake``
+4. Install PyOpenGL with ``sudo easy_install pyopengl``
+5. Install numpy/scipy with ScipySuperpack from http://fonnesbeck.github.com/ScipySuperpack/ (browse the page to find the correct version for your MacOsX)
+6. Generate XCode project , build and install::
 
-Install PyPlasm Python dependencies::
+	cd /home/$USERNAME/pyplasm
+	mkdir build
+	cd build
+	cmake -GXcode ../ 
+	xcodebuild      -project PyPlasm.xcodeproj -target ALL_BUILD  -configuration Release
+	sudo xcodebuild -project PyPlasm.xcodeproj -target install    -configuration Release
 
-    sudo apt-get install python-setuptools
-    sudo easy_install PyOpenGL PyOpenGL-accelerate
+**Possible cmake errors**:
 
-Open a bash shell and type::
+If the command ``cmake -GXcode ../`` fails with errors about OPENGL_INCLUDE_DIRS and PYTHON_INCLUDE_DIRS you need to specify it manually:
+for example, in Mac OsX 10.8 the right command line is::
 
-    cd plasm
-    make clean
-    make
-    sudo make install
+	cmake -GXcode -DOPENGL_INCLUDE_DIR=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers -DPYTHON_INCLUDE_DIR=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.8.sdk/System/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7 ../
 
-To test the PyPlasm distribution, type::
-
-    python
-    from pyplasm import *
-    c=CUBOID([1,1,1])
-    VIEW(c)
-    quit()
-
-To run some other tests, type::
-
-    python /usr/lib/python2.7/dist-packages/pyplasm/examples.py
-
-(OPTIONAL, only for DEBUGGING) if you want to run the self test procedure xgemain::
-
-    ./src/xgemain/xgemain
-
-Linux compilation (openSUSE .RPM - tested on openSUSE 11.4)
+-----------------------------------------------------------
+Windows 7/8 compilation 
 -----------------------------------------------------------
 
-Install FreeImage developer library::
+Install:
 
-    sudo yast --install libfreeimage3
-    subo yast --install libfreeimage-devel
+- Visual Studio (Express edition is free)
+http://www.microsoft.com/visualstudio/eng/products/visual-studio-express-products
 
-Install Freetype2 developer library::
+- Python 2.7.3 - 32 bit
+http://www.python.org/ftp/python/2.7.3/python-2.7.3.msi
 
-    sudo yast --install libfreetype6
-    sudo yast --install freetype2-devel
+- PyOpenGL 3.0.2 - 32 bit
+https://pypi.python.org/packages/any/P/PyOpenGL/PyOpenGL-3.0.2.win32.exe#md5=4f1c66d6d87dcdf98ecc7ff4ce61a7e6
 
-Install ALSA developer library::
+- numpy 1.7.0 - 32 bit
+http://sourceforge.net/projects/numpy/files/NumPy/1.7.0/numpy-1.7.0-win32-superpack-python2.7.exe/download
 
-    sudo yast --install alsa
-    sudo yast --install alsa-devel
+- SciPy 0.12.0 rc1 - 32 bit
+http://sourceforge.net/projects/scipy/files/scipy/0.12.0rc1/scipy-0.12.0c1-win32-superpack-python2.7.exe/download
 
-Install Glew developer library::
+- Swig 2.0.9
+http://prdownloads.sourceforge.net/swig/swigwin-2.0.9.zip
+(unzip Swig and move the folder to obtain C:/swigwin-2.0.9)
 
-    sudo yast --install glew
-    sudo yast --install libGLEW1_6
-    sudo yast --install libGLEW1_6-devel
+- Cmake 2.8.10.2 - 32 bit 
+http://www.cmake.org/files/v2.8/cmake-2.8.10.2-win32-x86.exe
+(during the installation select: "Add CMake to the system PATH for all users")
 
-Install python2.7 (the version number is important)::
+Run cmake-gui::
 
-    sudo yast --install python
-    sudo yast --install python-devel
+	"Where is the source code"    <browse to the pyplasm directory>
+	"Where to build the binaries  <browse to the pyplasm directory>/build
 
-Open a bash shell and type::
+Press configure::
 
-    cd <the/directory/containing/this/file>
-    make clean
-    make
-    sudo make install
+ 	"Build directory does not exist..." > Yes
+	"Specify the generator for this project": Visual Studio 11
+	Select: "Use default native compilers" 
+	Wait...  "Configuring done"!
+	Select: "Ungrouped Entries" > "PYPLASM_REGENERATE_SWIG_WRAPPERS" and check it
+	
+Press configure again::
 
-To test the PyPlasm distribution, type::
+	Error
+	Select: "SWIG_EXECUTABLE" > "SWIG_EXECUTABLE-NOTFOUND" and specify: C:/swigwin-2.0.9/swig.exe
 
-    python
-    from pyplasm import *
-    c=CUBOID([1,1,1])
-    VIEW(c)
-    quit()
+Press configure again::
 
-To run some other tests, type::
+	Wait...  "Configuring done"!
 
-    python /usr/lib/python2.7/site-packages/pyplasm/examples.py
+Press generate::
 
-(OPTIONAL, only for DEBUGGING) if you want to run the self test procedure xgemain::
+	Wait...  "Generating done"!
+	
+Run Visual Studio::
 
-    ./src/xgemain/xgemain
+	File > Open > Project/Solution... > ..\pyplasm\build\PyPlasm.sln
+	Wait till the project is loaded
+
+	In the upper fields:
+	"Solution Configurations": Release
+	"Solution Platforms": Win32
+
+	Menu BUILD: "Build ALL_BUILD"
+	Wait till the project is built: "Build: 9 succeeded, 0 failed..."
+
+	In the "Solution Explorer" panel highlight: "INSTALL"
+	Menu BUILD: "Build INSTALL"
+	Wait till the project is built: "Build: 3 succeeded, 0 failed..."
+
+-----------------------------------------------------------
+Test pyplasm is working
+-----------------------------------------------------------
+
+	python
+	from pyplasm import *
+	c=CUBOID([1,1,1])
+	VIEW(c)
+	quit()
+

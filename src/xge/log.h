@@ -3,7 +3,7 @@
 
 #include <xge/xge.h>
 
-class XGE_API Log
+class Log
 {
 public:
 
@@ -17,7 +17,7 @@ public:
 	static void silence (bool silent);
 	
 private:
-	#ifdef _WINDOWS
+	#if PYPLASM_WINDOWS
 	static HANDLE __redirect;
 	#endif
 

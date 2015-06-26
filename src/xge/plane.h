@@ -13,7 +13,7 @@
 	The internal vector must be normalized (x*x+y*y+z*z)=1
 */
 //==============================================
-class XGE_API Plane4f: public Vec4f
+class Plane4f: public Vec4f
 {
 	
 public:
@@ -254,9 +254,6 @@ public:
 		return Utils::Format("[%f,%f,%f,%f]",x,y,z,w);
 	}
 
-	//!SelfTest
-	static int SelfTest();
-
 }; //end class Plane4f
 
 
@@ -267,7 +264,7 @@ public:
 	The first component is the homogeneous component
 */
 //==========================================================
-class XGE_API Planef: public Vecf
+class Planef: public Vecf
 {
 
 public:
@@ -424,7 +421,8 @@ public:
 //		XgeDebugAssert(m && !isnan(m) && finite(m));
 //		for (int i=0;i<=dim;i++) this->mem[i]/=m;
 //#else //_DEBUG
-		if (m && !isnan(m) && finite(m))
+
+		if (m && !isnan(m) && std::isfinite(m))
 		{
 			for (int i=0;i<=dim;i++) 
 				this->mem[i]/=m;
@@ -614,9 +612,6 @@ public:
 		ret+="]";
 		return ret;
 	}
-
-	//!SelfTest
-	static int SelfTest();
 
 }; //end class Planef
 

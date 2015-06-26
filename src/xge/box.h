@@ -5,7 +5,7 @@
 #include <xge/vec.h>
 #include <xge/plane.h>
 
-class XGE_API Box2i
+class Box2i
 {
 public:
 
@@ -53,7 +53,7 @@ public:
 //===========================================================================
 //! Un box in 3-dim
 //===========================================================================
-class XGE_API Box3f
+class Box3f
 {
 public:
 
@@ -260,12 +260,12 @@ public:
 	inline bool isValid() const
 	{
 		return 
-			   !isnan(this->p1.x) && finite(this->p1.x)
-			&& !isnan(this->p1.y) && finite(this->p1.y)
-			&& !isnan(this->p1.z) && finite(this->p1.z)
-			&& !isnan(this->p2.x) && finite(this->p2.x)
-			&& !isnan(this->p2.y) && finite(this->p2.y)
-			&& !isnan(this->p2.z) && finite(this->p2.z)
+			   !isnan(this->p1.x) && std::isfinite(this->p1.x)
+			&& !isnan(this->p1.y) && std::isfinite(this->p1.y)
+			&& !isnan(this->p1.z) && std::isfinite(this->p1.z)
+			&& !isnan(this->p2.x) && std::isfinite(this->p2.x)
+			&& !isnan(this->p2.y) && std::isfinite(this->p2.y)
+			&& !isnan(this->p2.z) && std::isfinite(this->p2.z)
 			&& this->p1.x<=this->p2.x 
 			&& this->p1.y<=this->p2.y 
 			&& this->p1.z<=this->p2.z;
@@ -546,9 +546,6 @@ public:
 		return Utils::Format("[[%f,%f,%f],[%f,%f,%f]]",p1.x,p1.y,p1.z,p2.x,p2.y,p2.z);
 	}
 
-	//self testing
-	static int SelfTest();
-
 };
 
 
@@ -561,7 +558,7 @@ public:
 	che sono (1.0,x,y,z). Cosi' come i vettori conterranno 4 floats che sono (0.0,x,y,z).
 */
 //===========================================================================
-class XGE_API Boxf
+class Boxf
 {
 
 public:
@@ -759,7 +756,7 @@ public:
 
 		for (int i=1;i<=p1.dim;i++)
 		{
-			if (isnan(p1[i]) || !finite(p1[i])) return false;
+			if (isnan(p1[i]) || !std::isfinite(p1[i])) return false;
 			if (this->p1[i]   >   this->p2[i] ) return false;
 		}
 		return true;
@@ -1095,10 +1092,6 @@ public:
 		ret+="]]";
 		return ret;
 	}
-
-
-	///self testing
-	static int SelfTest();
 
 };
 

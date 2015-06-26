@@ -4,6 +4,8 @@
 #include <xge/xge.h>
 #include <xge/archive.h>
 
+#include <cmath>
+
 //predeclaration
 class Mat4f;
 class Matf;
@@ -11,7 +13,7 @@ class Matf;
 //========================================================================
 //! 2D integer vector
 //========================================================================
-class XGE_API Vec2i
+class Vec2i
 {
 public:
 	int x,y;
@@ -46,7 +48,7 @@ public:
 //========================================================================
 //! 2D float vector
 //========================================================================
-class XGE_API Vec2f
+class Vec2f
 {
 	
 
@@ -248,7 +250,7 @@ public:
 //========================================================================
 //! 3D float vector
 //========================================================================
-class XGE_API Vec3f
+class Vec3f
 {
 public:
 	void Write(Archive& ar)
@@ -463,9 +465,9 @@ public:
 	inline bool isValid() const
 	{
 		return 
-			   !isnan(this->x) && finite(this->x)
-			&& !isnan(this->y) && finite(this->y)
-			&& !isnan(this->z) && finite(this->z);
+			   !isnan(this->x) && std::isfinite(this->x)
+			&& !isnan(this->y) && std::isfinite(this->y)
+			&& !isnan(this->z) && std::isfinite(this->z);
 	}
 
 	//! test fuzzy equality (error tolerance)
@@ -757,10 +759,6 @@ public:
 		return Utils::Format("[%f,%f,%f]",x,y,z);
 	}
 
-
-	//SelfTest
-	static int SelfTest();
-
 }; //end Vec3f
 
 
@@ -768,7 +766,7 @@ public:
 //========================================================================
 //! 4D float vector
 //========================================================================
-class XGE_API Vec4f
+class Vec4f
 {
 
 public:
@@ -1174,10 +1172,6 @@ public:
 	}
 
 
-	//self test
-	static int SelfTest();
-
-
 }; //end class Vec4f
 
 
@@ -1190,7 +1184,7 @@ public:
 */
 //========================================================================
 
-class XGE_API Vecf
+class Vecf
 {
 	
 public:
@@ -1734,7 +1728,7 @@ public:
 	inline Vecf normalize() const
 	{
 		float m=module();
-		if (!m || isnan(m) || !finite(m)) m=1;
+		if (!m || isnan(m) || !std::isfinite(m)) m=1;
 		return Vecf(*this)/m;
 	}
 
@@ -1810,9 +1804,6 @@ public:
 		ret+="]";
 		return ret;
 	}
-
-	//! internal self test
-	static int SelfTest();
 
 }; //end class Vecf
 
