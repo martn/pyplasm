@@ -18,20 +18,14 @@ from nclab.tools import ExceptionWT
 
 # def ExceptionWT(a):
 #  print a
-
 # This is needed to measure time:
-import time
-
-start = time.clock()
+# import time
+# start = time.clock()
 
 # default values (see PlasmConfig)
 DEFAULT_TOLERANCE = 1e-6
 DEFAULT_MAX_NUM_SPLIT = 10
 DEFAULT_USE_OCTREE_PLANES = True
-
-import sys
-import types
-import math
 
 # set this to True if you want to do a self test
 self_test = False
@@ -6407,7 +6401,7 @@ def ROTN(args):
 # ===================================================
 # MKVECTOR
 # ===================================================
-
+'''
 def MKVECTOR(P1):
     def MKVECTOR0(P2):
         TR = PLASM_T([1, 2, 3])(P1)
@@ -6419,7 +6413,7 @@ def MKVECTOR(P1):
         ROT = ROTN([ALPHA, N])
         return (COMP([COMP([TR, ROT]), SC]))(MKVERSORK)
 
-    return MKVECTOR0
+    return MKVECTOR0'''
 
 # ===================================================
 # Matrix stuff
@@ -6611,7 +6605,7 @@ if self_test:
 # BIQUADRATICSURFACE
 # ======================================================
 
-
+'''
 def BIQUADRATICSURFACE(controlpoints):
     def u0(point): u = S1(point)
 
@@ -6635,13 +6629,13 @@ if self_test:
     mapping = BIQUADRATICSURFACE(controlpoints)
     plasm_config.push(1e-4)
     PLASM_VIEW(PLASM_MAP(mapping)(domain))
-    plasm_config.pop()
+    plasm_config.pop()'''
 
 
 # ======================================================
 # HERMITESURFACE
 # ======================================================
-
+'''
 def PLASM_HERMITESURFACE(controlpoints):
     def H0(point): u = S1(point)
 
@@ -6678,7 +6672,7 @@ if self_test:
     mapping = PLASM_HERMITESURFACE(controlpoints)
     plasm_config.push(1e-4)
     PLASM_VIEW(PLASM_MAP(mapping)(domain))
-    plasm_config.pop()
+    plasm_config.pop()'''
 
 # ======================================================
 # PLASM_BEZIERSURFACE
