@@ -643,38 +643,6 @@ if self_test:
 
 
 # ===================================================
-# n-ary DIFFerence
-# ===================================================
-
-def PLASM_NDIFF(args):
-
-    if isinstance(args, list) and ISPOL(args[0]):
-        return PLASM_DIFFERENCE(args)
-
-    if ISNUM(args):
-        return -1 * args
-
-    if isinstance(args, list) and ISNUM(args[0]):
-        return reduce(lambda x, y: x - y, args)
-
-    if isinstance(args, list) and isinstance(args[0], list):
-
-        # matrix difference
-        if isinstance(args[0][0], list):
-            return AA(VECTDIFF)(list(zip(*args)))
-
-        # vector diff
-        else:
-            return VECTDIFF(args)
-
-    raise Exception("\'-\' function has been applied to %s!" % repr(args))
-
-
-if self_test:
-    assert(PLASM_DIFF(
-        2) == -2 and PLASM_DIFF([1, 2, 3]) == -4 and PLASM_DIFF([[1, 2, 3], [1, 2, 3]]) == [0, 0, 0])
-
-# ===================================================
 # n-ary PRODuct
 # ===================================================
 
@@ -1136,7 +1104,7 @@ class BASEOBJ:
             raise ExceptionWT(
                 "Material must be a list of 17 values: ambientRGBA, diffuseRGBA specularRGBA emissionRGBA shininess")
 
-    def getmaterial():
+    def getmaterial(self):
         return self.material
 
     def setcolor(self, color=STEEL):
@@ -3096,6 +3064,41 @@ def PLASM_DIFFERENCE(objs_list):
     return result
 
 PLASM_DIFF = PLASM_DIFFERENCE
+
+
+# ===================================================
+# n-ary DIFFerence
+# ===================================================
+
+def PLASM_NDIFF(args):
+
+    if isinstance(args, list) and ISPOL(args[0]):
+        return PLASM_DIFFERENCE(args)
+
+    if ISNUM(args):
+        return -1 * args
+
+    if isinstance(args, list) and ISNUM(args[0]):
+        return reduce(lambda x, y: x - y, args)
+
+    if isinstance(args, list) and isinstance(args[0], list):
+
+        # matrix difference
+        if isinstance(args[0][0], list):
+            return AA(VECTDIFF)(list(zip(*args)))
+
+        # vector diff
+        else:
+            return VECTDIFF(args)
+
+    raise Exception("\'-\' function has been applied to %s!" % repr(args))
+
+
+if self_test:
+    assert(PLASM_DIFF(
+        2) == -2 and PLASM_DIFF([1, 2, 3]) == -4 and PLASM_DIFF([[1, 2, 3], [1, 2, 3]]) == [0, 0, 0])
+
+
 
 # SUBTRACT IS ALWAYS BINARY BUT EITHER ITEM CAN BE A LIST.
 # SECOND OBJECT IS SUBTRACTED FROM THE FIRST, AND THE FIRST OBJECT CHANGES:
