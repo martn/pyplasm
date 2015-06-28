@@ -4542,7 +4542,7 @@ def SHELL(radius1, radius2, divisions=[16, 32]):
     if not isinstance(divisions, list):
         if divisions <= 4:
             raise ExceptionWT("Bad division in the SHELL command!")
-        divisionslist = [divisions / 2, divisions]
+        divisionslist = [int(divisions / 2), divisions]
     # Making it s solid:
     return BASEOBJ(PLASM_SHELL(radius1, radius2)(divisionslist))
 
@@ -4595,7 +4595,7 @@ def SPHERE(radius, divisions=[16, 32]):
     if not isinstance(divisions, list):
         if divisions <= 4:
             raise ExceptionWT("Bad division in the SPHERE command!")
-        divisionslist = [divisions / 2, divisions]
+        divisionslist = [int(divisions / 2), divisions]
     # Returning the sphere:
     return BASEOBJ(PLASM_JOIN(PLASM_SPHERE(radius)(divisionslist)))
 
@@ -4702,7 +4702,7 @@ def TORUS(r1, r2, divisions=[32, 16]):
     if not isinstance(divisions, list):
         if divisions / 2 <= 0:
             raise ExceptionWT("Bad division in the TORUS command!")
-        divisionslist = [divisions, divisions / 2]
+        divisionslist = [divisions, int(divisions / 2)]
     return BASEOBJ(PLASM_SOLIDTORUS([r1, r2])([divisionslist[0], divisionslist[1], 1]))
 
 # English:
@@ -4774,7 +4774,7 @@ def ELBOW(r1, r2, angle, divisions=[24, 24]):
     if not isinstance(divisions, list):
         if divisions / 2 <= 0:
             raise ExceptionWT("Bad division in the ELBOW command!")
-        divisionslist = [divisions, divisions / 2]
+        divisionslist = [divisions, int(divisions / 2)]
     return BASEOBJ(PLASM_SOLIDELBOW([r1, r2, angle])([divisionslist[0], divisionslist[1], 1]))
 
 
