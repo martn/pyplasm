@@ -5814,15 +5814,6 @@ def PLASM_ROTATIONALSURFACE(args):
     return map_fn
 
 
-if self_test:
-    profile = PLASM_BEZIER(S1)(
-        [[0, 0, 0], [2, 0, 1], [3, 0, 4]])  # defined in xz!
-    plasm_config.push(1e-4)
-    # the first interval should be in 0,1 for bezier
-    domain = Plasm.power(PLASM_INTERVALS(1)(10), PLASM_INTERVALS(2 * PI)(30))
-    out = PLASM_MAP(ROTATIONALSURFACE(profile))(domain)
-    plasm_config.pop()
-    PLASM_VIEW(out)
 
 # NEW COMMAND:
 
@@ -5858,6 +5849,18 @@ def ROTATIONALSURFACE(point_list, angle=360, nx=32, na=32):
 ROSURFACE = ROTATIONALSURFACE
 ROSURF = ROTATIONALSURFACE
 ROSU = ROTATIONALSURFACE
+
+
+
+if self_test:
+    profile = PLASM_BEZIER(S1)(
+        [[0, 0, 0], [2, 0, 1], [3, 0, 4]])  # defined in xz!
+    plasm_config.push(1e-4)
+    # the first interval should be in 0,1 for bezier
+    domain = Plasm.power(PLASM_INTERVALS(1)(10), PLASM_INTERVALS(2 * PI)(30))
+    out = PLASM_MAP(ROTATIONALSURFACE(profile))(domain)
+    plasm_config.pop()
+    PLASM_VIEW(out)
 
 # ======================================================
 # ROTATIONAL SOLID
@@ -7948,13 +7951,13 @@ def PLASM_GETCOLOR(obj):
         raise Exception(repr(obj) + " is not a Plasm object!")
     string = Plasm.getProperty(obj, "RGBcolor")
     col = [float(s) for s in string.split()]
-    if col == []:
+    if not col:
         return col
     else:
         if len(col) < 3:
             print(
                 "Warning: There is some problem with the color of an object.")
-            print(("Expected [R, G, B] but list length is", len(col0)))
+            print("Expected [R, G, B] but list length is", len(col))
             return
     col[0] = int(255 * float(col[0]) + 0.5)
     col[1] = int(255 * float(col[1]) + 0.5)
