@@ -651,13 +651,14 @@ def PLASM_SUM(args):
 
 PLASM_ADD = PLASM_SUM
 
+'''
 if self_test:
     assert (ADD([1, 2, 3]) == 6 and ADD([[1, 2, 3], [4, 5, 6]]) == [5, 7, 9])
     assert PLASM_SUM([[[1, 2], [3, 4]], [[10, 20], [30, 40]], [
         [100, 200], [300, 400]]]) == [[111, 222], [333, 444]]
     assert (LIFT(ADD)([math.cos, math.sin])(PI / 2) == 1.0)
     assert (RAISE(ADD)([1, 2]) == 3)
-    assert (RAISE(ADD)([math.cos, math.sin])(PI / 2) == 1.0)
+    assert (RAISE(ADD)([math.cos, math.sin])(PI / 2) == 1.0)'''
 
 
 # ===================================================
@@ -8989,7 +8990,7 @@ def NCLabTurtleShow(turtle, layer=0, dots=True):
     image = PRISM(image, h_image)
     canvas = PRISM(canvas, h_trace)
     trace = PRISM(trace, h_trace)
-    if turtle.isvisible == True:
+    if turtle.isvisible:
         SHOW(image, canvas, trace)
     else:
         SHOW(canvas, trace)
@@ -9203,5 +9204,3 @@ class NCLabTurtle:
         self.linewidth = 1
         self.canvassize = 100
         self.isvisible = True
-        
-
